@@ -4,14 +4,7 @@ module Spectrum
 
       def initialize(request)
         @request = request
-        @tree    = Spectrum::FieldTree.new({
-          'type' => 'field',
-          'value' => @request.params['id_field'],
-          'children' => [{
-            'type' => 'literal',
-            'value' => @request.params['id']
-          }]
-        })
+        @query = "#{@request.params['id_field']}:#{@request.params['id']}"
       end
 
       def sort
@@ -23,7 +16,7 @@ module Spectrum
 
       def query(query_map = {}, filter_map = {})
         {
-          q: @tree.query(query_map),
+          q: @query,
           page: 0,
           start: 0,
           rows: 1,
@@ -45,6 +38,10 @@ module Spectrum
       end
 
       def facet_limit
+        nil
+      end
+
+      def fvf(_)
         nil
       end
 
