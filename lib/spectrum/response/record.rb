@@ -21,7 +21,7 @@ module Spectrum
         @complete        = @data['complete'] || true
         @names           = Array(@data['names'] || @data['title'])
         @names_have_html = @data['names_have_html'] || false
-        @fields          = @focus.apply_fields(@data)
+        @fields          = @focus.apply_fields(@data, @base_url)
       end
 
       def initialize_from_object
@@ -30,7 +30,7 @@ module Spectrum
         @complete        = true
         @names           = Array(@data.title)
         @names_have_html = false
-        @fields          = @focus.apply_fields(@data)
+        @fields          = @focus.apply_fields(@data, @base_url)
       end
 
 
