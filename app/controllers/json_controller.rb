@@ -79,6 +79,15 @@ class JsonController < ApplicationController
         path: '/cgi-bin/getHoldings.pl',
         query: {id: request[:id]}.to_query
       )))[request[:id]] || []
+      response.each do |item|
+        next unless item['item_info']
+        item['item_info'].each do |info|
+          next unless info['barcode']
+          record = URI.escape(request[:id])
+          query = {barcode: info['barcode'], getthis: 'Get this'}.to_query
+          info['get_this_url'] = "https://mirlyn.lib.umich.edu/Record/#{record}/Hold?#{query}"
+        end
+      end
     else
       response = []
     end
