@@ -16,7 +16,7 @@ module Spectrum
       end
 
       def initialize_from_hash
-        @id              = @data['id']
+        @url             = @focus.get_url(@data, @base_url)
         @type            = @data['type'] || @source.id
         @complete        = @data['complete'] || true
         @names           = Array(@data['names'] || @data['title'])
@@ -25,7 +25,7 @@ module Spectrum
       end
 
       def initialize_from_object
-        @id              = @data.id
+        @url             = @focus.get_url(@data, @base_url)
         @type            = @data.content_types || @source.id
         @complete        = true
         @names           = Array(@data.title)
@@ -37,7 +37,7 @@ module Spectrum
       def spectrum
         {
           type: @type,
-          source: @base_url + '/' + @source.id + '/record/' + @id,
+          source: @url,
           complete: @complete,
           names: @names,
           names_have_html: @names_have_html,
