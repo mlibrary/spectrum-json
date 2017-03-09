@@ -9,10 +9,10 @@ module Spectrum
         'value_boolean' => Spectrum::FieldTree::ValueBoolean,
       }
       def query field_map = {}
-        if @value.empty? || field_map[@value].empty?
+        if @value.empty? || field_map.by_uid(@value).empty?
           @children.map {|item| item.query(field_map)}.join(' ')
         else
-          "#{field_map[@value] || @value}:(#{@children.map {|item| item.query(field_map)}.join(' ')})"
+          "#{field_map.by_uid(@value).field || @value}:(#{@children.map {|item| item.query(field_map)}.join(' ')})"
         end
       end
     end
