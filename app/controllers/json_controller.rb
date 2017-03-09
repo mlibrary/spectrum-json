@@ -68,7 +68,7 @@ class JsonController < ApplicationController
       @response  = Spectrum::Response::Record.new(fetch_record)
       render(json: record_response)
     else
-      render(json: {}, status: 404)
+      render(json: {}, status: 200)
     end
   end
 
@@ -82,10 +82,13 @@ class JsonController < ApplicationController
       response.each do |item|
         next unless item['item_info']
         item['item_info'].each do |info|
-          next unless info['barcode']
-          record = URI.escape(request[:id])
-          query = {barcode: info['barcode'], getthis: 'Get this'}.to_query
-          info['get_this_url'] = "https://mirlyn.lib.umich.edu/Record/#{record}/Hold?#{query}"
+          if info['barcode']
+            record = URI.escape(request[:id])
+            query = {barcode: info['barcode'], getthis: 'Get this'}.to_query
+            info['get_this_url'] = "https://mirlyn.lib.umich.edu/Record/#{record}/Hold?#{query}"
+          else
+            info['handle_url'] = "http://hdl.handle.net/2027/#{info['id']}"
+          end
         end
       end
     else
