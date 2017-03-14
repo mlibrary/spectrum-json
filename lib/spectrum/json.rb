@@ -45,14 +45,16 @@ module Spectrum
         @focus_files  = root.join('config', 'foci', '*.yml')
         @sources_file = root.join('config', 'source.yml')
         @sorts_file   = root.join('config', 'sorts.yml')
+        @bookplates_file = root.join('config', 'bookplates.yml')
         configure!
       end
 
       def configure!
         @sources = Spectrum::Config::SourceList.new(YAML.load_file(@sources_file))
+        @bookplates = Spectrum::Config::BookplateList.new(YAML.load_file(@bookplates_file))
         @filters = Spectrum::Config::FilterList.new(YAML.load_file(@filters_file))
         @sorts   = Spectrum::Config::SortList.new(YAML.load_file(@sorts_file))
-        @fields  = Spectrum::Config::FieldList.new(YAML.load_file(@fields_file), @sorts)
+        @fields  = Spectrum::Config::FieldList.new(YAML.load_file(@fields_file), self)
         @foci    = Spectrum::Config::FocusList.new(
           Dir.glob(@focus_files).map {|file| YAML.load_file(file) },
           self
@@ -97,6 +99,10 @@ module Spectrum
 
       def sources
         @sources
+      end
+
+      def bookplates
+        @bookplates
       end
     end
   end
