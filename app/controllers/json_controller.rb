@@ -74,28 +74,61 @@ class JsonController < ApplicationController
 
   def holdings
     if request[:source] == 'mirlyn'
+      data = []
       response = JSON.parse(Net::HTTP.get(URI::HTTP.build(
         host: 'mirlyn-aleph.lib.umich.edu',
         path: '/cgi-bin/getHoldings.pl',
         query: {id: request[:id]}.to_query
       )))[request[:id]] || []
+
       response.each do |item|
         next unless item['item_info']
         item['item_info'].each do |info|
           if info['barcode']
             record = URI.escape(request[:id])
-            query = {barcode: info['barcode'], getthis: 'Get this'}.to_query
-            info['get_this_url'] = "https://mirlyn.lib.umich.edu/Record/#{record}/Hold?#{query}"
+            if info['can_request']
+              query = {barcode: info['barcode'], getthis: 'Get this'}.to_query
+              type = 'circulating'
+              url = "https://mirlyn.lib.umich.edu/Record/#{record}/Hold?#{query}"
+            elsif info['can_reserve']
+              query = {barcode: info['barcode']}.to_query
+              type = 'special'
+              url = "https://mirlyn.lib.umich.edu/Record/#{record}/Request?#{query}"
+            elsif info['can_book']
+              query = {full_item_key: info['full_item_key']}.to_query
+              type = 'media'
+              url = "https://mirlyn.lib.umich.edu/Record/#{record}/Booking?#{query}"
+            else
+              type = 'other'
+              url = nil
+            end
+            data <<  {
+              type: type,
+              barcode: info['barcode'],
+              location: info['location'],
+              callnumber: info['callnumber'],
+              status: info['status'],
+              enum: [ info['enum_a'], info['enum_b'], info['enum_c'] ].compact,
+              chron:  [ info['chron_i'], info['chron_j'] ].compact,
+              info_link: item['info_link'],
+              get_this_url: url,
+            }
           else
-            info['handle_url'] = "http://hdl.handle.net/2027/#{info['id']}"
+            data << {
+              type: 'hathitrust',
+              id: info['id'],
+              handle_url: "http://hdl.handle.net/2027/#{info['id']}",
+              source: info['source'],
+              rights: info['rights'],
+              status: info['status'],
+              description: info['description'],
+            }
           end
         end
       end
-    else
-      response = []
     end
     
-    render(json: response)
+    render(json: data)
   end
 
   def holdings_response
