@@ -63,7 +63,11 @@ module Spectrum
       end
 
       def book_mark?
-        @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
+        begin
+          @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
+        rescue
+          false
+        end
       end
 
       def book_mark
@@ -77,10 +81,14 @@ module Spectrum
 
       def holdings_only?
         # TODO: Check this for when we implement this completely.
-        if @data['facets']['holdings_only'].nil?
+        begin
+          if @data['facets']['holdings_only'].nil?
+            true
+          else
+            @data['facets']['holdings_only'] == 'true'
+          end
+        rescue
           true
-        else
-          @data['facets']['holdings_only'] == 'true'
         end
       end
 
