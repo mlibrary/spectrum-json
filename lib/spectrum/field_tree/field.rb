@@ -8,7 +8,16 @@ module Spectrum
         'special' => Spectrum::FieldTree::Special,
         'value_boolean' => Spectrum::FieldTree::ValueBoolean,
       }
-      def query field_map = {}
+
+      def params(field_map)
+        ret = super
+        unless @value.empty? || field_map.by_uid(@value).empty?
+          ret.merge!(field_map.by_uid(@value).query_params)
+        end
+        ret
+      end
+
+      def query(field_map)
         if @value.empty? || field_map.by_uid(@value).empty?
           @children.map {|item| item.query(field_map)}.join(' ')
         else

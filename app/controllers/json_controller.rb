@@ -73,8 +73,8 @@ class JsonController < ApplicationController
   end
 
   def holdings
+    data = []
     if request[:source] == 'mirlyn'
-      data = []
       response = JSON.parse(Net::HTTP.get(URI::HTTP.build(
         host: 'mirlyn-aleph.lib.umich.edu',
         path: '/cgi-bin/getHoldings.pl',

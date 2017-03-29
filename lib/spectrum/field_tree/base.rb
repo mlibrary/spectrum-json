@@ -32,6 +32,14 @@ module Spectrum
         ret
       end
 
+      def params(field_map)
+        ret = {}
+        @children.map {|child| child.params(field_map) }.each do |p|
+          ret.merge!(p)
+        end
+        ret
+      end
+
       def query(field_map = {}) 
         @value
       end

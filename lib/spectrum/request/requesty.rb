@@ -62,6 +62,28 @@ module Spectrum
         @page_size ||= 0
       end
 
+      def book_mark?
+        @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
+      end
+
+      def book_mark
+        @request.params['id']
+      end
+
+      def authenticated?
+        # TODO: Implement this for production.
+        true
+      end
+
+      def holdings_only?
+        # TODO: Check this for when we implement this completely.
+        if @data['facets']['holdings_only'].nil?
+          true
+        else
+          @data['facets']['holdings_only'] == 'true'
+        end
+      end
+
       def fvf(filter_map = {})
         @facets.fvf(filter_map)
       end
@@ -74,7 +96,7 @@ module Spectrum
           rows: @page_size,
           fq: @facets.query(filter_map),
           per_page: @page_size,
-        }
+        }.merge(@tree.params(query_map))
       end
 
       def facets
