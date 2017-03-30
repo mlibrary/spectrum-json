@@ -7,8 +7,9 @@ module Spectrum
         attr_accessor :request_id, :slice, :sort
       end
 
-      def initialize(request = nil)
+      def initialize(request = nil, focus = nil)
         @request = request
+        @focus   = focus
         if @request && @request.post?
           @raw = CGI::unescape(@request.raw_post)
           @data = JSON.parse(@raw)
@@ -21,7 +22,7 @@ module Spectrum
             @count      = @data['count'].to_i
             @page       = @data['page']
             @tree       = Spectrum::FieldTree.new(@data['field_tree'])
-            @facets     = Spectrum::FacetList.new(@data['facets'])
+            @facets     = Spectrum::FacetList.new(@focus.filter_facets(@data['facets']))
             @sort       = @data['sort']
             @settings   = @data['settings']
             @request_id = @data['request_id']
