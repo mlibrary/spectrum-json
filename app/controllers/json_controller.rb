@@ -46,8 +46,8 @@ class JsonController < ApplicationController
   end
 
   def search
-    @request      = Spectrum::Request::DataStore.new(request)
-    @new_request  = Spectrum::Request::DataStore.new(request)
+    @request      = Spectrum::Request::DataStore.new(request, @focus)
+    @new_request  = Spectrum::Request::DataStore.new(request, @focus)
     @datastore    = Spectrum::Response::DataStore.new(this_datastore)
     @response     = Spectrum::Response::RecordList.new(fetch_records)
     render(json: search_response)
