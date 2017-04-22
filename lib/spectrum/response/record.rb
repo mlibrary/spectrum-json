@@ -19,18 +19,18 @@ module Spectrum
         @url             = @focus.get_url(@data, @base_url)
         @type            = @data['type'] || @source.id
         @complete        = @data['complete'] || true
-        @names           = Array(@data['names'] || @data['title'])
-        @names_have_html = @data['names_have_html'] || false
         @fields          = @focus.apply_fields(@data, @base_url)
+        @names           = @focus.names(@fields)
+        @names_have_html = @data['names_have_html'] || true
       end
 
       def initialize_from_object
         @url             = @focus.get_url(@data, @base_url)
         @type            = @data.content_types || @source.id
-        @complete        = true
-        @names           = Array(@data.title)
-        @names_have_html = false
         @fields          = @focus.apply_fields(@data, @base_url)
+        @names           = @focus.names(@fields)
+        @complete        = true
+        @names_have_html = true
       end
 
 
