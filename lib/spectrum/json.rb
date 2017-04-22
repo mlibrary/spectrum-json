@@ -15,6 +15,7 @@ require "spectrum/response/data_store_list"
 require "spectrum/response/facet_list"
 require "spectrum/response/record"
 require "spectrum/response/record_list"
+require 'spectrum/response/holdings'
 
 require "spectrum/field_tree"
 require "spectrum/field_tree/base"
@@ -32,6 +33,7 @@ require "spectrum/request/requesty"
 require "spectrum/request/null"
 require "spectrum/request/facet"
 require "spectrum/request/data_store"
+require 'spectrum/request/holdings'
 
 require 'spectrum/json/railtie' if defined?(Rails)
 
@@ -63,7 +65,7 @@ module Spectrum
         request  = Spectrum::Request::DataStore.new
 
         @foci.values.each do |focus|
-          focus.default_facets do
+          focus.get_null_facets do
             source = @sources[focus.source]
             engine = source.engine(focus, request, nil)
             begin
