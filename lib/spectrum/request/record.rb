@@ -7,6 +7,41 @@ module Spectrum
         @query = "#{@request.params['id_field']}:#{@request.params['id']}"
       end
 
+      def authenticated?
+        # TODO: Implement this for production.
+        true
+      end
+
+      def book_mark?
+        begin
+          @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
+        rescue
+          false
+        end
+      end
+
+      def book_mark
+        begin
+        @request.params['id']
+        rescue
+        end
+      end
+
+      def holdings_only?
+        # TODO: Check this for when we implement this completely.
+        begin
+          if @data['facets']['holdings_only'].nil?
+            true
+          else
+            Array(@data['facets']['holdings_only']).include?('true')
+          end
+        rescue
+          true
+        end
+      end
+
+
+
       def sort
       end
 
