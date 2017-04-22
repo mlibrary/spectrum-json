@@ -22,7 +22,7 @@ module Spectrum
             @count      = @data['count'].to_i
             @page       = @data['page']
             @tree       = Spectrum::FieldTree.new(@data['field_tree'])
-            @facets     = Spectrum::FacetList.new(@focus.filter_facets(@data['facets']))
+            @facets     = Spectrum::FacetList.new(@focus.default_facets.merge(@focus.filter_facets(@data['facets'])))
             @sort       = @data['sort']
             @settings   = @data['settings']
             @request_id = @data['request_id']
@@ -86,7 +86,7 @@ module Spectrum
           if @data['facets']['holdings_only'].nil?
             true
           else
-            @data['facets']['holdings_only'] == 'true'
+            Array(@data['facets']['holdings_only']).include?('true')
           end
         rescue
           true
