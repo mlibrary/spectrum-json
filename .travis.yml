@@ -1,3 +1,8 @@
 language: ruby
+cache: bundler
+env:
+  - "BUNDLE_PATH=.bundle"
 rvm:
-  - 1.9.3
+  - 2.3.1
+before_install:
+  - gem install bundler
