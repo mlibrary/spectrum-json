@@ -125,7 +125,7 @@ class JsonController < ApplicationController
 
   def fetch_record
     base_url.merge({
-      data: engine.documents.first,
+      data: engine.results.first,
       source: @source,
       focus: @focus,
     })
@@ -141,7 +141,7 @@ class JsonController < ApplicationController
 
   def fetch_records
     base_url.merge({
-      data: engine.documents,
+      data: engine.results,
       source: @source,
       focus: @focus,
       total_available: engine.total_items,
