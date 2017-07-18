@@ -77,6 +77,8 @@ module Spectrum
           enum: [ info['enum_a'], info['enum_b'], info['enum_c'] ].compact,
           chron: [ info['chron_i'], info['chron_j']].compact,
           info_link: item['info_link'],
+          description: info['description'],
+          summary_holdings: item['summary_holdings'],
         }
       end
 
@@ -89,6 +91,7 @@ module Spectrum
           rights: info['rights'],
           status: info['status'],
           description: info['description'],
+          summary_holdings: item['summary_holdings'],
         }
       end
     end
