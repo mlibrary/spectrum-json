@@ -34,7 +34,7 @@ module Spectrum
         if info['barcode']
           process_mirlyn_item_info(item, info)
         else
-          process_hathitrust_item_info(info)
+          process_hathitrust_item_info(item, info)
         end
       end
 
@@ -82,7 +82,7 @@ module Spectrum
         }
       end
 
-      def process_hathitrust_item_info(info)
+      def process_hathitrust_item_info(item, info)
         {
           type: 'hathitrust',
           id: info['id'],
