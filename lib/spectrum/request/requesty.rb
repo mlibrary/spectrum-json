@@ -100,7 +100,7 @@ module Spectrum
 
       # For summon's range filter facet (i.e. a filter to ask for counts of)
       def rff
-        @focus ? @focus.rff : []
+        @focus ? @focus.rff(@facets) : []
       end
 
       def fvf(filter_map = {})
