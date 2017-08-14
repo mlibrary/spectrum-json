@@ -1,6 +1,8 @@
 module Spectrum
   class FacetList
-    def initialize data
+    attr_reader :data
+
+    def initialize(data)
      @data = data
     end
 

@@ -93,8 +93,18 @@ module Spectrum
         end
       end
 
+      # For summon's range filter (i.e. an applied filter)
+      def rf
+        @focus ? @focus.rf(@facets) : []
+      end
+
+      # For summon's range filter facet (i.e. a filter to ask for counts of)
+      def rff
+        @focus ? @focus.rff : []
+      end
+
       def fvf(filter_map = {})
-        @facets.fvf(filter_map)
+        @focus ? @focus.fvf(@facets) : []
       end
 
       def query(query_map = {}, filter_map = {})
