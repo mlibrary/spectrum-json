@@ -76,11 +76,18 @@ module Spectrum
         nil
       end
 
-      def fvf(_)
+      def fvf
+        nil
+      end
+
+      def rff
+        nil
+      end
+
+      def rf
         nil
       end
 
     end
   end
 end
-
