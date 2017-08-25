@@ -18,10 +18,16 @@ module Spectrum
       end
 
       def query(field_map)
+        val   = @children.map {|item| item.query(field_map)}.join(' ')
         if @value.empty? || field_map.by_uid(@value).nil? || field_map.by_uid(@value).query_field.empty?
-          @children.map {|item| item.query(field_map)}.join(' ')
+          val
         else
-          "#{field_map.by_uid(@value).query_field}:(#{@children.map {|item| item.query(field_map)}.join(' ')})"
+          field = field_map.by_uid(@value).query_field
+          if field.respond_to?(:map)
+            "(#{field.map { |f| "#{f}:(#{val})" }.join(' OR ')})"
+          else
+            "#{field}:(#{val})"
+          end
         end
       end
     end
