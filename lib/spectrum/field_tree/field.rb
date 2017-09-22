@@ -25,6 +25,8 @@ module Spectrum
           field = field_map.by_uid(@value).query_field
           if field.respond_to?(:map)
             "(#{field.map { |f| "#{f}:(#{val})" }.join(' OR ')})"
+          elsif field == 'search_title_starts_with'
+            "#{field}:\"#{val.gsub(/"/, '')}\""
           else
             "#{field}:(#{val})"
           end

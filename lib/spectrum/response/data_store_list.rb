@@ -12,8 +12,8 @@ module Spectrum
         @list.length
       end
 
-      def spectrum
-        @list.map(&:spectrum)
+      def spectrum(args = {})
+        @list.map { |item| item.spectrum(args) }
       end
     end
   end

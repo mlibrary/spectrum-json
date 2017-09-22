@@ -11,8 +11,8 @@ module Spectrum
         @data.facet(name, @base_url)
       end
 
-      def spectrum
-        @data.spectrum(@base_url + '/')
+      def spectrum(args = {})
+        @data.spectrum(@base_url + '/', args)
       end
     end
   end

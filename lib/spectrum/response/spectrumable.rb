@@ -7,9 +7,9 @@ module Spectrum
         @data = args
       end
 
-      def spectrum
+      def spectrum(args = {})
         if @data.respond_to?(:spectrum)
-          @data.spectrum
+          @data.spectrum(args)
         else
           @data
         end

@@ -35,6 +35,17 @@ module Spectrum
           else
             value = solr_escape(value)
           end
+          if key == 'date_of_publication'
+            value.match(/^before(\d+)$/) do |m|
+              value = "[* TO #{m[1]}]"
+            end
+            value.match(/^after(\d+)$/) do |m|
+              value = "[#{m[1]} TO *]"
+            end
+            value.match(/^(\d+)to(\d+)$/) do |m|
+              value = "[#{m[1]} TO #{m[2]}]"
+            end
+          end
           ret << "#{filter_map[key] || key}:(#{value})"
         end
       end

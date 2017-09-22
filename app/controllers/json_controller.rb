@@ -165,24 +165,32 @@ class JsonController < ApplicationController
   def basic_response
     {
       request:  @request.spectrum,
-      response: @response.spectrum,
+      response: @response.spectrum(filter_limit: -1),
       messages: @messages.map(&:spectrum),
       total_available: @response.total_available
     }
   end
 
   def search_response
-    basic_response.merge({
+    {
+      request:  @request.spectrum,
+      response: @response.spectrum,
+      messages: @messages.map(&:spectrum),
+      total_available: @response.total_available,
       datastore: @datastore.spectrum,
       new_request: @new_request.spectrum
-    })
+    }
   end
 
   def facet_response
-    basic_response.merge({
+    {
+      request:  @request.spectrum,
+      response: @response.spectrum,
+      messages: @messages.map(&:spectrum),
+      total_available: @response.total_available,
       datastore: @datastore.spectrum,
       new_request: @new_request.spectrum
-    })
+    }
   end
 
 end
