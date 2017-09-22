@@ -16,7 +16,7 @@ module Spectrum
       end
 
       def facet_limit
-        nil
+        500
       end
 
     end
