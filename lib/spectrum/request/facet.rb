@@ -9,6 +9,30 @@ module Spectrum
         @facet_uid = @data['facet_uid'] || request.params[:facet]
       end
 
+      def search_only?
+        false
+      end
+
+      def available_online?
+        false
+      end
+
+      def search_only?
+        false
+      end
+
+      def holdings_only?
+        false
+      end
+
+      def exclude_newspapers?
+        false
+      end
+
+      def is_scholarly?
+        false
+      end
+
       def facet_sort
         @sort
       end
@@ -31,7 +55,6 @@ module Spectrum
           per_page: 0,
         }
       end
-
 
       def spectrum
         super.merge({

@@ -63,6 +63,32 @@ module Spectrum
         @page_size ||= 0
       end
 
+      def pseudo_facet?(name, default = false)
+        return default if @data.nil? || @data['facets'].nil? || @data['facets'][name].nil?
+        Array(@data['facets'][name]).include?('true')
+      end
+
+      # TODO: Find a way to make this configurable
+      def available_online?
+        pseudo_facet?('available_online')
+      end
+
+      def search_only?
+        @focus && @focus.id == 'mirlyn' && pseudo_facet?('search_only', true)
+      end
+
+      def holdings_only?
+        pseudo_facet?('holdings_only', true)
+      end
+
+      def exclude_newspapers?
+        pseudo_facet?('exclude_newspapers')
+      end
+
+      def is_scholarly?
+        pseudo_facet?('is_scholarly')
+      end
+
       def book_mark?
         begin
           @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
@@ -78,19 +104,6 @@ module Spectrum
       def authenticated?
         # TODO: Implement this for production.
         true
-      end
-
-      def holdings_only?
-        # TODO: Check this for when we implement this completely.
-        begin
-          if @data['facets']['holdings_only'].nil?
-            true
-          else
-            Array(@data['facets']['holdings_only']).include?('true')
-          end
-        rescue
-          true
-        end
       end
 
       # For summon's range filter (i.e. an applied filter)
