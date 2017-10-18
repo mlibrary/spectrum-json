@@ -3,8 +3,8 @@ class JsonController < ApplicationController
   before_filter :init, :sample, :cors
 
   def cors
-    headers['Access-Control-Allow-Origin'] = request.headers['origin'] || '*'
-    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    headers['Access-Control-Allow-Origin'] = request.headers['origin'] || request.headers['referer'] || '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Referer'
     headers['Access-Control-Allow-Credentials'] = 'true'
     if request.method == 'OPTIONS'
       render :text => '', content_type: 'text/plain'
@@ -162,12 +162,50 @@ class JsonController < ApplicationController
     { base_url: config.relative_url_root }
   end
 
+  # TODO: Move this into configuration.
+  def default_institution
+    addr = if request.env['REMOTE_ADDR'] != "127.0.0.1"
+      request.env['REMOTE_ADDR']
+    elsif request.env['HTTP_X_FORWARDED_FOR']
+      request.env['HTTP_X_FORWARDED_FOR'].split(/ /).last
+    else
+      "127.0.0.1"
+    end
+
+    case IPAddr.new(addr)
+    when IPAddr.new('35.0.0.0/16'),
+         IPAddr.new('35.1.0.0/16'),
+         IPAddr.new('35.2.0.0/16'),
+         IPAddr.new('35.3.0.0/16'),
+         IPAddr.new('67.194.0.0/16'),
+         IPAddr.new('141.211.0.0/16'),
+         IPAddr.new('141.212.0.0/16'),
+         IPAddr.new('141.213.0.0/16'),
+         IPAddr.new('141.214.0.0/16'),
+         IPAddr.new('192.12.80.0/24'),
+         IPAddr.new('198.108.8.0/21'),
+         IPAddr.new('198.111.224.0/22'),
+         IPAddr.new('198.111.181.0/25'),
+         IPAddr.new('207.75.144.0/20'),
+         IPAddr.new('10.0.0.0/8'),
+         IPAddr.new('127.0.0.0/8'),
+         IPAddr.new('172.16.0.0/12'),
+         IPAddr.new('192.168.0.0/16')
+      'U-M Ann Arbor Libraries'
+    when IPAddr.new('141.216.0.0/16')
+      'Flint Thompson Library'
+    else
+      'All Libraries'
+    end
+  end
+
   def basic_response
     {
       request:  @request.spectrum,
       response: @response.spectrum(filter_limit: -1),
       messages: @messages.map(&:spectrum),
-      total_available: @response.total_available
+      total_available: @response.total_available,
+      default_institution: default_institution,
     }
   end
 
