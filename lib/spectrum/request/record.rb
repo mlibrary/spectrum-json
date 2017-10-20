@@ -12,10 +12,6 @@ module Spectrum
         true
       end
 
-      def search_only?
-        false
-      end
-
       def available_online?
         false
       end
