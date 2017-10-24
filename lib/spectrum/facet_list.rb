@@ -30,11 +30,15 @@ module Spectrum
       ret = []
       if @data
         @data.each_pair do |key, value|
-          if value.is_a?(Array)
-            value = value.map { |val| solr_escape(value_map.fetch(val, val))}.join(' AND ')
-          else
-            value = solr_escape(value_map.fetch(value, value))
-          end
+
+          value = Array(value).map do |v|
+            value_map.fetch(v, v)
+          end.reject do |v|
+            v == '*'
+          end.map do |v|
+            solr_escape(v)
+          end.join(' AND ')
+
           if key == 'date_of_publication'
             value.match(/^before(\d+)$/) do |m|
               value = "[* TO #{m[1]}]"
@@ -46,7 +50,7 @@ module Spectrum
               value = "[#{m[1]} TO #{m[2]}]"
             end
           end
-          ret << "#{filter_map[key] || key}:(#{value})"
+          ret << "#{filter_map[key] || key}:(#{value})" unless value.empty?
         end
       end
       ret
