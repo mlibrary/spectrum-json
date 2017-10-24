@@ -32,7 +32,7 @@ module Spectrum
         @data.each_pair do |key, value|
 
           value = Array(value).map do |v|
-            value_map.fetch(v, v)
+            value_map.fetch(key, {}).fetch(v, v)
           end.reject do |v|
             v == '*'
           end.map do |v|
