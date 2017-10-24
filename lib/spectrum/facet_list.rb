@@ -26,14 +26,14 @@ module Spectrum
       ret
     end
 
-    def query filter_map = {}
+    def query(filter_map = {}, value_map = {})
       ret = []
       if @data
         @data.each_pair do |key, value|
           if value.is_a?(Array)
-            value = value.map { |val| solr_escape(val)}.join(' AND ')
+            value = value.map { |val| solr_escape(value_map.fetch(val, val))}.join(' AND ')
           else
-            value = solr_escape(value)
+            value = solr_escape(value_map.fetch(value, value))
           end
           if key == 'date_of_publication'
             value.match(/^before(\d+)$/) do |m|

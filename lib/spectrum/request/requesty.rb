@@ -126,7 +126,7 @@ module Spectrum
           page: @page,
           start: @start,
           rows: @page_size,
-          fq: @facets.query(filter_map),
+          fq: @facets.query(filter_map, (@focus && @focus.value_map) || {}),
           per_page: @page_size,
         }.merge(@tree.params(query_map))
       end
