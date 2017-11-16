@@ -4,7 +4,14 @@ module Spectrum
 
       def initialize(request)
         @request = request
-        @query = "#{@request.params['id_field']}:#{@request.params['id']}"
+        @query = "#{@request.params['id_field']}:#{RSolr.solr_escape(unfiltered_id(request))}"
+      end
+
+      def unfiltered_id(request)
+        path = request.path
+        original = request.original_fullpath
+        id = request.params[:id]
+        original.slice(path.length - id.length, original.length)
       end
 
       def authenticated?
