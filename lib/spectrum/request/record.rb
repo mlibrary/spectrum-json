@@ -4,7 +4,11 @@ module Spectrum
 
       def initialize(request)
         @request = request
-        @query = "#{@request.params['id_field']}:#{RSolr.solr_escape(unfiltered_id(request))}"
+        if request.params[:source] == 'summon'
+          @query = "#{@request.params['id_field']}:#{unfiltered_id(request)}"
+        else
+          @query = "#{@request.params['id_field']}:#{RSolr.solr_escape(unfiltered_id(request))}"
+        end
       end
 
       def unfiltered_id(request)
