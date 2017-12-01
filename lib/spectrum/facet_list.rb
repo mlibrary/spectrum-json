@@ -30,7 +30,7 @@ module Spectrum
       ret = []
       if @data
         @data.each_pair do |key, value|
-
+          key = filter_map[key] if filter_map[key]
           value = Array(value).map do |v|
             value_map.fetch(key, {}).fetch(v, v)
           end.reject do |v|
@@ -50,7 +50,7 @@ module Spectrum
               value = "[#{m[1]} TO #{m[2]}]"
             end
           end
-          ret << "#{filter_map[key] || key}:(#{value})" unless value.empty?
+          ret << "#{key}:(#{value})" unless value.empty?
         end
       end
       ret
