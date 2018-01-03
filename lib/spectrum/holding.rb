@@ -25,6 +25,10 @@ module Spectrum
       @holding['can_request']
     end
 
+    def circulating?
+      can_request?
+    end
+
     def on_shelf?
       @holding['status'].start_with?('On shelf')
     end
