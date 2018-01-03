@@ -1,0 +1,88 @@
+---
+# Options
+#log-in:
+- label: Log in to see more options
+  description: TBD
+  faq: TBD
+  grants:
+    patron:
+      - empty?
+
+#contact-circulation:
+- label: Contact Circulation
+  description: TBD
+  faq: TBD
+  grants:
+    patron:
+      - expired?
+
+#self-service:
+- label: Find it in the library (Self Service)
+  description: TBD
+  faq: TBD
+  grants:
+    holding:
+      - on_site?
+      - on_shelf?
+      - circulating?
+      
+#library-to-library:
+- label: Pick it up at the library (Library to Library)
+  description: TBD
+  faq: TBD
+  grants:
+    patron:
+      - active?
+    holding:
+      - on_shelf?
+        
+#7fast:
+- label: Have it delivered (Document Delivery)
+  description: TBD
+  faq: TBD
+  grants:
+    patron:
+      - active?
+    record:
+      - on_shelf?
+      - circulating?
+
+#7fast-scan:
+- label: Have it scanned (Document Delivery)
+  description: TBD
+  faq: TBD
+  grants:
+    patron:
+      - active?
+
+#recall:
+- label: Recall It (Request that this copy be returned)
+  description: TBD
+  faq: TBD
+  grants:
+    patron:
+      - active?
+
+#hold:
+- label: Place a hold on it (Library to Library)
+  description: TBD
+  faq: TBD
+  grants:
+    patron:
+      - active?
+
+#ill:
+- label: Request a copy from another library (I.L.L.) 
+  description: TBD
+  faq: TBD
+  grants:
+    patron:
+      - active?
+
+#ill-scan:
+- label: Request to have a small portion scanned (I.L.L.)
+  description: TBD
+  faq: TBD
+  grants:
+    patron:
+      - active?

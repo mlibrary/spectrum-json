@@ -3,6 +3,8 @@ require "json-schema"
 require "active_support"
 require "active_support/concern"
 
+require 'spectrum/holding'
+
 require "spectrum/json/version"
 require "spectrum/json/engine"
 require "spectrum/json/schema"
@@ -16,6 +18,7 @@ require "spectrum/response/facet_list"
 require "spectrum/response/record"
 require "spectrum/response/record_list"
 require 'spectrum/response/holdings'
+require 'spectrum/response/get_this'
 
 require "spectrum/field_tree"
 require "spectrum/field_tree/base"
@@ -34,6 +37,9 @@ require "spectrum/request/null"
 require "spectrum/request/facet"
 require "spectrum/request/data_store"
 require 'spectrum/request/holdings'
+require 'spectrum/request/get_this'
+
+require 'spectrum/policy/get_this'
 
 require 'spectrum/json/railtie' if defined?(Rails)
 

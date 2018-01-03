@@ -75,7 +75,13 @@ class JsonController < ApplicationController
   def holdings
     @request = Spectrum::Request::Holdings.new(request)
     @response = Spectrum::Response::Holdings.new(@source, @request)
-    render(json: @response.to_a)
+    render(json: @response.renderable)
+  end
+
+  def get_this
+    @request = Spectrum::Request::GetThis.new(request)
+    @response = Spectrum::Response::GetThis.new(@source, @request)
+    render(json: @response.renderable)
   end
 
   def holdings_response

@@ -1,10 +1,12 @@
+require 'aleph'
+
 module Spectrum
   module Response
-    class Holdings
+    class GetThis
       def initialize(source, request)
         @source = source
         @request = request
-        @data = fetch_holdings
+        @data = fetch_get_this
       end
 
       def renderable
@@ -12,11 +14,37 @@ module Spectrum
       end
 
       private
-      def fetch_holdings
-        return [] unless @source.holdings
+      def needs_authentication
+        { status: "Not logged in" }
+      end
+
+      def patron_not_found
+        { status: "Patron not found" }
+      end
+
+      def patron_expired
+        { status: "Patron expired" }
+      end
+
+      def fetch_get_this
+        return {} unless @source.holdings
+        return needs_authentication unless @request.username
+        begin
+          patron = Aleph::Borrower.new.tap {|patron| patron.bor_info(@request.username) }
+        rescue Aleph::Error
+          return patron_not_found
+        end
+        return patron_expired if patron.expired?
+
+        {
+           status: "Success",
+           options: Spectrum::Policy::GetThis.new(patron, fetch_holdings_record).resolve
+        }
+      end
+
+      def fetch_holdings_record
         uri = URI(@source.holdings + @request.id)
-        response = JSON.parse(Net::HTTP.get(uri))[@request.id]
-        process_response(response)
+        Spectrum::Holding.new(JSON.parse(Net::HTTP.get(uri)), @request.id, @request.barcode)
       end
 
       def process_response(response)
