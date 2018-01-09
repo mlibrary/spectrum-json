@@ -1,14 +1,9 @@
 module Spectrum
   class Holding
+    attr_reader :holding, :record, :barcode
+
     def initialize(data, record, barcode)
-      data[record].each do |item|
-        next unless item['item_info']
-        @item = item
-        item['item_info'].each do |holding|
-          next unless holding['barcode'] == barcode
-          @holding = holding
-        end
-      end
+      @holding = extract_holding(data, record, barcode) || barcode_not_found
       @record = record
       @barcode = barcode
     end
@@ -47,6 +42,25 @@ module Spectrum
 
     def status
       @holding['status']
+    end
+
+    private
+    def extract_holding(data, barcode)
+      data[record].each do |item|
+        next unless item['item_info']
+        item['item_info'].each do |holding|
+          return holding if holding['barcode'] == barcode
+        end
+      end
+    end
+    def barcode_not_found
+      {
+        'can_book' => false,
+        'can_reserve' => false,
+        'can_request' => false,
+        'status' => '',
+        'location' => '',
+      }
     end
   end
 end
