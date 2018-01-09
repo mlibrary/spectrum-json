@@ -15,20 +15,20 @@ module Spectrum
 
       private
       def needs_authentication
-        { status: "Not logged in" }
+        { status: "Not logged in", options: [] }
       end
 
       def patron_not_found
-        { status: "Patron not found" }
+        { status: "Patron not found", options: [] }
       end
 
       def patron_expired
-        { status: "Patron expired" }
+        { status: "Patron expired", options: [] }
       end
 
       def fetch_get_this
         return {} unless @source.holdings
-        return needs_authentication unless @request.username
+        return needs_authentication unless @request.logged_in?
         begin
           patron = Aleph::Borrower.new.tap {|patron| patron.bor_info(@request.username) }
         rescue Aleph::Error

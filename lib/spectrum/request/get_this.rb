@@ -6,7 +6,11 @@ module Spectrum
       def initialize(request)
         @id = request[:id]
         @barcode = request[:barcode]
-        @username = request.env['HTTP_X_REMOTE_USER']
+        @username = request.env['HTTP_X_REMOTE_USER'] || ''
+      end
+
+      def logged_in?
+        !@username.empty?
       end
 
     end
