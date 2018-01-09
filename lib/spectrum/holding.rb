@@ -4,7 +4,7 @@ module Spectrum
 
     def initialize(data, record, barcode)
       @holding = extract_holding(data, record, barcode) || barcode_not_found
-      @record = record
+      @record  = record
       @barcode = barcode
     end
 
@@ -45,7 +45,7 @@ module Spectrum
     end
 
     private
-    def extract_holding(data, barcode)
+    def extract_holding(data, record, barcode)
       data[record].each do |item|
         next unless item['item_info']
         item['item_info'].each do |holding|
