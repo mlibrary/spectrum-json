@@ -8,6 +8,10 @@ module Spectrum
       @barcode = barcode
     end
 
+    def id
+      record
+    end
+
     def can_book?
       @holding['can_book']
     end

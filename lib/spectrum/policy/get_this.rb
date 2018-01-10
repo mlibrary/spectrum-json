@@ -18,25 +18,56 @@ module Spectrum
       end
 
       class Option
-        attr_reader :label, :description, :faq, :grants
+        attr_reader :label, :description, :faq, :grants, :duration, :tip, :form
+
         def initialize(config)
           @label = config['label']
           @description = config['description']
           @faq = config['faq']
+          @tip = config['tip']
+          @duration = config['duration']
+          @form = config['form']
           @grants = config['grants'].map do |attribute, features|
             Grant.new(attribute, features)
           end
         end
 
-        def allow(account, record)
+        def resolve(account, record)
+          return nil unless allow?(account, record)
+          replace(account, record)
+        end
+
+        def allow?(account, record)
           grants.all? {|grant| grant.allow(account, record) }
+        end
+
+        def replace(account, record)
+          new_hash = Marshal.load(Marshal.dump(to_h))
+          if new_hash['form']
+            new_hash['form']['action'] = replace_string(new_hash['form']['action'], account, record)
+            new_hash['form']['fields'].each do |field|
+              field['value'] = replace_string(field['value'], account, record) if field['value']
+            end
+          end
+          new_hash
+        end
+
+        def replace_string(input_string, account, record)
+          input_string
+            .gsub('{$barcode}', record.barcode)
+            .gsub('{$record_id}', record.id)
+            .gsub('{$patron_id}', account.id)
+            .gsub('{$patron_name}', account.name)
         end
 
         def to_h
           {
-            'label' => @label,
-            'description' => @description,
-            'faq' => @faq
+            'label' => label,
+            'description' => description,
+            'duration' => duration,
+            'faq' => faq,
+            'tip' => tip,
+            'form' => form
           }
         end
       end
@@ -56,7 +87,7 @@ module Spectrum
         end
 
         def resolve(account, record)
-          options.select {|option| option.allow(account, record) }.map(&:to_h)
+          options.map {|option| option.resolve(account, record) }.compact
         end
 
       end
