@@ -72,7 +72,8 @@ describe Spectrum::Policy::GetThis::Option do
         'duration' => 'Duration',
         'faq' => 'FAQ',
         'tip' => 'tip',
-        'form' => 'form'
+        'form' => 'form',
+        'service_type' => nil
       })
     end
   end

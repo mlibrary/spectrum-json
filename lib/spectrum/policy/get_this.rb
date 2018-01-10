@@ -18,18 +18,21 @@ module Spectrum
       end
 
       class Option
-        attr_reader :label, :description, :faq, :grants, :duration, :tip, :form
+        attr_reader :label, :service_type, :duration, :description, :tip, :faq, :form,
+          :grants, :weight
 
         def initialize(config)
           @label = config['label']
-          @description = config['description']
-          @faq = config['faq']
-          @tip = config['tip']
+          @service_type = config['service_type']
           @duration = config['duration']
+          @description = config['description']
+          @tip = config['tip']
+          @faq = config['faq']
           @form = config['form']
           @grants = config['grants'].map do |attribute, features|
             Grant.new(attribute, features)
           end
+          @weight = config['weight'] || 0
         end
 
         def resolve(account, record)
@@ -63,10 +66,11 @@ module Spectrum
         def to_h
           {
             'label' => label,
-            'description' => description,
+            'service_type' => service_type,
             'duration' => duration,
-            'faq' => faq,
+            'description' => description,
             'tip' => tip,
+            'faq' => faq,
             'form' => form
           }
         end
