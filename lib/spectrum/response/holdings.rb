@@ -21,13 +21,17 @@ module Spectrum
 
       def process_response(response)
         data = []
+        sorter = Hash.new {|hash,key| hash[key] = key}.tap do |hash|
+          hash[nil] = 'AAAA'
+          hash['- Offsite Shelving -'] = 'zzzz'
+        end
         response.each do |item|
           next unless item['item_info']
           item['item_info'].each do |info|
             data << process_item_info(item, info)
           end
         end
-        data
+        data.sort_by {|item| sorter[item[:location]]}
       end
 
       def process_item_info(item, info)
