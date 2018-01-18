@@ -61,6 +61,7 @@ module Spectrum
             .gsub('{$record_id}', record.id)
             .gsub('{$patron_id}', account.id)
             .gsub('{$patron_name}', account.name)
+            .gsub('{$two_months_from_today}', (DateTime.now >> 2).strftime('%m/%d/%Y'))
         end
 
         def to_h
