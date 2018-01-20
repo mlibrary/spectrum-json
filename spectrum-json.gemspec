@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry"
   spec.add_development_dependency "quality", "~> 20.1.0"
   spec.add_development_dependency "coveralls"
+  spec.add_development_dependency "simplecov"
 
   spec.add_dependency "rails", "~> 4.2.0"
   spec.add_dependency "json-schema"
