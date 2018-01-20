@@ -11,8 +11,8 @@ module Spectrum
           @features = features
         end
 
-        def allow(account, record)
-          h = {'patron' => account, 'holding' => record}
+        def allow(account, bib, item)
+          h = {'patron' => account, 'bib' => bib, 'holding' => item}
           features.all? { |feature| h[@attribute].send(feature) }
         end
       end
@@ -35,33 +35,47 @@ module Spectrum
           @weight = config['weight'] || 0
         end
 
-        def resolve(account, record)
-          return nil unless allow?(account, record)
-          replace(account, record)
+        def resolve(account, bib, item)
+          return nil unless allow?(account, bib, item)
+          replace(account, bib, item)
         end
 
-        def allow?(account, record)
-          grants.all? {|grant| grant.allow(account, record) }
+        def allow?(account, bib, item)
+          grants.all? {|grant| grant.allow(account, bib, item) }
         end
 
-        def replace(account, record)
+        def replace(account, bib, item)
           new_hash = Marshal.load(Marshal.dump(to_h))
           if new_hash['form']
-            new_hash['form']['action'] = replace_string(new_hash['form']['action'], account, record)
+            new_hash['form']['action'] = replace_string(new_hash['form']['action'], account, bib, item)
             new_hash['form']['fields'].each do |field|
-              field['value'] = replace_string(field['value'], account, record) if field['value']
+              field['value'] = replace_string(field['value'], account, bib, item) if field['value']
             end
           end
           new_hash
         end
 
-        def replace_string(input_string, account, record)
+        def replace_string(input_string, account, bib, item)
           input_string
-            .gsub('{$barcode}', record.barcode)
-            .gsub('{$record_id}', record.id)
+            .gsub('{$barcode}', item.barcode)
+            .gsub('{$record_id}', item.id)
             .gsub('{$patron_id}', account.id)
             .gsub('{$patron_name}', account.name)
             .gsub('{$two_months_from_today}', (DateTime.now >> 2).strftime('%Y-%m-%d'))
+            .gsub('{$accession_number}', bib.accession_number)
+            .gsub('{$isbn}', bib.isbn)
+            .gsub('{$issn}', bib.issn)
+            .gsub('{$title}', bib.title)
+            .gsub('{$rft.au}', bib.author)
+            .gsub('{$date}', bib.date)
+            .gsub('{$rft.pub}', bib.pub)
+            .gsub('{$rft.place}', bib.place)
+            .gsub('{$rft.edition}', bib.edition)
+            .gsub('{$callnumber}', item.callnumber)
+            .gsub('{$aleph_location}', item.location)
+            .gsub('{$aleph_item_status}', item.status)
+            .gsub('{$rft.issue}', item.issue)
+            .gsub('{$notes}', item.notes)
         end
 
         def to_h
@@ -91,21 +105,22 @@ module Spectrum
           @options ||= {}
         end
 
-        def resolve(account, record)
-          options.map {|option| option.resolve(account, record) }.compact
+        def resolve(account, bib, item)
+          options.map {|option| option.resolve(account, bib, item) }.compact
         end
 
       end
 
-      attr_reader :account, :record
+      attr_reader :account, :bib, :item
 
-      def initialize(account, record)
+      def initialize(account, bib, item)
         @account = account
-        @record  = record
+        @bib     = bib
+        @item    = item
       end
 
       def resolve
-        self.class.resolve(account, record)
+        self.class.resolve(account, bib, item)
       end
 
       private

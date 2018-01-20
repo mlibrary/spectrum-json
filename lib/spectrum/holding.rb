@@ -4,12 +4,25 @@ module Spectrum
 
     def initialize(data, record, barcode)
       @holding = extract_holding(data, record, barcode) || barcode_not_found
+      @item    = data[record]
       @record  = record
       @barcode = barcode
     end
 
     def id
       record
+    end
+
+    def callnumber
+      @holding['callnumber'] || ''
+    end
+
+    def notes
+      @holding['description'] || ''
+    end
+
+    def issue
+      @holding['description'] || ''
     end
 
     def can_book?
@@ -41,7 +54,7 @@ module Spectrum
     end
 
     def location
-      @holding['location']
+      [@holding['sub_library'], @holding['collection']].compact.join(',')
     end
 
     def status
@@ -49,6 +62,7 @@ module Spectrum
     end
 
     private
+
     def extract_holding(data, record, barcode)
       data[record].each do |item|
         next unless item['item_info']
@@ -57,6 +71,7 @@ module Spectrum
         end
       end
     end
+
     def barcode_not_found
       {
         'can_book' => false,

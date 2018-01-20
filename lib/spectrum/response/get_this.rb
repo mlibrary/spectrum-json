@@ -38,13 +38,18 @@ module Spectrum
 
         {
            status: "Success",
-           options: Spectrum::Policy::GetThis.new(patron, fetch_holdings_record).resolve
+           options: Spectrum::Policy::GetThis.new(patron, fetch_bib_record, fetch_holdings_record).resolve
         }
       end
 
       def fetch_holdings_record
         uri = URI(@source.holdings + @request.id)
         Spectrum::Holding.new(JSON.parse(Net::HTTP.get(uri)), @request.id, @request.barcode)
+      end
+
+      def fetch_bib_record
+        client = @source.driver.constantize.connect(url: @source.url)
+        Spectrum::BibRecord.new(client.get('select', params: {q: "id:#{RSolr.solr_escape(@request.id)}"}))
       end
 
       def process_response(response)

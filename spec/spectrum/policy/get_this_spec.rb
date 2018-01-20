@@ -32,7 +32,14 @@ class AuthenticatedPatronStub
   end
 end
 
-class RecordStub
+class BibStub
+  def method_missing(symbol, *args)
+    ''
+  end
+end
+
+
+class ItemStub
   def on_site?
     true
   end
@@ -46,8 +53,12 @@ class RecordStub
   def id
     '000000000'
   end
+
   def barcode
     '00000000000'
+  end
+  def method_missing(symbol, *args)
+    ''
   end
 end
 
@@ -84,8 +95,12 @@ describe Spectrum::Policy::GetThis do
     PatronStub.new
   end
 
-  let(:record) do
-    RecordStub.new
+  let(:bib) do
+    BibStub.new
+  end
+
+  let(:item) do
+    ItemStub.new
   end
 
   let(:authenticated_patron) do
@@ -97,11 +112,11 @@ describe Spectrum::Policy::GetThis do
   end
 
   let(:authenticated_subject) do
-    described_class.new(authenticated_patron, record)
+    described_class.new(authenticated_patron, bib, item)
   end
 
   subject do
-    described_class.new(patron, record)
+    described_class.new(patron, bib, item)
   end
 
   describe "::load_config(config_file)" do

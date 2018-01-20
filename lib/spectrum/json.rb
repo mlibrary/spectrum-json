@@ -4,6 +4,7 @@ require "active_support"
 require "active_support/concern"
 
 require 'spectrum/holding'
+require 'spectrum/bib_record'
 
 require "spectrum/json/version"
 require "spectrum/json/engine"
