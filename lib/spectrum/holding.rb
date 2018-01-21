@@ -41,8 +41,16 @@ module Spectrum
       can_request?
     end
 
+    def building_use_only?
+      status.start_with?('Building use only')
+    end
+
     def on_shelf?
-      status.start_with?('On shelf') || status.start_with?('Building use only')
+      status.start_with?('On shelf') || building_use_only?
+    end
+
+    def mobile?
+      !building_use_only?
     end
 
     def off_shelf?
