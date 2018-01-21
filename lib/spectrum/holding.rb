@@ -42,11 +42,28 @@ module Spectrum
     end
 
     def on_shelf?
-      @holding['status'].start_with?('On shelf')
+      status.start_with?('On shelf') || status.start_with?('Building use only')
+    end
+
+    def off_shelf?
+      !on_shelf?
+    end
+
+    def missing?
+      status.start_with?('missing')
+    end
+
+    def known_off_shelf?
+      return false if missing? || checked_out?
+      off_shelf?
     end
 
     def on_site?
-      ! off_site?
+      !off_site?
+    end
+
+    def checked_out?
+      status.start_with?('Checked out')
     end
 
     def off_site?
