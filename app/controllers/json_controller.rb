@@ -3,7 +3,7 @@ class JsonController < ApplicationController
   before_filter :init, :sample, :cors
 
   def cors
-    headers['Access-Control-Allow-Origin'] = request.headers['origin'] || request.headers['referer'] || '*'
+    headers['Access-Control-Allow-Origin'] = get_origin(request.headers)
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Referer'
     headers['Access-Control-Allow-Credentials'] = 'true'
     if request.method == 'OPTIONS'
@@ -17,6 +17,7 @@ class JsonController < ApplicationController
     @messages    = []
     @focus       = Spectrum::Json.foci[params[:focus]]
     @source      = Spectrum::Json.sources[params[:source]]
+    no_cache
   end
 
   def sample
@@ -109,6 +110,19 @@ class JsonController < ApplicationController
   end
 
   private
+
+  def get_origin(headers)
+    return headers['origin'] if headers['origin']
+    return '*' unless headers['referer']
+    uri = URI(request.headers['referer'])
+    "#{uri.scheme}://#{uri.host}#{[80,443].include?(uri.port) ? '' : ':' + uri.port.to_s}"
+  end
+
+  def no_cache
+    response.headers['Cache-Control'] = 'no-cache, no-store'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = 'Mon, 01 Jan 1990 00:00:00 GMT'
+  end
 
   def engine
     if @engine.nil?
