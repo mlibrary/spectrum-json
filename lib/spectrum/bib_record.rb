@@ -75,7 +75,7 @@ module Spectrum
     end
 
     def clean_marc(str)
-      str.sub(/[.,;:\/]$/,'')
+      str.respond_to?(:sub) ? str.sub(/[.,;:\/]$/,'') : ''
     end
   end
 end
