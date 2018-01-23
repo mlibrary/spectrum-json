@@ -19,13 +19,14 @@ module Spectrum
 
       class Option
         attr_reader :label, :service_type, :duration, :description, :tip, :faq, :form,
-          :grants, :weight
+          :grants, :weight, :orientation
 
         def initialize(config)
           @label = config['label']
           @service_type = config['service_type']
           @duration = config['duration']
           @description = config['description']
+          @orientation = config['orientation'] || ''
           @tip = config['tip']
           @faq = config['faq']
           @form = config['form']
@@ -52,6 +53,7 @@ module Spectrum
               field['value'] = replace_string(field['value'], account, bib, item) if field['value']
             end
           end
+          new_hash['orientation'] = replace_string(new_hash['orientation'], account, bib, item)
           new_hash
         end
 
@@ -76,6 +78,7 @@ module Spectrum
             .gsub('{$aleph_item_status}', item.status)
             .gsub('{$rft.issue}', item.issue)
             .gsub('{$notes}', item.notes)
+            .gsub('{$email}', account.email)
         end
 
         def to_h
@@ -84,6 +87,7 @@ module Spectrum
             'service_type' => service_type,
             'duration' => duration,
             'description' => description,
+            'orientation' => orientation,
             'tip' => tip,
             'faq' => faq,
             'form' => form
