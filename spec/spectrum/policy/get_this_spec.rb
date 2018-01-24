@@ -8,6 +8,10 @@ class PatronStub
   end
   def active?
   end
+
+  def method_missing(symbol, *args)
+    ''
+  end
 end
 
 class AuthenticatedPatronStub
@@ -30,11 +34,15 @@ class AuthenticatedPatronStub
   def name
     'Authenticated Patron'
   end
+
+  def method_missing(symbol, *args)
+    symbol.to_s
+  end
 end
 
 class BibStub
   def method_missing(symbol, *args)
-    ''
+    symbol.to_s
   end
 end
 
@@ -81,6 +89,7 @@ describe Spectrum::Policy::GetThis::Option do
         'label' => 'Label',
         'description' => 'Description',
         'duration' => 'Duration',
+        'orientation' => '',
         'faq' => 'FAQ',
         'tip' => 'tip',
         'form' => 'form',
