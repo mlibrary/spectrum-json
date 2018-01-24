@@ -75,7 +75,7 @@ module Spectrum
     end
 
     def off_site?
-      @holding['location'].start_with?('Off-site')
+      @holding['location'].start_with?('Offsite') || @holding['location'].start_with?('- Offsite')
     end
 
     def location
