@@ -43,21 +43,23 @@ module Spectrum
     end
 
     def date
-      #fetch_first('display_date')
-      clean_marc(@fullrecord['260']['c'])
+      fetch_marc('260', 'c')
     end
 
     def pub
-      #fetch_first('publisher')
-      clean_marc(@fullrecord['260']['b'])
+      fetch_marc('260', 'b')
     end
 
     def place
-      #fetch_first('pubPlace')
-      clean_marc(@fullrecord['260']['a'])
+      fetch_marc('260', 'a')
     end
 
     private
+
+    def fetch_marc(datafield, subfield)
+      clean_marc(((@fullrecord || {})[datafield] || {})[subfield] || '')
+    end
+
     def extract_data(solr_response)
       solr_response['response']['docs'].first
     end
