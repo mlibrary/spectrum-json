@@ -26,12 +26,39 @@ module Spectrum
           hash['- Offsite Shelving -'] = 'zzzz'
         end
         response.each do |item|
-          next unless item['item_info']
-          item['item_info'].each do |info|
-            data << process_item_info(item, info)
+          if item['down_links']
+            item['down_links'].each do |link|
+              data << process_down_link(link)
+            end
+          elsif item['up_links']
+            item['up_links'].each do |link|
+              data << process_up_link(link)
+            end
+          elsif item['item_info']
+            item['item_info'].each do |info|
+              data << process_item_info(item, info)
+            end
           end
         end
         data.sort_by {|item| sorter[item[:location]]}
+      end
+
+      def process_up_link(link)
+        {
+          type: 'uplink',
+          description: 'Included in',
+          label: link['link_text'],
+          id: link['key']
+        }
+      end
+
+      def process_down_link(link)
+        {
+          type: 'downlink',
+          description: 'Linked titles',
+          label: link['link_text'],
+          id: link['key']
+        }
       end
 
       def process_item_info(item, info)
