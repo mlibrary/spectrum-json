@@ -17,7 +17,7 @@ class JsonController < ApplicationController
     @messages    = []
     @focus       = Spectrum::Json.foci[params[:focus]]
     @source      = Spectrum::Json.sources[params[:source]]
-    no_cache
+    no_cache unless production?
   end
 
   def sample
@@ -251,4 +251,11 @@ class JsonController < ApplicationController
     }
   end
 
+  def production?
+    begin
+      request.env['SERVER_NAME'] == 'search.lib.umich.edu'
+    rescue
+      false
+    end
+  end
 end
