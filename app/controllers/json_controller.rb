@@ -73,6 +73,12 @@ class JsonController < ApplicationController
     end
   end
 
+  def hold
+    @request = Spectrum::Request::PlaceHold.new(request)
+    @response = Spectrum::Response::PlaceHold.new(@request)
+    render(json: @response.renderable)
+  end
+
   def holdings
     @request = Spectrum::Request::Holdings.new(request)
     @response = Spectrum::Response::Holdings.new(@source, @request)

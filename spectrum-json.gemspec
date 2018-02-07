@@ -36,4 +36,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "activesupport"
   spec.add_dependency "rsolr"
   spec.add_dependency 'marc'
+  spec.add_dependency 'exlibris-aleph'
 end

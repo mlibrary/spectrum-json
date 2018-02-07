@@ -110,6 +110,7 @@ module Spectrum
           info_link: item['info_link'],
           description: info['description'],
           summary_holdings: item['summary_holdings'],
+          floor: Spectrum::FloorLocation.resolve(info['collection'], info['callnumber'])
         }
       end
 

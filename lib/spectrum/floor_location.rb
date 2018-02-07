@@ -13,12 +13,17 @@ module Spectrum
     end
 
     def self.resolve(collection, callno)
-      @config[collection.upcase].find do |item|
+      collection = normalize_collection(collection)
+      @config[collection].find do |item|
         if item.match(callno)
           return item.text
         end
       end
       ''
+    end
+
+    def self.normalize_collection(collection)
+      (collection || '').upcase
     end
 
     attr_reader :text, :start, :stop

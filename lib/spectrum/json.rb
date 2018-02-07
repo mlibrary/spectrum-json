@@ -4,6 +4,7 @@ require "active_support"
 require "active_support/concern"
 
 require 'spectrum/holding'
+require 'spectrum/floor_location'
 require 'spectrum/bib_record'
 
 require "spectrum/json/version"
@@ -20,6 +21,7 @@ require "spectrum/response/record"
 require "spectrum/response/record_list"
 require 'spectrum/response/holdings'
 require 'spectrum/response/get_this'
+require 'spectrum/response/place_hold'
 
 require "spectrum/field_tree"
 require "spectrum/field_tree/base"
@@ -39,6 +41,7 @@ require "spectrum/request/facet"
 require "spectrum/request/data_store"
 require 'spectrum/request/holdings'
 require 'spectrum/request/get_this'
+require 'spectrum/request/place_hold'
 
 require 'spectrum/policy/get_this'
 
