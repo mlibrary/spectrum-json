@@ -1,4 +1,5 @@
 require 'rails'
+require 'exlibris-aleph'
 
 module Spectrum
   module Json
