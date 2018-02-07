@@ -25,6 +25,10 @@ module Spectrum
       @holding['description'] || ''
     end
 
+    def full_item_key
+      @holding['full_item_key'] || ''
+    end
+
     def can_book?
       @holding['can_book']
     end

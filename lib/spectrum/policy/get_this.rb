@@ -79,6 +79,7 @@ module Spectrum
             .gsub('{$rft.issue}', item.issue)
             .gsub('{$notes}', item.notes)
             .gsub('{$email}', account.email)
+            .gsub('{$full_item_key}', item.full_item_key)
         end
 
         def to_h
