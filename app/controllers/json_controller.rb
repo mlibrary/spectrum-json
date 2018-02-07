@@ -73,6 +73,12 @@ class JsonController < ApplicationController
     end
   end
 
+  def hold_redirect
+    @request = Spectrum::Request::PlaceHold.new(request)
+    Spectrum::Response::PlaceHold.new(@request).renderable
+    redirect_to 'https://www.lib.umich.edu/my-account/holds-recalls', status: 302
+  end
+
   def hold
     @request = Spectrum::Request::PlaceHold.new(request)
     @response = Spectrum::Response::PlaceHold.new(@request)
