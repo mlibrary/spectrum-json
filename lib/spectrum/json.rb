@@ -58,6 +58,7 @@ module Spectrum
         @sources_file = root.join('config', 'source.yml')
         @sorts_file   = root.join('config', 'sorts.yml')
         @bookplates_file = root.join('config', 'bookplates.yml')
+        Spectrum::Config::FacetParents.configure(root)
         configure!
       end
 
