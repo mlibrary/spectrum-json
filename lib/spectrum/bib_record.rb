@@ -9,7 +9,7 @@ module Spectrum
 
     def title
       @fullrecord['245'].select do |subfield|
-        /[abdefgknp]/ === subfield.code 
+        /[abdefgknp]/ === subfield.code
       end.map(&:value).join(' ')
     end
 
@@ -52,6 +52,50 @@ module Spectrum
 
     def place
       fetch_marc('260', 'a')
+    end
+
+    def pub_date
+      fetch_marc('245', 'f')
+    end
+
+    def publisher
+      @fullrecord['260'].select do |subfield|
+        /[abc]/ === subfield.code
+      end.map(&:value).join(' ')
+    end
+
+    def physical_description
+      clean_marc(@fullrecord['300'].select do |subfield|
+        /[abcf]/ === subfield.code
+      end.map(&:value).join(' '))
+    end
+
+    def genre
+      {
+         'BK' => 'Book',
+         'SE' => 'Serial Publication',
+         'MP' => 'Map',
+         'MU' => 'Music',
+         'VM' => 'Visual Material',
+         'MV' => 'Mixed Material`',
+         'MX' => 'Mixed Material',
+      }[fmt]
+    end
+
+    def sgenre
+      {
+         'BK' => 'Book',
+         'SE' => 'Book',
+         'MP' => 'Map',
+         'MU' => 'Graphics',
+         'VM' => 'Graphics',
+         'MV' => 'Manuscripts',
+         'MX' => 'Manuscripts',
+      }[fmt]
+    end
+
+    def fmt
+      @fullrecord['970']['a']
     end
 
     private

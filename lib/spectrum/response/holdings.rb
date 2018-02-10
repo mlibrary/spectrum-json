@@ -81,28 +81,161 @@ module Spectrum
         end
       end
 
-      def get_url(info)
-        record = @request.id
-        if info['can_request']
-          query = {barcode: info['barcode'], getthis: 'Get this'}.to_query
-          "https://mirlyn.lib.umich.edu/Record/#{record}/Hold?#{query}"
-        elsif info['can_reserve']
-          query = {barcode: info['barcode']}.to_query
-          url = "https://mirlyn.lib.umich.edu/Record/#{record}/Request?#{query}"
+      def get_url(item, info)
+        if info['can_reserve']
+          request_this_url(item, info)
         elsif info['can_book']
-          query = {full_item_key: info['full_item_key']}.to_query
-          url = "https://mirlyn.lib.umich.edu/Record/#{record}/Booking?#{query}"
+          advance_booking_url(info)
         else
           nil
         end
       end
 
+      def fetch_bib_record
+        client = @source.driver.constantize.connect(url: @source.url)
+        Spectrum::BibRecord.new(client.get('select', params: {q: "id:#{RSolr.solr_escape(@request.id)}"}))
+      end
+
+      def request_this_url(item, info)
+        record_id = @request.id
+        record = fetch_bib_record
+
+        query = {
+          Action: "10",
+          Form: "30",
+          genre: get_aeon_genre(record, item, info),
+          sgenre: get_aeon_sgenre(record, item, info),
+          sysnum: record_id,
+          issn: get_aeon_issn(record, item, info),
+          isbn: get_aeon_isbn(record, item, info),
+          title: get_aeon_title(record, item, info),
+          ItemAuthor: get_aeon_item_author(record, item, info),
+          :'rft.au' => get_aeon_item_author(record, item, info),
+          date: get_aeon_date(record, item, info),
+          publisher: get_aeon_publisher(record, item, info),
+          itemPlace: get_aeon_item_place(record, item, info),
+          itemPublisher: get_aeon_item_publisher(record, item, info),
+          itemDate: get_aeon_item_date(record, item, info),
+          extent: get_aeon_extent(record, item, info),
+          :'rft.edition' => get_aeon_edition(record, item, info),
+          callnumber: get_aeon_callnumber(record, item, info),
+          description: get_aeon_description(record, item, info),
+          location: get_aeon_location(record, item, info),
+          sublocation: get_aeon_sublocation(record, item, info),
+          barcode: get_aeon_barcode(record, item, info),
+          fixedshelf: get_aeon_fixedshelf(record, item, info),
+        }.to_query
+        get_aeon_base_url(record, item, info) + query
+      end
+
+      def get_aeon_fixedshelf(record, item, info)
+        item['inventory_number']
+      end
+
+      def get_aeon_barcode(record, item, info)
+        info['barcode']
+      end
+
+      def get_aeon_sublocation(record, item, info)
+        item['collection']
+      end
+
+      def get_aeon_location(record, item, info)
+        return nil if (item['sub_library'] && item['sub_library'] = 'BENT')
+        item['sub_lobrary']
+      end
+
+      def get_aeon_description(record, item, info)
+        (item['description'] || '').slice(0, 250)
+      end
+
+      def get_aeon_callnumber(record, item, info)
+        item['callnumber']
+      end
+
+      def get_aeon_edition(record, item, info)
+        (record.edition || '').slice(0, 250)
+      end
+
+      def get_aeon_extent(record, item, info)
+        (record.physical_description || '').slice(0, 250)
+      end
+
+      def get_aeon_item_date(record, item, info)
+        (record.date || '').slice(0, 250)
+      end
+
+      def get_aeon_item_publisher(record, item, info)
+        (record.pub || '').slice(0, 250)
+      end
+
+      def get_aeon_item_place(record, item, info)
+        (record.place || '').slice(0, 250)
+      end
+
+      def get_aeon_publisher(record, item, info)
+        (record.publisher || '').slice(0,250)
+      end
+
+      def get_aeon_date(record, item, info)
+        record.pub_date
+      end
+
+      def get_aeon_item_author(record, item, info)
+        (record.author || '').slice(0, 250)
+      end
+
+      def get_aeon_title(record, item, info)
+        (record.title || '').slice(0, 250)
+      end
+
+      def get_aeon_isbn(record, item, info)
+        record.isbn
+      end
+
+      def get_aeon_issn(record, item, info)
+        record.issn
+      end
+
+      def get_aeon_barcode(record, item, info)
+        info['barcode']
+      end
+
+      def get_aeon_genre(record, item, info)
+        record.genre
+      end
+
+      def get_aeon_sgenre(record, item, info)
+        record.sgenre
+      end
+
+      def get_aeon_base_url(record, item, info)
+        return 'https://agathe.bentley.umich.edu/aeon/?' if item['sub_library'] == 'BENT'
+        return 'https://chara.clements.umich.edu/aeon/?' if item['sub_library'] == 'CLEM'
+        'https://iris.lib.umich.edu/aeon/?'
+      end
+
+      def advance_booking_url(info)
+        adm_doc_number = info['full_item_key'].slice(0, 9)
+        adm_item_sequence = info['full_item_key'].slice(9, 6)
+
+        query = {
+          func: 'booking-req-form-itm',
+          adm_library: 'MIU50',
+          adm_doc_number: adm_doc_number,
+          adm_item_sequence: adm_item_sequence,
+          exact_item: 'N'
+        }.to_query
+        Exlibris::Aleph::Config::base_url + '/F/?' + query
+      end
+
       def process_mirlyn_item_info(item, info)
         {
           type: get_type(info),
-          url: get_url(info),
+          url: get_url(item, info),
           barcode: info['barcode'],
           location: info['location'],
+          public_note: item['public_note'],
           callnumber: info['callnumber'],
           status: info['status'],
           enum: [ info['enum_a'], info['enum_b'], info['enum_c'] ].compact,
