@@ -50,6 +50,7 @@ class JsonController < ApplicationController
     @request      = Spectrum::Request::DataStore.new(request, @focus)
     @new_request  = Spectrum::Request::DataStore.new(request, @focus)
     @datastore    = Spectrum::Response::DataStore.new(this_datastore)
+    @specialists  = Spectrum::Response::Specialists.new(specialists)
     @response     = Spectrum::Response::RecordList.new(fetch_records)
     render(json: search_response)
   end
@@ -163,6 +164,14 @@ class JsonController < ApplicationController
     })
   end
 
+  def specialists
+    base_url.merge({
+      request: @request,
+      source: @source,
+      focus: @focus,
+    })
+  end
+
   def fetch_holdings
     base_url.merge({
       data: @request.fetch_holdings,
@@ -177,6 +186,7 @@ class JsonController < ApplicationController
       source: @source,
       focus: @focus,
       total_available: engine.total_items,
+      specialists: @specialists.spectrum
     })
   end
 
@@ -247,6 +257,7 @@ class JsonController < ApplicationController
       response: @response.spectrum,
       messages: @messages.map(&:spectrum),
       total_available: @response.total_available,
+      specialists: @specialists.spectrum,
       datastore: @datastore.spectrum,
       new_request: @new_request.spectrum
     }

@@ -22,6 +22,7 @@ require "spectrum/response/record_list"
 require 'spectrum/response/holdings'
 require 'spectrum/response/get_this'
 require 'spectrum/response/place_hold'
+require 'spectrum/response/specialists'
 
 require "spectrum/field_tree"
 require "spectrum/field_tree/base"
