@@ -17,6 +17,7 @@ module Spectrum
         [
           {
             name: 'Scott Dennis',
+            url: 'https://www.lib.umich.edu/users/sdenn',
             job_title: 'Librarian for Philosophy, General Reference, and Core Electronic Resources',
             picture: 'https://www.lib.umich.edu/sites/default/files/pictures/picture-205-1471625361.jpg',
             department: 'Arts & Humanities',
@@ -34,6 +35,7 @@ module Spectrum
         [
           {
             name: 'Dave Carter',
+            url: 'https://www.lib.umich.edu/users/superman',
             job_title: 'Video Game Archivist & Reference Librarian',
             picture: 'https://www.lib.umich.edu/sites/default/files/pictures/picture-141-1375893456.jpg',
             department: 'Connected Scholarship',
