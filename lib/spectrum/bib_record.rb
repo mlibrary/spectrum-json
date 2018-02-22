@@ -8,7 +8,7 @@ module Spectrum
     end
 
     def title
-      @fullrecord['245'].select do |subfield|
+      (@fullrecord['245'] || []).select do |subfield|
         /[abdefgknp]/ === subfield.code
       end.map(&:value).join(' ')
     end
@@ -59,13 +59,13 @@ module Spectrum
     end
 
     def publisher
-      @fullrecord['260'].select do |subfield|
+      (@fullrecord['260'] || []).select do |subfield|
         /[abc]/ === subfield.code
       end.map(&:value).join(' ')
     end
 
     def physical_description
-      clean_marc(@fullrecord['300'].select do |subfield|
+      clean_marc((@fullrecord['300'] || []).select do |subfield|
         /[abcf]/ === subfield.code
       end.map(&:value).join(' '))
     end
@@ -95,7 +95,7 @@ module Spectrum
     end
 
     def fmt
-      @fullrecord['970']['a']
+      (@fullrecord['970'] || {'a' => ''})['a']
     end
 
     private
