@@ -19,6 +19,8 @@ module Spectrum
         end
 
         Spectrum::FloorLocation.configure(File.join(Rails.root, 'config', 'floor_locations.json'))
+
+        Spectrum::Response::Specialists::configure(File.join(Rails.root, 'config', 'specialists.yml'))
       end
     end
   end
