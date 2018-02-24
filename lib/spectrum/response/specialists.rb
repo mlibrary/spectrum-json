@@ -145,7 +145,12 @@ module Spectrum
       end
 
       def spectrum
-        merge(engines.map {|engine| engine.find(data[:request].query[:q])})
+        merge(engines.map { |engine|
+          engine.find(data[:request].query(
+            data[:focus].fields,
+            data[:focus].facet_map
+          )[:q])
+        })
       end
 
       def merge(results)
