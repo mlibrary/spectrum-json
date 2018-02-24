@@ -3,6 +3,9 @@ module Spectrum
     class PlaceHold
       attr_reader :hold
       def initialize(request)
+        @valid_account = request.valid_account?
+        @logged_in = request.logged_in?
+        return unless @valid_account
         @hold = Exlibris::Aleph::Patron::Record::Item::CreateHold.new(
           request.patron_id,
           request.record_id,
@@ -18,18 +21,24 @@ module Spectrum
             note_2: '',
             rush: '',
           }
-        ) if request.patron
+        )
       end
 
       def renderable
+        return { status: 'Not logged in' } unless @logged_in
+        return { status: 'No account' } unless @valid_account
         begin
-          if hold.nil?
-            { status: 'Not logged in' }
-          else
-            hold.error?
-            { status: hold.note }
-          end
-        rescue
+          hold.error?
+          {
+            status: hold.note,
+            message: [],
+          }
+        rescue NoMethodError => e
+          # Some hold placing errors raise NoMethodErrors,
+          # but still have more information available.
+          { status: hold.instance_eval { @root }["reply_text"] }
+        rescue Exception => e
+          # Some other exception
           { status: "Unable to place hold" }
         end
       end

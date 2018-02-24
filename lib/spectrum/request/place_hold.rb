@@ -24,7 +24,24 @@ module Spectrum
       attr_reader :request, :patron
       def initialize(request)
         @request = request
-        @patron = Aleph::Borrower.new.tap {|patron| patron.bor_info(request.env['HTTP_X_REMOTE_USER']) } if request.env['HTTP_X_REMOTE_USER']
+        user = request.env['HTTP_X_REMOTE_USER']
+        begin
+          if user && !user.empty?
+            # The order matters here because Aleph::Borrower#bor_info raises an exception if the account isn't valid
+            @logged_in = true
+            @patron = Aleph::Borrower.new.tap {|patron| patron.bor_info(user) }
+            @valid_account = true
+          end
+        rescue
+        end
+      end
+
+      def logged_in?
+        @logged_in
+      end
+
+      def valid_account?
+        @valid_account
       end
 
       def lib
