@@ -43,10 +43,10 @@ module Spectrum
       end
 
       def success_message
-        return [] unless @option
+        return {} unless @option
         {
           label: @option['label'],
-          service_type: @option['service_type']
+          service_type: @option['service_type'],
           duration: @option['duration'],
           description: {
             heading: @option['description']['heading'],
