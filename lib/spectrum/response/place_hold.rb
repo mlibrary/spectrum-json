@@ -5,6 +5,8 @@ module Spectrum
       def initialize(request)
         @valid_account = request.valid_account?
         @logged_in = request.logged_in?
+        @success_message = request.success_message
+        @failure_message = []
         return unless @valid_account
         @hold = Exlibris::Aleph::Patron::Record::Item::CreateHold.new(
           request.patron_id,
@@ -31,7 +33,7 @@ module Spectrum
           hold.error?
           {
             status: hold.note,
-            message: [],
+            orientation: hold.note == 'Action Succeeded' ? @success_message : @failure_message,
           }
         rescue NoMethodError => e
           # Some hold placing errors raise NoMethodErrors,
