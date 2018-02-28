@@ -9,6 +9,20 @@ module Spectrum
       end.new(config)
     end
 
+    class EmptyFieldsFieldList
+      def by_uid(uid)
+        self
+      end
+
+      def query_field
+        ''
+      end
+
+      def query_params
+       {}
+      end
+    end
+
     class SpecialistEngine
       attr_reader :config
       def initialize(config)
@@ -87,15 +101,24 @@ module Spectrum
           list
         end.delete_if do |field, count|
           count < term_threshold
-        end.keys.map do |field|
-          RSolr.solr_escape(field).gsub(' ', '\ ')
-        end
+        end.map do |field, count|
+          [RSolr.solr_escape(field).gsub(' ', '\ '), count]
+        end.to_h
       end
 
       def fetch_specialists(terms)
+        bq = []
+        terms.each_pair do |term, count|
+          bq << "#{fields.last}:(#{term})^#{count}"
+        end
         params = {
-          q: "+#{fields.last}:(#{terms.join(' OR ')})",
-          rows: 5,
+          mm: 1,
+          q: terms.keys.join(' OR '),
+          qf: fields.last,
+          pf: fields.last,
+          bq: bq,
+          defType: 'edismax',
+          rows: 10,
           fl: '*',
           fq: '+source:drupal-users +status:true',
           wt: 'ruby',
@@ -103,7 +126,11 @@ module Spectrum
         client.last.get('select', params: params)
       end
 
-      def find(query)
+      def find(data)
+        query = data[:request].query(
+          EmptyFieldsFieldList.new,
+          data[:focus].facet_map
+        )[:q]
         records = fetch_records(query)
         return [] unless records
 
@@ -112,6 +139,7 @@ module Spectrum
 
         specialists = fetch_specialists(terms)
         return [] unless specialists
+
         specialists['response']['docs'].map do |specialist|
           extract_fields(specialist)
         end
@@ -145,53 +173,13 @@ module Spectrum
       end
 
       def spectrum
-        merge(engines.map { |engine|
-          engine.find(data[:request].query(
-            data[:focus].fields,
-            data[:focus].facet_map
-          )[:q])
-        })
+        merge(engines.map { |engine| engine.find(data) })
       end
 
       def merge(results)
         results.flatten.compact
       end
 
-      def hlb_specialists
-        [
-          {
-            name: 'Scott Dennis',
-            url: 'https://www.lib.umich.edu/users/sdenn',
-            job_title: 'Librarian for Philosophy, General Reference, and Core Electronic Resources',
-            picture: 'https://www.lib.umich.edu/sites/default/files/pictures/picture-205-1471625361.jpg',
-            department: 'Arts & Humanities',
-            email: 'sdenn@umich.edu',
-            phone: '734-647-6484',
-            office: [
-              '209 Hatcher North',
-              'Ann Arbor, MI 48109-1190',
-            ]
-          }
-        ]
-      end
-
-      def le_specialists
-        [
-          {
-            name: 'Dave Carter',
-            url: 'https://www.lib.umich.edu/users/superman',
-            job_title: 'Video Game Archivist & Reference Librarian',
-            picture: 'https://www.lib.umich.edu/sites/default/files/pictures/picture-141-1375893456.jpg',
-            department: 'Connected Scholarship',
-            email: 'superman@umich.edu',
-            phone: '734-615-7158',
-            office: [
-              '2216 LSA',
-              'Ann Arbor, MI 48109-0320',
-            ]
-          }
-        ]
-      end
     end
   end
 end
