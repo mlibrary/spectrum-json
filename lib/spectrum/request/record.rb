@@ -11,6 +11,10 @@ module Spectrum
         end
       end
 
+      def can_sort?
+        false
+      end
+
       def unfiltered_id(request)
         path = request.path
         original = request.original_fullpath

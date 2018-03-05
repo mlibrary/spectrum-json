@@ -5,6 +5,10 @@ module Spectrum
         yield self
       end
 
+      def can_sort?
+        false
+      end
+
       def self.lib=(value)
         @lib = value
       end

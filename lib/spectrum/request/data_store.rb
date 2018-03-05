@@ -3,6 +3,10 @@ module Spectrum
     class DataStore
       include Requesty
 
+      def can_sort?
+        false
+      end
+
       def facet_uid
         nil
       end

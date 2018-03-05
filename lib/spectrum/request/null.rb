@@ -4,15 +4,16 @@ module Spectrum
       def spectrum
         nil
       end
+
+      def can_sort?
+        false
+      end
+
       def search_only?
         false
       end
 
       def available_online?
-        false
-      end
-
-      def search_only?
         false
       end
 

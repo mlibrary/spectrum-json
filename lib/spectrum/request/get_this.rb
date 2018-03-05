@@ -13,6 +13,9 @@ module Spectrum
         !@username.empty?
       end
 
+      def can_sort?
+        false
+      end
     end
   end
 end

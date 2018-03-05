@@ -7,6 +7,10 @@ module Spectrum
         attr_accessor :request_id, :slice, :sort
       end
 
+      def can_sort?
+        true
+      end
+
       def initialize(request = nil, focus = nil)
         @request = request
         @focus   = focus

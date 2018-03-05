@@ -7,6 +7,10 @@ module Spectrum
         @id = request[:id]
       end
 
+      def can_sort?
+        false
+      end
+
     end
   end
 end
