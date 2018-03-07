@@ -111,6 +111,7 @@ module Spectrum
         terms.each_pair do |term, count|
           bq << "#{fields.last}:(#{term})^#{count}"
         end
+
         params = {
           mm: 1,
           q: terms.keys.join(' OR '),
@@ -126,12 +127,8 @@ module Spectrum
         client.last.get('select', params: params)
       end
 
-      def find(data)
-        query = data[:request].query(
-          EmptyFieldsFieldList.new,
-          data[:focus].facet_map
-        )[:q]
-        records = fetch_records(query)
+      def find(query)
+        records = fetch_records(query[:q])
         return [] unless records
 
         terms = extract_terms(records)
@@ -140,25 +137,54 @@ module Spectrum
         specialists = fetch_specialists(terms)
         return [] unless specialists
 
-        specialists['response']['docs'].map do |specialist|
+        specialists = specialists['response']['docs'].map do |specialist|
           extract_fields(specialist)
         end
+        {
+          config['keys']['terms'] => terms,
+          config['keys']['specialists'] => specialists,
+        }
       end
     end
 
     class SpecialistDirect < SpecialistEngine
+      def fetch_specialists(query)
+        params = {
+          mm: 1,
+          q: query,
+          qf: fields,
+          pf: fields,
+          bq: bq,
+          defType: 'edismax',
+          rows: 10,
+          fl: 'score,*',
+          fq: '+source:drupal-users +status:true',
+          wt: 'ruby',
+        }
+        client.last.get('select', params: params)
+      end
+
       def find(query)
+        {
+          config['keys']['terms'] => [],
+          config['keys']['specialists'] => [],
+        }
       end
     end
 
     class Specialists
 
       class << self
-        attr_reader :config
+        attr_reader :config, :logger
         def configure(file)
           @config = YAML.load_file(file).map do |key, value|
-            [key, ::Spectrum::Response::SpecialistEngine(value)]
-          end.to_h
+            if key == 'logger'
+              @logger = value
+              nil
+            else
+              [key, ::Spectrum::Response::SpecialistEngine(value)]
+            end
+          end.compact.to_h
         end
       end
 
@@ -168,16 +194,52 @@ module Spectrum
         @data = args
       end
 
+      def logger
+        self.class.logger
+      end
+
       def engines
         self.class.config.values
       end
 
       def spectrum
-        merge(engines.map { |engine| engine.find(data) })
+        query = data[:request].query(
+          EmptyFieldsFieldList.new,
+          data[:focus].facet_map
+        )
+        results = engines.map do |engine|
+          engine.find(query)
+        end.inject({}) do |acc, item|
+          acc.merge(item)
+        end
+        report(
+          query: query[:q],
+          filters: query[:fq],
+          hlb: results['hlb'],
+          expertise: results['expertise'],
+          hlb_expert: results['hlb_expert'],
+          expertise_expert: results['expertise_expert']
+        )
+        merge(results['hlb_expert'] + results['expertise_expert'])
       end
 
       def merge(results)
         results.flatten.compact
+      end
+
+      def report(user: '', query: '', filters: '', hlb: [], expertise: [], hlb_expert: [], expertise_expert: [])
+        return unless logger
+        uri = URI(logger)
+        Net::HTTP.post_form(
+          uri,
+          user: user,
+          query: query,
+          filters: filters,
+          hlb: hlb,
+          expertise: expertise,
+          hlb_expert: hlb_expert,
+          expertise_expert: expertise_expert
+        )
       end
 
     end
