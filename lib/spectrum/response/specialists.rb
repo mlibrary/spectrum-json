@@ -215,9 +215,9 @@ module Spectrum
         report(
           query: query[:q],
           filters: query[:fq],
-          hlb: results['hlb'],
+          hlb: results['hlb'].keys.map {|term| term.gsub(/\\/, '')},
           expertise: results['expertise'],
-          hlb_expert: results['hlb_expert'],
+          hlb_expert: results['hlb_expert'].map {|expert| expert[:email].sub(/@umich.edu/, '')},
           expertise_expert: results['expertise_expert']
         )
         merge(results['hlb_expert'] + results['expertise_expert'])
@@ -227,11 +227,11 @@ module Spectrum
         results.flatten.compact
       end
 
-      def report(user: '', query: '', filters: '', hlb: [], expertise: [], hlb_expert: [], expertise_expert: [])
+      def report(user: '', query: '', filters: [], hlb: [], expertise: [], hlb_expert: [], expertise_expert: [])
         return unless logger
         uri = URI(logger)
-        Net::HTTP.post_form(
-          uri,
+        req = Net::HTTP::Post.new(uri)
+        req.body = {
           user: user,
           query: query,
           filters: filters,
@@ -239,7 +239,10 @@ module Spectrum
           expertise: expertise,
           hlb_expert: hlb_expert,
           expertise_expert: expertise_expert
-        )
+        }.to_query
+        Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+          http.request(req)
+        end
       end
 
     end
