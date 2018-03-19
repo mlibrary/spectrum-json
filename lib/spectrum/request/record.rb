@@ -24,7 +24,7 @@ module Spectrum
 
       def authenticated?
         # TODO: Implement this for production.
-        true
+        !(@request.env['HTTP_X_REMOTE_USER'] || '').empty?
       end
 
       def available_online?

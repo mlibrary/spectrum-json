@@ -107,7 +107,7 @@ module Spectrum
 
       def authenticated?
         # TODO: Implement this for production.
-        true
+        !(@request.env['HTTP_X_REMOTE_USER'] || '').empty?
       end
 
       # For summon's range filter (i.e. an applied filter)
