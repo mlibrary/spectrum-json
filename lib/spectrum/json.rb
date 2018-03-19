@@ -52,7 +52,9 @@ module Spectrum
   module Json
     class << self
 
-      def configure(root)
+      def configure(root, base_url)
+        @base_url     = base_url
+        @actions_file = root.join('config', 'actions.yml')
         @filters_file = root.join('config', 'filters.yml')
         @fields_file  = root.join('config', 'fields.yml')
         @focus_files  = root.join('config', 'foci', '*.yml')
