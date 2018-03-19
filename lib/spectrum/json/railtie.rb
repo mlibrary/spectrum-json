@@ -5,7 +5,7 @@ module Spectrum
   module Json
     class Railtie < Rails::Railtie
       initializer 'spectrum-json.initialize' do
-        Spectrum::Json.configure(Rails.root)
+        Spectrum::Json.configure(Rails.root, Rails.configuration.relative_url_root)
         Spectrum::Policy::GetThis::load_config(File.join(Rails.root, 'config', 'get_this.yml'))
         config_data = YAML.load_file(File.join(Rails.root, 'config', 'aleph.yml'))
         Spectrum::Request::PlaceHold.configure do |config|
