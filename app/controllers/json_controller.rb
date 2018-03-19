@@ -39,6 +39,18 @@ class JsonController < ApplicationController
     )
   end
 
+  def text
+    render(json: response_class.new(request_class.new(request)).spectrum)
+  end
+
+  def email
+    render(json: response_class.new(request_class.new(request)).spectrum)
+  end
+
+  def file
+    render(json: response_class.new(request_class.new(request)).spectrum)
+  end
+
   def index
     @request     = Spectrum::Request::Null.new
     @new_request = Spectrum::Request::Null.new
@@ -272,6 +284,14 @@ class JsonController < ApplicationController
       datastore: @datastore.spectrum,
       new_request: @new_request.spectrum
     }
+  end
+
+  def request_class
+    "Spectrum::Request::#{request.params[:type]}".constantize
+  end
+
+  def response_class
+    "Spectrum::Response::#{request.params[:type]}".constantize
   end
 
   def production?
