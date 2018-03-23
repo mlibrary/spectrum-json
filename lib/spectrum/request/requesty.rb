@@ -106,7 +106,8 @@ module Spectrum
       end
 
       def authenticated?
-        # TODO: Implement this for production.
+        # When @request is nil, the server is making the request for it's own information.
+        return true unless @request && @request.env
         !(@request.env['HTTP_X_REMOTE_USER'] || '').empty?
       end
 
