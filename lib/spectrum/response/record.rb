@@ -21,6 +21,7 @@ module Spectrum
         @complete        = @data['complete'] || true
         @fields          = @focus.apply_fields(@data, @base_url)
         @names           = @focus.names(@fields)
+        @uid             = @fields.find {|f| f[:uid] == 'id'}[:value]
         @names_have_html = @data['names_have_html'] || true
       end
 
@@ -29,6 +30,7 @@ module Spectrum
         @type            = @data.content_types || @source.id
         @fields          = @focus.apply_fields(@data, @base_url)
         @names           = @focus.names(@fields)
+        @uid             = @fields.find {|f| f[:uid] == 'id'}[:value]
         @complete        = true
         @names_have_html = true
       end
@@ -40,7 +42,10 @@ module Spectrum
           source: @url,
           complete: @complete,
           names: @names,
+          uid: @uid,
+          datastore: @focus.id,
           names_have_html: @names_have_html,
+          has_holdings: @focus.has_holdings?,
           fields: @fields,
         }
       end
