@@ -106,6 +106,7 @@ module Spectrum
             to   email_to
             from email_from
             subject subject_content
+            delivery_method :sendmail
 
             text_part do
               content_type 'text/plain; charset=UTF-8'
