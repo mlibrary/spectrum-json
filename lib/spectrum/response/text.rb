@@ -9,6 +9,7 @@ module Spectrum
       end
 
       def spectrum
+        return needs_authentication unless request.logged_in?
         result = driver.message(request.to, request.items)
         ret = {}
         if result.all? {|message| message.status == 'accepted'}
@@ -25,6 +26,12 @@ module Spectrum
         }
         ret
       end
+
+      private
+      def needs_authentication
+        { status: "Not logged in", options: [] }
+      end
+
     end
   end
 end
