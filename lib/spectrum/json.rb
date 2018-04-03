@@ -110,7 +110,7 @@ module Spectrum
 
       def routes app
         foci.routes(app)
-        ['text', 'email', 'text'].each do |action|
+        ['text', 'email', 'file'].each do |action|
           app.match action,
             to: "json##{action}",
             defaults: { type: action.titlecase },

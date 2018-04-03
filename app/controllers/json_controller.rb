@@ -48,7 +48,12 @@ class JsonController < ApplicationController
   end
 
   def file
-    render(json: response_class.new(request_class.new(request)).spectrum)
+    send_data(
+      response_class.new(request_class.new(request)).data,
+      type: 'application/x-research-info-systems',
+      disposition: 'attachment',
+      filename: 'Library Search Record Export.ris'
+    )
   end
 
   def index
