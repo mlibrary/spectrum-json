@@ -127,15 +127,22 @@ module Spectrum
         client.last.get('select', params: params)
       end
 
+      def empty_results
+        {
+          config['keys']['terms'] => {},
+          config['keys']['specialists'] => [],
+        }
+      end
+
       def find(query)
         records = fetch_records(query[:q])
-        return {} unless records
+        return empty_results unless records
 
         terms = extract_terms(records)
-        return {} if terms.empty?
+        return empty_results if terms.empty?
 
         specialists = fetch_specialists(terms)
-        return {} unless specialists
+        return empty_results unless specialists
 
         specialists = specialists['response']['docs'].map do |specialist|
           extract_fields(specialist)
@@ -166,7 +173,7 @@ module Spectrum
 
       def find(query)
         {
-          config['keys']['terms'] => [],
+          config['keys']['terms'] => {},
           config['keys']['specialists'] => [],
         }
       end
@@ -225,7 +232,7 @@ module Spectrum
             query: query[:q],
             filters: query[:fq],
             hlb: results['hlb'].keys.map {|term| term.gsub(/\\/, '')},
-            expertise: results['expertise'],
+            expertise: results['expertise'].keys,
             hlb_expert: results['hlb_expert'].map {|expert| expert[:email].sub(/@umich.edu/, '')},
             expertise_expert: results['expertise_expert']
           )
