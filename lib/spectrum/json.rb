@@ -1,4 +1,5 @@
 require "json-schema"
+require 'lru_redux'
 
 require "active_support"
 require "active_support/concern"

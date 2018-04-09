@@ -19,7 +19,7 @@ module Spectrum
       end
 
       def query_params
-       {}
+        {}
       end
     end
 
@@ -129,13 +129,13 @@ module Spectrum
 
       def find(query)
         records = fetch_records(query[:q])
-        return [] unless records
+        return {} unless records
 
         terms = extract_terms(records)
-        return [] if terms.empty?
+        return {} if terms.empty?
 
         specialists = fetch_specialists(terms)
-        return [] unless specialists
+        return {} unless specialists
 
         specialists = specialists['response']['docs'].map do |specialist|
           extract_fields(specialist)
@@ -175,16 +175,20 @@ module Spectrum
     class Specialists
 
       class << self
-        attr_reader :config, :logger
+        attr_reader :config, :logger, :cache
         def configure(file)
           @config = YAML.load_file(file).map do |key, value|
             if key == 'logger'
               @logger = value
               nil
+            elsif key == 'cache'
+              @cache = value['driver'].constantize.new(value['size'], value['ttl'])
+              nil
             else
               [key, ::Spectrum::Response::SpecialistEngine(value)]
             end
           end.compact.to_h
+          @cache ||= LruRedux::TTL::ThreadSafe.new(500, 43200)
         end
       end
 
@@ -192,6 +196,10 @@ module Spectrum
 
       def initialize(args)
         @data = args
+      end
+
+      def cache
+        self.class.cache
       end
 
       def logger
@@ -207,20 +215,22 @@ module Spectrum
           EmptyFieldsFieldList.new,
           data[:focus].facet_map
         )
-        results = engines.map do |engine|
-          engine.find(query)
-        end.inject({}) do |acc, item|
-          acc.merge(item)
+        cache.getset(query) do
+          results = engines.map do |engine|
+            engine.find(query)
+          end.inject({}) do |acc, item|
+            acc.merge(item)
+          end
+          report(
+            query: query[:q],
+            filters: query[:fq],
+            hlb: results['hlb'].keys.map {|term| term.gsub(/\\/, '')},
+            expertise: results['expertise'],
+            hlb_expert: results['hlb_expert'].map {|expert| expert[:email].sub(/@umich.edu/, '')},
+            expertise_expert: results['expertise_expert']
+          )
+          merge(results['hlb_expert'] + results['expertise_expert'])
         end
-        report(
-          query: query[:q],
-          filters: query[:fq],
-          hlb: results['hlb'].keys.map {|term| term.gsub(/\\/, '')},
-          expertise: results['expertise'],
-          hlb_expert: results['hlb_expert'].map {|expert| expert[:email].sub(/@umich.edu/, '')},
-          expertise_expert: results['expertise_expert']
-        )
-        merge(results['hlb_expert'] + results['expertise_expert'])
       end
 
       def merge(results)
@@ -229,19 +239,21 @@ module Spectrum
 
       def report(user: '', query: '', filters: [], hlb: [], expertise: [], hlb_expert: [], expertise_expert: [])
         return unless logger
-        uri = URI(logger)
-        req = Net::HTTP::Post.new(uri)
-        req.body = {
-          user: user,
-          query: query,
-          filters: filters,
-          hlb: hlb,
-          expertise: expertise,
-          hlb_expert: hlb_expert,
-          expertise_expert: expertise_expert
-        }.to_query
-        Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-          http.request(req)
+        Thread.new do
+          uri = URI(logger)
+          req = Net::HTTP::Post.new(uri)
+          req.body = {
+            user: user,
+            query: query,
+            filters: filters,
+            hlb: hlb,
+            expertise: expertise,
+            hlb_expert: hlb_expert,
+            expertise_expert: expertise_expert
+          }.to_query
+          Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+            http.request(req)
+          end
         end
       end
 
