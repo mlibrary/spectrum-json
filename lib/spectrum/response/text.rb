@@ -10,6 +10,7 @@ module Spectrum
 
       def spectrum
         return needs_authentication unless request.logged_in?
+        return invalid_number unless request.to.match(/^\d{10,10}$/)
         result = driver.message(request.to, request.items)
         ret = {}
         if result.all? {|message| message.status == 'accepted'}
@@ -28,6 +29,11 @@ module Spectrum
       end
 
       private
+
+      def invalid_number
+        { status: 'Invalid number', options: [] }
+      end
+
       def needs_authentication
         { status: "Not logged in", options: [] }
       end

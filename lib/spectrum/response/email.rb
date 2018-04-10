@@ -9,7 +9,8 @@ module Spectrum
       end
 
       def spectrum
-        return needs_authentication unless @request.logged_in?
+        return needs_authentication unless request.logged_in?
+        return invalid_email unless request.to.match(/\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i)
         result = driver.message(request.to, request.from, request.items)
         ret = {}
         ret[:status] = 'Success'
@@ -17,6 +18,11 @@ module Spectrum
       end
 
       private
+
+      def invalid_email
+        { status: "Invalid email", options: [] }
+      end
+
       def needs_authentication
         { status: "Not logged in", options: [] }
       end
