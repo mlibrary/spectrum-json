@@ -1,14 +1,13 @@
-class JsonController < ApplicationController
+# frozen_string_literal: true
 
+class JsonController < ApplicationController
   before_filter :init, :sample, :cors
 
   def cors
     headers['Access-Control-Allow-Origin'] = get_origin(request.headers)
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Referer'
     headers['Access-Control-Allow-Credentials'] = 'true'
-    if request.method == 'OPTIONS'
-      render :text => '', content_type: 'text/plain'
-    end
+    render text: '', content_type: 'text/plain' if request.method == 'OPTIONS'
   end
 
   def init
@@ -22,20 +21,20 @@ class JsonController < ApplicationController
 
   def sample
     @messages << Spectrum::Response::Message.info(
-      summary: "Information!",
+      summary: 'Information!',
       details: "You've been given a sample of an informational message."
     )
     @messages << Spectrum::Response::Message.success(
-      summary: "Success",
-      details: "A long-winded explanation for your success."
+      summary: 'Success',
+      details: 'A long-winded explanation for your success.'
     )
     @messages << Spectrum::Response::Message.warn(
-      summary: "Warning",
-      details: "A long-winded explanation for your success."
+      summary: 'Warning',
+      details: 'A long-winded explanation for your success.'
     )
     @messages << Spectrum::Response::Message.error(
-      summary: "Error",
-      details: "Something went wrong with the doohickey."
+      summary: 'Error',
+      details: 'Something went wrong with the doohickey.'
     )
   end
 
@@ -88,7 +87,7 @@ class JsonController < ApplicationController
     @request   = Spectrum::Request::Record.new(request)
     @datastore = Spectrum::Response::DataStore.new(this_datastore)
     if engine.total_items > 0
-      @response  = Spectrum::Response::Record.new(fetch_record)
+      @response = Spectrum::Response::Record.new(fetch_record)
       render(json: record_response)
     else
       render(json: {}, status: 200)
@@ -128,7 +127,7 @@ class JsonController < ApplicationController
   end
 
   def show
-    render json: "json#show"
+    render json: 'json#show'
   end
 
   def current_user
@@ -149,7 +148,7 @@ class JsonController < ApplicationController
     return headers['origin'] if headers['origin']
     return '*' unless headers['referer']
     uri = URI(request.headers['referer'])
-    "#{uri.scheme}://#{uri.host}#{[80,443].include?(uri.port) ? '' : ':' + uri.port.to_s}"
+    "#{uri.scheme}://#{uri.host}#{[80, 443].include?(uri.port) ? '' : ':' + uri.port.to_s}"
   end
 
   def no_cache
@@ -159,66 +158,64 @@ class JsonController < ApplicationController
   end
 
   def engine
-    if @engine.nil?
-      @engine = @source.engine(@focus, @request, self)
-    end
+    @engine = @source.engine(@focus, @request, self) if @engine.nil?
     @engine
   end
 
   def list_datastores
-    base_url.merge({
-      data: Spectrum::Json.foci,
-    })
+    base_url.merge(
+      data: Spectrum::Json.foci
+    )
   end
 
   def this_datastore
-    base_url.merge({
-      data: @focus.apply(@request, engine.search),
-    })
+    base_url.merge(
+      data: @focus.apply(@request, engine.search)
+    )
   end
 
   def fetch_record
-    base_url.merge({
+    base_url.merge(
       data: engine.results.first,
       source: @source,
-      focus: @focus,
-    })
+      focus: @focus
+    )
   end
 
   def specialists
-    base_url.merge({
+    base_url.merge(
       request: @request,
       source: @source,
-      focus: @focus,
-    })
+      focus: @focus
+    )
   end
 
   def fetch_holdings
-    base_url.merge({
+    base_url.merge(
       data: @request.fetch_holdings,
       source: @source,
-      focus: @focus,
-    })
+      focus: @focus
+    )
   end
 
   def fetch_records
-    base_url.merge({
+    base_url.merge(
       data: engine.results,
       source: @source,
       focus: @focus,
       total_available: engine.total_items,
       specialists: @specialists.spectrum
-    })
+    )
   end
 
   def fetch_facets
-    base_url.merge({
+    base_url.merge(
       datastore: @datastore,
       source: @source,
       focus: @focus,
       facet: params[:facet],
-      total_available: nil,
-    })
+      total_available: nil
+    )
   end
 
   def base_url
@@ -227,12 +224,12 @@ class JsonController < ApplicationController
 
   # TODO: Move this into configuration.
   def default_institution
-    addr = if request.env['REMOTE_ADDR'] != "127.0.0.1"
-      request.env['REMOTE_ADDR']
-    elsif request.env['HTTP_X_FORWARDED_FOR']
-      request.env['HTTP_X_FORWARDED_FOR'].split(/ /).last
-    else
-      "127.0.0.1"
+    addr = if request.env['REMOTE_ADDR'] != '127.0.0.1'
+             request.env['REMOTE_ADDR']
+           elsif request.env['HTTP_X_FORWARDED_FOR']
+             request.env['HTTP_X_FORWARDED_FOR'].split(/ /).last
+           else
+             '127.0.0.1'
     end
 
     case IPAddr.new(addr)
@@ -268,7 +265,7 @@ class JsonController < ApplicationController
       response: @response.spectrum(filter_limit: -1),
       messages: @messages.map(&:spectrum),
       total_available: @response.total_available,
-      default_institution: default_institution,
+      default_institution: default_institution
     }
   end
 
@@ -304,10 +301,8 @@ class JsonController < ApplicationController
   end
 
   def production?
-    begin
-      request.env['SERVER_NAME'] == 'search.lib.umich.edu'
-    rescue
-      false
-    end
+    request.env['SERVER_NAME'] == 'search.lib.umich.edu'
+  rescue StandardError
+    false
   end
 end

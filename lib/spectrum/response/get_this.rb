@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'aleph'
 
 module Spectrum
@@ -14,31 +16,32 @@ module Spectrum
       end
 
       private
+
       def needs_authentication
-        { status: "Not logged in", options: [] }
+        { status: 'Not logged in', options: [] }
       end
 
       def patron_not_found
-        { status: "Patron not found", options: [] }
+        { status: 'Patron not found', options: [] }
       end
 
       def patron_expired
-        { status: "Patron expired", options: [] }
+        { status: 'Patron expired', options: [] }
       end
 
       def fetch_get_this
         return {} unless @source.holdings
         return needs_authentication unless @request.logged_in?
         begin
-          patron = Aleph::Borrower.new.tap {|patron| patron.bor_info(@request.username) }
+          patron = Aleph::Borrower.new.tap { |patron| patron.bor_info(@request.username) }
         rescue Aleph::Error
           return patron_not_found
         end
         return patron_expired if patron.expired?
 
         {
-           status: "Success",
-           options: Spectrum::Policy::GetThis.new(patron, fetch_bib_record, fetch_holdings_record).resolve
+          status: 'Success',
+          options: Spectrum::Policy::GetThis.new(patron, fetch_bib_record, fetch_holdings_record).resolve
         }
       end
 
@@ -49,7 +52,7 @@ module Spectrum
 
       def fetch_bib_record
         client = @source.driver.constantize.connect(url: @source.url)
-        Spectrum::BibRecord.new(client.get('select', params: {q: "id:#{RSolr.solr_escape(@request.id)}"}))
+        Spectrum::BibRecord.new(client.get('select', params: { q: "id:#{RSolr.solr_escape(@request.id)}" }))
       end
 
       def process_response(response)
@@ -86,16 +89,14 @@ module Spectrum
       def get_url(info)
         record = @request.id
         if info['can_request']
-          query = {barcode: info['barcode'], getthis: 'Get this'}.to_query
+          query = { barcode: info['barcode'], getthis: 'Get this' }.to_query
           "https://mirlyn.lib.umich.edu/Record/#{record}/Hold?#{query}"
         elsif info['can_reserve']
-          query = {barcode: info['barcode']}.to_query
+          query = { barcode: info['barcode'] }.to_query
           url = "https://mirlyn.lib.umich.edu/Record/#{record}/Request?#{query}"
         elsif info['can_book']
-          query = {full_item_key: info['full_item_key']}.to_query
+          query = { full_item_key: info['full_item_key'] }.to_query
           url = "https://mirlyn.lib.umich.edu/Record/#{record}/Booking?#{query}"
-        else
-          nil
         end
       end
 
@@ -107,11 +108,11 @@ module Spectrum
           location: info['location'],
           callnumber: info['callnumber'],
           status: info['status'],
-          enum: [ info['enum_a'], info['enum_b'], info['enum_c'] ].compact,
-          chron: [ info['chron_i'], info['chron_j']].compact,
+          enum: [info['enum_a'], info['enum_b'], info['enum_c']].compact,
+          chron: [info['chron_i'], info['chron_j']].compact,
           info_link: item['info_link'],
           description: info['description'],
-          summary_holdings: item['summary_holdings'],
+          summary_holdings: item['summary_holdings']
         }
       end
 
@@ -124,7 +125,7 @@ module Spectrum
           rights: info['rights'],
           status: info['status'],
           description: info['description'],
-          summary_holdings: item['summary_holdings'],
+          summary_holdings: item['summary_holdings']
         }
       end
     end

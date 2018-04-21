@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Request
     class DataStore
@@ -22,8 +24,6 @@ module Spectrum
       def facet_limit
         500
       end
-
     end
   end
 end
-

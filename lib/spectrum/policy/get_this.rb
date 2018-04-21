@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
 module Spectrum
   module Policy
     class GetThis
-
       class Grant
         attr_reader :attribute, :features
         def initialize(attribute, features)
@@ -12,14 +13,14 @@ module Spectrum
         end
 
         def allow(account, bib, item)
-          h = {'patron' => account, 'bib' => bib, 'holding' => item}
+          h = { 'patron' => account, 'bib' => bib, 'holding' => item }
           features.all? { |feature| h[@attribute].send(feature) }
         end
       end
 
       class Option
         attr_reader :label, :service_type, :duration, :description, :tip, :faq, :form,
-          :grants, :weight, :orientation
+                    :grants, :weight, :orientation
 
         def initialize(config)
           @label = config['label']
@@ -42,7 +43,7 @@ module Spectrum
         end
 
         def allow?(account, bib, item)
-          grants.all? {|grant| grant.allow(account, bib, item) }
+          grants.all? { |grant| grant.allow(account, bib, item) }
         end
 
         def replace(account, bib, item)
@@ -97,7 +98,6 @@ module Spectrum
       end
 
       class << self
-
         attr_reader :options
 
         def load_config(config_file)
@@ -111,9 +111,8 @@ module Spectrum
         end
 
         def resolve(account, bib, item)
-          options.map {|option| option.resolve(account, bib, item) }.compact
+          options.map { |option| option.resolve(account, bib, item) }.compact
         end
-
       end
 
       attr_reader :account, :bib, :item
@@ -129,10 +128,10 @@ module Spectrum
       end
 
       private
+
       def options
         self.class.options
       end
-
     end
   end
 end

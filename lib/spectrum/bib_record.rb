@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'marc'
 
 module Spectrum
@@ -39,7 +41,7 @@ module Spectrum
     end
 
     def accession_number
-       "<accession_number>#{fetch_joined('oclc', ',')}</accession_number>"
+      "<accession_number>#{fetch_joined('oclc', ',')}</accession_number>"
     end
 
     def date
@@ -72,30 +74,30 @@ module Spectrum
 
     def genre
       {
-         'BK' => 'Book',
-         'SE' => 'Serial Publication',
-         'MP' => 'Map',
-         'MU' => 'Music',
-         'VM' => 'Visual Material',
-         'MV' => 'Mixed Material`',
-         'MX' => 'Mixed Material',
+        'BK' => 'Book',
+        'SE' => 'Serial Publication',
+        'MP' => 'Map',
+        'MU' => 'Music',
+        'VM' => 'Visual Material',
+        'MV' => 'Mixed Material`',
+        'MX' => 'Mixed Material'
       }[fmt]
     end
 
     def sgenre
       {
-         'BK' => 'Book',
-         'SE' => 'Book',
-         'MP' => 'Map',
-         'MU' => 'Graphics',
-         'VM' => 'Graphics',
-         'MV' => 'Manuscripts',
-         'MX' => 'Manuscripts',
+        'BK' => 'Book',
+        'SE' => 'Book',
+        'MP' => 'Map',
+        'MU' => 'Graphics',
+        'VM' => 'Graphics',
+        'MV' => 'Manuscripts',
+        'MX' => 'Manuscripts'
       }[fmt]
     end
 
     def fmt
-      (@fullrecord['970'] || {'a' => ''})['a']
+      (@fullrecord['970'] || { 'a' => '' })['a']
     end
 
     private
@@ -121,7 +123,7 @@ module Spectrum
     end
 
     def clean_marc(str)
-      str.respond_to?(:sub) ? str.sub(/[.,;:\/]$/,'') : ''
+      str.respond_to?(:sub) ? str.sub(/[.,;:\/]$/, '') : ''
     end
   end
 end

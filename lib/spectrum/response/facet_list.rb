@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Response
     class FacetList
@@ -16,7 +18,6 @@ module Spectrum
       def spectrum
         @datastore.facet(@facet)[:values]
       end
-
     end
   end
 end

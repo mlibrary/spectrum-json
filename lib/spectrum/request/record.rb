@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Request
     class Record
-
       def initialize(request)
         @request = request
         if request.params[:source] == 'summon'
@@ -48,50 +49,42 @@ module Spectrum
       end
 
       def book_mark?
-        begin
-          @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
-        rescue
-          false
-        end
+        @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
+      rescue StandardError
+        false
       end
 
       def book_mark
-        begin
         @request.params['id']
-        rescue
-        end
+      rescue StandardError
       end
 
       def holdings_only?
         # TODO: Check this for when we implement this completely.
-        begin
-          if @data['facets']['holdings_only'].nil?
-            true
-          else
-            Array(@data['facets']['holdings_only']).include?('true')
-          end
-        rescue
+
+        if @data['facets']['holdings_only'].nil?
           true
+        else
+          Array(@data['facets']['holdings_only']).include?('true')
         end
+      rescue StandardError
+        true
       end
 
-
-
-      def sort
-      end
+      def sort; end
 
       def slice
         [0, 1]
       end
 
-      def query(query_map = {}, filter_map = {})
+      def query(_query_map = {}, _filter_map = {})
         {
           q: @query,
           page: 0,
           start: 0,
           rows: 1,
           fq: [],
-          per_page: 1,
+          per_page: 1
         }
       end
 
@@ -122,7 +115,6 @@ module Spectrum
       def rf
         nil
       end
-
     end
   end
 end

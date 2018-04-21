@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Request
     class Text
       def initialize(request)
-        @raw = CGI::unescape(request.raw_post)
+        @raw = CGI.unescape(request.raw_post)
         @data = JSON.parse(@raw)
         @username = request.env['HTTP_X_REMOTE_USER'] || ''
         @items = nil
@@ -25,9 +27,9 @@ module Spectrum
         @data.each_pair do |focus_uid, data|
           focus = Spectrum::Json.foci[focus_uid]
           next unless focus
-          data["records"].each do |id|
+          data['records'].each do |id|
             record = focus.fetch_record(Spectrum::Json.sources, id)
-            yield record + [{uid: 'base_url', value: data["base_url"]}]
+            yield record + [{ uid: 'base_url', value: data['base_url'] }]
           end
         end
       end

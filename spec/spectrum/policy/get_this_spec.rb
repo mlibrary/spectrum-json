@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 require 'spectrum/policy/get_this'
 
 class PatronStub
   def empty?
     true
   end
-  def expired?
-  end
-  def active?
-  end
 
-  def method_missing(symbol, *args)
+  def expired?; end
+
+  def active?; end
+
+  def method_missing(_symbol, *_args)
     ''
   end
 end
@@ -35,25 +37,26 @@ class AuthenticatedPatronStub
     'Authenticated Patron'
   end
 
-  def method_missing(symbol, *args)
+  def method_missing(symbol, *_args)
     symbol.to_s
   end
 end
 
 class BibStub
-  def method_missing(symbol, *args)
+  def method_missing(symbol, *_args)
     symbol.to_s
   end
 end
-
 
 class ItemStub
   def on_site?
     true
   end
+
   def on_shelf?
     true
   end
+
   def circulating?
     true
   end
@@ -65,7 +68,8 @@ class ItemStub
   def barcode
     '00000000000'
   end
-  def method_missing(symbol, *args)
+
+  def method_missing(_symbol, *_args)
     ''
   end
 end
@@ -85,7 +89,7 @@ describe Spectrum::Policy::GetThis::Option do
 
   describe '#to_h' do
     it 'returns a hash' do
-      expect(subject.to_h).to eq({
+      expect(subject.to_h).to eq(
         'label' => 'Label',
         'description' => 'Description',
         'duration' => 'Duration',
@@ -94,7 +98,7 @@ describe Spectrum::Policy::GetThis::Option do
         'tip' => 'tip',
         'form' => 'form',
         'service_type' => nil
-      })
+      )
     end
   end
 end
@@ -117,7 +121,7 @@ describe Spectrum::Policy::GetThis do
   end
 
   before do
-    described_class.load_config(File.expand_path("../../../get_this_policy.yml", __FILE__))
+    described_class.load_config(File.expand_path('../../../get_this_policy.yml', __FILE__))
   end
 
   let(:authenticated_subject) do
@@ -128,9 +132,9 @@ describe Spectrum::Policy::GetThis do
     described_class.new(patron, bib, item)
   end
 
-  describe "::load_config(config_file)" do
-    it "loads a yaml file" do
-      described_class.load_config(File.expand_path("../../../get_this_policy.yml", __FILE__))
+  describe '::load_config(config_file)' do
+    it 'loads a yaml file' do
+      described_class.load_config(File.expand_path('../../../get_this_policy.yml', __FILE__))
       expect(described_class.options.length).to eq(10)
     end
   end
@@ -141,7 +145,7 @@ describe Spectrum::Policy::GetThis do
     end
 
     it 'fills in placeholders' do
-      expect(authenticated_subject.resolve[1]['form']['action']).to eq("https://mirlyn.lib.umich.edu/Record/000000000/Hold")
+      expect(authenticated_subject.resolve[1]['form']['action']).to eq('https://mirlyn.lib.umich.edu/Record/000000000/Hold')
     end
   end
 end

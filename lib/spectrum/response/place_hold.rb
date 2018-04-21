@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Response
     class PlaceHold
@@ -12,17 +14,15 @@ module Spectrum
           request.patron_id,
           request.record_id,
           request.item_id,
-          {
-            pickup_location: request.pickup_location,
-            last_interest_date: request.not_needed_after,
-            start_interest_date: '',
-            sub_author: '',
-            sub_title: '',
-            pages: '',
-            note_1: '',
-            note_2: '',
-            rush: '',
-          }
+          pickup_location: request.pickup_location,
+          last_interest_date: request.not_needed_after,
+          start_interest_date: '',
+          sub_author: '',
+          sub_title: '',
+          pages: '',
+          note_1: '',
+          note_2: '',
+          rush: ''
         )
       end
 
@@ -33,7 +33,7 @@ module Spectrum
           hold.error?
           return {
             status: hold.note,
-            orientation: hold.note == 'Action Succeeded' ? @success_message : @failure_message,
+            orientation: hold.note == 'Action Succeeded' ? @success_message : @failure_message
           }
         rescue NoMethodError => e
           # Some hold placing errors raise NoMethodErrors,
@@ -48,10 +48,9 @@ module Spectrum
                 response = client.instance_eval { @response }
                 "#{self.class.name} status: #{response.status} body: #{body}"
               end
-            rescue
+            rescue StandardError
             end
           end
-
         rescue Exception => e
           # Some other exception
         end

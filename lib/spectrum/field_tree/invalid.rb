@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 module Spectrum
   module FieldTree
     class Invalid < RuntimeError
-
-      def query(field_map = {})
+      def query(_field_map = {})
         ''
       end
 
@@ -12,4 +13,3 @@ module Spectrum
     end
   end
 end
-

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   class Holding
     attr_reader :holding, :record, :barcode
@@ -79,7 +81,7 @@ module Spectrum
     end
 
     def off_site?
-      @holding['location'].start_with?('Offsite') || @holding['location'].start_with?('- Offsite')
+      @holding['location'].start_with?('Offsite', '- Offsite')
     end
 
     def location
@@ -107,7 +109,7 @@ module Spectrum
         'can_reserve' => false,
         'can_request' => false,
         'status' => '',
-        'location' => '',
+        'location' => ''
       }
     end
   end

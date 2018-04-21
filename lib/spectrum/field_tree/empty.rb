@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Spectrum
   module FieldTree
     class Empty
-      def query(field_map = {})
+      def query(_field_map = {})
         '*:*'
       end
 
@@ -13,7 +15,7 @@ module Spectrum
         {}
       end
 
-      def params(field_map)
+      def params(_field_map)
         {}
       end
     end

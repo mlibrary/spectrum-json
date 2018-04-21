@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Request
     class Facet
       include Requesty
       attr_accessor :facet_uid
 
-      def initialize request = nil
+      def initialize(request = nil)
         super
         @facet_uid = @data['facet_uid'] || request.params[:facet]
       end
@@ -52,14 +54,14 @@ module Spectrum
           start: 0,
           rows: 0,
           fq: @facets.query(filter_map),
-          per_page: 0,
+          per_page: 0
         }
       end
 
       def spectrum
-        super.merge({
+        super.merge(
           facet_uid: @facet_uid
-        })
+        )
       end
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Request
     class PlaceHold
@@ -9,40 +11,40 @@ module Spectrum
         false
       end
 
-      def self.lib=(value)
-        @lib = value
+      class << self
+        attr_writer :lib
       end
 
-      def self.adm=(value)
-        @adm = value
+      class << self
+        attr_writer :adm
       end
 
-      def self.lib
-        @lib
+      class << self
+        attr_reader :lib
       end
 
-      def self.adm
-        @adm
+      class << self
+        attr_reader :adm
       end
 
       attr_reader :request, :patron
       def initialize(request)
         @request = request
         @record_id = get_record_id_from_request(request)
-        @source  = get_source_from_request(request)
+        @source = get_source_from_request(request)
         @item_key = get_item_key_from_request(request)
         user = request.env['HTTP_X_REMOTE_USER']
         begin
           if user && !user.empty?
             # The order matters here because Aleph::Borrower#bor_info raises an exception if the account isn't valid
             @logged_in = true
-            @patron = Aleph::Borrower.new.tap {|patron| patron.bor_info(user) }
+            @patron = Aleph::Borrower.new.tap { |patron| patron.bor_info(user) }
             @valid_account = true
             @option = Spectrum::Policy::GetThis.new(@patron, fetch_bib_record, fetch_holdings_record).resolve.reject do |service|
               ['Self Service', 'Document Delivery'].include? service['service_type']
             end.first
           end
-        rescue
+        rescue StandardError
         end
       end
 
@@ -84,7 +86,7 @@ module Spectrum
 
       def fetch_bib_record
         client = @source.driver.constantize.connect(url: @source.url)
-        Spectrum::BibRecord.new(client.get('select', params: {q: "id:#{RSolr.solr_escape(@record_id)}"}))
+        Spectrum::BibRecord.new(client.get('select', params: { q: "id:#{RSolr.solr_escape(@record_id)}" }))
       end
 
       def fetch_holdings_record

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 
 module Spectrum
@@ -15,9 +17,7 @@ module Spectrum
     def self.resolve(collection, callno)
       collection = normalize_collection(collection)
       @config[collection].find do |item|
-        if item.match(callno)
-          return item.text
-        end
+        return item.text if item.match(callno)
       end
       ''
     end
@@ -39,19 +39,18 @@ module Spectrum
       start <= callno && callno < stop
     end
 
-    def normalize(callno)
+    def normalize(_callno)
       nil
     end
-
   end
 
   def self.FloorLocation(location)
-    return location.map {|item| FloorLocation(item)} if Array === location
+    return location.map { |item| FloorLocation(item) } if Array === location
 
     case location['type']
     when 'Everything'
       EverythingFloorLocation
-    when 'Dewey' 
+    when 'Dewey'
       DeweyFloorLocation
     when 'LC'
       LCFloorLocation
@@ -61,7 +60,7 @@ module Spectrum
   end
 
   class EverythingFloorLocation < FloorLocation
-    def match(callno)
+    def match(_callno)
       true
     end
   end
@@ -79,11 +78,11 @@ module Spectrum
         numbers = match[2] || ''
         decimal = (match[3] || '').ljust(5, '0')
         rest    = match[4] || ''
-        return letters unless (letters + numbers).match(/\S/)
+        return letters unless (letters + numbers) =~ /\S/
         numbers = '0' if numbers.nil? || numbers.empty?
-        return '%s%04d.%s%s' % [letters, numbers.to_i, decimal, rest]
+        return format('%s%04d.%s%s', letters, numbers.to_i, decimal, rest)
       end
-      return ''
+      ''
     end
   end
 end

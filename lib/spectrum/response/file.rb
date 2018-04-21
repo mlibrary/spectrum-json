@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Response
     class File
@@ -5,7 +7,7 @@ module Spectrum
 
       def initialize(request)
         self.request = request
-        self.driver  = Spectrum::Json::actions['file'].driver
+        self.driver  = Spectrum::Json.actions['file'].driver
       end
 
       def data

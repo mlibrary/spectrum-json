@@ -1,29 +1,31 @@
-require "json-schema"
+# frozen_string_literal: true
+
+require 'json-schema'
 require 'lru_redux'
 
-require "active_support"
-require "active_support/concern"
+require 'active_support'
+require 'active_support/concern'
 
 require 'spectrum/holding'
 require 'spectrum/floor_location'
 require 'spectrum/bib_record'
 
-require "spectrum/json/version"
-require "spectrum/json/engine"
-require "spectrum/json/schema"
+require 'spectrum/json/version'
+require 'spectrum/json/engine'
+require 'spectrum/json/schema'
 
 require 'spectrum/json/ris'
 require 'spectrum/json/twilio'
 require 'spectrum/json/email'
 
-require "spectrum/response"
-require "spectrum/response/spectrumable"
-require "spectrum/response/message"
-require "spectrum/response/data_store"
-require "spectrum/response/data_store_list"
-require "spectrum/response/facet_list"
-require "spectrum/response/record"
-require "spectrum/response/record_list"
+require 'spectrum/response'
+require 'spectrum/response/spectrumable'
+require 'spectrum/response/message'
+require 'spectrum/response/data_store'
+require 'spectrum/response/data_store_list'
+require 'spectrum/response/facet_list'
+require 'spectrum/response/record'
+require 'spectrum/response/record_list'
 require 'spectrum/response/holdings'
 require 'spectrum/response/get_this'
 require 'spectrum/response/place_hold'
@@ -33,22 +35,22 @@ require 'spectrum/response/email'
 require 'spectrum/response/file'
 require 'spectrum/response/profile'
 
-require "spectrum/field_tree"
-require "spectrum/field_tree/base"
-require "spectrum/field_tree/field"
-require "spectrum/field_tree/field_boolean"
-require "spectrum/field_tree/literal"
-require "spectrum/field_tree/empty"
-require "spectrum/field_tree/invalid"
+require 'spectrum/field_tree'
+require 'spectrum/field_tree/base'
+require 'spectrum/field_tree/field'
+require 'spectrum/field_tree/field_boolean'
+require 'spectrum/field_tree/literal'
+require 'spectrum/field_tree/empty'
+require 'spectrum/field_tree/invalid'
 
-require "spectrum/facet_list"
+require 'spectrum/facet_list'
 
-require "spectrum/request"
-require "spectrum/request/record"
-require "spectrum/request/requesty"
-require "spectrum/request/null"
-require "spectrum/request/facet"
-require "spectrum/request/data_store"
+require 'spectrum/request'
+require 'spectrum/request/record'
+require 'spectrum/request/requesty'
+require 'spectrum/request/null'
+require 'spectrum/request/facet'
+require 'spectrum/request/data_store'
 require 'spectrum/request/holdings'
 require 'spectrum/request/get_this'
 require 'spectrum/request/place_hold'
@@ -87,13 +89,13 @@ module Spectrum
         @sorts   = Spectrum::Config::SortList.new(YAML.load_file(@sorts_file))
         @fields  = Spectrum::Config::FieldList.new(YAML.load_file(@fields_file), self)
         @foci    = Spectrum::Config::FocusList.new(
-          Dir.glob(@focus_files).map {|file| YAML.load_file(file) },
+          Dir.glob(@focus_files).map { |file| YAML.load_file(file) },
           self
         )
 
         @actions.configure!
 
-        request  = Spectrum::Request::DataStore.new
+        request = Spectrum::Request::DataStore.new
 
         @foci.values.each do |focus|
           focus.get_null_facets do
@@ -110,23 +112,21 @@ module Spectrum
         self
       end
 
-
-      def routes app
+      def routes(app)
         foci.routes(app)
 
         app.match 'profile',
-          to: 'json#profile',
-          defaults: { type: 'Profile' },
-          via: [:get, :options]
+                  to: 'json#profile',
+                  defaults: { type: 'Profile' },
+                  via: %i[get options]
 
-        ['text', 'email', 'file'].each do |action|
+        %w[text email file].each do |action|
           app.match action,
-            to: "json##{action}",
-            defaults: { type: action.titlecase },
-            via: [ :post, :options ]
+                    to: "json##{action}",
+                    defaults: { type: action.titlecase },
+                    via: %i[post options]
         end
       end
-
     end
   end
 end

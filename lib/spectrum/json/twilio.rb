@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Json
     class Twilio
@@ -10,9 +12,9 @@ module Spectrum
         end
 
         def message(to, messages)
-          return [] unless to.match(/^[0-9]{10,10}$/)
+          return [] unless to =~ /^[0-9]{10,10}$/
           messages.each_with_index.map do |message, index|
-            self.client.messages.create(to: "1#{to}", from: self.service, body: format(message, index))
+            client.messages.create(to: "1#{to}", from: service, body: format(message, index))
           end
         end
 
@@ -33,7 +35,7 @@ module Spectrum
         end
 
         def field_value(message, uid)
-          Array(message.find { |field| field[:uid] == uid}[:value])
+          Array(message.find { |field| field[:uid] == uid }[:value])
         end
 
         def title(message)

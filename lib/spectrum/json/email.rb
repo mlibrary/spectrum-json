@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'mail'
 
 module Spectrum
@@ -11,19 +13,19 @@ module Spectrum
         end
 
         def text_header
-          self.service.text_header + "\n"
+          service.text_header + "\n"
         end
 
         def text_footer
-          self.service.text_footer + "\n"
+          service.text_footer + "\n"
         end
 
         def html_header
-          self.service.html_header
+          service.html_header
         end
 
         def html_footer
-          self.service.html_footer
+          service.html_footer
         end
 
         def text_format(messages)
@@ -95,14 +97,14 @@ module Spectrum
         end
 
         def field_value(message, uid)
-          Array(message.find { |field| field[:uid] == uid}[:value])
+          Array(message.find { |field| field[:uid] == uid }[:value])
         end
 
         def message(email_to, email_from, messages)
           text_content = text_format(messages)
           html_content = html_format(messages)
-          subject_content = self.service.subject
-          self.client.deliver do
+          subject_content = service.subject
+          client.deliver do
             to   email_to
             from email_from
             subject subject_content

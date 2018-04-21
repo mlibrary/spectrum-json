@@ -1,26 +1,28 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Json
     class Ris
       class << self
         attr_accessor :fields
-        def configure!(config)
-          self.fields = [
-            :type,
-            :id,
-            :title,
-            :author,
-            :publisher,
-            :publication_year,
-            :publication_place,
-            :publication,
-            :issue,
-            :volume,
-            :doi,
-            :sn,
-            :url,
-            :sp,
-            :ep,
-            :er
+        def configure!(_config)
+          self.fields = %i[
+            type
+            id
+            title
+            author
+            publisher
+            publication_year
+            publication_place
+            publication
+            issue
+            volume
+            doi
+            sn
+            url
+            sp
+            ep
+            er
           ]
         end
 
@@ -42,7 +44,7 @@ module Spectrum
 
         def url(item)
           field(item, 'links').map do |link|
-            link.find {|attr| attr['uid'] == 'href'}
+            link.find { |attr| attr['uid'] == 'href' }
           end.compact.map do |item|
             "L2 - #{item['value']}"
           end.join("\n")
@@ -53,9 +55,8 @@ module Spectrum
         end
 
         def sn(item)
-          ['issn', 'isbn', 'eisbn', 'eissn'].inject([]) do |acc, uid|
+          %w[issn isbn eisbn eissn].each_with_object([]) do |uid, acc|
             acc << multi_valued(item, 'SN', uid)
-            acc
           end.compact.reject(&:empty?).join("\n")
         end
 
@@ -96,15 +97,15 @@ module Spectrum
         end
 
         def ris(item)
-          self.fields.map { |field| self.send(field, item) }.compact.reject(&:empty?).join("\n")
+          fields.map { |field| send(field, item) }.compact.reject(&:empty?).join("\n")
         end
 
         def type(item)
           single_valued(item, 'TY', 'format')
         end
 
-        def er(item)
-          "ER -"
+        def er(_item)
+          'ER -'
         end
 
         def single_valued(item, tag, uid)
@@ -126,11 +127,10 @@ module Spectrum
         end
 
         def field_value(message, uid)
-          values = message.find { |field| field[:uid] == uid}
+          values = message.find { |field| field[:uid] == uid }
           return Array(values[:value]) if values
           []
         end
-
       end
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Request
     module Requesty
@@ -14,11 +16,11 @@ module Spectrum
       def initialize(request = nil, focus = nil)
         @request = request
         @focus   = focus
-        if @request && @request.post?
-          @raw = CGI::unescape(@request.raw_post)
+        if @request&.post?
+          @raw = CGI.unescape(@request.raw_post)
           @data = JSON.parse(@raw)
 
-          bad_request "Request json did not validate" unless Spectrum::Json::Schema.validate(:request, @data)
+          bad_request 'Request json did not validate' unless Spectrum::Json::Schema.validate(:request, @data)
 
           if @data
             @uid        = @data['uid']
@@ -42,12 +44,12 @@ module Spectrum
               @page_size = @count
               @page_number = (@start / @page_size).floor
 
-              while @page_number > 0 && @page_size * (@page_number+1) < last_record
+              while @page_number > 0 && @page_size * (@page_number + 1) < last_record
                 first_record = @page_size * @page_number
                 if @start - first_record < @page_number
-                   @page_size = (last_record / @page_number).ceil
+                  @page_size = (last_record / @page_number).ceil
                 else
-                   @page_size += (@start - first_record).floor
+                  @page_size += (@start - first_record).floor
                 end
                 @page_number = (@start / @page_size).floor
               end
@@ -57,7 +59,7 @@ module Spectrum
             validate!
           end
         end
-        @page      = (@page_number || 0) + 1
+        @page = (@page_number || 0) + 1
 
         @start     ||= 0
         @count     ||= 0
@@ -94,11 +96,9 @@ module Spectrum
       end
 
       def book_mark?
-        begin
-          @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
-        rescue
-          false
-        end
+        @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
+      rescue StandardError
+        false
       end
 
       def book_mark
@@ -107,7 +107,7 @@ module Spectrum
 
       def authenticated?
         # When @request is nil, the server is making the request for it's own information.
-        return true unless @request && @request.env
+        return true unless @request&.env
         !(@request.env['HTTP_X_REMOTE_USER'] || '').empty?
       end
 
@@ -121,7 +121,7 @@ module Spectrum
         @focus ? @focus.rff(@facets) : []
       end
 
-      def fvf(filter_map = {})
+      def fvf(_filter_map = {})
         @focus ? @focus.fvf(@facets) : []
       end
 
@@ -131,8 +131,8 @@ module Spectrum
           page: @page,
           start: @start,
           rows: @page_size,
-          fq: @facets.query(filter_map, (@focus && @focus.value_map) || {}),
-          per_page: @page_size,
+          fq: @facets.query(filter_map, (@focus&.value_map) || {}),
+          per_page: @page_size
         }.merge(@tree.params(query_map))
       end
 
@@ -148,24 +148,25 @@ module Spectrum
           field_tree: @tree.spectrum,
           facets: @facets.spectrum,
           sort: @sort,
-          settings: @settings,
+          settings: @settings
         }
         if @request_id
-          ret.merge({request_id: @request_id})
+          ret.merge(request_id: @request_id)
         else
           ret
         end
       end
 
       private
-      def bad_request message
-        raise ActionController::BadRequest.new("input", Exception.new(message))
+
+      def bad_request(message)
+        raise ActionController::BadRequest.new('input', Exception.new(message))
       end
 
       def validate!
-        bad_request "uid is required" if @uid.nil?
-        bad_request "start must be >= 0" if @start < 0
-        bad_request "count must be >= 0" if @count < 0
+        bad_request 'uid is required' if @uid.nil?
+        bad_request 'start must be >= 0' if @start < 0
+        bad_request 'count must be >= 0' if @count < 0
         bad_request @tree.error unless @tree.valid?
         # TODO:
         # raise ActionController::BadRequest.new("input", @facets) unless @facets.valid?

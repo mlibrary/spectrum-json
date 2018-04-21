@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Request
     class Holdings
@@ -10,7 +12,6 @@ module Spectrum
       def can_sort?
         false
       end
-
     end
   end
 end

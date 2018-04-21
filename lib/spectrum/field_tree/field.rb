@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module FieldTree
     class Field < Base
@@ -6,8 +8,8 @@ module Spectrum
         'field' => Spectrum::FieldTree::Field,
         'literal' => Spectrum::FieldTree::Literal,
         'special' => Spectrum::FieldTree::Special,
-        'value_boolean' => Spectrum::FieldTree::ValueBoolean,
-      }
+        'value_boolean' => Spectrum::FieldTree::ValueBoolean
+      }.freeze
 
       def params(field_map)
         ret = super
@@ -18,7 +20,7 @@ module Spectrum
       end
 
       def query(field_map)
-        val   = @children.map {|item| item.query(field_map)}.join(' ')
+        val = @children.map { |item| item.query(field_map) }.join(' ')
         if @value.empty? || field_map.by_uid(@value).nil? || field_map.by_uid(@value).query_field.empty?
           val
         else
@@ -26,7 +28,7 @@ module Spectrum
           if field.respond_to?(:map)
             "(#{field.map { |f| "#{f}:(#{val})" }.join(' OR ')})"
           elsif field == 'search_title_starts_with'
-            "#{field}:\"#{val.gsub(/"/, '')}\""
+            "#{field}:\"#{val.delete('"')}\""
           else
             "#{field}:(#{val})"
           end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module FieldTree
     class Base
@@ -7,14 +9,14 @@ module Spectrum
         'literal' => Spectrum::FieldTree::Literal,
         'special' => Spectrum::FieldTree::Special,
         'value_boolean' => Spectrum::FieldTree::ValueBoolean,
-        'field_boolean' => Spectrum::FieldTree::FieldBoolean,
-      }
+        'field_boolean' => Spectrum::FieldTree::FieldBoolean
+      }.freeze
 
-      def initialize data
+      def initialize(data)
         @type  = data['type']
         @value = data['value']
         @children = data['children'] || []
-        @children = @children.map {|child| Spectrum::FieldTree.new(child, self.class::TYPES)}
+        @children = @children.map { |child| Spectrum::FieldTree.new(child, self.class::TYPES) }
       end
 
       def valid?
@@ -26,21 +28,19 @@ module Spectrum
           type: @type,
           value: @value
         }
-        ret.merge!({
-          children: @children.map(&:spectrum)
-        }) unless @children.empty?
+        ret[:children] = @children.map(&:spectrum) unless @children.empty?
         ret
       end
 
       def params(field_map)
         ret = {}
-        @children.map {|child| child.params(field_map) }.each do |p|
+        @children.map { |child| child.params(field_map) }.each do |p|
           ret.merge!(p)
         end
         ret
       end
 
-      def query(field_map = {}) 
+      def query(_field_map = {})
         @value
       end
     end

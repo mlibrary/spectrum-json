@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Response
     def self.SpecialistEngine(config)
@@ -10,7 +12,7 @@ module Spectrum
     end
 
     class EmptyFieldsFieldList
-      def by_uid(uid)
+      def by_uid(_uid)
         self
       end
 
@@ -29,16 +31,16 @@ module Spectrum
         @config = config
       end
 
-      def find(data)
+      def find(_data)
         puts "#{@config.inspect}.find"
       end
 
       def focus
-        @focus ||= Spectrum::Json::foci[config['focus']]
+        @focus ||= Spectrum::Json.foci[config['focus']]
       end
 
       def source
-        @source ||= Spectrum::Json::sources[focus.source]
+        @source ||= Spectrum::Json.sources[focus.source]
       end
 
       def client
@@ -66,22 +68,22 @@ module Spectrum
           department: specialist['ssfield_user_department'],
           email: specialist['email'].first,
           phone: specialist['ssfield_phone'],
-          office: specialist['smfield_user_location'].first.strip.split(/\n/),
+          office: specialist['smfield_user_location'].first.strip.split(/\n/)
         }
       end
     end
 
     class SpecialistTwoStep < SpecialistEngine
       def focus
-        @focus ||= Array(config['focus']).map {|f| Spectrum::Json::foci[f]}
+        @focus ||= Array(config['focus']).map { |f| Spectrum::Json.foci[f] }
       end
 
       def source
-        @source ||= focus.map {|f| Spectrum::Json::sources[f.source]}
+        @source ||= focus.map { |f| Spectrum::Json.sources[f.source] }
       end
 
       def client
-        @client ||= source.map {|s| s.driver.constantize.connect(url: s.url) }
+        @client ||= source.map { |s| s.driver.constantize.connect(url: s.url) }
       end
 
       def fetch_records(query)
@@ -96,10 +98,9 @@ module Spectrum
       def extract_terms(records)
         records['response']['docs'].map do |doc|
           doc[fields.first]
-        end.compact.flatten.inject(Hash.new(0)) do |list, field|
+        end.compact.flatten.each_with_object(Hash.new(0)) do |field, list|
           list[field] += 1
-          list
-        end.delete_if do |field, count|
+        end.delete_if do |_field, count|
           count < term_threshold
         end.map do |field, count|
           [RSolr.solr_escape(field).gsub(' ', '\ '), count]
@@ -122,7 +123,7 @@ module Spectrum
           rows: 10,
           fl: '*',
           fq: '+source:drupal-users +status:true',
-          wt: 'ruby',
+          wt: 'ruby'
         }
         client.last.get('select', params: params)
       end
@@ -130,7 +131,7 @@ module Spectrum
       def empty_results
         {
           config['keys']['terms'] => {},
-          config['keys']['specialists'] => [],
+          config['keys']['specialists'] => []
         }
       end
 
@@ -149,7 +150,7 @@ module Spectrum
         end
         {
           config['keys']['terms'] => terms,
-          config['keys']['specialists'] => specialists,
+          config['keys']['specialists'] => specialists
         }
       end
     end
@@ -166,21 +167,20 @@ module Spectrum
           rows: 10,
           fl: 'score,*',
           fq: '+source:drupal-users +status:true',
-          wt: 'ruby',
+          wt: 'ruby'
         }
         client.last.get('select', params: params)
       end
 
-      def find(query)
+      def find(_query)
         {
           config['keys']['terms'] => {},
-          config['keys']['specialists'] => [],
+          config['keys']['specialists'] => []
         }
       end
     end
 
     class Specialists
-
       class << self
         attr_reader :config, :logger, :cache
         def configure(file)
@@ -195,7 +195,7 @@ module Spectrum
               [key, ::Spectrum::Response::SpecialistEngine(value)]
             end
           end.compact.to_h
-          @cache ||= LruRedux::TTL::ThreadSafe.new(500, 43200)
+          @cache ||= LruRedux::TTL::ThreadSafe.new(500, 43_200)
         end
       end
 
@@ -231,9 +231,9 @@ module Spectrum
           report(
             query: query[:q],
             filters: query[:fq],
-            hlb: results['hlb'].keys.map {|term| term.gsub(/\\/, '')},
+            hlb: results['hlb'].keys.map { |term| term.delete('\\') },
             expertise: results['expertise'].keys,
-            hlb_expert: results['hlb_expert'].map {|expert| expert[:email].sub(/@umich.edu/, '')},
+            hlb_expert: results['hlb_expert'].map { |expert| expert[:email].sub(/@umich.edu/, '') },
             expertise_expert: results['expertise_expert']
           )
           merge(results['hlb_expert'] + results['expertise_expert'])
@@ -263,7 +263,6 @@ module Spectrum
           end
         end
       end
-
     end
   end
 end

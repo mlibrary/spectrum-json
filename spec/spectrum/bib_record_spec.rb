@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../spec_helper'
 require 'spectrum/bib_record'
 
@@ -7,7 +9,7 @@ describe Spectrum::BibRecord do
   end
 
   context '#title' do
-    it "returns a string" do
+    it 'returns a string' do
       expect(subject.title).to eq('The materials of aircraft construction, for the designer, user and student of aircraft and aircraft engines,')
     end
   end
@@ -65,5 +67,4 @@ describe Spectrum::BibRecord do
       expect(subject.callnumber).to eq('TL 698 .H64 1940')
     end
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spectrum
   module Response
     class Profile
@@ -11,7 +13,7 @@ module Spectrum
           status: request.status,
           email: request.email,
           text: request.sms,
-          institutions: request.institutions,
+          institutions: request.institutions
         }
       end
     end

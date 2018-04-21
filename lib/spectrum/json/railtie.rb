@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails'
 require 'exlibris-aleph'
 
@@ -6,7 +8,7 @@ module Spectrum
     class Railtie < Rails::Railtie
       initializer 'spectrum-json.initialize' do
         Spectrum::Json.configure(Rails.root, Rails.configuration.relative_url_root)
-        Spectrum::Policy::GetThis::load_config(File.join(Rails.root, 'config', 'get_this.yml'))
+        Spectrum::Policy::GetThis.load_config(File.join(Rails.root, 'config', 'get_this.yml'))
         config_data = YAML.load_file(File.join(Rails.root, 'config', 'aleph.yml'))
         Spectrum::Request::PlaceHold.configure do |config|
           config.lib = config_data['bib_library']
@@ -20,7 +22,7 @@ module Spectrum
 
         Spectrum::FloorLocation.configure(File.join(Rails.root, 'config', 'floor_locations.json'))
 
-        Spectrum::Response::Specialists::configure(File.join(Rails.root, 'config', 'specialists.yml'))
+        Spectrum::Response::Specialists.configure(File.join(Rails.root, 'config', 'specialists.yml'))
       end
     end
   end

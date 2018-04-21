@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2016, Regents of the University of Michigan.
 # All rights reserved. See LICENSE.txt for details.
 
@@ -19,4 +21,3 @@ rescue LoadError => e
 end
 
 task default: tasks
-
