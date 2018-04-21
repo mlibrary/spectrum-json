@@ -31,6 +31,7 @@ require 'spectrum/response/specialists'
 require 'spectrum/response/text'
 require 'spectrum/response/email'
 require 'spectrum/response/file'
+require 'spectrum/response/profile'
 
 require "spectrum/field_tree"
 require "spectrum/field_tree/base"
@@ -54,6 +55,7 @@ require 'spectrum/request/place_hold'
 require 'spectrum/request/text'
 require 'spectrum/request/email'
 require 'spectrum/request/file'
+require 'spectrum/request/profile'
 
 require 'spectrum/policy/get_this'
 
@@ -111,6 +113,12 @@ module Spectrum
 
       def routes app
         foci.routes(app)
+
+        app.match 'profile',
+          to: 'json#profile',
+          defaults: { type: 'Profile' },
+          via: [:get, :options]
+
         ['text', 'email', 'file'].each do |action|
           app.match action,
             to: "json##{action}",

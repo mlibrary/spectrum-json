@@ -56,6 +56,10 @@ class JsonController < ApplicationController
     )
   end
 
+  def profile
+    render(json: response_class.new(request_class.new(request)).spectrum)
+  end
+
   def index
     @request     = Spectrum::Request::Null.new
     @new_request = Spectrum::Request::Null.new
