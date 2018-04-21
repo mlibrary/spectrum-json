@@ -31,18 +31,31 @@ module Spectrum
         return { status: 'No account' } unless @valid_account
         begin
           hold.error?
-          {
+          return {
             status: hold.note,
             orientation: hold.note == 'Action Succeeded' ? @success_message : @failure_message,
           }
         rescue NoMethodError => e
           # Some hold placing errors raise NoMethodErrors,
           # but still have more information available.
-          { status: hold.instance_eval { @root }["reply_text"] }
+          root = hold.instance_eval { @root }
+          return { status: root['reply_text'] } if root && root['reply_text']
+
+          Rails.logger.info do
+            begin
+              if client = hold.instance_eval { @client }
+                body = client.instance_eval { @body }
+                response = client.instance_eval { @response }
+                "#{self.class.name} status: #{response.status} body: #{body}"
+              end
+            rescue
+            end
+          end
+
         rescue Exception => e
           # Some other exception
-          { status: "Unable to place hold" }
         end
+        { status: 'Unable to place hold' }
       end
     end
   end
