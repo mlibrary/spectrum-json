@@ -108,7 +108,12 @@ module Spectrum
       def authenticated?
         # When @request is nil, the server is making the request for it's own information.
         return true unless @request&.env
-        !(@request.env['HTTP_X_REMOTE_USER'] || '').empty?
+
+        # If there's a @request.env, but not a dlpsInstitutionId then it's empty.
+        return false unless @request.env['dlpsInstitutionId']
+
+        # If we found an institution we're authenticated.
+        @request.env['dlpsInstitutionId'].length > 0
       end
 
       # For summon's range filter (i.e. an applied filter)
