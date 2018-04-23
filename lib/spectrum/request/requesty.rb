@@ -17,7 +17,7 @@ module Spectrum
         @request = request
         @focus   = focus
         if @request&.post?
-          @raw = CGI.unescape(@request.raw_post)
+          @raw = @request.raw_post
           @data = JSON.parse(@raw)
 
           bad_request 'Request json did not validate' unless Spectrum::Json::Schema.validate(:request, @data)
