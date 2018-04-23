@@ -13,7 +13,8 @@ module Spectrum
           status: request.status,
           email: request.email,
           text: request.sms,
-          institutions: request.institutions
+          institutions: request.institutions,
+          proxyPrefix: request.proxy_prefix
         }
       end
     end
