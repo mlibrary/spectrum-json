@@ -13,7 +13,7 @@ module Spectrum
       end
 
       def to
-        @data['to']
+        @to ||= @data['to'].to_s.gsub(/\D/, '')
       end
 
       def items
