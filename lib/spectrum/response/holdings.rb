@@ -142,7 +142,7 @@ module Spectrum
       end
 
       def get_aeon_location(_record, item, _info)
-        return nil if item['sub_library'] && item['sub_library'] = 'BENT'
+        return nil if item['sub_library'] && item['sub_library'] == 'BENT'
         item['sub_lobrary']
       end
 
