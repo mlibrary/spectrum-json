@@ -6,7 +6,7 @@ module Spectrum
       include Requesty
 
       def can_sort?
-        false
+        true
       end
 
       def facet_uid
