@@ -71,7 +71,7 @@ class JsonController < ApplicationController
     @new_request  = Spectrum::Request::DataStore.new(request, @focus)
     @datastore    = Spectrum::Response::DataStore.new(this_datastore)
     @specialists  = Spectrum::Response::Specialists.new(specialists)
-    @response     = Spectrum::Response::RecordList.new(fetch_records)
+    @response     = Spectrum::Response::RecordList.new(fetch_records, @request)
     render(json: search_response)
   end
 
@@ -87,7 +87,7 @@ class JsonController < ApplicationController
     @request   = Spectrum::Request::Record.new(request)
     @datastore = Spectrum::Response::DataStore.new(this_datastore)
     if engine.total_items > 0
-      @response = Spectrum::Response::Record.new(fetch_record)
+      @response = Spectrum::Response::Record.new(fetch_record, @request)
       render(json: record_response)
     else
       render(json: {}, status: 200)

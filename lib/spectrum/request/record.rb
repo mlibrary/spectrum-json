@@ -3,6 +3,17 @@
 module Spectrum
   module Request
     class Record
+
+      FLINT = 'Flint'
+      FLINT_PROXY_PREFIX = 'http://libproxy.umflint.edu:2048/login?url='
+      DEFAULT_PROXY_PREFIX = 'https://proxy.lib.umich.edu/login?url='
+      INSTITUTION_KEY = 'dlpsInstitutionId'
+
+      def proxy_prefix
+        return FLINT_PROXY_PREFIX if @request.env[INSTITUTION_KEY]&.include?(FLINT)
+        DEFAULT_PROXY_PREFIX
+      end
+
       def initialize(request)
         @request = request
         if request.params[:source] == 'summon'

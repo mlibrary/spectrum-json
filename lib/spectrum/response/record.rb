@@ -3,11 +3,12 @@
 module Spectrum
   module Response
     class Record
-      def initialize(args = {})
+      def initialize(args = {}, request)
         @data     = args[:data]
         @focus    = args[:focus]
         @source   = args[:source]
         @base_url = args[:base_url]
+        @request  = request
 
         if @data.respond_to? :[]
           initialize_from_hash
@@ -20,7 +21,7 @@ module Spectrum
         @url             = @focus.get_url(@data, @base_url)
         @type            = @data['type'] || @source.id
         @complete        = @data['complete'] || true
-        @fields          = @focus.apply_fields(@data, @base_url)
+        @fields          = @focus.apply_fields(@data, @base_url, @request)
         @names           = @focus.names(@fields)
         @uid             = @fields.find { |f| f[:uid] == 'id' }[:value]
         @names_have_html = @data['names_have_html'] || true
@@ -29,7 +30,7 @@ module Spectrum
       def initialize_from_object
         @url             = @focus.get_url(@data, @base_url)
         @type            = @data.content_types || @source.id
-        @fields          = @focus.apply_fields(@data, @base_url)
+        @fields          = @focus.apply_fields(@data, @base_url, @request)
         @names           = @focus.names(@fields)
         @uid             = @fields.find { |f| f[:uid] == 'id' }[:value]
         @complete        = true

@@ -3,6 +3,10 @@
 module Spectrum
   module Request
     class Null
+      def proxy_prefix
+        'https://proxy.lib.umich.edu/login?url='
+      end
+
       def spectrum
         nil
       end

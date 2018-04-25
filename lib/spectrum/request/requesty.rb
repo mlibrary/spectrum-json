@@ -5,12 +5,22 @@ module Spectrum
     module Requesty
       extend ActiveSupport::Concern
 
+      FLINT = 'Flint'
+      FLINT_PROXY_PREFIX = 'http://libproxy.umflint.edu:2048/login?url='
+      DEFAULT_PROXY_PREFIX = 'https://proxy.lib.umich.edu/login?url='
+      INSTITUTION_KEY = 'dlpsInstituionId'
+
       included do
         attr_accessor :request_id, :slice, :sort
       end
 
       def can_sort?
         true
+      end
+
+      def proxy_prefix
+        return FLINT_PROXY_PREFIX if @request.env[INSTITUTION_KEY]&.include?(FLINT)
+        DEFAULT_PROXY_PREFIX
       end
 
       def initialize(request = nil, focus = nil)
