@@ -28,10 +28,14 @@ module Spectrum
 
     def query(filter_map = {}, value_map = {})
       ret = []
-      @data&.each_pair do |key, value|
-        key = filter_map[key] if filter_map[key]
+      @data&.each_pair do |original_key, value|
+        key = filter_map.fetch(original_key, original_key)
         value = Array(value).map do |v|
-          value_map.fetch(key, {}).fetch(v, v)
+          if value_map.has_key?(original_key)
+            value_map.fetch(original_key, {}).fetch(v, v)
+          else
+            value_map.fetch(key, {}).fetch(v, v)
+          end
         end.reject do |v|
           v == '*'
         end.map do |v|
