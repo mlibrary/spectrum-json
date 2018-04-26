@@ -14,19 +14,42 @@ module Spectrum
         return needs_authentication unless request.logged_in?
         return invalid_email unless request.to =~ /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
         result = driver.message(request.to, request.from, request.items)
-        ret = {}
-        ret[:status] = 'Success'
-        ret
+        success
+      rescue
+        failure
       end
 
       private
 
+      def success
+        {
+          status: 'Success',
+          status_code: 'action.response.success',
+          description: 'Success'
+        }
+      end
+
+      def failure
+        {
+          status: 'Failure',
+          status_code: 'action.response.unknown.error',
+          description: "We're sorry. Something went wrong. Please use <a href='https://www.lib.umich.edu/ask-librarian'>Ask a Librarian</a> for help."
+        }
+      end
+
       def invalid_email
-        { status: 'Invalid email', options: [] }
+        {
+          status_code: 'action.response.invalid.email',
+          description: 'Please enter a valid email address (e.g. uniqname@umich.edu)',
+        }
       end
 
       def needs_authentication
-        { status: 'Not logged in', options: [] }
+        {
+          status: 'Not logged in',
+          status_code: 'action.response.authentication.required',
+          description: 'Not logged in'
+        }
       end
     end
   end
