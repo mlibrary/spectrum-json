@@ -64,7 +64,7 @@ module Spectrum
         end
 
         def html_format(messages)
-          ret = '<div>'
+          ret = String.new('<div>')
           ret << html_header
           ret << '<ol>'
           messages.each_with_index do |message, idx|
@@ -97,7 +97,7 @@ module Spectrum
         end
 
         def field_value(message, uid)
-          Array(message.find { |field| field[:uid] == uid }[:value])
+          Array((message.find { |field| field[:uid] == uid } || {})[:value]).compact
         end
 
         def message(email_to, email_from, messages)

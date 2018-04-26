@@ -15,7 +15,8 @@ module Spectrum
         return invalid_email unless request.to =~ /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
         result = driver.message(request.to, request.from, request.items)
         success
-      rescue
+      rescue Exception => e
+        Rails.logger.info { e.to_s + e.backtrace.to_s}
         failure
       end
 

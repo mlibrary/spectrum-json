@@ -19,7 +19,7 @@ module Spectrum
         end
 
         def format(message, index = nil)
-          ret = ''
+          ret = String.new('')
           ret << "Record #{index + 1}: " if index
           ret << title(message)
           ret << link(message)
@@ -35,7 +35,7 @@ module Spectrum
         end
 
         def field_value(message, uid)
-          Array(message.find { |field| field[:uid] == uid }[:value])
+          Array((message.find { |field| field[:uid] == uid } || {})[:value]).compact
         end
 
         def title(message)

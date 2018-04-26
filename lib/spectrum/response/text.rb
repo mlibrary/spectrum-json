@@ -27,7 +27,8 @@ module Spectrum
             failure: result.reject { |message| message.status == 'accepted' }.length
           }
         )
-      rescue
+      rescue Exception => e
+        Rails.logger.info { e.to_s + e.backtrace.to_s}
         failure
       end
 
