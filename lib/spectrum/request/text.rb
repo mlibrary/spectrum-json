@@ -3,8 +3,19 @@
 module Spectrum
   module Request
     class Text
-      attr_reader :role
+      FLINT = 'Flint'
+      FLINT_PROXY_PREFIX = 'http://libproxy.umflint.edu:2048/login?url='
+      DEFAULT_PROXY_PREFIX = 'https://proxy.lib.umich.edu/login?url='
+      INSTITUTION_KEY = 'dlpsInstitutionId'
+
+      def proxy_prefix
+        return FLINT_PROXY_PREFIX if @request.env[INSTITUTION_KEY]&.include?(FLINT)
+        DEFAULT_PROXY_PREFIX
+      end
+
+      attr_reader :role, :request
       def initialize(request)
+        @request = request
         @raw = CGI.unescape(request.raw_post)
         @data = JSON.parse(@raw)
         @username = request.env['HTTP_X_REMOTE_USER'] || ''
@@ -30,7 +41,7 @@ module Spectrum
           focus = Spectrum::Json.foci[focus_uid]
           next unless focus
           data['records'].each do |id|
-            record = focus.fetch_record(Spectrum::Json.sources, id, role)
+            record = focus.fetch_record(Spectrum::Json.sources, id, role, self)
             yield record + [{ uid: 'base_url', value: data['base_url'] }]
           end
         end
