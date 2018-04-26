@@ -56,6 +56,7 @@ class JsonController < ApplicationController
   end
 
   def profile
+    no_cache
     render(json: response_class.new(request_class.new(request)).spectrum)
   end
 
