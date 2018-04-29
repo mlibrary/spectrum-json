@@ -42,7 +42,7 @@ module Spectrum
           solr_escape(v)
         end.join(' AND ')
 
-        if key == 'date_of_publication'
+        if key == 'date_of_publication' || original_key == 'date_of_publication'
           value.match(/^before(\d+)$/) do |m|
             value = "[* TO #{m[1]}]"
           end
