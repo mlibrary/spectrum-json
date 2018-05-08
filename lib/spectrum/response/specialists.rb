@@ -89,6 +89,7 @@ module Spectrum
       def fetch_records(query)
         params = focus.first.solr_params.merge(
           q: query,
+          qq: '"' + RSolr.solr_escape(query) + '"',
           rows: rows.first,
           fl: fields.first
         )
