@@ -8,22 +8,23 @@ module Spectrum
       @config = Hash.new([])
       JSON.parse(IO.read(json_file)).each_pair do |building, pair|
         pair.each do |collection, location|
-          @config[collection.empty? ? building : collection] = ::Spectrum::FloorLocation(location)
+          key = normalize_collection(building, collection)
+          @config[key] = ::Spectrum::FloorLocation(location)
         end
       end
       self
     end
 
-    def self.resolve(collection, callno)
-      collection = normalize_collection(collection)
-      @config[collection].find do |item|
+    def self.resolve(building, collection, callno)
+      key = normalize_collection(building, collection)
+      @config[key].find do |item|
         return item.text if item.match(callno)
       end
       ''
     end
 
-    def self.normalize_collection(collection)
-      (collection || '').upcase
+    def self.normalize_collection(building, collection)
+      "#{building} #{collection}".strip.upcase
     end
 
     attr_reader :text, :start, :stop
