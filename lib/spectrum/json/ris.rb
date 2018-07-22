@@ -46,7 +46,7 @@ module Spectrum
           field(item, 'links').map do |link|
             link.find { |attr| attr['uid'] == 'href' }
           end.compact.map do |item|
-            "L2 - #{item['value']}"
+            "L2  - #{item['value']}"
           end.join("\n")
         end
 
@@ -101,21 +101,21 @@ module Spectrum
         end
 
         def type(item)
-          single_valued(item, 'TY', 'format')
+          single_valued(item, 'TY', 'format', 'JOUR')
         end
 
         def er(_item)
-          'ER -'
+          'ER  -'
         end
 
-        def single_valued(item, tag, uid)
-          value = field(item, uid).first
+        def single_valued(item, tag, uid, default = nil)
+          value = field(item, uid).first || default
           return nil unless value
-          "#{tag} - #{value}"
+          "#{tag}  - #{value}"
         end
 
         def multi_valued(item, tag, uid)
-          field(item, uid).map { |value| "#{tag} - #{value}" }.join("\n")
+          field(item, uid).map { |value| "#{tag}  - #{value}" }.join("\n")
         end
 
         def field(message, uid, glue = nil)
