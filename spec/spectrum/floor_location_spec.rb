@@ -10,7 +10,7 @@ describe Spectrum::FloorLocation do
     end
 
     it 'resolves "GRAD / ac" to 1 North' do
-      expect(described_class.resolve('GRAD', 'ac')).to eql('1 North')
+      expect(described_class.resolve('HATCH', 'GRAD', 'ac')).to eql('1 North')
     end
   end
 end
