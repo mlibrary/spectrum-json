@@ -38,11 +38,7 @@ class JsonController < ApplicationController
     )
   end
 
-  def text
-    render(json: response_class.new(request_class.new(request)).spectrum)
-  end
-
-  def email
+  def act
     render(json: response_class.new(request_class.new(request)).spectrum)
   end
 
@@ -129,6 +125,18 @@ class JsonController < ApplicationController
 
   def show
     render json: 'json#show'
+  end
+
+  def ids
+    @request = Spectrum::Request::Ids.new(request)
+    @response = Spectrum::Response::Ids.new(@request)
+    render json: @response.renderable
+  end
+
+  def debug
+    @request = Spectrum::Request::Debug.new(request)
+    @response = Spectrum::Response::Debug.new(@request)
+    render json: @response.renderable
   end
 
   def current_user

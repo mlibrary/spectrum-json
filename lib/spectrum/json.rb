@@ -30,10 +30,17 @@ require 'spectrum/response/holdings'
 require 'spectrum/response/get_this'
 require 'spectrum/response/place_hold'
 require 'spectrum/response/specialists'
+require 'spectrum/response/action'
 require 'spectrum/response/text'
 require 'spectrum/response/email'
 require 'spectrum/response/file'
+require 'spectrum/response/favorite'
+require 'spectrum/response/unfavorite'
+require 'spectrum/response/tag'
+require 'spectrum/response/untag'
 require 'spectrum/response/profile'
+require 'spectrum/response/ids'
+require 'spectrum/response/debug'
 
 require 'spectrum/field_tree'
 require 'spectrum/field_tree/base'
@@ -54,10 +61,17 @@ require 'spectrum/request/data_store'
 require 'spectrum/request/holdings'
 require 'spectrum/request/get_this'
 require 'spectrum/request/place_hold'
+require 'spectrum/request/action'
 require 'spectrum/request/text'
 require 'spectrum/request/email'
 require 'spectrum/request/file'
+require 'spectrum/request/favorite'
+require 'spectrum/request/unfavorite'
+require 'spectrum/request/tag'
+require 'spectrum/request/untag'
 require 'spectrum/request/profile'
+require 'spectrum/request/ids'
+require 'spectrum/request/debug'
 
 require 'spectrum/policy/get_this'
 
@@ -116,15 +130,20 @@ module Spectrum
         foci.routes(app)
 
         app.match 'profile',
-                  to: 'json#profile',
-                  defaults: { type: 'Profile' },
-                  via: %i[get options]
+          to: 'json#profile',
+          defaults: { type: 'Profile' },
+          via: %i[get options]
 
-        %w[text email file].each do |action|
+        app.match 'file',
+          to: 'json#file',
+          defaults: {type: 'File'},
+          via: %i[post options]
+
+        %w[text email favorite unfavorite tag untag].each do |action|
           app.match action,
-                    to: "json##{action}",
-                    defaults: { type: action.titlecase },
-                    via: %i[post options]
+            to: "json#act",
+            defaults: { type: action.titlecase },
+            via: %i[post options]
         end
       end
     end
