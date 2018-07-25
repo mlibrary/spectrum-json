@@ -130,7 +130,7 @@ class JsonController < ApplicationController
   def ids
     @request = Spectrum::Request::Ids.new(request)
     @response = Spectrum::Response::Ids.new(@request)
-    render json: @response.renderable
+    redirect_to(@response.uri, status: @response.status)
   end
 
   def debug

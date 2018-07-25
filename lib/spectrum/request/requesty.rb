@@ -26,9 +26,7 @@ module Spectrum
       def initialize(request = nil, focus = nil)
         @request = request
         @focus   = focus
-        if @request&.post?
-          @raw = @request.raw_post
-          @data = JSON.parse(@raw)
+        if (@data = get_data(@request))
 
           bad_request 'Request json did not validate' unless Spectrum::Json::Schema.validate(:request, @data)
 
@@ -124,6 +122,16 @@ module Spectrum
 
         # If we found an institution we're authenticated.
         @request.env['dlpsInstitutionId'].length > 0
+      end
+
+      def get_data(request)
+        if request&.respond_to?(:post?) && request&.post?
+          JSON.parse(request.raw_post)
+        elsif Hash === request
+          request
+        else
+          nil
+        end
       end
 
       # For summon's range filter (i.e. an applied filter)

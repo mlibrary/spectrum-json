@@ -3,10 +3,17 @@
 module Spectrum
   module Response
     class Ids
-      def initialize(req)
+
+      STATUS = 302
+
+      attr_reader :uri
+
+      def initialize(request)
+        @uri = request.uri
       end
-      def renderable
-        "Ids"
+
+      def status
+        STATUS
       end
     end
   end
