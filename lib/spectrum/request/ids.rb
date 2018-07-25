@@ -9,6 +9,7 @@ module Spectrum
       UNDERSCORE = '/tmp/search/node_modules/underscore/underscore.js'
       PRIDE = '/tmp/search/node_modules/pride/pride.execjs.js'
       PARSER  = 'Pride.Parser.parse'
+      SOLR_URL = 'http://solr-vufind:8026/solr/biblio/'
 
       attr_reader :uri
 
@@ -49,7 +50,7 @@ module Spectrum
           'fl' => 'id'
         )
 
-        @uri = solr_url + 'select' + '?' + URI.encode_www_form(solr_params)
+        @uri = SOLR_URL + 'select' + '?' + URI.encode_www_form(solr_params)
       end
     end
   end
