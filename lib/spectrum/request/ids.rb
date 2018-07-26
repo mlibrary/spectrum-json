@@ -17,14 +17,18 @@ module Spectrum
         underscore = IO.read(Rails.root.to_path + UNDERSCORE)
         pride = IO.read(Rails.root.to_path + PRIDE)
         context = ExecJS.compile(underscore + pride)
-        query = context.call(PARSER, req.params[:query])
+        begin
+          query = context.call(PARSER, req.params[:query])
+        rescue
+          query = context.call(PARSER, '"' + req.params[:query].gsub(/"/, '') + '"')
+        end
 
         facets = req.params.map do |k,v|
           k.start_with?('filter.') ? [k[7..k.length], v] : nil
         end.compact.to_h
 
-        if req.params[:library]
-          facets['library'] = req.params[:library]
+        if req.params[:library] && req.params[:library] != 'All Libraries'
+          facets['institution'] = req.params[:library]
         end
 
         focus = Spectrum::Json.foci[req.params[:focus]]
@@ -32,7 +36,7 @@ module Spectrum
 
         data = {
           'field_tree' => query,
-          'filters' => facets,
+          'facets' => facets,
           'uid' => focus.id,
         }
 
