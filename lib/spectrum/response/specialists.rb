@@ -251,6 +251,7 @@ module Spectrum
       end
 
       def report(user: '', query: '', filters: [], hlb: [], expertise: [], hlb_expert: [], expertise_expert: [])
+        return
         return unless logger
         Thread.new do
           uri = URI(logger)
