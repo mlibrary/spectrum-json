@@ -219,6 +219,7 @@ module Spectrum
       end
 
       def spectrum
+        return [] if data[:request].instance_eval { @request&.env&.fetch('dlpsInstitutionId')&.include?('Flint') }
         query = data[:request].query(
           EmptyFieldsFieldList.new,
           data[:focus].facet_map
