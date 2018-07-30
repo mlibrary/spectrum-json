@@ -8,7 +8,7 @@ module Spectrum
       FLINT = 'Flint'
       FLINT_PROXY_PREFIX = 'http://libproxy.umflint.edu:2048/login?url='
       DEFAULT_PROXY_PREFIX = 'https://proxy.lib.umich.edu/login?url='
-      INSTITUTION_KEY = 'dlpsInstituionId'
+      INSTITUTION_KEY = 'dlpsInstitutionId'
 
       included do
         attr_accessor :request_id, :slice, :sort
