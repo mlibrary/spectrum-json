@@ -156,7 +156,11 @@ module Spectrum
           rows: @page_size,
           fq: @facets.query(filter_map, (@focus&.value_map) || {}),
           per_page: @page_size
-        }.merge(@tree.params(query_map))
+        }.merge(@tree.params(query_map)).tap do |ret|
+          if ret[:q].match(/ (AND|OR|NOT) /)
+            ret[:q] = '+(' + ret[:q] + ')'
+          end
+        end
       end
 
       def facets
