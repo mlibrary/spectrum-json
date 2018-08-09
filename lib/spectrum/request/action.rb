@@ -6,8 +6,10 @@ module Spectrum
 
       def initialize(request)
         @request = request
-        @raw = CGI.unescape(request.raw_post)
-        @data = JSON.parse(@raw)
+        if request.post?
+            @raw = CGI.unescape(request.raw_post)
+            @data = JSON.parse(@raw)
+        end
         @username = request.env['HTTP_X_REMOTE_USER'] || ''
         @role = request.env['dlpsInstitutionId'] && request.env['dlpsInstitutionId'].length > 0
         @items = nil
