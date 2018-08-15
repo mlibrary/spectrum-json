@@ -8,6 +8,16 @@ module Spectrum
           self.config = config
         end
 
+        def suggest(username)
+          params = { user: username }
+          JSON.parse(Net::HTTP.get(uri('suggest', params)))
+        end
+
+        def list(username)
+          params = { user: username }
+          JSON.parse(Net::HTTP.get(uri('list', params)))
+        end
+
         def favorite(username, items)
           return unless (silo = favoriteable_silo(items))
           params = {
