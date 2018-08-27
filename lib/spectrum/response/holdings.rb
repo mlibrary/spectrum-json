@@ -146,8 +146,8 @@ module Spectrum
         item['sub_lobrary']
       end
 
-      def get_aeon_description(_record, item, _info)
-        (item['description'] || '').slice(0, 250)
+      def get_aeon_description(_record, _item, info)
+        (info['description'] || '').slice(0, 250)
       end
 
       def get_aeon_callnumber(_record, item, _info)
