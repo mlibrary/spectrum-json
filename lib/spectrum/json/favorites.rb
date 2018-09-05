@@ -23,7 +23,7 @@ module Spectrum
           params = {
             user: username,
             items: favoriteable_items(items),
-            tags: [silo]
+            tags: [silo].flatten
           }
           JSON.parse(Net::HTTP.get(uri('add', params)))
         end
@@ -33,7 +33,7 @@ module Spectrum
           params = {
             user: username,
             items: favoriteable_items(items),
-            tags: [silo]
+            tags: [silo].flatten
           }
           JSON.parse(Net::HTTP.get(uri('remove', params)))
         end
@@ -43,7 +43,7 @@ module Spectrum
           params = {
             user: username,
             items: favoriteable_items(items),
-            tags: [tag]
+            tags: [tag].flatten
           }
           JSON.parse(Net::HTTP.get(uri('add', params)))
         end
@@ -53,7 +53,7 @@ module Spectrum
           params = {
             user: username,
             items: favoriteable_items(items),
-            tags: [tag]
+            tags: [tag].flatten
           }
           JSON.parse(Net::HTTP.get(uri('remove', params)))
         end
