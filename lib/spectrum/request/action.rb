@@ -39,6 +39,10 @@ module Spectrum
         !@username.empty?
       end
 
+      def proxy_prefix
+        ''
+      end
+
     end
   end
 end
