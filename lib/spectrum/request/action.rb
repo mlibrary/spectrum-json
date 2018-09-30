@@ -11,7 +11,12 @@ module Spectrum
             @data = JSON.parse(@raw)
         end
         @username = request.env['HTTP_X_REMOTE_USER'] || ''
-        @role = request.env['dlpsInstitutionId'] && request.env['dlpsInstitutionId'].length > 0
+        @role = if request.env['dlpsInstitutionId'] &&
+            request.env['dlpsInstitutionId'].length > 0
+          'authenticated'
+        else
+          ''
+        end
         @items = nil
       end
 
