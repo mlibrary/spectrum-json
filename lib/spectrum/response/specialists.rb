@@ -88,7 +88,8 @@ module Spectrum
 
       def fetch_records(query)
         params = focus.first.solr_params.merge(
-          q: query,
+          q: query[:q],
+          fq: query[:fq],
           qq: '"' + RSolr.solr_escape(query) + '"',
           rows: rows.first,
           fl: fields.first
@@ -137,7 +138,7 @@ module Spectrum
       end
 
       def find(query)
-        records = fetch_records(query[:q])
+        records = fetch_records(query)
         return empty_results unless records
 
         terms = extract_terms(records)
@@ -220,10 +221,12 @@ module Spectrum
 
       def spectrum
         return [] if data[:request].instance_eval { @request&.env&.fetch('dlpsInstitutionId', nil)&.include?('Flint') }
+        specialist_focus = Spectrum::Json.foci['mirlyn']
         query = data[:request].query(
-          EmptyFieldsFieldList.new,
-          data[:focus].facet_map
+          specialist_focus.fields,
+          specialist_focus.facet_map
         )
+        return [] if query[:q] == '*:*'
         cache.getset(query) do
           begin
             results = engines.map do |engine|
