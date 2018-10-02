@@ -90,7 +90,7 @@ module Spectrum
         params = focus.first.solr_params.merge(
           q: query[:q],
           fq: query[:fq],
-          qq: '"' + RSolr.solr_escape(query) + '"',
+          qq: '"' + RSolr.solr_escape(query[:q]) + '"',
           rows: rows.first,
           fl: fields.first
         )
