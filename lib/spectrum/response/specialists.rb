@@ -227,25 +227,23 @@ module Spectrum
           specialist_focus.facet_map
         )
         return [] if query[:q] == '*:*'
-        cache.getset(query) do
-          begin
-            results = engines.map do |engine|
-              engine.find(query)
-            end.inject({}) do |acc, item|
-              acc.merge(item)
-            end
-            report(
-              query: query[:q],
-              filters: query[:fq],
-              hlb: results['hlb'].keys.map { |term| term.delete('\\') },
-              expertise: results['expertise'].keys,
-              hlb_expert: results['hlb_expert'].map { |expert| expert[:email].sub(/@umich.edu/, '') },
-              expertise_expert: results['expertise_expert']
-            )
-            merge(results['hlb_expert'] + results['expertise_expert'])
-          rescue
-            []
+        begin
+          results = engines.map do |engine|
+            engine.find(query)
+          end.inject({}) do |acc, item|
+            acc.merge(item)
           end
+          report(
+            query: query[:q],
+            filters: query[:fq],
+            hlb: results['hlb'].keys.map { |term| term.delete('\\') },
+            expertise: results['expertise'].keys,
+            hlb_expert: results['hlb_expert'].map { |expert| expert[:email].sub(/@umich.edu/, '') },
+            expertise_expert: results['expertise_expert']
+          )
+          merge(results['hlb_expert'] + results['expertise_expert'])
+        rescue
+          []
         end
       end
 
