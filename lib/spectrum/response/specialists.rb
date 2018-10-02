@@ -109,22 +109,31 @@ module Spectrum
         end.to_h
       end
 
-      def fetch_specialists(terms)
+      def fetch_specialists(terms, query)
         bq = []
         terms.each_pair do |term, count|
           bq << "#{fields.last}:(#{term})^#{count}"
         end
+
+        fq = ['+(' + (query[:fq] || []).map do |fq|
+          fq.sub(/^#{fields.first}:/, "#{fields.last}:")
+        end.select do |fq|
+          fq.start_with?("#{fields.last}:")
+        end.join(' OR ') + ')'].
+          flatten.
+          push('+source:drupal-users +status:true').
+          reject { |fq| fq == '+()' }
 
         params = {
           mm: 1,
           q: terms.keys.join(' OR '),
           qf: fields.last,
           pf: fields.last,
+          fq: fq,
           bq: bq,
           defType: 'edismax',
           rows: 10,
           fl: '*',
-          fq: '+source:drupal-users +status:true',
           wt: 'ruby'
         }
         client.last.get('select', params: params)
@@ -144,7 +153,7 @@ module Spectrum
         terms = extract_terms(records)
         return empty_results if terms.empty?
 
-        specialists = fetch_specialists(terms)
+        specialists = fetch_specialists(terms, query)
         return empty_results unless specialists
 
         specialists = specialists['response']['docs'].map do |specialist|
