@@ -264,7 +264,7 @@ class JsonController < ApplicationController
     when IPAddr.new('141.216.0.0/16')
       'Flint Thompson Library'
     else
-      'All Libraries'
+      'All libraries'
     end
   end
 
