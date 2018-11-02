@@ -30,38 +30,56 @@ module Spectrum
         end
         response.each do |item|
           if item['down_links']
-            item['down_links'].each do |link|
-              data << process_down_link(link)
-            end
+            data << {
+              caption: 'Bound with',
+              headings: ['Record link'],
+              rows: item['down_links'].map { |link| process_down_link(link) }
+            }
           elsif item['up_links']
-            item['up_links'].each do |link|
-              data << process_up_link(link)
-            end
+            data << {
+              caption: 'Included in',
+              headings: ['Record link'],
+              rows: item['up_links'].map { |link| process_up_link(link) }
+            }
           elsif item['item_info']
-            item['item_info'].each do |info|
-              data << process_item_info(item, info)
+            if item['location'] == 'HathiTrust Digital Library'
+              data << {
+                caption: item['location'],
+                name: 'HathiTrust Sources',
+                headings: ['Link', 'Description', 'Source'],
+                rows: item['item_info'].map { |info| process_item_info(item, info) }
+              }
+            else
+              data << {
+                caption: item['location'],
+                captionLink: item['info_link'] ?
+                  {href: item['info_link'], text: 'About location'} :
+                  nil,
+                name: 'holdings',
+                notes: [
+                  item['public_note'],
+                  item['summary_holdings'],
+                  Spectrum::FloorLocation.resolve(
+                    item['sub_library'],
+                    item['collection'],
+                    item['callnumber']
+                  )
+                ].compact.reject(&:empty?),
+                headings: ['Action', 'Description', 'Status', 'Call Number'],
+                rows: item['item_info'].map { |info| process_item_info(item, info) }
+              }
             end
           end
         end
-        data.sort_by { |item| sorter[item[:location]] }
+        data.sort_by { |item| sorter[item[:caption]] }
       end
 
       def process_up_link(link)
-        {
-          type: 'uplink',
-          description: 'Included in',
-          label: link['link_text'],
-          id: link['key']
-        }
+        {text: link['link_text'], to: '/record/' + link['key']}
       end
 
       def process_down_link(link)
-        {
-          type: 'downlink',
-          description: 'Linked titles',
-          label: link['link_text'],
-          id: link['key']
-        }
+        {text: link['link_text'], to: '/record/' + link['key']}
       end
 
       def process_item_info(item, info)
@@ -69,6 +87,18 @@ module Spectrum
           process_mirlyn_item_info(item, info)
         else
           process_hathitrust_item_info(item, info)
+        end
+      end
+
+      def get_action(item, info)
+        if info['can_request']
+          {text: 'Get this', to: '/get-this/' + info['barcode']}
+        elsif info['can_reserve']
+          {text: 'Request this', href: get_url(item, info)}
+        elsif info['can_book']
+          {text: 'Book this', href: get_url(item, info)}
+        else
+          nil
         end
       end
 
@@ -231,21 +261,16 @@ module Spectrum
       end
 
       def process_mirlyn_item_info(item, info)
-        {
-          type: get_type(info),
-          url: get_url(item, info),
-          barcode: info['barcode'],
-          location: info['location'],
-          public_note: item['public_note'],
-          callnumber: info['callnumber'],
-          status: info['status'],
-          enum: [info['enum_a'], info['enum_b'], info['enum_c']].compact,
-          chron: [info['chron_i'], info['chron_j']].compact,
-          info_link: item['info_link'],
-          description: info['description'],
-          summary_holdings: item['summary_holdings'],
-          floor: Spectrum::FloorLocation.resolve(info['sub_library'], info['collection'], info['callnumber'])
-        }
+        [
+          get_action(item, info),
+          {text: info['description'] || 'N/A'},
+          {
+            text: info['status'],
+            intent: Aleph.intent(info['status']),
+            icon: Aleph.icon(info['status'])
+          },
+          {text: info['callnumber']}
+        ]
       end
 
       def process_hathitrust_item_info(item, info)
