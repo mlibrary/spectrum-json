@@ -75,11 +75,11 @@ module Spectrum
       end
 
       def process_up_link(link)
-        {text: link['link_text'], to: '/record/' + link['key']}
+        [ {text: link['link_text'], to: '/record/' + link['key']} ]
       end
 
       def process_down_link(link)
-        {text: link['link_text'], to: '/record/' + link['key']}
+        [ {text: link['link_text'], to: '/record/' + link['key']} ]
       end
 
       def process_item_info(item, info)
@@ -274,16 +274,11 @@ module Spectrum
       end
 
       def process_hathitrust_item_info(item, info)
-        {
-          type: 'hathitrust',
-          id: info['id'],
-          handle_url: "http://hdl.handle.net/2027/#{info['id']}",
-          source: info['source'],
-          rights: info['rights'],
-          status: info['status'],
-          description: info['description'],
-          summary_holdings: item['summary_holdings']
-        }
+        [
+          {text: info['status'], href: "http://hdl.handle.net/2027#{info['id']}"},
+          {text: info['description']},
+          {text: info['source']}
+        ]
       end
     end
   end
