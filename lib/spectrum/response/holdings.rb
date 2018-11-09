@@ -98,7 +98,7 @@ module Spectrum
         elsif info['can_book']
           {text: 'Book this', href: get_url(item, info)}
         else
-          nil
+          {text: 'N/A'}
         end
       end
 
