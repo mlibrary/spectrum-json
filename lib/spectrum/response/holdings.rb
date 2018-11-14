@@ -41,14 +41,14 @@ module Spectrum
               headings: ['Record link'],
               rows: item['up_links'].map { |link| process_up_link(link) }
             }
-          elsif item['item_info']
+          elsif item['item_info'] && item['item_info'].length > 0
             if item['location'] == 'HathiTrust Digital Library'
               data << {
                 caption: item['location'],
                 name: 'HathiTrust Sources',
                 headings: ['Link', 'Description', 'Source'],
                 rows: item['item_info'].map { |info| process_item_info(item, info) }
-              }
+              }.delete_if { |k,v| v.nil? || v.empty? }
             else
               data << {
                 caption: item['location'],
@@ -67,11 +67,15 @@ module Spectrum
                 ].compact.reject(&:empty?),
                 headings: ['Action', 'Description', 'Status', 'Call Number'],
                 rows: item['item_info'].map { |info| process_item_info(item, info) }
-              }
+              }.delete_if { |k,v| v.nil? || v.empty? }
             end
           end
         end
-        data.sort_by { |item| sorter[item[:caption]] }
+        data.reject do |item|
+          !item.has_key?(:rows) || item[:rows].empty?
+        end.sort_by do |item|
+          sorter[item[:caption]]
+        end
       end
 
       def process_up_link(link)
@@ -265,19 +269,19 @@ module Spectrum
           get_action(item, info),
           {text: info['description'] || 'N/A'},
           {
-            text: info['status'],
-            intent: Aleph.intent(info['status']),
-            icon: Aleph.icon(info['status'])
+            text: info['status'] || 'N/A',
+            intent: Aleph.intent(info['status']) || '',
+            icon: Aleph.icon(info['status'] || '')
           },
-          {text: info['callnumber']}
+          {text: info['callnumber'] || 'N/A'}
         ]
       end
 
       def process_hathitrust_item_info(item, info)
         [
           {text: info['status'], href: "http://hdl.handle.net/2027#{info['id']}"},
-          {text: info['description']},
-          {text: info['source']}
+          {text: info['description'] || 'N/A'},
+          {text: info['source'] || 'N/A'}
         ]
       end
     end
