@@ -105,8 +105,8 @@ module Spectrum
             to: {
               barcode: info['barcode'],
               action: 'get-this',
-              record: @record.id,
-              datastore: @record.focus,
+              record: @request.id,
+              datastore: @request.focus,
             }
           }
         elsif info['can_reserve']
