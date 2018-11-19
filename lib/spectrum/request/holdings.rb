@@ -3,10 +3,11 @@
 module Spectrum
   module Request
     class Holdings
-      attr_reader :id
+      attr_reader :id, :focus
 
       def initialize(request)
         @id = request[:id]
+        @focus = request[:id]
       end
 
       def can_sort?

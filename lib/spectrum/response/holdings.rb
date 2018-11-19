@@ -33,13 +33,13 @@ module Spectrum
             data << {
               caption: 'Bound with',
               headings: ['Record link'],
-              rows: item['down_links'].map { |link| process_down_link(link) }
+              rows: item['down_links'].map { |link| process_link(link) }
             }
           elsif item['up_links']
             data << {
               caption: 'Included in',
               headings: ['Record link'],
-              rows: item['up_links'].map { |link| process_up_link(link) }
+              rows: item['up_links'].map { |link| process_link(link) }
             }
           elsif item['item_info'] && item['item_info'].length > 0
             if item['location'] == 'HathiTrust Digital Library'
@@ -78,12 +78,16 @@ module Spectrum
         end
       end
 
-      def process_up_link(link)
-        [ {text: link['link_text'], to: '/record/' + link['key']} ]
-      end
-
-      def process_down_link(link)
-        [ {text: link['link_text'], to: '/record/' + link['key']} ]
+      def process_link(link)
+        [
+          {
+            text: link['link_text'],
+            to: {
+              record: link['key'],
+              datastore: @request.focus,
+            }
+          }
+        ]
       end
 
       def process_item_info(item, info)
@@ -96,7 +100,15 @@ module Spectrum
 
       def get_action(item, info)
         if info['can_request']
-          {text: 'Get this', to: '/get-this/' + info['barcode']}
+          {
+            text: 'Get this',
+            to: {
+              barcode: info['barcode'],
+              action: 'get-this',
+              record: @record.id,
+              datastore: @record.focus,
+            }
+          }
         elsif info['can_reserve']
           {text: 'Request this', href: get_url(item, info)}
         elsif info['can_book']
