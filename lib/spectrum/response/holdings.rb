@@ -26,6 +26,7 @@ module Spectrum
         data = []
         sorter = Hash.new { |hash, key| hash[key] = key }.tap do |hash|
           hash[nil] = 'AAAA'
+          hash['HathiTrust Digital Library'] = 'AAAA'
           hash['- Offsite Shelving -'] = 'zzzz'
         end
         response.each do |item|
