@@ -69,7 +69,9 @@ module Spectrum
         def favoriteable_item(item)
           {
             id: favoriteable_url(item),
-            title: fetch_field(item, 'title')
+            title: {
+              0 => fetch_field(item, 'title')
+            }
           }
         end
 
@@ -103,7 +105,9 @@ module Spectrum
           when 'databases'
             'databases-favorite'
           when 'journals'
-            'ejournals-favorite'
+            'journals-favorite'
+          when 'website'
+            'website-favorite'
           else
             datastore
           end
