@@ -31,7 +31,11 @@ module Spectrum
 
       def sms
         return nil unless logged_in?
-        @sms ||= Aleph::Borrower.new.tap { |patron| patron.bor_info(username) }.sms
+        begin
+          @sms ||= Aleph::Borrower.new.tap { |patron| patron.bor_info(username) }.sms
+        rescue Aleph::Error
+          nil
+        end
       end
 
       def username

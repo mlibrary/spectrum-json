@@ -100,7 +100,7 @@ module Spectrum
           case (datastore = fetch_field(items&.first, 'datastore'))
           when 'mirlyn'
             'mirlyn-favorite'
-          when 'articles'
+          when 'articles', 'articlesplus'
             'articles-favorite'
           when 'databases'
             'databases-favorite'
@@ -109,7 +109,7 @@ module Spectrum
           when 'website'
             'website-favorite'
           else
-            datastore
+            datastore + '-favorite'
           end
         end
 
