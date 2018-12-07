@@ -80,13 +80,13 @@ module Spectrum
           case (datastore = fetch_field(item, 'datastore'))
           when 'mirlyn'
             ret.push('http://mirlyn.lib.umich.edu/Record/' + fetch_field(item, 'id'))
-          when 'articles'
+          when 'articles', 'articlesplus'
             ret.push('http://www.lib.umich.edu/articles/details/' + fetch_field(item, 'id'))
             ret.push('http://mgetit.lib.umich.edu/?' + fetch_field(item, 'openurl'))
           when 'databases'
             ret.push('http://www.lib.umich.edu/node/' + fetch_field(item, 'id'))
           when 'journals'
-            ret.push(fetch_field(item, 'id'))
+            ret.push('http://mirlyn.lib.umich.edu/Record/' + fetch_field(item, 'id'))
           else
             ret.push(datastore + ':' + fetch_field(item, 'id'))
           end
