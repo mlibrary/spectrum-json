@@ -70,7 +70,7 @@ module Spectrum
           {
             id: favoriteable_url(item),
             title: {
-              0 => fetch_field(item, 'title')
+              0 => [fetch_field(item, 'title')].flatten.first
             }
           }
         end
