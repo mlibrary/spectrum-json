@@ -70,7 +70,7 @@ module Spectrum
           {
             id: favoriteable_url(item),
             title: {
-              0 => [fetch_field(item, 'title')].flatten.first
+              0 => fetch_field(item, 'title')
             }
           }
         end
@@ -82,7 +82,9 @@ module Spectrum
             ret.push('http://mirlyn.lib.umich.edu/Record/' + fetch_field(item, 'id'))
           when 'articles', 'articlesplus'
             ret.push('http://www.lib.umich.edu/articles/details/' + fetch_field(item, 'id'))
-            ret.push('http://mgetit.lib.umich.edu/?' + fetch_field(item, 'openurl'))
+            unless (openurl = fetch_field(item, 'openurl')).empty?
+              ret.push('http://mgetit.lib.umich.edu/?' + openurl)
+            end
           when 'databases'
             ret.push('http://www.lib.umich.edu/node/' + fetch_field(item, 'id'))
           when 'journals'
@@ -90,10 +92,11 @@ module Spectrum
           else
             ret.push(datastore + ':' + fetch_field(item, 'id'))
           end
+          ret
         end
 
         def fetch_field(item, field_name)
-          item&.find {|field| field[:uid] == field_name}.fetch(:value, nil)
+          [item&.find {|field| field[:uid] == field_name}&.fetch(:value, nil)].flatten.compact.first.to_s
         end
 
         def favoriteable_silo(items)
