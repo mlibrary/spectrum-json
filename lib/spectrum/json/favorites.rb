@@ -69,9 +69,7 @@ module Spectrum
         def favoriteable_item(item)
           {
             id: favoriteable_url(item),
-            title: {
-              0 => fetch_field(item, 'title')
-            }
+            title: fetch_field(item, 'title')
           }
         end
 
@@ -89,6 +87,8 @@ module Spectrum
             ret.push('http://www.lib.umich.edu/node/' + fetch_field(item, 'id'))
           when 'journals'
             ret.push('http://mirlyn.lib.umich.edu/Record/' + fetch_field(item, 'id'))
+          when 'website'
+            ret.push(fetch_field(item, 'id'))
           else
             ret.push(datastore + ':' + fetch_field(item, 'id'))
           end
