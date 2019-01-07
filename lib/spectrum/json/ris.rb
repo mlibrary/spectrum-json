@@ -171,7 +171,7 @@ module Spectrum
           datastore = item.find {|el| el[:uid] == 'datastore'}[:value]
           fields = ::Spectrum::Json.foci[datastore].fields
           item.each do |field|
-            next unless field_def = fields[field[:uid]]
+            next unless field_def = fields.by_uid(field[:uid])
             next unless field_def.ris
             field_def.ris.each do |tag|
               ret += ris_line(tag, field[:value])
@@ -188,29 +188,36 @@ module Spectrum
         def single_valued_tag(tag, value)
           return [] unless tag && value
           return [] if value.empty? || tag.empty?
-          if Hash === value && value.has_key?(:value)
-            value = value[:value]
-          else
-            return []
+          value = [value].flatten.first
+          if Hash === value
+            if value.has_key?(:value)
+              value = [value[:value]].flatten.first
+            else
+              return []
+            end
           end
-          ["#{tag}  - #{[value].flatten.first.to_s.gsub(/[\r\n]/, ' ')}"]
+          ["#{tag}  - #{value.to_s.gsub(/[\r\n]/, ' ')}"]
         end
 
         def multi_valued_tag(tag, values)
           return [] unless tag && values
           return [] if tag.empty? || values.empty?
           [values].flatten.map do |value|
-            if Hash === value && value.has_key?(:value)
-              value = value[:value]
-            else
-              return []
+            if Hash === value
+              if value.has_key?(:value)
+                value = value[:value]
+              else
+                value = []
+              end
             end
-            if value.empty?
-              nil
-            else
-              "#{tag}  - #{value.to_s.gsub(/[\r\n]/, ' ')}"
-            end
-          end.compact
+            [value].flatten.map do |val|
+              if val.empty?
+                nil
+              else
+                "#{tag}  - #{val.to_s.gsub(/[\r\n]/, ' ')}"
+              end
+            end.compact
+          end.flatten.compact
         end
 
         def type(item)
