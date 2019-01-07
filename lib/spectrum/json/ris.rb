@@ -188,6 +188,11 @@ module Spectrum
         def single_valued_tag(tag, value)
           return [] unless tag && value
           return [] if value.empty? || tag.empty?
+          if Hash === value && value.has_key?(:value)
+            value = value[:value]
+          else
+            return []
+          end
           ["#{tag}  - #{[value].flatten.first.to_s.gsub(/[\r\n]/, ' ')}"]
         end
 
@@ -195,6 +200,11 @@ module Spectrum
           return [] unless tag && values
           return [] if tag.empty? || values.empty?
           [values].flatten.map do |value|
+            if Hash === value && value.has_key?(:value)
+              value = value[:value]
+            else
+              return []
+            end
             if value.empty?
               nil
             else
