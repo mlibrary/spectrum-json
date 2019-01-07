@@ -3,6 +3,73 @@
 module Spectrum
   module Json
     class Ris
+      TYPES = Hash.new('GEN').merge(
+        'book' => 'BOOK',
+        'book / ebook' => 'BOOK',
+        'journal article' => 'JOUR',
+        'publication article' => 'JOUR',
+        'trade publication article' => 'JOUR',
+        'journal / ejournal' => 'JFULL',
+        'journal' => 'JFULL',
+        'serial' => 'SER',
+        'map' => 'MAP',
+        'maps-atlas' => 'MAP',
+        'atlas' => 'MAP',
+        'ebook' => 'EBOOK',
+        'motion picture' => 'VIDEO',
+        'video recording' => 'VIDEO',
+        'video (blu-ray)' => 'VIDEO',
+        'video (dvd)' => 'VIDEO',
+        'video (vhs)' => 'VIDEO',
+        'video games' => 'VIDEO',
+        'streaming video' => 'VIDEO',
+        'audio' => 'SOUND',
+        'audio recording' => 'SOUND',
+        'audio (spoken word)' => 'SOUND',
+        'audio cd' => 'SOUND',
+        'audio lp' => 'SOUND',
+        'streaming audio' => 'SOUND',
+        'spoken word recording' => 'SOUND',
+        'audio (music)' => 'MUSIC',
+        'music' => 'MUSIC',
+        'music recording' => 'MUSIC',
+        'musical score' => 'MUSIC',
+        'music score' => 'MUSIC',
+        'sheet music' => 'MUSIC',
+        'thesis' => 'THES',
+        'student thesis' => 'THES',
+        'dissertation' => 'THES',
+        'dictionaries' => 'DICT',
+        'data file' => 'DBASE',
+        'data set' => 'DBASE',
+        'computer file' => 'DBASE',
+        'cdrom' => 'DBASE',
+        'software' => 'DBASE',
+        'magazine' => 'MGZN',
+        'magazine article' => 'MGZN',
+        'newspaper' => 'NEWS',
+        'newspaper article' => 'NEWS',
+        'encyclopedias' => 'ENCYC',
+        'conference' => 'CONF',
+        'conference proceeding' => 'CONF',
+        'paper' => 'CPAPER',
+        'book chapter' => 'CHAP',
+        'internet communication' => 'ICOMM',
+        'electronic resource' => 'ICOMM',
+        'web resource' => 'ICOMM',
+        'gen' => 'GEN',
+        '*' => 'GEN'
+      )
+
+      TAG_ARITY = Hash.new(:single_valued_tag).merge(
+        'AU' => :multi_valued_tag,
+        'KW' => :multi_valued_tag,
+        'M1' => :multi_valued_tag,
+        'N1' => :multi_valued_tag,
+        'PB' => :multi_valued_tag,
+        'UR' => :multi_valued_tag,
+      )
+
       class << self
         attr_accessor :fields
         def configure!(_config)
@@ -97,19 +164,56 @@ module Spectrum
         end
 
         def ris(item)
-          fields.map { |field| send(field, item) }.compact.reject(&:empty?).join("\n")
+          ret = []
+          ret << type(item)
+          ret << 'DP  - University of Michigan Library'
+          ret << "Y2  - #{DateTime.now.strftime('%Y-%m-%d')}"
+          datastore = item.find {|el| el[:uid] == 'datastore'}[:value]
+          fields = ::Spectrum::Json.foci[datastore].fields
+          item.each do |field|
+            next unless field_def = fields[field[:uid]]
+            next unless field_def.ris
+            field_def.ris.each do |tag|
+              ret += ris_line(tag, field[:value])
+            end
+          end
+          ret << er(item)
+          ret.compact.reject(&:empty?).join("\r\n")
+        end
+
+        def ris_line(tag, value, tag_arity = TAG_ARITY)
+          send(tag_arity[tag], tag, value)
+        end
+
+        def single_valued_tag(tag, value)
+          return [] unless tag && value
+          return [] if value.empty? || tag.empty?
+          ["#{tag}  - #{[value].flatten.first.to_s.gsub(/[\r\n]/, ' ')}"]
+        end
+
+        def multi_valued_tag(tag, values)
+          return [] unless tag && values
+          return [] if tag.empty? || values.empty?
+          [values].flatten.map do |value|
+            if value.empty?
+              nil
+            else
+              "#{tag}  - #{value.to_s.gsub(/[\r\n]/, ' ')}"
+            end
+          end.compact
         end
 
         def type(item)
-          single_valued(item, 'TY', 'format', 'JOUR')
+          single_valued(item, 'TY', 'format', 'gen', TYPES)
         end
 
         def er(_item)
           'ER  -'
         end
 
-        def single_valued(item, tag, uid, default = nil)
+        def single_valued(item, tag, uid, default = nil, map = nil)
           value = field(item, uid).first || default
+          value = map[value] if map
           return nil unless value
           "#{tag}  - #{value}"
         end
