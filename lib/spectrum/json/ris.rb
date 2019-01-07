@@ -166,6 +166,7 @@ module Spectrum
         def ris(item)
           ret = []
           ret << type(item)
+          ret << db(item)
           ret << 'DP  - University of Michigan Library'
           ret << "Y2  - #{DateTime.now.strftime('%Y-%m-%d')}"
           datastore = item.find {|el| el[:uid] == 'datastore'}[:value]
@@ -220,8 +221,32 @@ module Spectrum
           end.flatten.compact
         end
 
+        def db(item)
+          case field(item, 'datastore').first
+          when 'mirlyn'
+            'DB  - U-M Catalog Search'
+          when 'articles', 'articlesplus'
+            'DB  - U-M Articles Search'
+          when 'databases'
+            'DB  - U-M Database Search'
+          when 'journals'
+            'DB  - U-M Online Journals Search'
+          when 'website'
+            'DB  - U-M Library Website Search'
+          end
+        end
+
         def type(item)
-          single_valued(item, 'TY', 'format', 'gen', TYPES)
+          case field(item, 'datastore').first
+          when 'databases'
+            'TY  - DBASE'
+          when 'journals'
+            'TY  - JFULL'
+          when 'website'
+            'TY  - ICOMM'
+          else
+            single_valued(item, 'TY', 'format', 'gen', TYPES)
+          end
         end
 
         def er(_item)
@@ -230,7 +255,7 @@ module Spectrum
 
         def single_valued(item, tag, uid, default = nil, map = nil)
           value = field(item, uid).first || default
-          value = map[value] if map
+          value = map[value.downcase] if map
           return nil unless value
           "#{tag}  - #{value}"
         end
