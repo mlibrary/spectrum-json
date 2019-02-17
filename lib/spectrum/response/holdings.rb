@@ -176,8 +176,8 @@ module Spectrum
         get_aeon_base_url(record, item, info) + query
       end
 
-      def get_aeon_fixedshelf(_record, item, _info)
-        item['inventory_number']
+      def get_aeon_fixedshelf(_record, _item, info)
+        info['inventory_number']
       end
 
       def get_aeon_barcode(_record, _item, info)
