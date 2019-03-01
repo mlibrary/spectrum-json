@@ -179,7 +179,7 @@ module Spectrum
             end
           end
           ret << er(item)
-          ret.compact.reject(&:empty?).join("\r\n")
+          ret.compact.reject(&:empty?).uniq.join("\r\n")
         end
 
         def ris_line(tag, value, tag_arity = TAG_ARITY)
