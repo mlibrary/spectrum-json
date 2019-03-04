@@ -15,6 +15,12 @@ module Spectrum
       end.map(&:value).join(' ')
     end
 
+    def restriction
+      (@fullrecord['506'] || []).select do |subfield|
+        /[abc]/ === subfield.code
+      end.map(&:value).join(' ')
+    end
+
     def callnumber
       fetch_first('callnumber')
     end

@@ -171,9 +171,14 @@ module Spectrum
           location: get_aeon_location(record, item, info),
           sublocation: get_aeon_sublocation(record, item, info),
           barcode: get_aeon_barcode(record, item, info),
-          fixedshelf: get_aeon_fixedshelf(record, item, info)
+          fixedshelf: get_aeon_fixedshelf(record, item, info),
+          restriction: get_aeon_restriction(record, item, info)
         }.to_query
         get_aeon_base_url(record, item, info) + query
+      end
+
+      def get_aeon_restriction(record, _item, _info)
+        record.restriction
       end
 
       def get_aeon_fixedshelf(_record, _item, info)
