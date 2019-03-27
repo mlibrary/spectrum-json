@@ -202,8 +202,8 @@ module Spectrum
         (info['description'] || '').slice(0, 250)
       end
 
-      def get_aeon_callnumber(_record, item, _info)
-        item['callnumber']
+      def get_aeon_callnumber(_record, item, info)
+        info['callnumber'] || item['callnumber']
       end
 
       def get_aeon_edition(record, _item, _info)
