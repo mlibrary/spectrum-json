@@ -24,6 +24,10 @@ module Spectrum
 
         Spectrum::Response::Specialists.configure(File.join(Rails.root, 'config', 'specialists.yml'))
       end
+
+      rake_tasks do
+        load 'spectrum/json.rake'
+      end
     end
   end
 end

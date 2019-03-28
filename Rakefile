@@ -4,6 +4,7 @@
 # All rights reserved. See LICENSE.txt for details.
 
 require 'bundler/gem_tasks'
+load 'lib/spectrum/json.rake'
 
 tasks = [:build]
 begin
