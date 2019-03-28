@@ -15,4 +15,3 @@ module Spectrum
     end
   end
 end
-    
