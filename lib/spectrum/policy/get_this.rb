@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'yaml'
+require 'date'
 
 module Spectrum
   module Policy
@@ -64,7 +65,7 @@ module Spectrum
             .gsub('{$record_id}', item.id)
             .gsub('{$patron_id}', account.id)
             .gsub('{$patron_name}', account.name)
-            .gsub('{$two_months_from_today}', (DateTime.now >> 2).strftime('%Y-%m-%d'))
+            .gsub('{$two_months_from_today}', (::DateTime.now >> 2).strftime('%Y-%m-%d'))
             .gsub('{$accession_number}', bib.accession_number)
             .gsub('{$isbn}', bib.isbn)
             .gsub('{$issn}', bib.issn)
