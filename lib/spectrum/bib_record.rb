@@ -4,6 +4,17 @@ require 'marc'
 
 module Spectrum
   class BibRecord
+    SCANABLE = Hash.new(true).merge(
+      'ISSCF' => false,
+      'ISSMU' => false,
+      'ISSVM' => false,
+      'ISSMX' => false,
+      'CF' => false,
+      'MU' => false,
+      'VM' => false,
+      'MX' => false,
+    )
+
     def initialize(solr_response)
       @data = extract_data(solr_response)
       @fullrecord = MARC::XMLReader.new(StringIO.new(@data['fullrecord'])).first
@@ -130,6 +141,14 @@ module Spectrum
 
     def clean_marc(str)
       str.respond_to?(:sub) ? str.sub(/[.,;:\/]$/, '') : ''
+    end
+
+    def formats
+      @fullrecord.fields('970').map { |field| field['a'] }
+    end
+
+    def can_scan?
+      return formats.all? { |format| SCANABLE[format] }
     end
   end
 end
