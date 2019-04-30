@@ -46,6 +46,7 @@ module Spectrum
       end
 
       def fetch_holdings_record
+        return Spectrum::AvailableOnlineHolding.new(@request.id) if @request.barcode == 'available-online'
         uri = URI(@source.holdings + @request.id)
         Spectrum::Holding.new(JSON.parse(Net::HTTP.get(uri)), @request.id, @request.barcode)
       end

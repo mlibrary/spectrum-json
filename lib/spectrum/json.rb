@@ -7,6 +7,7 @@ require 'active_support'
 require 'active_support/concern'
 
 require 'spectrum/holding'
+require 'spectrum/available_online_holding'
 require 'spectrum/floor_location'
 require 'spectrum/bib_record'
 
