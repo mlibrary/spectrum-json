@@ -19,11 +19,37 @@ module Spectrum
         end
 
         def format(message, index = nil)
+          holdings = get_holdings(message)
           ret = String.new('')
-          ret << "Record #{index + 1}: " if index
+          ret << "Record #{index + 1}: \n" if index
           ret << title(message)
-          ret << link(message)
+          case holdings.length
+          when 0
+            ret << link(message)
+          when 1, 2
+            last_location = ''
+            holdings.each do |holding|
+              ret << " Location: #{holding['location']}\n" unless last_location == holding['location']
+              ret << " Description/Status: #{holding['description']} (#{holding['status']})\n"
+              ret << " Call Number: #{holding['callnumber']}\n"
+              last_location = holding['location']
+            end
+            ret << " Catalog Record: #{url(message)}"
+          else
+            ret << " There are multiple items available; see the catalog record for a list: \n"
+            ret << url(message)
+          end
           ret
+        end
+
+        def get_holdings(message)
+          field_value(message, 'holdings').reject do |holding|
+            holding['location'] == 'HathiTrust Digital Library'
+          end.map do |holding|
+            holding['item_info'].map do |item_info|
+              holding.merge(item_info).delete('item_info')
+            end
+          end.flatten
         end
 
         def field(message, uid, glue = nil)
@@ -39,11 +65,15 @@ module Spectrum
         end
 
         def title(message)
-          " Title: #{field(message, 'title', "\n")}"
+          " Title: #{field(message, 'title', "\n")}\n"
         end
 
         def link(message)
-          " Link: #{field(message, 'base_url')}/#{field(message, 'id')}"
+          " Link: #{url(message)}"
+        end
+
+        def url(message)
+          "#{field(message, 'base_url')}/#{field(message, 'id')}"
         end
       end
     end
