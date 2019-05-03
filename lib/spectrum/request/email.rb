@@ -52,9 +52,18 @@ module Spectrum
           next unless focus
           data['records'].each do |id|
             record = focus.fetch_record(Spectrum::Json.sources, id, role, self)
-            yield record + [{ uid: 'base_url', value: data['base_url'] }]
+            yield record + [
+              { uid: 'base_url', value: data['base_url'] },
+              { uid: 'holdings', value: get_holdings(focus, id) }
+            ]
           end
         end
+      end
+
+      def get_holdings(focus, id)
+        source = Spectrum::Json.sources[focus.source]
+        return [] unless source.holdings
+        Spectrum::Response::Holdings.new(source, OpenStruct.new(id: id, focus: focus.id)).renderable
       end
 
       def each_focus

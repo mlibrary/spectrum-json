@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require 'mail'
+require 'htmlentities'
 
 module Spectrum
   module Json
     class Email
       class << self
         attr_accessor :service, :client
+
         def configure!(config)
           self.service = config
           self.client = Mail
@@ -63,29 +65,91 @@ module Spectrum
           "#{field(message, 'base_url')}/#{field(message, 'id')}"
         end
 
+        def encode(string)
+          HTMLEntities.new.encode(string)
+        end
+
         def html_format(messages)
+          length = messages.length
           ret = String.new('<div>')
           ret << html_header
-          ret << '<ol>'
+          ret << '<ul>'
           messages.each_with_index do |message, idx|
-            format_content = format(message, '</dd><dd>')
-            author_content = author(message, '</dd><dd>')
+            locations = get_locations(message)
+            location_count = locations.inject(0) do |memo, location|
+              memo + location[:rows].length
+            end
+
+            format_content = format(message, ', ')
+            author_content = author(message, ', ')
             published_content = published(message)
-            ret << '<li><article>'
-            ret << '<header>'
+
+            ret << '<div>'
             ret << "<div>Record #{idx + 1}:</div>"
-            ret << "<div><a href='#{url(message)}'>#{title(message, '<br>')}</a></div>"
-            ret << '</header>'
-            ret << '<dl>'
-            ret << "<dt>Format</dt><dd>#{format_content}</dd>" if format_content
-            ret << "<dt>Author</dt><dd>#{author_content}</dd>" if author_content
-            ret << "<dt>Published</dt><dd>#{published_content}</dd>" if published_content
-            ret << '</dl>'
+            ret << "<div>&nbsp;&nbsp;<strong>Record Title:</strong> <a href='#{encode(url(message))}'>#{encode(title(message, '<br>'))}</a></div>"
+            ret << "<div>&nbsp;&nbsp;<strong>Format:</strong> #{encode(format_content)}</div>" if format_content
+            ret << "<div>&nbsp;&nbsp;<strong>Main Author:</strong> #{encode(author_content)}</div>" if author_content
+            ret << "<div>&nbsp;&nbsp;<strong>Published:</strong> #{encode(published_content)}</div>" if published_content
+            if location_count > 6
+              ret << '<p><em>[There are multiple items, locations or volumes associated with this record; please see the catalog record for full details.]</em></p>'
+            else
+              ret << format_locations_html(locations)
+            end
+
             ret << '</article></li>'
           end
-          ret << '</ol>'
+          ret << '</ul>'
           ret << html_footer
           ret << '</div>'
+        end
+
+        def location_type(location)
+          return nil unless location[:caption]
+          case location[:caption]
+          when "Online Resources", "HathiTrust Digital Library"
+            "Online Location"
+          else
+            "Physical Location"
+          end
+        end
+
+        def location_cell(location, row, index)
+          heading = location[:headings][index]
+          cell = row[index]
+          html_ready_value = case heading
+          when "Description", "Call Number", "Source"
+            encode(cell[:text])
+          when "Link"
+            "<a href='#{encode(cell[:href])}'>#{encode(cell[:text])}</a>"
+          when "Status"
+            if location[:caption].include?('Offsite') && cell[:text] == "On Shelf"
+              "Use Get This to request this item"
+            else
+              encode(cell[:text])
+            end
+          else
+            ""
+          end
+          return "" if html_ready_value.empty?
+          "<div>&nbsp;&nbsp;&nbsp;&nbsp;<strong>#{heading}:</strong> #{html_ready_value}</div>"
+        end
+
+        def format_locations_html(locations)
+          locations.reduce(String.new) do |memo, location|
+            memo << "<div>&nbsp;&nbsp;<strong>#{location_type(location)}:</strong> #{location[:caption]}</div>"
+            memo << "<div>&nbsp;&nbsp;<strong>Floor:</strong> #{location[:notes].join(", ")}</div>" if location[:notes]
+            location[:rows].each do |row|
+              (0...row.length).each do |index|
+                memo << location_cell(location, row, index)
+              end
+            end
+            memo
+          end
+        end
+
+        def location_content(message, holdings)
+          ret = String.new("<ol>")
+          ret
         end
 
         def field(message, uid, glue = nil)
@@ -97,7 +161,17 @@ module Spectrum
         end
 
         def field_value(message, uid)
-          Array((message.find { |field| field[:uid] == uid } || {})[:value]).compact
+          [(message.find { |field| field[:uid] == uid } || {})[:value]].flatten(1).compact
+        end
+
+        def raw_value(message, uid)
+        end
+
+        def get_locations(message)
+          (
+            field_value(message, 'resource_access') + 
+            field_value(message, 'holdings')
+          ).compact.reject { |table| table[:rows].nil? || table[:rows].empty? }
         end
 
         def message(email_to, email_from, messages)
