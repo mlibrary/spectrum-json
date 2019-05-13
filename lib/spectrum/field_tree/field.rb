@@ -13,6 +13,7 @@ module Spectrum
 
       PHRASE_ONLY_FIELDS = %w[
           search_call_number_starts_with
+          search_title_starts_with
       ]
 
       def params(field_map)
@@ -37,8 +38,6 @@ module Spectrum
           if field.respond_to?(:map)
             "(#{field.map {|f| "#{f}:(#{val})"}.join(' OR ')})"
           elsif PHRASE_ONLY_FIELDS.include? field
-            %Q["#{quoteless}"]
-          elsif field == "search_title_starts_with"
             %Q[#{field}:"#{quoteless}"]
           else
             "#{field}:(#{val})"
