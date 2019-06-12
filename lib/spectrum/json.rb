@@ -83,6 +83,8 @@ require 'spectrum/request/debug'
 require 'spectrum/policy/get_this'
 
 require 'spectrum/json/railtie' if defined?(Rails)
+require 'erb'
+
 
 module Spectrum
   module Json
@@ -103,14 +105,14 @@ module Spectrum
       end
 
       def configure!
-        @actions = Spectrum::Config::ActionList.new(YAML.load_file(@actions_file))
-        @sources = Spectrum::Config::SourceList.new(YAML.load_file(@sources_file))
-        @bookplates = Spectrum::Config::BookplateList.new(YAML.load_file(@bookplates_file))
-        @filters = Spectrum::Config::FilterList.new(YAML.load_file(@filters_file))
-        @sorts   = Spectrum::Config::SortList.new(YAML.load_file(@sorts_file))
-        @fields  = Spectrum::Config::FieldList.new(YAML.load_file(@fields_file), self)
+        @actions = Spectrum::Config::ActionList.new(YAML.load(ERB.new(File.read(@actions_file)).result))
+        @sources = Spectrum::Config::SourceList.new(YAML.load(ERB.new(File.read(@sources_file)).result))
+        @bookplates = Spectrum::Config::BookplateList.new(YAML.load(ERB.new(File.read(@bookplates_file)).result))
+        @filters = Spectrum::Config::FilterList.new(YAML.load(ERB.new(File.read(@filters_file)).result))
+        @sorts   = Spectrum::Config::SortList.new(YAML.load(ERB.new(File.read(@sorts_file)).result))
+        @fields  = Spectrum::Config::FieldList.new(YAML.load(ERB.new(File.read(@fields_file)).result), self)
         @foci    = Spectrum::Config::FocusList.new(
-          Dir.glob(@focus_files).map { |file| YAML.load_file(file) },
+          Dir.glob(@focus_files).map { |file| YAML.load(ERB.new(File.read(file)).result) },
           self
         )
 
