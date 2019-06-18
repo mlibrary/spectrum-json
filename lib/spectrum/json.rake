@@ -26,17 +26,63 @@ namespace :spectrum do
 
     desc "Search parsed search strings against all datastores publicized in spectrum"
     task :search, [:file, :datastore, :count] => [:environment] do |task, args|
-      # 1 Construct a request for args[:datastore]
+
       tsv = CSV.read(args[:file], {col_sep: "\t", liberal_parsing: true})
       tsv.each do |row|
+        controller = JsonController.new
+        focus = Spectrum::Json.foci[args[:datastore]]
+        source = focus.source
+
+        request = OpenStruct.new(
+          parameters: {
+            uid: args[:datastore],
+            focus: args[:datastore],
+            source: source,
+            start: 0,
+            count: args[:count].to_i,
+            facets: {},
+            sort: 'relevance',
+            settings: {},
+            query: row[1],
+          },
+          post?: true,
+          raw_post: {
+            uid: args[:datastore],
+            focus: args[:datastore],
+            source: source,
+            start: 0,
+            count: args[:count].to_i,
+            facets: {},
+            sort: 'relevance',
+            settings: {},
+            query: row[1],
+          }.to_json,
+          env: {'SERVER_NAME' => 'search.lib.umich.edu'}
+        )
+
+        controller.request = request
+        controller.init
+
+        ret = controller.instance_eval do
+          @request      = Spectrum::Request::DataStore.new(request, @focus)
+          @new_request  = Spectrum::Request::DataStore.new(request, @focus)
+          @datastore    = Spectrum::Response::DataStore.new(this_datastore)
+          @specialists  = OpenStruct.new(spectrum: nil)
+          @response     = Spectrum::Response::RecordList.new(fetch_records, @request)
+          search_response
+        end
+
         raw_query = row[0]
         parsed_query = row[1]
-        # 2 Add the query to the base
-        # 3. Run the search, and get the results
-        # 1.upto(args[:count]) do |i|
-        #   row << result[i]
-        # end
-        puts CSV.generate_line(row, {col_sep: "\t", liberal_parsing: true})
+
+        records = ret[:response].map do |record|
+          [record[:uid], [record[:names]].flatten.first]
+        end.flatten
+
+        puts CSV.generate_line(
+          row + [ret[:total_available]] + records,
+          {col_sep: "\t", liberal_parsing: true}
+        )
       end
     end
   end
