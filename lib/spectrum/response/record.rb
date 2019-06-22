@@ -8,6 +8,7 @@ module Spectrum
         @focus    = args[:focus]
         @source   = args[:source]
         @base_url = args[:base_url]
+        @position = args[:position]
         @request  = request
 
         if @data.respond_to? :[]
@@ -47,7 +48,8 @@ module Spectrum
           datastore: @focus.id,
           names_have_html: @names_have_html,
           has_holdings: @focus.has_holdings?,
-          fields: @fields
+          fields: @fields,
+          position: @position,
         }
       end
     end
