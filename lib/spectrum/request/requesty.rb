@@ -11,7 +11,7 @@ module Spectrum
       INSTITUTION_KEY = 'dlpsInstitutionId'
 
       included do
-        attr_accessor :request_id, :slice, :sort
+        attr_accessor :request_id, :slice, :sort, :start
       end
 
       def can_sort?
