@@ -34,13 +34,15 @@ module Spectrum
             data << {
               caption: 'Bound with',
               headings: ['Record link'],
-              rows: item['down_links'].map { |link| process_link(link) }
+              rows: item['down_links'].map { |link| process_link(link) },
+              type: 'physical',
             }
           elsif item['up_links']
             data << {
               caption: 'Included in',
               headings: ['Record link'],
-              rows: item['up_links'].map { |link| process_link(link) }
+              rows: item['up_links'].map { |link| process_link(link) },
+              type: 'physical',
             }
           elsif item['item_info'] && item['item_info'].length > 0
             if item['location'] == 'HathiTrust Digital Library'
@@ -48,7 +50,8 @@ module Spectrum
                 caption: item['location'],
                 name: 'HathiTrust Sources',
                 headings: ['Link', 'Description', 'Source'],
-                rows: item['item_info'].map { |info| process_item_info(item, info) }
+                rows: item['item_info'].map { |info| process_item_info(item, info) },
+                type: 'online',
               }.delete_if { |k,v| v.nil? || v.empty? }
             else
               data << {
@@ -67,7 +70,8 @@ module Spectrum
                   )
                 ].compact.reject(&:empty?),
                 headings: ['Action', 'Description', 'Status', 'Call Number'],
-                rows: item['item_info'].map { |info| process_item_info(item, info) }
+                rows: item['item_info'].map { |info| process_item_info(item, info) },
+                type: 'physical',
               }.delete_if { |k,v| v.nil? || v.empty? }
             end
           end
