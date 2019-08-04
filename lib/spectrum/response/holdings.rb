@@ -51,7 +51,7 @@ module Spectrum
                 name: 'HathiTrust Sources',
                 headings: ['Link', 'Description', 'Source'],
                 rows: item['item_info'].map { |info| process_item_info(item, info) },
-                type: 'online',
+                type: 'electronic',
               }.delete_if { |k,v| v.nil? || v.empty? }
             else
               data << {
