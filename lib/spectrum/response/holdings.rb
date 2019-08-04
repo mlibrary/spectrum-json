@@ -72,10 +72,14 @@ module Spectrum
             end
           end
         end
-        data.reject do |item|
+        data = data.reject do |item|
           !item.has_key?(:rows) || item[:rows].empty?
         end.sort_by do |item|
           sorter[item[:caption]]
+        end
+        expanded = data.length == 1
+        data.each do |item|
+          item['preExpanded'] = expanded
         end
       end
 
