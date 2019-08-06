@@ -147,6 +147,10 @@ module Spectrum
       @fullrecord.fields('970').map { |field| field['a'] }
     end
 
+    def physical_only?
+      @fullrecord.fields('856').map { |field| field['u'] }.compact.empty?
+    end
+
     def can_scan?
       return formats.all? { |format| SCANABLE[format] }
     end

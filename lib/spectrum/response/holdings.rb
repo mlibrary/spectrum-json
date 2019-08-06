@@ -6,6 +6,7 @@ module Spectrum
       def initialize(source, request)
         @source = source
         @request = request
+        @bib_record = fetch_bib_record
         @data = fetch_holdings
       end
 
@@ -81,7 +82,7 @@ module Spectrum
         end.sort_by do |item|
           sorter[item[:caption]]
         end
-        expanded = data.length == 1
+        expanded = @bib_record.physical_only? && data.length == 1
         data.each do |item|
           item['preExpanded'] = expanded
         end
@@ -154,7 +155,7 @@ module Spectrum
 
       def request_this_url(item, info)
         record_id = @request.id
-        record = fetch_bib_record
+        record = @bib_record
 
         query = {
           Action: '10',
