@@ -117,6 +117,10 @@ module Spectrum
       (@fullrecord['970'] || { 'a' => '' })['a']
     end
 
+    def physical_only?
+      @fullrecord.fields('856').map { |field| field['u'] }.compact.empty?
+    end
+
     private
 
     def fetch_marc(datafield, subfield)
@@ -145,10 +149,6 @@ module Spectrum
 
     def formats
       @fullrecord.fields('970').map { |field| field['a'] }
-    end
-
-    def physical_only?
-      @fullrecord.fields('856').map { |field| field['u'] }.compact.empty?
     end
 
     def can_scan?
