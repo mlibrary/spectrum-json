@@ -103,6 +103,10 @@ module Spectrum
         pseudo_facet?('is_scholarly')
       end
 
+      def is_open_access?
+        pseudo_facet?('is_open_access')
+      end
+
       def book_mark?
         @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
       rescue StandardError

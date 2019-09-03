@@ -65,6 +65,10 @@ module Spectrum
         false
       end
 
+      def is_open_access?
+        false
+      end
+
       def book_mark?
         @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
       rescue StandardError

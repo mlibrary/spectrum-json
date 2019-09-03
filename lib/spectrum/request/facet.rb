@@ -19,10 +19,6 @@ module Spectrum
         false
       end
 
-      def search_only?
-        false
-      end
-
       def holdings_only?
         false
       end
@@ -32,6 +28,10 @@ module Spectrum
       end
 
       def is_scholarly?
+        false
+      end
+
+      def is_open_access?
         false
       end
 

@@ -34,6 +34,10 @@ module Spectrum
       def is_scholarly?
         false
       end
+
+      def is_open_access?
+        false
+      end
     end
   end
 end
