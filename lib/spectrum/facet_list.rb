@@ -31,15 +31,14 @@ module Spectrum
       @data&.each_pair do |original_key, value|
         key = filter_map.fetch(original_key, original_key)
         value = Array(value).map do |v|
-          if value_map.has_key?(original_key)
+          mapped_value = if value_map.has_key?(original_key)
             value_map.fetch(original_key, {}).fetch(v, v)
           else
             value_map.fetch(key, {}).fetch(v, v)
           end
+          [mapped_value].flatten.map {|v| solr_escape(v)}.join(' OR ')
         end.reject do |v|
-          v == '*'
-        end.map do |v|
-          solr_escape(v)
+          v == '*' || v == '\*'
         end.join(' AND ')
 
         if key == 'date_of_publication' || original_key == 'date_of_publication'
