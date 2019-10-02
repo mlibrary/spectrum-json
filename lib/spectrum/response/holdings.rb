@@ -291,6 +291,13 @@ module Spectrum
         Exlibris::Aleph::Config.base_url + '/F/?' + query
       end
 
+      def get_callnumber(info)
+        return nil unless (callnumber = info['callnumber'])
+        return callnumber unless (inventory_number = info['inventory_number'])
+        return callnumber unless callnumber.start_with?('VIDEO')
+        [callnumber, inventory_number].join(' - ')
+      end
+
       def process_mirlyn_item_info(item, info)
         [
           get_action(item, info),
@@ -300,7 +307,7 @@ module Spectrum
             intent: Aleph.intent(info['status']) || '',
             icon: Aleph.icon(info['status'] || '')
           },
-          {text: info['callnumber'] || 'N/A'}
+          {text: get_callnumber(info)  || 'N/A' }
         ]
       end
 
