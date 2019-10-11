@@ -36,7 +36,11 @@ module Spectrum
             @count      = @data['count'].to_i
             @page       = @data['page']
             @tree       = Spectrum::FieldTree.new(@data['field_tree'])
-            @facets     = Spectrum::FacetList.new(@focus.default_facets.merge(@focus.filter_facets(@data['facets'] || {})))
+            @facets     = Spectrum::FacetList.new(
+              @focus.default_facets,
+              @data['facets'] || {},
+              @focus.queryable_uids
+            )
             @sort       = @data['sort']
             @settings   = @data['settings']
             @request_id = @data['request_id']
@@ -73,7 +77,7 @@ module Spectrum
         @count     ||= 0
         @slice     ||= [0, @count]
         @tree      ||= Spectrum::FieldTree::Empty.new
-        @facets    ||= Spectrum::FacetList.new(nil)
+        @facets    ||= Spectrum::FacetList.new(nil, nil, nil)
         @page_size ||= 0
       end
 
@@ -186,6 +190,10 @@ module Spectrum
         else
           ret
         end
+      end
+
+      def htso?
+        @facets.htso?
       end
 
       private

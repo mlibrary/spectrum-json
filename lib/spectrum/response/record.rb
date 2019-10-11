@@ -19,7 +19,7 @@ module Spectrum
       end
 
       def initialize_from_hash
-        @url             = @focus.get_url(@data, @base_url)
+        @url             = @focus.get_url(@data, @base_url, @request)
         @type            = @data['type'] || @source.id
         @complete        = @data['complete'] || true
         @fields          = @focus.apply_fields(@data, @base_url, @request)
@@ -29,7 +29,7 @@ module Spectrum
       end
 
       def initialize_from_object
-        @url             = @focus.get_url(@data, @base_url)
+        @url             = @focus.get_url(@data, @base_url, @request)
         @type            = @data.content_types || @source.id
         @fields          = @focus.apply_fields(@data, @base_url, @request)
         @names           = @focus.names(@fields)

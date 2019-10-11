@@ -55,6 +55,8 @@ require 'spectrum/field_tree/literal'
 require 'spectrum/field_tree/empty'
 require 'spectrum/field_tree/invalid'
 
+require 'spectrum/facet'
+require 'spectrum/silent_facet'
 require 'spectrum/facet_list'
 
 require 'spectrum/request'
