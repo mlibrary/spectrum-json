@@ -4,8 +4,14 @@ module Spectrum
   class FacetList
     attr_reader :data
 
-    def initialize(data)
-      @data = data
+    def find(field)
+      [data.find { |facet| facet.key == field }&.value].flatten(1).compact
+    end
+
+    def initialize(default_facets, request_facets, queryable_uids)
+      @data = (default_facets || {}).merge(request_facets || {}).map do |key, value|
+        Spectrum::Facet(key, value, queryable_uids)
+      end
     end
 
     def spectrum
