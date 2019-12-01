@@ -23,15 +23,16 @@ module Spectrum
         end
       end
 
+      def htso?
+        @request.params[:htso]
+      end
+
       def can_sort?
         false
       end
 
       def unfiltered_id(request)
-        path = request.path
-        original = request.original_fullpath
-        id = request.params[:id]
-        original.slice(path.length - id.length, original.length)
+        request.params[:id]
       end
 
       def authenticated?

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class JsonController < ApplicationController
-  before_filter :init, :sample, :cors
+  before_filter :init, :cors, :id_preprocessor
 
   AA_ADDRESSES = [
     IPAddr.new('35.0.0.0/16'),
@@ -28,6 +28,19 @@ class JsonController < ApplicationController
     IPAddr.new('141.216.0.0/16')
   ]
 
+  def id_preprocessor
+    return unless request.params[:id]
+    path = request.path
+    original = request.original_fullpath
+    id = request.params[:id]
+    request.params[:id] = original.slice(path.length - id.length, original.length)
+
+    return unless request.params[:id].end_with?(':htso')
+    request.params[:id] = request.params[:id].slice(0, request.params[:id].length - 5)
+    request.params[:facets] = (request.params[:facets] || {}).merge('search_only' => 'true')
+    request.params[:htso] = true
+  end
+
   def cors
     headers['Access-Control-Allow-Origin'] = get_origin(request.headers)
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Referer'
@@ -42,25 +55,6 @@ class JsonController < ApplicationController
     @focus       = Spectrum::Json.foci[params[:focus]]
     @source      = Spectrum::Json.sources[params[:source]]
     no_cache unless production?
-  end
-
-  def sample
-    @messages << Spectrum::Response::Message.info(
-      summary: 'Information!',
-      details: "You've been given a sample of an informational message."
-    )
-    @messages << Spectrum::Response::Message.success(
-      summary: 'Success',
-      details: 'A long-winded explanation for your success.'
-    )
-    @messages << Spectrum::Response::Message.warn(
-      summary: 'Warning',
-      details: 'A long-winded explanation for your success.'
-    )
-    @messages << Spectrum::Response::Message.error(
-      summary: 'Error',
-      details: 'Something went wrong with the doohickey.'
-    )
   end
 
   def act

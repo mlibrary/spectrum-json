@@ -16,6 +16,18 @@ module Spectrum
 
       private
 
+      def filtered_row?(item)
+        return false unless @request.htso?
+        return false if item.nil? || item.empty? || item[0].nil? || item[0].empty?
+        return false unless item[0].has_key?(:text)
+        item[0][:text].start_with?('Search only')
+      end
+
+      def id_suffix
+        return ':htso' if @request.htso?
+        ''
+      end
+
       def fetch_holdings
         return [] unless @source.holdings
         uri = URI(@source.holdings + @request.id)
@@ -79,6 +91,16 @@ module Spectrum
         end
         data = data.reject do |item|
           !item.has_key?(:rows) || item[:rows].empty?
+        end.map do |item|
+          if data.length <= 1
+            item
+          elsif item[:caption] == 'HathiTrust  Digital Library'
+            item[:rows] = item[:rows].reject { |row| filtered_row?(row) }
+          else
+            item
+          end
+        end.reject do |item|
+          item[:rows].empty?
         end.sort_by do |item|
           sorter[item[:caption]]
         end
@@ -93,7 +115,7 @@ module Spectrum
           {
             text: link['link_text'],
             to: {
-              record: link['key'],
+              record: link['key'] + id_suffix,
               datastore: @request.focus,
             }
           }
@@ -115,7 +137,7 @@ module Spectrum
             to: {
               barcode: info['barcode'],
               action: 'get-this',
-              record: @request.id,
+              record: @request.id + id_suffix,
               datastore: @request.focus,
             }
           }

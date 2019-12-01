@@ -7,7 +7,12 @@ module Spectrum
 
       def initialize(request)
         @id = request[:id]
-        @focus = request[:id]
+        @htso = request[:htso]
+        @focus = request[:focus]
+      end
+
+      def htso?
+        @htso
       end
 
       def can_sort?
