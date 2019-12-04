@@ -5,7 +5,7 @@ module Spectrum
     attr_reader :data
 
     def find(field)
-      [data.find { |facet| facet.key == field }&.value].flatten(1).compact
+      [data.map { |key,value| key == field && value }].flatten(2).compact
     end
 
     def initialize(data)
