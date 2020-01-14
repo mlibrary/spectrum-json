@@ -298,10 +298,16 @@ module Spectrum
         [callnumber, inventory_number].join(' - ')
       end
 
+      def get_description(item, info)
+        return {text: "On Reserve: shelved at #{item['temp_loc']}"} if item['temp_loc']
+        return {text: info['description']} if info['description']
+        'N/A'
+      end
+
       def process_mirlyn_item_info(item, info)
         [
           get_action(item, info),
-          {text: info['description'] || 'N/A'},
+          get_description(item, info),
           {
             text: info['status'] || 'N/A',
             intent: Aleph.intent(info['status']) || '',
