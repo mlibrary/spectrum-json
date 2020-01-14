@@ -301,7 +301,7 @@ module Spectrum
       def get_description(item, info)
         return {text: "On Reserve: shelved at #{item['temp_loc']}"} if item['temp_loc']
         return {text: info['description']} if info['description']
-        'N/A'
+        {text: 'N/A'}
       end
 
       def process_mirlyn_item_info(item, info)
