@@ -299,8 +299,8 @@ module Spectrum
       end
 
       def get_description(item, info)
-        return {text: "On Reserve: shelved at #{item['temp_loc']}"} if item['temp_loc']
-        return {text: info['description']} if info['description']
+        return {text: "On Reserve: shelved at #{item['temp_loc']}"} unless item['temp_loc'].nil? || item['temp_loc'].empty?
+        return {text: info['description']} unless info['description'].nil? || info['description'].empty?
         {text: 'N/A'}
       end
 
