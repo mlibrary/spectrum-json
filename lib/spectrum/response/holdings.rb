@@ -309,7 +309,7 @@ module Spectrum
           if item['temp_loc'].nil? || item['temp_loc'].empty?
             {text: info['description']}
           else
-            {text: [info['description'], "Temporary location: Shelved at #{item['temp_loc']}"]}
+            {html: "<div>#{info['description']}</div><div>Temporary location: Shelved at #{item['temp_loc']}</div>"]}
           end
         end
       end
