@@ -299,9 +299,19 @@ module Spectrum
       end
 
       def get_description(item, info)
-        return {text: "On Reserve: shelved at #{item['temp_loc']}"} unless item['temp_loc'].nil? || item['temp_loc'].empty?
-        return {text: info['description']} unless info['description'].nil? || info['description'].empty?
-        {text: 'N/A'}
+        if info['description'].nil? || info['description'].empty?
+          if item['temp_loc'].nil? || item['temp_loc'].empty?
+            {text: 'N/A'}
+          else
+            {text: "Temporary location: Shelved at #{item['temp_loc']}"}
+          end
+        else
+          if item['temp_loc'].nil? || item['temp_loc'].empty?
+            {text: info['description']}
+          else
+            {text: [info['description'], "Temporary location: Shelved at #{item['temp_loc']}"]}
+          end
+        end
       end
 
       def process_mirlyn_item_info(item, info)
