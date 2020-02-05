@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class JsonController < ApplicationController
-  before_filter :init, :sample, :cors
+  before_filter :init, :cors
 
   AA_ADDRESSES = [
     IPAddr.new('35.0.0.0/16'),
@@ -42,25 +42,6 @@ class JsonController < ApplicationController
     @focus       = Spectrum::Json.foci[params[:focus]]
     @source      = Spectrum::Json.sources[params[:source]]
     no_cache unless production?
-  end
-
-  def sample
-    @messages << Spectrum::Response::Message.info(
-      summary: 'Information!',
-      details: "You've been given a sample of an informational message."
-    )
-    @messages << Spectrum::Response::Message.success(
-      summary: 'Success',
-      details: 'A long-winded explanation for your success.'
-    )
-    @messages << Spectrum::Response::Message.warn(
-      summary: 'Warning',
-      details: 'A long-winded explanation for your success.'
-    )
-    @messages << Spectrum::Response::Message.error(
-      summary: 'Error',
-      details: 'Something went wrong with the doohickey.'
-    )
   end
 
   def act
