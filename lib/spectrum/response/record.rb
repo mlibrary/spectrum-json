@@ -26,6 +26,7 @@ module Spectrum
         @names           = @focus.names(@fields)
         @uid             = @fields.find { |f| f[:uid] == 'id' }[:value]
         @names_have_html = @data['names_have_html'] || true
+        @metadata        = @focus.metadata_component(@data, @base_url, @request)
       end
 
       def initialize_from_object
@@ -36,6 +37,7 @@ module Spectrum
         @uid             = @fields.find { |f| f[:uid] == 'id' }[:value]
         @complete        = true
         @names_have_html = true
+        @metadata        = @focus.metadata_component(@data, @base_url, @request)
       end
 
       def spectrum
@@ -50,6 +52,7 @@ module Spectrum
           has_holdings: @focus.has_holdings?,
           fields: @fields,
           position: @position,
+          metadata: @metadata,
         }
       end
     end
