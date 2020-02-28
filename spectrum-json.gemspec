@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rerun'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'pry-byebug'
 
   spec.add_dependency 'activesupport'
   spec.add_dependency 'exlibris-aleph'
