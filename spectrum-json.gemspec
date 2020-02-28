@@ -25,14 +25,14 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'coveralls'
+  spec.add_development_dependency 'coveralls', '~> 0.8.21'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'quality', '~> 20.1.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'bigdecimal', '~> 1.3.4'
   spec.add_development_dependency 'rerun'
   spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'simplecov', '~> 0.14.1'
   spec.add_development_dependency 'pry-byebug'
 
   spec.add_dependency 'activesupport'
