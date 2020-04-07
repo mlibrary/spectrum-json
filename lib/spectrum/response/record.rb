@@ -27,7 +27,7 @@ module Spectrum
         @uid             = @fields.find { |f| f[:uid] == 'id' }[:value]
         @names_have_html = @data['names_have_html'] || true
         @metadata        = @focus.metadata_component(@data, @base_url, @request)
-        @icons           = @focus.icons(@metadata)
+        @icons           = @focus.icons(@data, @base_url, @request)
       end
 
       def initialize_from_object
