@@ -39,7 +39,7 @@ module Spectrum
         @complete        = true
         @names_have_html = true
         @metadata        = @focus.metadata_component(@data, @base_url, @request)
-        @icons           = @focus.icons(@metadata)
+        @icons           = @focus.icons(@data, @base_url, @request)
       end
 
       def spectrum
