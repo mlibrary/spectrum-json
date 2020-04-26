@@ -17,10 +17,17 @@ module Spectrum
         underscore = IO.read(Rails.root.to_path + UNDERSCORE)
         pride = IO.read(Rails.root.to_path + PRIDE)
         context = ExecJS.compile(underscore + pride)
+
+        raw_query = req.params[:query].to_s
+
         begin
-          query = context.call(PARSER, req.params[:query])
+          if raw_query.empty? || raw_query == '*'
+            query = {}
+          else
+            query = context.call(PARSER, raw_query)
+          end
         rescue
-          query = context.call(PARSER, '"' + req.params[:query].gsub(/"/, '') + '"')
+          query = context.call(PARSER, '"' + raw_query.gsub(/"/, '') + '"')
         end
 
         facets = req.params.map do |k,v|
