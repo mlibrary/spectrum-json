@@ -41,6 +41,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'lru_redux'
   spec.add_dependency 'marc'
   spec.add_dependency 'execjs'
-  spec.add_dependency 'rails', '~> 4.2.0'
+  spec.add_dependency 'rails'
   spec.add_dependency 'rsolr'
 end
