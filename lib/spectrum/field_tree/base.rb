@@ -5,6 +5,7 @@ module Spectrum
     class Base
       TYPES = {
         'tag' => Spectrum::FieldTree::Tag,
+        'raw' => Spectrum::FieldTree::Raw,
         'field' => Spectrum::FieldTree::Field,
         'literal' => Spectrum::FieldTree::Literal,
         'special' => Spectrum::FieldTree::Special,

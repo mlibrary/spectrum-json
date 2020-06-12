@@ -10,6 +10,7 @@ module Spectrum
     class Field < Base; end
     class Special < ChildFreeBase; end
     class Literal < ChildFreeBase; end
+    class Raw < ChildFreeBase; end
     class Invalid < RuntimeError; end
     class Empty; end
 
