@@ -2,6 +2,12 @@
 
 module Spectrum
   class Holding
+
+    REOPENED = [
+      'HATCH',
+      'HSRS',
+    ]
+
     attr_reader :holding, :record, :barcode
 
     def initialize(data, record, barcode)
@@ -82,6 +88,10 @@ module Spectrum
 
     def off_site?
       @holding['location'].start_with?('Offsite', '- Offsite')
+    end
+
+    def reopened?
+      REOPENED.include?(@holding['sub_library'])
     end
 
     def location
