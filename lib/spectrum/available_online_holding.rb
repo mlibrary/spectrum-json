@@ -35,7 +35,7 @@ module Spectrum
     # Things that respond with false
     [:can_book?, :can_reserve?, :circulating?, :on_shelf?,
      :building_use_only?, :missing?, :known_off_shelf?,
-     :on_site?, :checked_out?].each do |name|
+     :on_site?, :checked_out?, :reopened?].each do |name|
        define_method(name) do
          false
        end
