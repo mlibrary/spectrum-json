@@ -10,7 +10,7 @@ require 'spectrum/available_online_holding'
 }.each_pair do |klass, args|
   describe klass do
     [
-      'id', 'callnumber', 'status', 'location', 
+      'id', 'callnumber', 'status', 'location',
       'notes', 'issue', 'can_book?', 'can_reserve?',
       'can_request?', 'circulating?', 'on_shelf?',
       'on_site?', 'off_site?', 'reopened?',
