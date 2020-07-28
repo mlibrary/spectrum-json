@@ -6,6 +6,7 @@ module Spectrum
     REOPENED = [
       'HATCH',
       'HSRS',
+      'BUHR',
     ]
 
     attr_reader :holding, :record, :barcode
