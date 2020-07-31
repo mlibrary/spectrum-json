@@ -6,6 +6,7 @@ module Spectrum
     REOPENED = [
       'HATCH',
       'HSRS',
+      'BUHR',
       'SHAP',
       'SCI',
     ]
