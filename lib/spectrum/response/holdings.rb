@@ -329,7 +329,7 @@ module Spectrum
 
       def process_hathitrust_item_info(item, info)
         [
-          {text: info['status'], href: "http://hdl.handle.net/2027/#{info['id']}"},
+          {text: info['status'], href: "http://hdl.handle.net/2027/#{info['id']}?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth"},
           {text: info['description'] || 'N/A'},
           {text: info['source'] || 'N/A'}
         ]
