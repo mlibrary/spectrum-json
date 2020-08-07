@@ -121,7 +121,7 @@ module Spectrum
         {
           type: 'hathitrust',
           id: info['id'],
-          handle_url: "http://hdl.handle.net/2027/#{info['id']}",
+          handle_url: "http://hdl.handle.net/2027/#{info['id']}?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
           source: info['source'],
           rights: info['rights'],
           status: info['status'],
