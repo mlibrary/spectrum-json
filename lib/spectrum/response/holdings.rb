@@ -328,8 +328,15 @@ module Spectrum
       end
 
       def process_hathitrust_item_info(item, info)
+        status = info['status']
+        handle = "http://hdl.handle.net/2027/#{info['id']}"
+        suffix = if status.include?('log in required')
+          "?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth"
+        else
+          ''
+        end
         [
-          {text: info['status'], href: "http://hdl.handle.net/2027/#{info['id']}?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth"},
+          {text: status, href: "#{handle}#{suffix}"},
           {text: info['description'] || 'N/A'},
           {text: info['source'] || 'N/A'}
         ]
