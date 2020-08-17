@@ -272,7 +272,7 @@ module Spectrum
       end
 
       def get_aeon_base_url(_record, item, _info)
-        return 'https://agathe.bentley.umich.edu/aeon/?' if item['sub_library'] == 'BENT'
+        return 'https://aeon.bentley.umich.edu/login?' if item['sub_library'] == 'BENT'
         return 'https://chara.clements.umich.edu/aeon/?' if item['sub_library'] == 'CLEM'
         'https://iris.lib.umich.edu/aeon/?'
       end
