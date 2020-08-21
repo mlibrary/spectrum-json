@@ -1,13 +1,29 @@
 # frozen_string_literal: true
 
-require 'aleph'
+#FIXME
+#require 'aleph'
 
 module Spectrum
   module Response
     class GetThis
-      def initialize(source, request)
+      def initialize(source:, request:, get_this_policy: Spectrum::Policy::GetThis,
+                    available_online_holding: Spectrum::AvailableOnlineHolding,
+                    aleph_borrower: Aleph::Borrower.new, aleph_error: Aleph::Error,
+                    holding: Spectrum::Holding, bib_record: Spectrum::BibRecord,
+                    rsolr: RSolr
+                    )
+
         @source = source
         @request = request
+        #dependencies
+        @get_this_policy = get_this_policy
+        @available_online_holding = available_online_holding
+        @aleph_borrower = aleph_borrower
+        @aleph_error = aleph_error
+        @holding = holding
+        @bib_record = bib_record
+        @rsolr = rsolr
+        
         @data = fetch_get_this
       end
 
@@ -33,27 +49,27 @@ module Spectrum
         return {} unless @source.holdings
         return needs_authentication unless @request.logged_in?
         begin
-          patron = Aleph::Borrower.new.tap { |patron| patron.bor_info(@request.username) }
-        rescue Aleph::Error
+          patron = @aleph_borrower.tap { |patron| patron.bor_info(@request.username) }
+        rescue @aleph_error
           return patron_not_found
         end
         return patron_expired if patron.expired?
 
         {
           status: 'Success',
-          options: Spectrum::Policy::GetThis.new(patron, fetch_bib_record, fetch_holdings_record).resolve
+          options: @get_this_policy.new(patron, fetch_bib_record, fetch_holdings_record).resolve
         }
       end
 
       def fetch_holdings_record
-        return Spectrum::AvailableOnlineHolding.new(@request.id) if @request.barcode == 'available-online'
+        return @available_online_holding.new(@request.id) if @request.barcode == 'available-online'
         uri = URI(@source.holdings + @request.id)
-        Spectrum::Holding.new(JSON.parse(Net::HTTP.get(uri)), @request.id, @request.barcode)
+        @holding.new(JSON.parse(Net::HTTP.get(uri)), @request.id, @request.barcode)
       end
 
       def fetch_bib_record
         client = @source.driver.constantize.connect(url: @source.url)
-        Spectrum::BibRecord.new(client.get('select', params: { q: "id:#{RSolr.solr_escape(@request.id)}" }))
+        @bib_record.new(client.get('select', params: { q: "id:#{@rsolr.solr_escape(@request.id)}" }))
       end
 
       def process_response(response)
