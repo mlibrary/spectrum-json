@@ -43,5 +43,18 @@ describe Spectrum::Response::GetThis do
             
       expect(get_this.renderable[:options].bib.solr_response).to eq('mybib')
     end
+    
+    it 'calls get_this_policy with holdings_record' do
+      aleph_borrower_dbl = double('Aleph::Borrower', bor_info: [], expired?: false)
+      client = double('Spectrum::Utility::HttpClient', get: 'myholdings')
+      rsolr_client = double( 'RSolr.connect', get: '' )
+      solr = double('Spectrum::Utility::Solr', connect: rsolr_client, solr_escape: '')
+
+      get_this = described_class.new(source: @holdings_source_dbl, request: @request_dbl, aleph_borrower: aleph_borrower_dbl, client: client, solr: solr) 
+            
+      expect(get_this.renderable[:options].item.holdings).to eq('myholdings')
+      expect(get_this.renderable[:options].item.id).to eq('123456789')
+      expect(get_this.renderable[:options].item.barcode).to eq('55555')
+    end
   end
 end

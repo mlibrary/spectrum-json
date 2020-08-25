@@ -22,7 +22,11 @@ module Spectrum
     end
   end
   class Holding
+    attr_reader :holdings, :id, :barcode
     def initialize(holdings, id, barcode)
+      @holdings = holdings
+      @id = id
+      @barcode = barcode
     end
   end
   class BibRecord
