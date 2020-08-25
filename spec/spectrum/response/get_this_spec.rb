@@ -9,8 +9,8 @@ require 'yaml'
 describe Spectrum::Response::GetThis do
   describe 'renderable' do
     before(:each) do
-      @holdings_source_dbl = double("HoldingsSource", holdings: 'http://localhost')
-      @request_dbl = double('Spectrum::Request::GetThis', id: 123456789, barcode: 55555, logged_in?: true, username: 'username')
+      @holdings_source_dbl = double("HoldingsSource", holdings: 'http://localhost', url: 'mirlyn_solr_url')
+      @request_dbl = double('Spectrum::Request::GetThis', id: '123456789', barcode: '55555', logged_in?: true, username: 'username')
     end
     it 'returns {} if source.holdings is empty' do
       request_dbl = double('Spectrum::Request::GetThis')
@@ -32,7 +32,16 @@ describe Spectrum::Response::GetThis do
     end
 
     it 'returns patron_not_found if aleph_error raised'
+    
+    it 'calls get_this_policy with bib_record' do
+      aleph_borrower_dbl = double('Aleph::Borrower', bor_info: [], expired?: false)
+      client = double('Spectrum::Utility::HttpClient', get: [])
+      rsolr_client = double( 'RSolr.connect', get: 'mybib' )
+      solr = double('Spectrum::Utility::Solr', connect: rsolr_client, solr_escape: '')
 
-
+      get_this = described_class.new(source: @holdings_source_dbl, request: @request_dbl, aleph_borrower: aleph_borrower_dbl, client: client, solr: solr) 
+            
+      expect(get_this.renderable[:options].bib.solr_response).to eq('mybib')
+    end
   end
 end

@@ -10,7 +10,7 @@ module Spectrum
                     available_online_holding: Spectrum::AvailableOnlineHolding,
                     aleph_borrower: Aleph::Borrower.new, aleph_error: Aleph::Error,
                     holding: Spectrum::Holding, bib_record: Spectrum::BibRecord,
-                    rsolr: RSolr
+                    client: Spectrum::Utility::HttpClient.new, solr: Spectrum::Utility::Solr.new
                     )
 
         @source = source
@@ -22,7 +22,9 @@ module Spectrum
         @aleph_error = aleph_error
         @holding = holding
         @bib_record = bib_record
-        @rsolr = rsolr
+        @client = client
+
+        @solr = solr
         
         @data = fetch_get_this
       end
@@ -63,13 +65,13 @@ module Spectrum
 
       def fetch_holdings_record
         return @available_online_holding.new(@request.id) if @request.barcode == 'available-online'
-        uri = URI(@source.holdings + @request.id)
-        @holding.new(JSON.parse(Net::HTTP.get(uri)), @request.id, @request.barcode)
+        uri = @source.holdings + @request.id
+        @holding.new( @client.get(uri), @request.id, @request.barcode)
       end
 
       def fetch_bib_record
-        client = @source.driver.constantize.connect(url: @source.url)
-        @bib_record.new(client.get('select', params: { q: "id:#{@rsolr.solr_escape(@request.id)}" }))
+        client = @solr.connect(url: @source.url)
+        @bib_record.new(client.get('select', params: { q: "id:#{@solr.solr_escape(@request.id)}" }))
       end
 
       def process_response(response)
