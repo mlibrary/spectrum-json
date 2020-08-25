@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-#FIXME
-#require 'aleph'
+require 'aleph'
 
 module Spectrum
   module Response
