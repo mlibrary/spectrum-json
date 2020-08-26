@@ -80,7 +80,13 @@ describe Spectrum::Response::GetThis do
       expect(get_this.renderable).to eq({ status: 'Patron expired', options: [] })
     end
 
-    it 'returns patron_not_found if aleph_error raised'
+    it 'returns patron_not_found if aleph_error raised' do
+      allow(@init[:aleph_borrower]).to receive(:bor_info) {raise Aleph::Error, 'Borrower not set'} 
+
+      @init.delete(:aleph_error)
+      get_this = described_class.new(**@init) 
+      expect(get_this.renderable).to eq({ status: 'Patron not found', options: [] })
+    end
     
     it 'calls get_this_policy with bib_record' do
       @init[:client] = double('Spectrum::Utility::HttpClient', get: [])
@@ -99,7 +105,7 @@ describe Spectrum::Response::GetThis do
       rsolr_client = double( 'RSolr.connect', get: '' )
       @init[:solr] = double('Spectrum::Utility::Solr', connect: rsolr_client, solr_escape: '')
 
-      get_this = described_class.new(**@ini) 
+      get_this = described_class.new(**@init) 
             
       expect(get_this.renderable[:options].item.holdings).to eq('myholdings')
       expect(get_this.renderable[:options].item.id).to eq('123456789')
