@@ -1,0 +1,128 @@
+{
+  "bib_data": {
+    "mms_id": "991408490000541",
+    "title": "Plain words on singing /",
+    "author": "Shakespeare, William,",
+    "issn": null,
+    "isbn": 9781234567897,
+    "complete_edition": "",
+    "network_number": [
+      "(TrN)45027-train20072_c2db",
+      "CAB00000027"
+    ],
+    "place_of_publication": "London ;",
+    "date_of_publication": "[1924].",
+    "publisher_const": "GP Putnam's sons",
+    "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/991408490000541"
+  },
+  "holding_data": {
+    "holding_id": "229209090000521",
+    "call_number_type": {
+      "value": "0",
+      "desc": "Library of Congress classification"
+    },
+    "call_number": "MT820 .S53",
+    "accession_number": "",
+    "copy_id": "0",
+    "in_temp_location": false,
+    "temp_library": {
+      "value": null,
+      "desc": null
+    },
+    "temp_location": {
+      "value": null,
+      "desc": null
+    },
+    "temp_call_number_type": {
+      "value": "",
+      "desc": null
+    },
+    "temp_call_number": "",
+    "temp_policy": {
+      "value": "",
+      "desc": null
+    },
+    "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/991408490000541/holdings/229209090000521"
+  },
+  "item_data": {
+    "pid": "235561180000541",
+    "barcode": "0919242913",
+    "creation_date": "2011-12-17Z",
+    "modification_date": "2018-06-28Z",
+    "base_status": {
+      "value": "0",
+      "desc": "Item not in place"
+    },
+    "awaiting_reshelving": false,
+    "physical_material_type": {
+      "value": "BOOK",
+      "desc": "Book"
+    },
+    "policy": {
+      "value": "",
+      "desc": null
+    },
+    "provenance": {
+      "value": "",
+      "desc": null
+    },
+    "po_line": "",
+    "is_magnetic": false,
+    "year_of_issue": "",
+    "enumeration_a": "",
+    "enumeration_b": "",
+    "enumeration_c": "",
+    "enumeration_d": "",
+    "enumeration_e": "",
+    "enumeration_f": "",
+    "enumeration_g": "",
+    "enumeration_h": "",
+    "chronology_i": "",
+    "chronology_j": "",
+    "chronology_k": "",
+    "chronology_l": "",
+    "chronology_m": "",
+    "description": "",
+    "receiving_operator": "",
+    "process_type": {
+      "value": "LOAN",
+      "desc": "Loan"
+    },
+    "inventory_number": "",
+    "inventory_price": "",
+    "library": {
+      "value": "MUS",
+      "desc": "Music Library"
+    },
+    "location": {
+      "value": "OVR",
+      "desc": "Oversize Shelves - 4th floor"
+    },
+    "alternative_call_number": "",
+    "alternative_call_number_type": {
+      "value": "",
+      "desc": null
+    },
+    "storage_location_id": "",
+    "pages": "",
+    "pieces": "1",
+    "public_note": "",
+    "fulfillment_note": "",
+    "due_date": "2020-09-09T15:39:53.935Z",
+    "internal_note_1": "",
+    "internal_note_2": "",
+    "internal_note_3": "",
+    "statistics_note_1": "",
+    "statistics_note_2": "",
+    "statistics_note_3": "",
+    "requested": false,
+    "edition": null,
+    "imprint": null,
+    "language": null,
+    "physical_condition": {
+      "value": null,
+      "desc": null
+    }
+  },
+  "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/991408490000541/holdings/229209090000521/items/235561180000541"
+}

@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'simplecov', '~> 0.14.1'
   spec.add_development_dependency 'pry-byebug'
+  spec.add_development_dependency 'dotenv'
 
   spec.add_dependency 'activesupport'
   spec.add_dependency 'exlibris-aleph'
@@ -43,4 +44,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'execjs'
   spec.add_dependency 'rails'
   spec.add_dependency 'rsolr'
+  spec.add_dependency 'httparty'
 end

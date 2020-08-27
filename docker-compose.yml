@@ -6,7 +6,5 @@ services:
     volumes:
       - .:/usr/src/app
       - gem_cache:/gems
-      - tmp:/usr/src/app/tmp
 volumes:
   gem_cache:
-  tmp:

@@ -23,6 +23,7 @@ require 'pry-byebug'
 
 require 'coveralls'
 require 'simplecov'
+require 'dotenv/load'
 SimpleCov.start
 
 RSpec.configure do |config|
