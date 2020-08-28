@@ -6,22 +6,22 @@ module Spectrum
   module Response
     class GetThis
       def initialize(source:, request:, get_this_policy: Spectrum::Policy::GetThis,
-                    available_online_holding: Spectrum::AvailableOnlineHolding,
                     aleph_borrower: Aleph::Borrower.new, aleph_error: Aleph::Error,
-                    holding: Spectrum::Holding, bib_record: Spectrum::BibRecord,
-                    client: Spectrum::Utility::HttpClient.new, solr: Spectrum::Utility::Solr.new
+                    bib_record: Spectrum::BibRecord,
+                    item_picker: Spectrum::Utility::ItemPicker.new,
+                    solr: Spectrum::Utility::Solr.new
                     )
 
         @source = source
         @request = request
         #dependencies
         @get_this_policy = get_this_policy
-        @available_online_holding = available_online_holding
+
         @aleph_borrower = aleph_borrower
         @aleph_error = aleph_error
-        @holding = holding
+
+        @item_picker = item_picker
         @bib_record = bib_record
-        @client = client
 
         @solr = solr
         
@@ -58,14 +58,8 @@ module Spectrum
 
         {
           status: 'Success',
-          options: @get_this_policy.new(patron, fetch_bib_record, fetch_holdings_record).resolve
+          options: @get_this_policy.new(patron, fetch_bib_record, @item_picker.item(request: @request) ).resolve
         }
-      end
-
-      def fetch_holdings_record
-        return @available_online_holding.new(@request.id) if @request.barcode == 'available-online'
-        uri = @source.holdings + @request.id
-        @holding.new( @client.get(uri), @request.id, @request.barcode)
       end
 
       def fetch_bib_record

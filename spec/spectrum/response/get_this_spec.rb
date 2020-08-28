@@ -3,11 +3,11 @@ require 'spectrum/response/get_this'
 
 #collaborators
 require 'spectrum/policy/get_this'
-require 'spectrum/available_online_holding'
 require 'spectrum/holding'
+require 'spectrum/item'
 require 'spectrum/bib_record'
-require 'spectrum/utility/http_client'
 require 'spectrum/utility/solr'
+require 'spectrum/utility/item_picker'
 
 require 'yaml'
 
@@ -52,8 +52,8 @@ describe Spectrum::Response::GetThis do
                 get_this_policy: GetThisPolicyDouble,
                 aleph_borrower: double('Aleph::Borrower', bor_info: [], expired?: false), 
                 aleph_error: AlephErrorDouble,
-                holding: HoldingDouble, bib_record: BibRecordDouble,
-                client: double('Spectrum::Utility::HttpClient', get: nil),
+                bib_record: BibRecordDouble,
+                item_picker: double("Spectrum::Utility::ItemPicker", item: nil),
                 solr: double('Spectrum::Utility::Solr'),
       }
       @holdings_source_dbl = double("HoldingsSource", holdings: 'http://localhost', url: 'mirlyn_solr_url')
@@ -89,7 +89,6 @@ describe Spectrum::Response::GetThis do
     end
     
     it 'calls get_this_policy with bib_record' do
-      @init[:client] = double('Spectrum::Utility::HttpClient', get: [])
       rsolr_client = double( 'RSolr.connect', get: 'mybib' )
       @init[:solr] = double('Spectrum::Utility::Solr', connect: rsolr_client, solr_escape: '')
 
@@ -98,18 +97,17 @@ describe Spectrum::Response::GetThis do
       expect(get_this.renderable[:options].bib.solr_response).to eq('mybib')
     end
     
-    it 'calls get_this_policy with holdings_record' do
-      aleph_borrower_dbl = double('Aleph::Borrower', bor_info: [], expired?: false)
+    it 'calls get_this_policy with Spectrum::Item' do
 
-      @init[:client] = double('Spectrum::Utility::HttpClient', get: 'myholdings')
+      item_dbl = 'MyItem'
+      allow(@init[:item_picker]).to receive(:item) {item_dbl} 
       rsolr_client = double( 'RSolr.connect', get: '' )
       @init[:solr] = double('Spectrum::Utility::Solr', connect: rsolr_client, solr_escape: '')
 
+      expect(@init[:item_picker]).to receive(:item).with(hash_including(request: @init[:request]))
       get_this = described_class.new(**@init) 
-            
-      expect(get_this.renderable[:options].item.holdings).to eq('myholdings')
-      expect(get_this.renderable[:options].item.id).to eq('123456789')
-      expect(get_this.renderable[:options].item.barcode).to eq('55555')
+      
+      expect(get_this.renderable[:options].item).to eq(item_dbl)
     end
   end
 end

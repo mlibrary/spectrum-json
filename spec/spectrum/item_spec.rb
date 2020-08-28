@@ -108,27 +108,6 @@ describe Spectrum::Item do
   end
 end
 
-describe Spectrum::Item, "self.for(barcode:)" do
-  before(:each) do
-    @client_dbl = double('Spectrum::Utility::HttpClient')
-  end
-  it "returns loaded item for valid barcode" do
-    response_dbl = double('HTTParty::Response', parsed_response: JSON.parse(File.read('./spec/fixtures/plain_words_on_singing_item.json')), code: 200 )
-    allow(@client_dbl).to receive(:get).and_return(response_dbl)
-    item = described_class.for(barcode: '0919242913', client: @client_dbl)
-    expect(item.barcode).to eq('0919242913')
-    expect(item.class.name).to eq('Spectrum::Item')
-  end
-
-  it "returns NullItem for error received" do
-    response_dbl = double('HTTParty::Response', parsed_response: JSON.parse(File.read('./spec/fixtures/item_error.json')), code: 400 )
-    allow(@client_dbl).to receive(:get).and_return(response_dbl)
-    item = described_class.for(barcode: '0919242913', client: @client_dbl)
-    expect(item.barcode).to eq('0919242913')
-    expect(item.class.name).to eq('Spectrum::NullItem')
-  end
-
-end
 
 describe Spectrum::NullItem do
   subject do
