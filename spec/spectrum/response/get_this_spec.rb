@@ -6,19 +6,11 @@ require 'spectrum/policy/get_this'
 require 'spectrum/holding'
 require 'spectrum/item'
 require 'spectrum/bib_record'
-require 'spectrum/utility/solr'
 require 'spectrum/utility/item_picker'
+require 'spectrum/utility/bib_fetcher'
 
 require 'yaml'
 
-class HoldingDouble
-  attr_reader :holdings, :id, :barcode
-  def initialize(holdings, id, barcode)
-    @holdings = holdings
-    @id = id
-    @barcode = barcode
-  end
-end
 class BibRecordDouble
   attr_reader :solr_response
   def initialize(solr_response)
@@ -52,9 +44,8 @@ describe Spectrum::Response::GetThis do
                 get_this_policy: GetThisPolicyDouble,
                 aleph_borrower: double('Aleph::Borrower', bor_info: [], expired?: false), 
                 aleph_error: AlephErrorDouble,
-                bib_record: BibRecordDouble,
+                bib_fetcher: double("Spectrum::Utility::BibFetcher", fetch: 'Spectrum::BibRecord'),
                 item_picker: double("Spectrum::Utility::ItemPicker", item: nil),
-                solr: double('Spectrum::Utility::Solr'),
       }
       @holdings_source_dbl = double("HoldingsSource", holdings: 'http://localhost', url: 'mirlyn_solr_url')
       @request_dbl = double('Spectrum::Request::GetThis', id: '123456789', barcode: '55555', logged_in?: true, username: 'username')
@@ -89,20 +80,16 @@ describe Spectrum::Response::GetThis do
     end
     
     it 'calls get_this_policy with bib_record' do
-      rsolr_client = double( 'RSolr.connect', get: 'mybib' )
-      @init[:solr] = double('Spectrum::Utility::Solr', connect: rsolr_client, solr_escape: '')
 
       get_this = described_class.new(**@init) 
             
-      expect(get_this.renderable[:options].bib.solr_response).to eq('mybib')
+      expect(get_this.renderable[:options].bib).to eq('Spectrum::BibRecord')
     end
     
     it 'calls get_this_policy with Spectrum::Item' do
 
       item_dbl = 'MyItem'
       allow(@init[:item_picker]).to receive(:item) {item_dbl} 
-      rsolr_client = double( 'RSolr.connect', get: '' )
-      @init[:solr] = double('Spectrum::Utility::Solr', connect: rsolr_client, solr_escape: '')
 
       expect(@init[:item_picker]).to receive(:item).with(hash_including(request: @init[:request]))
       get_this = described_class.new(**@init) 

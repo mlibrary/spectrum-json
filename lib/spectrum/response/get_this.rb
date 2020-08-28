@@ -7,9 +7,8 @@ module Spectrum
     class GetThis
       def initialize(source:, request:, get_this_policy: Spectrum::Policy::GetThis,
                     aleph_borrower: Aleph::Borrower.new, aleph_error: Aleph::Error,
-                    bib_record: Spectrum::BibRecord,
-                    item_picker: Spectrum::Utility::ItemPicker.new,
-                    solr: Spectrum::Utility::Solr.new
+                    bib_fetcher: Spectrum::Utility::BibFetcher.new,
+                    item_picker: Spectrum::Utility::ItemPicker.new
                     )
 
         @source = source
@@ -21,9 +20,8 @@ module Spectrum
         @aleph_error = aleph_error
 
         @item_picker = item_picker
-        @bib_record = bib_record
+        @bib_fetcher = bib_fetcher
 
-        @solr = solr
         
         @data = fetch_get_this
       end
@@ -58,14 +56,14 @@ module Spectrum
 
         {
           status: 'Success',
-          options: @get_this_policy.new(patron, fetch_bib_record, @item_picker.item(request: @request) ).resolve
+          options: @get_this_policy.new(patron, @bib_fetcher.fetch(id: @request.id, url: @source.url), @item_picker.item(request: @request) ).resolve
         }
       end
 
-      def fetch_bib_record
-        client = @solr.connect(url: @source.url)
-        @bib_record.new(client.get('select', params: { q: "id:#{@solr.solr_escape(@request.id)}" }))
-      end
+      #def fetch_bib_record
+        #client = @solr.connect(url: @source.url)
+        #@bib_record.new(client.get('select', params: { q: "id:#{@solr.solr_escape(@request.id)}" }))
+      #end
 
       #def process_response(response)
         #data = []

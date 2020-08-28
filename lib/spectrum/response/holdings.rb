@@ -3,10 +3,12 @@
 module Spectrum
   module Response
     class Holdings
-      def initialize(source, request)
+      def initialize(source:, request:, client: Spectrum::Utility::HttpClient.new,
+                     bib_fetcher: Spectrum::Utility::BibFetcher.new)
         @source = source
         @request = request
-        @bib_record = fetch_bib_record
+        @client = client
+        @bib_record = bib_fetcher.fetch(id: @request.id, url: @source.url)
         @data = fetch_holdings
       end
 
@@ -18,8 +20,8 @@ module Spectrum
 
       def fetch_holdings
         return [] unless @source.holdings
-        uri = URI(@source.holdings + @request.id)
-        response = JSON.parse(Net::HTTP.get(uri))[@request.id]
+        uri = @source.holdings + @request.id
+        response = @client.get(uri)[@request.id]
         process_response(response)
       end
 
@@ -148,10 +150,10 @@ module Spectrum
         end
       end
 
-      def fetch_bib_record
-        client = @source.driver.constantize.connect(url: @source.url)
-        Spectrum::BibRecord.new(client.get('select', params: { q: "id:#{RSolr.solr_escape(@request.id)}" }))
-      end
+      #def fetch_bib_record
+        #client = @source.driver.constantize.connect(url: @source.url)
+        #Spectrum::BibRecord.new(client.get('select', params: { q: "id:#{RSolr.solr_escape(@request.id)}" }))
+      #end
 
       def request_this_url(item, info)
         record_id = @request.id

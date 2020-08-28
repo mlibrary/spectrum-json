@@ -1,0 +1,556 @@
+[
+    {
+        "caption": "HathiTrust Digital Library",
+        "headings": [
+            "Link",
+            "Description",
+            "Source"
+        ],
+        "name": "HathiTrust Sources",
+        "preExpanded": false,
+        "rows": [
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924000857437?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.1-2 1966-69"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924060942194?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.3-4 1970-73"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924060942160?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.5 1974/75"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924060942178?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.6 1976/77"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924060942186?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.7 1978/79"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924060940644?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.8 1980/81"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924060940651?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.9 1982/83"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924060940669?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.10 1984/85"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924060940677?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.11 1986/87"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924058985346?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.12 1989/90"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924058987797?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.13 1990/91"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924063079127?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.14 1992/93"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924073959763?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.15  Inc. 1994-95"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924094817503?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.16-17 1995-99"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924094750175?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.18 2000/01"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924094749581?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.19 Inc. 2002-03"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924097824613?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.20 2004-05"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ],
+            [
+                {
+                    "href": "http://hdl.handle.net/2027/coo.31924101499196?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
+                    "text": "Full text available, simultaneous access is limited (HathiTrust log in required)"
+                },
+                {
+                    "text": "v.21 2006-07"
+                },
+                {
+                    "text": "Cornell University"
+                }
+            ]
+        ],
+        "type": "electronic"
+    },
+    {
+        "caption": "Research Museums Center Birds Division",
+        "captionLink": {
+            "href": "http://www.lib.umich.edu/location/museums-library/unit/31",
+            "text": "About location"
+        },
+        "headings": [
+            "Action",
+            "Description",
+            "Status",
+            "Call Number"
+        ],
+        "name": "holdings",
+        "notes": [
+            "1-24 : 1966/1967-2013"
+        ],
+        "preExpanded": false,
+        "rows": [
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.1-2 1966-69"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.3-4 1970-73"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.5-6 1974-77"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.7-8 1978-81"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.9 1982-83"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.10 1984-85"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.11 1986-87"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.12 1988-89"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.13 1990-91"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.14 1992-93"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.15 1994-96"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.16 1996-97"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.17 1998-99"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.18 2000-01"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.19 2002-03"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.20 2004-05"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.21 2006-2007"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.22 2008-2010"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ],
+            [
+                {
+                    "text": "N/A"
+                },
+                {
+                    "text": "v.23 2010-2011"
+                },
+                {
+                    "icon": "check_circle",
+                    "intent": "success",
+                    "text": "On shelf"
+                },
+                {
+                    "text": "QL671 .B678"
+                }
+            ]
+        ],
+        "type": "physical"
+    }
+]
