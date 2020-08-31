@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails'
+
 module Spectrum
   module Json
     class Engine < Rails::Engine
