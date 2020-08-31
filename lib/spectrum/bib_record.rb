@@ -147,6 +147,18 @@ module Spectrum
       str.respond_to?(:sub) ? str.sub(/[.,;:\/]$/, '') : ''
     end
 
+    def etas?
+      @fullrecord.any? do |field|
+        field.tag == '973' && field.subfields.any? do |subfield|
+          subfield.code == 'a' && subfield.value == 'ET'
+        end
+      end
+    end
+
+    def not_etas?
+      !etas?
+    end
+
     def formats
       @fullrecord.fields('970').map { |field| field['a'] }
     end

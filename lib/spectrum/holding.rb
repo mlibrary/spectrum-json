@@ -11,6 +11,19 @@ module Spectrum
       'SCI',
     ]
 
+    CONTACTLESS_PICKUP = [
+      'HATCH',
+      'SHAP',
+      'SCI',
+      'UGL',
+      'FINE',
+      'BUHR',
+    ]
+
+    STANDARD_PICKUP = [
+      'FLINT',
+    ]
+
     attr_reader :holding, :record, :barcode
 
     def initialize(data, record, barcode)
@@ -91,6 +104,14 @@ module Spectrum
 
     def off_site?
       @holding['location'].start_with?('Offsite', '- Offsite')
+    end
+
+    def contactless_pickup?
+      CONTACTLESS_PICKUP.include?(@holding['sub_library'])
+    end
+
+    def standard_pickup?
+      STANDARD_PICKUP.include?(@holding['sub_library'])
     end
 
     def reopened?
