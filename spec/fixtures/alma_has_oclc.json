@@ -1,0 +1,41 @@
+{
+  "bib": [
+    {
+      "mms_id": "991117860000541",
+      "record_format": "marc21",
+      "linked_record_id": {
+        "value": null,
+        "type": null
+      },
+      "title": "Cities and growth : a policy handbook /",
+      "author": "Kemp, Roger L.",
+      "issn": null,
+      "isbn": "0786431970 (softcover : alk. paper)",
+      "network_number": [
+        "(TrN)61390-train20072_c2db",
+        "15001596",
+        "(OCoLC)ocn173243746"
+      ],
+      "place_of_publication": "Jefferson, N.C. :",
+      "date_of_publication": "c2008.",
+      "publisher_const": "McFarland & Company",
+      "holdings": {
+        "value": null,
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/991117860000541/holdings"
+      },
+      "created_by": "import",
+      "created_date": "2011-12-17Z",
+      "last_modified_by": "OPR-RECALCULATION",
+      "last_modified_date": "2016-07-08Z",
+      "suppress_from_publishing": "false",
+      "suppress_from_external_search": "false",
+      "sync_with_oclc": "NONE",
+      "originating_system": "ILS",
+      "originating_system_id": "61390-train20072_c2db",
+      "anies": null,
+      "requests": null,
+      "link": null
+    }
+  ],
+  "total_record_count": 1
+}

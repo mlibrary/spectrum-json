@@ -1,0 +1,39 @@
+{
+  "records": {
+    "000311635": {
+      "recordURL": "https://catalog.hathitrust.org/Record/000311635",
+      "titles": [
+        "The hurdy-gurdy"
+      ],
+      "isbns": [
+        "9780715378885",
+        "9780715378885"
+      ],
+      "issns": [],
+      "oclcs": [
+        "10543709",
+        "6961296",
+        "60082813",
+        "1008222435"
+      ],
+      "lccns": [
+        "79056052"
+      ],
+      "publishDates": [
+        "1980"
+      ]
+    }
+  },
+  "items": [
+    {
+      "orig": "Indiana University",
+      "fromRecord": "000311635",
+      "htid": "inu.30000042758924",
+      "itemURL": "https://hdl.handle.net/2027/inu.30000042758924",
+      "rightsCode": "ic",
+      "lastUpdate": "20200319",
+      "enumcron": false,
+      "usRightsString": "Limited (search-only)"
+    }
+  ]
+}
