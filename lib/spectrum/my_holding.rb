@@ -1,17 +1,18 @@
 #Will eventually be Holding, but need to deal with PlaceHold first. This goes with holdings method in JsonController
 module Spectrum
+  attr_reader :preExpanded
   class MyHolding
-    def initialize(holding={})
+    def initialize(holding: {}, preExpanded: false)
       @holding = holding
+      @preExpanded = preExpanded
     end
 
     def caption
     end
+
     def headings
     end
     def name
-    end
-    def preExpanded
     end
     def rows
     end
@@ -39,9 +40,10 @@ module Spectrum
     #type: physical
   end
   class HathiHolding < Spectrum::MyHolding
-    def initialize(holding={}, alma_client=Spectrum::Utility::AlmaClient.new)
+    attr_reader :preExpanded
+    def initialize(holding: {}, preExpanded: false, alma_client: Spectrum::Utility::AlmaClient.new)
       @alma_client = alma_client
-      super(holding)
+      super(holding: holding, preExpanded: preExpanded)
       @holding.empty? ? @ph_exists = false : @ph_exists = get_ph_status
     end
     def caption
@@ -63,14 +65,32 @@ module Spectrum
     def print_holding?
       @ph_exists
     end
+    def rows
+      @holding["items"].map do |item|
+        pick_item(item)
+      end
+    end
+    def to_h
+      {
+        caption: caption,
+        headings: headings,
+        name: name,
+        preExpanded: @preExpanded,
+        rows: rows.map{ |r| r.to_a },
+        type: type
+      }
+    end
     private
-    #Need Item Picker. Can do this in here.
-      #if @rightsCode =~ /^(pd|world|cc|und-world|ic-world)/ 
-        #"Full text"
-      #elsif @ph_exists
-        #"Full text available (HathiTrust log in required)"
-      #else
-#        "Search only (no full text)"
+    def pick_item(item)
+      if item['rightsCode'] =~ /^(pd|world|cc|und-world|ic-world)/ 
+        PublicDomainHathiItem.new(item)
+      elsif print_holding? || item['orig'] == 'University of Michigan'
+        EtasHathiItem.new(item)
+      else
+        HathiItem.new(item)
+      end
+    end
+
     def get_ph_status
       oclcs = @holding["records"]&.values&.first&.dig("oclcs")
       oclcs.each do |oclc|
@@ -83,12 +103,10 @@ module Spectrum
     end
   end
   class HathiItem
-    def initialize(item: item, ph_exists: ph_exists)
-      @source = item['source'] || 'N/A'
+    def initialize(item)
+      @source = item['orig'] || 'N/A'
       @url = item['itemURL']
       @description = item['enumcron'] || 'N/A'
-      @rightsCode = item['rightsCode']
-      @ph_exists = ph_exists
     end
     def to_a
       [
@@ -97,32 +115,15 @@ module Spectrum
           {text: @source}
       ]
     end
+
+    private
     def href
       @url
     end
-
-    private
-    def suffix
-      if #condition
-        "?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth"
-      else
-        ''
-      end
-    end
     def status
         "Search only (no full text)"
-        #1: pd
-        #2: ic
-        #3: opb
-        #4: orph
-        #6: umall
-        #7: world
-        #5: und
-        #8: nobody
-        #9: pdus
-        #10 - 15: Creative Commons (cc-by-nd, cc-by-nc-nd, etc) Treat same as world
-      
     end
+      
   end
   
   class PublicDomainHathiItem < HathiItem
@@ -136,7 +137,7 @@ module Spectrum
       "#{@url}?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth"
     end
     def status 
-      "Full text available (HathiTrust log in required)"
+      "Full text available, simultaneous access is limited (HathiTrust log in required)"
     end
   end
 end
