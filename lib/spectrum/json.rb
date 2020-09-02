@@ -83,6 +83,11 @@ require 'spectrum/request/debug'
 
 require 'spectrum/policy/get_this'
 
+require 'spectrum/holding/action'
+require 'spectrum/holding/get_this_action'
+require 'spectrum/holding/request_this_action'
+require 'spectrum/holding/book_this_action'
+
 require 'spectrum/json/railtie' if defined?(Rails)
 require 'erb'
 
