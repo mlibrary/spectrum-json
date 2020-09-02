@@ -102,6 +102,10 @@ module Spectrum
       status.start_with?('Checked out')
     end
 
+    def not_checked_out?
+      !checked_out?
+    end
+
     def off_site?
       @holding['location'].start_with?('Offsite', '- Offsite')
     end
