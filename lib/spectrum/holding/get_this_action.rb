@@ -14,6 +14,7 @@ module Spectrum
         return false if item['sub_library'] == 'BENT' && item['collection'] == 'ELEC'
         return false if item['sub_library'] == 'CLEM' && item['collection'] == 'ELEC'
         return false if item['collection']  == 'PAPY' && item['sub_library'].match(/^(SPEC|HATCH)/)
+        ret
       end
 
       def self.from_process_status(item)
