@@ -8,7 +8,7 @@ module Spectrum
         return true if info['can_request']
 
         # Apply the snapshot of Tim's logic from 9/1
-        ret = from_process_status(item)
+        ret = from_process_status(info)
         return false if item['sub_library'] == 'FVL'
         return false if item['sub_library'] == 'SPEC'
         return false if item['sub_library'] == 'BENT' && item['collection'] == 'ELEC'
@@ -19,7 +19,7 @@ module Spectrum
 
       def self.from_process_status(item)
         ret = item_default_match(item)
-        return ret unless item['item_process_status']
+        return ret if item['item_process_status'].nil? || item['item_process_status'].empty?
 
         ps_entry = process_status_map[item['item_process_status']]
         return false unless ps_entry
