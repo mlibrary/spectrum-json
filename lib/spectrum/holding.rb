@@ -9,6 +9,8 @@ module Spectrum
       'BUHR',
       'SHAP',
       'SCI',
+      'UGL',
+      'FINE',
     ]
 
     CONTACTLESS_PICKUP = [
