@@ -1,0 +1,11 @@
+{
+  "holding_id": "22372236120006381",
+  "created_by": "import",
+  "created_date": "2020-08-18Z",
+  "originating_system": "ILS",
+  "originating_system_id": "001116087-MIU60",
+  "suppress_from_publishing": "false",
+  "anies": [
+    "<?xml version=\"1.0\" encoding=\"UTF-16\"?><record schemaLocation=\"http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd\"><leader>     ny   22001213n 4500</leader><datafield ind1=\" \" ind2=\" \" tag=\"OWN\"><subfield code=\"a\">MUSM</subfield></datafield><controlfield tag=\"008\">880719||    |   |   ||eng       </controlfield><datafield ind1=\"0\" ind2=\" \" tag=\"852\"><subfield code=\"a\">MiU</subfield><subfield code=\"b\">MUSM</subfield><subfield code=\"c\">BIR</subfield><subfield code=\"h\">QL671 .B678</subfield></datafield><datafield ind1=\"3\" ind2=\"2\" tag=\"866\"><subfield code=\"a\">1-24</subfield><subfield code=\"8\">0</subfield></datafield><datafield ind1=\"3\" ind2=\"2\" tag=\"866\"><subfield code=\"a\">1966/1967-2013</subfield><subfield code=\"8\">0</subfield></datafield><datafield ind1=\" \" ind2=\" \" tag=\"XPR\"><subfield code=\"a\">NONE</subfield><subfield code=\"b\">11111111</subfield><subfield code=\"t\">ADD</subfield></datafield></record>"
+  ]
+}

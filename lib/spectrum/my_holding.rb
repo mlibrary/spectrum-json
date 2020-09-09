@@ -21,15 +21,26 @@ module Spectrum
     end
   end
   class AlmaHolding < Spectrum::MyHolding
+    def initialize(holding: {}, 
+                   preExpanded: false, 
+                   items: {}, 
+                   collections_data: YAML.load_file(File.expand_path('../utility/collections.yml', __FILE__)), 
+                   holding_record: MARC::XMLReader.new(StringIO.new(holding['anies']&.first || '')).first 
+                  ) 
+      @items = items
+      @collections_data = collections_data 
+      @holding_record = holding_record
+      super(holding: holding, preExpanded: preExpanded)
+    end
     def caption
       #Library Description?
+      "#{library_name} #{location_name}".strip
     end
     def captionLink
-      #link in giant yaml file in getholdings.pl
+      collection = @collections_data.find {|x| x["code"] == library_location_code}
+      collection&.dig('lib_info_link') || ''
     end
-    def notes
-    end
-    def headings 
+    def headings
       [
         "Action",
         "Description",
@@ -37,7 +48,109 @@ module Spectrum
         "Call Number"
       ]
     end
+    def name
+      "holdings"
+    end
+    def notes(floor_location = Spectrum::FloorLocation.resolve(library, location, call_number)) 
+
+      [public_note, summary, floor_location].compact.reject(&:empty?)
+    end
+    def rows
+    end
     #type: physical
+    private
+    
+    def public_note
+      collect_holding_info('852','z',', ')
+    end
+    
+    def summary
+     collect_holding_info('866','a',' : ')
+    end
+    
+    def collect_holding_info(tag, code, seperator) 
+      #get all 852 tagged fields
+      tags = @holding_record.find_all{ |x| x.tag == tag}
+
+      #filter only code z; flatten into one array
+      codes = tags&.map{|x| x.find_all{|y| y.code==code} }&.flatten
+      
+      #format
+      codes&.map{|x| x.value}&.join(seperator)
+    end
+    
+    def call_number
+      @items[0].dig("holding_data","call_number")
+    end
+    def library_name
+      @items[0].dig("item_data","library","desc") || ''
+    end
+    def library
+      @items[0].dig("item_data","library","value") || ''
+    end
+    def location_name
+      location = @items[0].dig("item_data","location","desc") || ''
+      location == 'Main' ? '' : location
+    end
+    def location
+      location = @items[0].dig("item_data","location","value") || ''
+      location == 'MAIN' ? '' : location
+    end
+    def library_location_code
+      "#{library} #{location}".strip
+    end
+
+  end
+  class AlmaItem 
+    def initialize(item:{}, spectrum_item: Spectrum::Item.new(item))
+      @raw = item
+      @item = spectrum_item
+    end
+    def to_a(intent: Aleph.intent(item.status), icon: Aleph.icon(item.status))
+      [
+        action,
+        {
+          text: @item.status || 'N/A',
+          intent: intent || 'N/A',
+          icon: icon || 'N/A'
+        },
+        { text: call_number || 'N/A' }
+      ]
+    end
+    private 
+    def call_number
+      if inventory_number and @item.call_number =~ /^VIDEO/
+        [@item.call_number, inventory_number].join(' - ')
+      elsif @item.call_number.empty?
+        nil
+      else
+        @item.call_number
+      end
+    end
+    def inventory_number
+      number = @raw.dig('item_data', 'inventory_number')
+      if number&.empty?
+        nil
+      else
+        number
+      end
+    end
+    def action
+      if @item.can_request?
+        {
+          text: 'Get this',
+          to: {
+            barcode: @item.barcode,
+            action: 'get-this',
+            record: @item.record,
+            datastore: @item.record
+          }
+        }
+      else
+        {text: 'N/A'}
+      end
+    end
+
   end
   class HathiHolding < Spectrum::MyHolding
     attr_reader :preExpanded
@@ -49,7 +162,7 @@ module Spectrum
     def caption
       "HathiTrust Digital Library"
     end
-    def headings 
+    def headings
       [
         "Link",
         "Description",
@@ -82,7 +195,7 @@ module Spectrum
     end
     private
     def pick_item(item)
-      if item['rightsCode'] =~ /^(pd|world|cc|und-world|ic-world)/ 
+      if item['rightsCode'] =~ /^(pd|world|cc|und-world|ic-world)/
         PublicDomainHathiItem.new(item)
       elsif print_holding? || item['orig'] == 'University of Michigan'
         EtasHathiItem.new(item)
@@ -95,8 +208,8 @@ module Spectrum
       oclcs = @holding["records"]&.values&.first&.dig("oclcs")
       oclcs.each do |oclc|
         response = @alma_client.get('/bibs',{query: {other_system_id: oclc, view: 'brief'}})
-        if response.code == 200 && response.parsed_response["total_record_count"] > 0 
-          return true 
+        if response.code == 200 && response.parsed_response["total_record_count"] > 0
+          return true
         end
       end
       return false
@@ -123,11 +236,9 @@ module Spectrum
     def status
         "Search only (no full text)"
     end
-      
   end
-  
   class PublicDomainHathiItem < HathiItem
-    def status 
+    def status
       "Full text"
     end
   end
@@ -136,7 +247,7 @@ module Spectrum
     def href
       "#{@url}?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth"
     end
-    def status 
+    def status
       "Full text available, simultaneous access is limited (HathiTrust log in required)"
     end
   end

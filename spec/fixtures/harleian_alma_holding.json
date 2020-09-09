@@ -1,0 +1,11 @@
+{
+  "holding_id": "22391566180006381",
+  "created_by": "import",
+  "created_date": "2020-08-18Z",
+  "originating_system": "ILS",
+  "originating_system_id": "000956426-MIU60",
+  "suppress_from_publishing": "false",
+  "anies": [
+    "<?xml version=\"1.0\" encoding=\"UTF-16\"?><record schemaLocation=\"http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd\"><leader>     ny   22001213n 4500</leader><datafield ind1=\" \" ind2=\" \" tag=\"OWN\"><subfield code=\"a\">HATCH</subfield></datafield><controlfield tag=\"005\">20051221111254.0</controlfield><controlfield tag=\"008\">010719||    |   |   ||eng       </controlfield><datafield ind1=\"0\" ind2=\" \" tag=\"852\"><subfield code=\"a\">MiU</subfield><subfield code=\"b\">HATCH</subfield><subfield code=\"c\">GRAD</subfield><subfield code=\"h\">CS 410 .H28</subfield><subfield code=\"z\">Additional vols. in Buhr</subfield><subfield code=\"z\">Analyzed 1-2:1-17</subfield><subfield code=\"z\">2:18- Classed sep.</subfield></datafield><datafield ind1=\" \" ind2=\" \" tag=\"XPR\"><subfield code=\"a\">NONE</subfield><subfield code=\"b\">11111111</subfield><subfield code=\"t\">ADD</subfield></datafield></record>"
+  ]
+}

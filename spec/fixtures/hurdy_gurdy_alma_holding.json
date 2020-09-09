@@ -1,0 +1,11 @@
+{
+  "holding_id": "22213672670006381",
+  "created_by": "import",
+  "created_date": "2020-08-17Z",
+  "originating_system": "ILS",
+  "originating_system_id": "000671336-MIU60",
+  "suppress_from_publishing": "false",
+  "anies": [
+    "<?xml version=\"1.0\" encoding=\"UTF-16\"?><record schemaLocation=\"http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd\"><leader>     nx   22000971n 4500</leader><datafield ind1=\" \" ind2=\" \" tag=\"OWN\"><subfield code=\"a\">MUSIC</subfield></datafield><controlfield tag=\"008\">880718||    8|||4001||   0000000</controlfield><datafield ind1=\"0\" ind2=\" \" tag=\"852\"><subfield code=\"a\">MiU</subfield><subfield code=\"b\">MUSIC</subfield><subfield code=\"h\">ML760 .P18</subfield><subfield code=\"c\">UNASSIGNED</subfield></datafield><datafield ind1=\"1\" ind2=\" \" tag=\"583\"><subfield code=\"a\">committed to retain</subfield><subfield code=\"c\">20170930</subfield><subfield code=\"d\">20421231</subfield><subfield code=\"f\">HathiTrust</subfield><subfield code=\"u\">https://www.hathitrust.org/shared_print_program</subfield><subfield code=\"5\">MiU</subfield></datafield></record>"
+  ]
+} 

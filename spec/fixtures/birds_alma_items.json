@@ -1,0 +1,2475 @@
+{
+  "item": [
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372235930006381",
+        "barcode": "39015072358081",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2019-05-22Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.23 2010-2011",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.23 2010-2011",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372235930006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372235940006381",
+        "barcode": "39015061999291",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2010-03-23Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.22 2008-2010",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.22 2008-2010",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372235940006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372235950006381",
+        "barcode": "39015061912286",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2008-02-11Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.21 2006-2007",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.21 2006-2007",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372235950006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372235960006381",
+        "barcode": "39015061356914",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2006-06-23Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.20 2004-05",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.20 2004-05",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372235960006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372235970006381",
+        "barcode": "39015052376814",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2004-04-30Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.19 2002-03",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.19 2002-03",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372235970006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372235980006381",
+        "barcode": "39015042512601",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2002-08-27Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.18 2000-01",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.18 2000-01",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372235980006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372235990006381",
+        "barcode": "39015042749575",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2001-02-02Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.17 1998-99",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.17 1998-99",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372235990006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236000006381",
+        "barcode": "39015042539869",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2001-10-08Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.16 1996-97",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.16 1996-97",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236000006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236010006381",
+        "barcode": "39015037684480",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "1996-07-25Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.15 1994-96",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.15 1994-96",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236010006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236020006381",
+        "barcode": "39015028967381",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "1994-06-27Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.14 1992-93",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.14 1992-93",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "Maintenance count: 001",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236020006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236030006381",
+        "barcode": "39015028677949",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "1993-04-23Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.13 1990-91",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.13 1990-91",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236030006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236040006381",
+        "barcode": "39015018662489",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "1991-02-26Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.12 1988-89",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.12 1988-89",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236040006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236050006381",
+        "barcode": "39015019702086",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2002-08-06Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.11 1986-87",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.11 1986-87",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236050006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236060006381",
+        "barcode": "39015014271111",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2002-08-06Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.10 1984-85",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.10 1984-85",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236060006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236070006381",
+        "barcode": "39015042512437",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2002-08-06Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.9 1982-83",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.9 1982-83",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236070006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236080006381",
+        "barcode": "39015019702078",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2002-08-06Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.7-8 1978-81",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.7-8 1978-81",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236080006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236090006381",
+        "barcode": "39015019702060",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2002-07-24Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.5-6 1974-77",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.5-6 1974-77",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236090006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236100006381",
+        "barcode": "39015019702052",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2002-08-06Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.3-4 1970-73",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.3-4 1970-73",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236100006381"
+    },
+    {
+      "bib_data": {
+        "mms_id": "990006758990206381",
+        "title": "Birds.",
+        "author": "Royal Society for the Protection of Birds.",
+        "issn": "0006-3665",
+        "isbn": null,
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm02551528",
+          "(CaOTULAS)160668009",
+          "(RLIN)MIUG101629-S",
+          "(MiU)000675899MIU01"
+        ],
+        "place_of_publication": "Sandy, Bedfordshire, Eng. :",
+        "date_of_publication": "1966",
+        "publisher_const": "Royal Society for the Protection of Birds",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381"
+      },
+      "holding_data": {
+        "holding_id": "22372236120006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "QL671 .B678",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381"
+      },
+      "item_data": {
+        "pid": "23372236110006381",
+        "barcode": "39015019702045",
+        "creation_date": "2020-08-18Z",
+        "modification_date": "2020-08-18Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "ISSUE",
+          "desc": "Issue"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSM",
+          "desc": "Museums Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "2002-08-06Z",
+        "year_of_issue": "",
+        "enumeration_a": "v.1-2 1966-69",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "v.1-2 1966-69",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSM",
+          "desc": "Research Museums Center"
+        },
+        "location": {
+          "value": "BIR",
+          "desc": "Birds Division"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "",
+        "statistics_note_2": "",
+        "statistics_note_3": "",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990006758990206381/holdings/22372236120006381/items/23372236110006381"
+    }
+  ],
+  "total_record_count": 19
+}

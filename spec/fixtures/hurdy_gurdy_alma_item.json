@@ -1,0 +1,135 @@
+{
+  "item": [
+    {
+      "bib_data": {
+        "mms_id": "990003116350206381",
+        "title": "The hurdy-gurdy /",
+        "author": "Palmer, Susann.",
+        "issn": null,
+        "isbn": "0715378880",
+        "complete_edition": "",
+        "network_number": [
+          "(OCoLC)ocm06961296",
+          "(CaOTULAS)160608021",
+          "(RLIN)MIUG83-B11939",
+          "(MiU)000311635MIU01"
+        ],
+        "place_of_publication": "Newton Abbot, Devon ; North Pomfret, Vt. :",
+        "date_of_publication": "c1980.",
+        "publisher_const": "David & Charles",
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990003116350206381"
+      },
+      "holding_data": {
+        "holding_id": "22213672670006381",
+        "call_number_type": {
+          "value": "0",
+          "desc": "Library of Congress classification"
+        },
+        "call_number": "ML760 .P18",
+        "accession_number": "",
+        "copy_id": "",
+        "in_temp_location": false,
+        "temp_library": {
+          "value": null,
+          "desc": null
+        },
+        "temp_location": {
+          "value": null,
+          "desc": null
+        },
+        "temp_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "temp_call_number": "",
+        "temp_policy": {
+          "value": "",
+          "desc": null
+        },
+        "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990003116350206381/holdings/22213672670006381"
+      },
+      "item_data": {
+        "pid": "23213672660006381",
+        "barcode": "39015009714562",
+        "creation_date": "2020-08-17Z",
+        "modification_date": "2020-08-17Z",
+        "base_status": {
+          "value": "1",
+          "desc": "Item in place"
+        },
+        "awaiting_reshelving": false,
+        "physical_material_type": {
+          "value": "BOOK",
+          "desc": "Book"
+        },
+        "policy": {
+          "value": "01",
+          "desc": "Loan 1"
+        },
+        "provenance": {
+          "value": "MUSIC",
+          "desc": "Music Library"
+        },
+        "po_line": "",
+        "is_magnetic": false,
+        "arrival_date": "1989-09-24Z",
+        "year_of_issue": "",
+        "enumeration_a": "",
+        "enumeration_b": "",
+        "enumeration_c": "",
+        "enumeration_d": "",
+        "enumeration_e": "",
+        "enumeration_f": "",
+        "enumeration_g": "",
+        "enumeration_h": "",
+        "chronology_i": "",
+        "chronology_j": "",
+        "chronology_k": "",
+        "chronology_l": "",
+        "chronology_m": "",
+        "description": "",
+        "receiving_operator": "import",
+        "process_type": {
+          "value": "",
+          "desc": null
+        },
+        "inventory_number": "",
+        "inventory_price": "",
+        "library": {
+          "value": "MUSIC",
+          "desc": "Music"
+        },
+        "location": {
+          "value": "MAIN",
+          "desc": "Main"
+        },
+        "alternative_call_number": "",
+        "alternative_call_number_type": {
+          "value": "",
+          "desc": null
+        },
+        "storage_location_id": "",
+        "pages": "",
+        "pieces": "",
+        "public_note": "",
+        "fulfillment_note": "",
+        "internal_note_1": "",
+        "internal_note_2": "",
+        "internal_note_3": "",
+        "statistics_note_1": "MD20100526",
+        "statistics_note_2": "",
+        "statistics_note_3": "Maintenance count: 002",
+        "requested": false,
+        "edition": null,
+        "imprint": null,
+        "language": null,
+        "physical_condition": {
+          "value": null,
+          "desc": null
+        }
+      },
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990003116350206381/holdings/22213672670006381/items/23213672660006381"
+    }
+  ],
+  "total_record_count": 1
+}
