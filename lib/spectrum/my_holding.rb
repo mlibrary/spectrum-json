@@ -22,6 +22,7 @@ module Spectrum
   end
   class AlmaHolding < Spectrum::MyHolding
     def initialize(holding: {}, 
+                   source:,
                    preExpanded: false, 
                    items: {}, 
                    collections_data: YAML.load_file(File.expand_path('../utility/collections.yml', __FILE__)), 
@@ -30,6 +31,7 @@ module Spectrum
       @items = items
       @collections_data = collections_data 
       @holding_record = holding_record
+      @source = source
       super(holding: holding, preExpanded: preExpanded)
     end
     def caption
@@ -102,13 +104,15 @@ module Spectrum
 
   end
   class AlmaItem 
-    def initialize(item:{}, spectrum_item: Spectrum::Item.new(item))
+    def initialize(item:{}, source:, spectrum_item: Spectrum::Item.new(item) )
       @raw = item
       @item = spectrum_item
+      @source = source
     end
-    def to_a(intent: Aleph.intent(item.status), icon: Aleph.icon(item.status))
+    def to_a(action: Spectrum::ItemAction.for( item: @item, source: @source ), 
+              intent: Aleph.intent(item.status), icon: Aleph.icon(item.status))
       [
-        action,
+        action.to_h,
         {
           text: @item.status || 'N/A',
           intent: intent || 'N/A',

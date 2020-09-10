@@ -18,7 +18,16 @@ module Spectrum
       @holding = item_data['holding_data']
       @item = item_data['item_data']
     end
+    def library
+      @item.dig('library','value')
+    end
+    def description
+      @item['description']
+    end
 
+    def collection
+      @item.dig('location','value')
+    end
     def barcode
       @item['barcode'] || ''
     end
@@ -26,12 +35,19 @@ module Spectrum
     def record
       @bib['mms_id'] || ''
     end
+    
+    def inventory_number
+      @item['inventory_number']
+    end
 
     def id
       record
     end
 
     def callnumber
+      call_number
+    end
+    def call_number
       @holding['call_number'] || ''
     end
 

@@ -1,0 +1,1837 @@
+---
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL
+- collection_desc: Book Arts 2nd floor - ask at service desk
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL BKART
+- collection_desc: Book Collection
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL BKS
+- collection_desc: Basement - B484
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL BSMT
+- collection_desc: Career Collection - 2nd Floor
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL CAR
+- collection_desc: Dissertation - Basement
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL DISS
+- collection_desc: Reserves - Electronic Resource
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL ERES
+- collection_desc: Recreational Reading - 2nd Floor - shelved by author
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL FUN
+- collection_desc: Video Games - Basement
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL GAME
+- collection_desc: IEEE - see current location
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL IEEE
+- collection_desc: Microfiche - Basement
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL MICE
+- collection_desc: Microfilm - Basement
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL MICM
+- collection_desc: Open Reserves - No Loan
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL OPEN
+- collection_desc: Book Collection - Oversize
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL OVR
+- collection_desc: Journal Collection
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL PER
+- collection_desc: Current Journals - 2nd floor
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL PERU
+- collection_desc: Special Coll. - By appt. only
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL RAR
+- collection_desc: Reference - 2nd Floor
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL REF
+- collection_desc: Course Reserve - 2nd Floor
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL RESC
+- collection_desc: Ask at 2nd Floor Desk
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL RESI
+- collection_desc: Reserves - 2nd Floor
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL RESP
+- collection_desc: 2nd Floor - 2321 M
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL SECD
+- collection_desc: 2nd Floor Service Desk
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL SLD
+- collection_desc: Closed shelving - Ask at Circ
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL STO
+- collection_desc: Folio closed shelving - Ask at Circ
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL STOF
+- collection_desc: Book Collection - Oversize - 2nd Floor
+  lib_info_link: http://www.lib.umich.edu/location/art-architecture-engineering-library/unit/37
+  library_desc: Art Architecture & Engineering
+  code: AAEL XOVR
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/bentley-historical-library/unit/41
+  library_desc: Bentley Historical
+  code: BENT
+- collection_desc: Electronic resources
+  lib_info_link: http://www.lib.umich.edu/location/bentley-historical-library/unit/41
+  library_desc: Bentley Historical
+  code: BENT ELEC
+- collection_desc: Reading Room
+  lib_info_link: http://www.lib.umich.edu/location/bentley-historical-library/unit/41
+  library_desc: Bentley Historical
+  code: BENT RR
+- collection_desc: Security File
+  lib_info_link: http://www.lib.umich.edu/location/bentley-historical-library/unit/41
+  library_desc: Bentley Historical
+  code: BENT SF
+- collection_desc: Storage - Ask at library
+  lib_info_link: http://www.lib.umich.edu/location/bentley-historical-library/unit/41
+  library_desc: Bentley Historical
+  code: BENT STOR
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/biological-station-library--pellston-/unit/47
+  library_desc: Biological Station
+  code: BSTA
+- collection_desc: Cage - Ask Staff
+  lib_info_link: http://www.lib.umich.edu/location/biological-station-library--pellston-/unit/47
+  library_desc: Biological Station
+  code: BSTA CAGE
+- collection_desc: Reserves - Electronic Resource
+  lib_info_link: http://www.lib.umich.edu/location/biological-station-library--pellston-/unit/47
+  library_desc: Biological Station
+  code: BSTA ERES
+- collection_desc: Oversize
+  lib_info_link: http://www.lib.umich.edu/location/biological-station-library--pellston-/unit/47
+  library_desc: Biological Station
+  code: BSTA OVR
+- collection_desc: Reference
+  lib_info_link: http://www.lib.umich.edu/location/biological-station-library--pellston-/unit/47
+  library_desc: Biological Station
+  code: BSTA REF
+- collection_desc: Course Reserve
+  lib_info_link: http://www.lib.umich.edu/location/biological-station-library--pellston-/unit/47
+  library_desc: Biological Station
+  code: BSTA RESC
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR AAEL
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR ASIA
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR CHEM
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR DENT
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR FINE
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR FVL
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR GLMR
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR GRAD
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR JUV
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR MAP
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR MUSI
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR MUSM
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR PAPY
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR PUB
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR SCI
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR SOC
+- collection_desc: Serials Set - Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR SSBU
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR TAUB
+- collection_desc: Ask at any library
+  lib_info_link: http://www.lib.umich.edu/location/buhr-remote-shelving-facility/unit/45
+  library_desc: Buhr Shelving Facility
+  code: BUHR WARE
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/mark-chesler-library/unit/40977
+  library_desc: Mark Chesler Library
+  code: CHES
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/clements-library/unit/21
+  library_desc: William L. Clements
+  code: CLEM
+- collection_desc: Overflow
+  lib_info_link: http://www.lib.umich.edu/location/clements-library/unit/21
+  library_desc: William L. Clements
+  code: CLEM OVFL
+- collection_desc: RBR
+  lib_info_link: http://www.lib.umich.edu/location/clements-library/unit/21
+  library_desc: William L. Clements
+  code: CLEM RBR
+- collection_desc: Remote Storage - Ask in advance
+  lib_info_link: http://www.lib.umich.edu/location/clements-library/unit/21
+  library_desc: William L. Clements
+  code: CLEM RSTO
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: CSCAR - Rackham Building
+  code: CSCAR
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Dentistry
+  code: DENT
+- collection_desc: ''
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL
+- collection_desc: Monographs
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL BOOK
+- collection_desc: Blu-ray Disc
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL BRD
+- collection_desc: Blu-ray ROM
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL BRR
+- collection_desc: CD-ROM
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL CDROM
+- collection_desc: Audio Disc
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL DISC
+- collection_desc: DVDs
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL DVD
+- collection_desc: DVD-ROM
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL DVROM
+- collection_desc: Video Games
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL GAME
+- collection_desc: Laserdiscs
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL LASER
+- collection_desc: Oversize
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL OVR
+- collection_desc: Screenplays
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL SCRN
+- collection_desc: Sound Cassette
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL TAPEC
+- collection_desc: VHS Tapes
+  lib_info_link: http://lsa.umich.edu/sac/resources/donald-hall-collection.html
+  library_desc: Donald Hall Collection
+  code: DHCL VHS
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: UM-Dearborn Mardigian Library
+  code: DRBN
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Electronic Resources
+  code: ELEC
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Ellsworth
+  code: ELLS
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Ellsworth
+  code: ELLS GRAD
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE
+- collection_desc: Staff Offices
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE ADM
+- collection_desc: Reserves - Electronic Resource
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE ERES
+- collection_desc: Flat Folio Collection
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE FOL
+- collection_desc: Oriental Seminar Rm. Flat Folios
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE OSFF
+- collection_desc: Oriental Seminar Rm.
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE OSR
+- collection_desc: Oriental Seminar Rm. Folios
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE OSRF
+- collection_desc: Oriental Seminar Rm. Journals
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE OSRJ
+- collection_desc: Oriental Seminar Rm. Reference
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE OSRR
+- collection_desc: Oversize - 1st floor
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE OVR
+- collection_desc: Oversize - 2nd floor
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE OVR2
+- collection_desc: Journals
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE PER
+- collection_desc: Current Journals
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE PERC
+- collection_desc: Reference
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE REF
+- collection_desc: Reserves - Circulation Desk
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE RESC
+- collection_desc: Open Reserves Shelving Area
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE RESP
+- collection_desc: Special Collections
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE SPE
+- collection_desc: Special Collections Oversize
+  lib_info_link: http://www.lib.umich.edu/location/fine-arts-library/unit/23
+  library_desc: Fine Arts
+  code: FINE SPO
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT
+- collection_desc: Indexes & Abstracts
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT ABST
+- collection_desc: Archives
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT ARCH
+- collection_desc: Atlas Collection
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT ATLAS
+- collection_desc: Browsing Collection
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT BROWS
+- collection_desc: UM-Flint Kresge Books, 1st floor
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT BUSB
+- collection_desc: UM-Flint Kresge Periodicals, 2nd floor
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT BUSP
+- collection_desc: Children's Literature
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT CHILD
+- collection_desc: Electronic resources
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT ELEC
+- collection_desc: English Language Program 1
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT ELP1
+- collection_desc: English Language Program 2
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT ELP2
+- collection_desc: English Language Program 3
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT ELP3
+- collection_desc: Reserves - Electronic Resource
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT ERES
+- collection_desc: Pamphlets
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT FSPAM
+- collection_desc: Main Collection
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT MAIN
+- collection_desc: Microcard
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT MCARD
+- collection_desc: Media Collection
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT MEDIA
+- collection_desc: Microfiche
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT MFICH
+- collection_desc: Microfilm
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT MFILM
+- collection_desc: Anatomical Models
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT MODEL
+- collection_desc: Media- OVERSIZED
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT MOVRZ
+- collection_desc: Masters Theses
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT MSTR
+- collection_desc: Oversized Collection
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT OVERZ
+- collection_desc: Periodicals
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT PERI
+- collection_desc: Reference Collection
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT REF
+- collection_desc: Reference, Ready
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT REFD
+- collection_desc: Reserved Readings
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT RESV
+- collection_desc: Archives - Special Collections
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT SPEC
+- collection_desc: Technical Services Department
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT TECH
+- collection_desc: Time Capsule
+  lib_info_link: http://www.lib.umich.edu/location/thompson-library--flint-/unit/49
+  library_desc: UM-Flint
+  code: FLINT TIME
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/askwith-media-library/unit/59
+  library_desc: Askwith Media Library
+  code: FVL
+- collection_desc: Offsite Shelving - please allow 3 days for delivery
+  lib_info_link: http://www.lib.umich.edu/location/askwith-media-library/unit/59
+  library_desc: Askwith Media Library
+  code: FVL BUH
+- collection_desc: Offsite Shelving - please allow 3 days for delivery
+  lib_info_link: http://www.lib.umich.edu/location/askwith-media-library/unit/59
+  library_desc: Askwith Media Library
+  code: FVL ELL
+- collection_desc: Room 2002 Shapiro - Non-circulating
+  lib_info_link: http://www.lib.umich.edu/location/askwith-media-library/unit/59
+  library_desc: Askwith Media Library
+  code: FVL F2
+- collection_desc: Room 2002 Shapiro
+  lib_info_link: http://www.lib.umich.edu/location/askwith-media-library/unit/59
+  library_desc: Askwith Media Library
+  code: FVL H1
+- collection_desc: Library staff loaners
+  lib_info_link: http://www.lib.umich.edu/location/askwith-media-library/unit/59
+  library_desc: Askwith Media Library
+  code: FVL LOA
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH
+- collection_desc: Acquisitions
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH ACQ
+- collection_desc: The Azad and Margaret Hogikyan Armenian Studies Collection - 100
+    Hatcher North
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH AMHC
+- collection_desc: Asia Library Microforms - Ask at Office - Rm. 418 N
+  lib_info_link: http://www.lib.umich.edu/location/asia-library/unit/75
+  library_desc: Hatcher Graduate
+  code: HATCH AMIC
+- collection_desc: Asia Library Office - Rm. 418 N
+  lib_info_link: http://www.lib.umich.edu/location/asia-library/unit/75
+  library_desc: Hatcher Graduate
+  code: HATCH AOFF
+- collection_desc: Asia Library Oversized - East Attic
+  lib_info_link: http://www.lib.umich.edu/location/asia-library/unit/75
+  library_desc: Hatcher Graduate
+  code: HATCH AOVR
+- collection_desc: Asia Library Reference - Rm. 421 N
+  lib_info_link: http://www.lib.umich.edu/location/asia-library/unit/75
+  library_desc: Hatcher Graduate
+  code: HATCH AREF
+- collection_desc: Argus - MoA
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH ARGM
+- collection_desc: Asia Library Stacks
+  lib_info_link: http://www.lib.umich.edu/location/asia-library/unit/75
+  library_desc: Hatcher Graduate
+  code: HATCH ASIA
+- collection_desc: Asia Library Special Collections
+  lib_info_link: http://www.lib.umich.edu/location/asia-library/unit/75
+  library_desc: Hatcher Graduate
+  code: HATCH ASPEC
+- collection_desc: In process
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH BACK
+- collection_desc: Clark Library Book Shelves - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLARK
+- collection_desc: Clark Library Atlas Shelves - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLATL
+- collection_desc: Clark Library Book Shelves - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLBKS
+- collection_desc: Children's Literature Collection - 3rd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLC
+- collection_desc: Clark Library File Cabinets - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLFIL
+- collection_desc: Clark Library Rare File - Ask at Clark Library - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLFIR
+- collection_desc: Clark Library Folio - Ask at Clark Library - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLFOL
+- collection_desc: Clark Library Lab - Ask at Clark Library - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLLAB
+- collection_desc: Clark Library Map Cases - Ask at Clark Library - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLMAP
+- collection_desc: Clark Library Office - Ask at Clark Library - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLOFF
+- collection_desc: Clark Library Oversize Drawer - Ask at Clark Library - 2nd floor
+    S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLOVD
+- collection_desc: Clark Library Oversize - Ask at Clark Library - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLOVR
+- collection_desc: Clark Library Rare Cases - Ask at Clark Library - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLRAR
+- collection_desc: Clark Library Software - Ask at Clark Library - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLSOF
+- collection_desc: Clark Library Storage - Ask at Clark Library - 2nd floor S
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH CLSTR
+- collection_desc: 2nd Floor U-M Faculty Authors - Shelved by author
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH FAC
+- collection_desc: Reference Desk - 2nd floor N
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH GDESK
+- collection_desc: Folio - Ask at Circ, Rm. 104 N
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH GFOL
+- collection_desc: Serials and Microforms - 203 N. Hatcher
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH GLMR
+- collection_desc: Reference Rm. - 2nd floor N
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH GLRF
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH GRAD
+- collection_desc: Reference - Grants collection - 2nd floor N
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH GRNT
+- collection_desc: Juvenile Collection - 3rd floor N
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH JUV
+- collection_desc: Graduate Library Mixed Media - 203 N. Hatcher
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH MIXM
+- collection_desc: MonoCat
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH MONO
+- collection_desc: Middle East Reference - 1 West
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH NER
+- collection_desc: Papyrology Collection (807 S. Hatcher)
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH PAPY
+- collection_desc: South Asia Reference - 1 West
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH SAR
+- collection_desc: Southeast Asia Reference - 1 West
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH SEAR
+- collection_desc: Near East Seminar - Rm. 3020 Thayer Academic Bldg (Dept of Middle
+    East Studies)
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH SEM
+- collection_desc: Slavic Reference - 1 West
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH SLVR
+- collection_desc: Slavic Reference - Holtzman - Restricted - Ask at Rm. 110F for
+    access
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH SLVRH
+- collection_desc: Serials Set - 1 East
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH SSBU
+- collection_desc: Technical Services Backlog
+  lib_info_link: http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25
+  library_desc: Hatcher Graduate
+  code: HATCH TECH
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: HathiTrust Digital Library
+  code: HATHI
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/museums-library-herbarium-division/unit/28945
+  library_desc: Herbarium
+  code: HERB
+- collection_desc: Cage - By appointment only
+  lib_info_link: http://www.lib.umich.edu/location/museums-library-herbarium-division/unit/28945
+  library_desc: Herbarium
+  code: HERB HEBC
+- collection_desc: Oversize
+  lib_info_link: http://www.lib.umich.edu/location/museums-library-herbarium-division/unit/28945
+  library_desc: Herbarium
+  code: HERB HEBO
+- collection_desc: Reference
+  lib_info_link: http://www.lib.umich.edu/location/museums-library-herbarium-division/unit/28945
+  library_desc: Herbarium
+  code: HERB HEBR
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving H
+  code: HSRS
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving H
+  code: HSRS IND
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving H
+  code: HSRS MUSM
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving H
+  code: HSRS MUSMR
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving H
+  code: HSRS OVR
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving H
+  code: HSRS PER
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving H
+  code: HSRS STOR
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC
+- collection_desc: Staff Offices
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC ADM
+- collection_desc: Dissertations - 4th floor
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC DIS
+- collection_desc: DVD Collection
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC DVD
+- collection_desc: American Sheet Music
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC EDIS
+- collection_desc: Reserves - Electronic Resource
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC ERES
+- collection_desc: Folio Collection - 3rd floor
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC FOLIO
+- collection_desc: Miniatures - 4th floor
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC MINI
+- collection_desc: Oversize Recordings - Circulation Desk
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC OVCD
+- collection_desc: Oversize Shelves - 4th floor
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC OVR
+- collection_desc: Periodicals Rack - 3rd floor
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC PER
+- collection_desc: Rare Book Rm.
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC RAR
+- collection_desc: Sheet Music Collection
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC RARS
+- collection_desc: Women Composers Collection
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC RARW
+- collection_desc: Recordings - Circulation Desk
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC REC
+- collection_desc: Reference - 3rd floor
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC REF
+- collection_desc: Reserves - Circulation Desk
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC RESC
+- collection_desc: Software - Circulation Desk
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC SOFT
+- collection_desc: Videos- Circulation Desk
+  lib_info_link: http://www.lib.umich.edu/location/music-library/unit/39
+  library_desc: Music
+  code: MUSIC VID
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM
+- collection_desc: Anthropology Division
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM ANT
+- collection_desc: Anthro. Div. - Ethnobotany
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM ANTE
+- collection_desc: Anthro. Div. - Oversize
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM ANTO
+- collection_desc: Birds Division
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM BIR
+- collection_desc: Birds Division - Case
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM BIRC
+- collection_desc: Cage - by appointment only
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM CAGE
+- collection_desc: Reserves - Electronic Resource
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM ERES
+- collection_desc: Fish Division
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM FIS
+- collection_desc: Fish Division - Oversize
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM FISO
+- collection_desc: Herpetology Division
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM HEP
+- collection_desc: Herpetology Division - Oversize
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM HEPO
+- collection_desc: Insect Division
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM INS
+- collection_desc: Insect Division - Oversize
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM INSO
+- collection_desc: Insect Division - Orthoptera
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM INST
+- collection_desc: Room 2500
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM MAIN
+- collection_desc: Mammals Division
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM MAM
+- collection_desc: Mammals Division - Oversize
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM MAMO
+- collection_desc: Microform Collection - Rm. 2500
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM MIC
+- collection_desc: Mollusks Division
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM MOL
+- collection_desc: Mollusks Division - Oversize
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM MOLO
+- collection_desc: Room 2500 - Oversize
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM OVR
+- collection_desc: Paleontology Division
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM PAL
+- collection_desc: Paleontology - Oversize
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM PALO
+- collection_desc: Paleontology - Reference
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM PALR
+- collection_desc: Journals
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM PER
+- collection_desc: Reference - Rm. 2500
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM REF
+- collection_desc: Course Reserves - Rm. 2500
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM RESC
+- collection_desc: Permanent Reserves - Rm. 2500
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM RESP
+- collection_desc: Special Formats - Ask Staff
+  lib_info_link: http://www.lib.umich.edu/location/museums-library/unit/31
+  library_desc: Research Museums Center
+  code: MUSM SPE
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: MLibrary@NCRC
+  code: NCRC
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving
+  code: OFFS
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving
+  code: OFFS ELLS
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving
+  code: OFFS STATE
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Request via Get This or 7FAST
+  code: PUB
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI
+- collection_desc: Atlases & Maps - 4th floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI ATL
+- collection_desc: Book Stacks - 4th floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI BKS
+- collection_desc: Dissertations/Masters - 4th floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI DIS
+- collection_desc: Reserves - Electronic Resource
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI ERES
+- collection_desc: Indexes & Abstracts - 3rd floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI IND
+- collection_desc: Reference Tables - 3rd floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI INDT
+- collection_desc: Masters Theses Archival Collection
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI MAS
+- collection_desc: Oversize Stacks - 4th floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI OVR
+- collection_desc: Reference - The Wu Reading Room - 3rd floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI REFU
+- collection_desc: Course Reserves - 3rd floor - Ask at Desk
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI RESC
+- collection_desc: Science Media Cabinet - 3rd floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI RESP
+- collection_desc: Shapiro Basement Compact Shelving
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI SBCS
+- collection_desc: Journals
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-science-library/unit/57
+  library_desc: Shapiro Science
+  code: SCI SER
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR
+- collection_desc: University of Alberta
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR AEU
+- collection_desc: The University of Queensland
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR AUBRU
+- collection_desc: University of Chicago
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR CHI
+- collection_desc: Cornell University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR COO
+- collection_desc: University of Connecticut
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR CTU
+- collection_desc: Millennium Project
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR DCMP
+- collection_desc: University of Delaware
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR DEU
+- collection_desc: University of Miami
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR FMU
+- collection_desc: Emory University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR GEU
+- collection_desc: The Getty Research Institute
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR GRI
+- collection_desc: Technical Report Archive & Image Library
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR GWLA
+- collection_desc: Harvard University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR HVD
+- collection_desc: University of Iowa
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR IAU
+- collection_desc: Boston College
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR IBC
+- collection_desc: Duke University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR IDUKE
+- collection_desc: Library of Congress
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR ILOC
+- collection_desc: North Carolina State University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR INCSU
+- collection_desc: Columbia University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR INNC
+- collection_desc: University of Notre Dame
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR INND
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR INRLF
+- collection_desc: Indiana University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR INU
+- collection_desc: Pennsylvania State University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR IPST
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR ISRLF
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR IUCD
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR IUCLA
+- collection_desc: State University System of Florida
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR IUFL
+- collection_desc: University of Illinois at Urbana-Champaign
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR IUIUC
+- collection_desc: University of North Carolina at Chapel Hill
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR IUNC
+- collection_desc: Keio University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR KEIO
+- collection_desc: American University of Beirut
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR LEBAU
+- collection_desc: Minnesota Digital Library
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR MDL
+- collection_desc: University of Maryland, College Park
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR MDU
+- collection_desc: Michigan State University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR MIEM
+- collection_desc: University of Michigan
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR MIU
+- collection_desc: Tufts University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR MMET
+- collection_desc: University of Missouri - Columbia
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR MOU
+- collection_desc: Michigan State University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR MSU
+- collection_desc: University of Massachusetts Amherst
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR MU
+- collection_desc: Clark Art Institute Library
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR MWICA
+- collection_desc: Brooklyn Museum
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR NBB
+- collection_desc: Wake Forest University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR NCWSW
+- collection_desc: Princeton University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR NJP
+- collection_desc: Columbia University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR NNC
+- collection_desc: The Frick Collection
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR NNFR
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR NRLF
+- collection_desc: Northwestern University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR NWU
+- collection_desc: New York Public Library
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR NYP
+- collection_desc: The Ohio State University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR OSU
+- collection_desc: Private Donor
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR PRIV
+- collection_desc: Pennsylvania State University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR PST
+- collection_desc: University of Pennsylvania
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR PU
+- collection_desc: Purdue University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR PUR
+- collection_desc: McGill University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR QMM
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR SRLF
+- collection_desc: Texas A&M University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR TXCM
+- collection_desc: The University of Texas
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR TXU
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UCBK
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UCD
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UCI
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UCLA
+- collection_desc: Universidad Complutense de Madrid
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UCM
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UCMR
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UCR
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UCSC
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UCSD
+- collection_desc: University of California
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UCSF
+- collection_desc: State University System of Florida
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UFDC
+- collection_desc: University of Illinois at Urbana-Champaign
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UIUC
+- collection_desc: University of Illinois at Urbana-Champaign
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UIUCL
+- collection_desc: Knowledge Unlatched
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UKLOK
+- collection_desc: University of Michigan
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UMBUS
+- collection_desc: University of Michigan
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UMDB
+- collection_desc: University of Michigan
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UMLAW
+- collection_desc: University of Minnesota
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UMN
+- collection_desc: Utah State University Press
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR USU
+- collection_desc: Unitarian Universalist History and Heritage Society
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UUHHS
+- collection_desc: University of Virginia
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR UVA
+- collection_desc: Virginia Commonwealth University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR VIRCU
+- collection_desc: University of Washington
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR WAU
+- collection_desc: University of Wisconsin - Madison
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR WU
+- collection_desc: Yale University
+  lib_info_link: 
+  library_desc: HathiTrust
+  code: SDR YALE
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro
+  code: SHAP
+- collection_desc: Basement Compact Shelving
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro
+  code: SHAP SBCS
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Social Work
+  code: SOC
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC
+- collection_desc: Archival and Manuscript Collections
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC AMSBN
+- collection_desc: Archival and Manuscript Collections
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC AMSHE
+- collection_desc: Archival and Manuscript Collections
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC AMSHW
+- collection_desc: Archival and Manuscript Collections
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC AMSNB
+- collection_desc: Archival and Manuscript Collections
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC AMSNC
+- collection_desc: Asa Gray Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC ASG
+- collection_desc: Publishers' Bindings
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC BIND
+- collection_desc: General and Rare
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC BUHR
+- collection_desc: Children's Literature
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC CHIL
+- collection_desc: Children's Literature
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC CHIL1
+- collection_desc: Children's Literature
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC CHIL2
+- collection_desc: Children's Literature
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC CHIL3
+- collection_desc: Children's Literature
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC CHIL4
+- collection_desc: Children's Literature
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC CHILO
+- collection_desc: Janice Bluestein Longone Culinary Archive
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC CULHN
+- collection_desc: Janice Bluestein Longone Culinary Archive
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC CULHS
+- collection_desc: Janice Bluestein Longone Culinary Archive
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC CULNB
+- collection_desc: Faulkner Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC FAUL
+- collection_desc: Faulkner Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC FAULX
+- collection_desc: Pop-Up and Movable Books
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC GOSL
+- collection_desc: Hubbard Imaginary Voyages
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC HUB
+- collection_desc: Hubbard Imaginary Voyages
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC HUBO
+- collection_desc: Islamic Manuscripts
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC ISLM
+- collection_desc: Jewish Heritage Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC JHC
+- collection_desc: Jewish Heritage Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC JHCO
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LABD
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LABH1
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LABH2
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LABHC
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LABHE
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LABHF
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LABHV
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LABS1
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LABS2
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LABSF
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LAFO
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LAMS
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LAOV
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LAPA
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LASTR
+- collection_desc: Labadie Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC LASVF
+- collection_desc: Michigan Manuscripts
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC MICH
+- collection_desc: Manuscripts
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC MSS
+- collection_desc: Myers Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC MYRSO
+- collection_desc: Myers Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC MYRSR
+- collection_desc: Parsons-Rau Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC PARS
+- collection_desc: General and Rare
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC RARE
+- collection_desc: General and Rare
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC RAREO
+- collection_desc: General and Rare
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC RAREX
+- collection_desc: Children's Literature
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC RCLC
+- collection_desc: Reference Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC REF
+- collection_desc: Reference Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC REFH
+- collection_desc: Reference Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC REFO
+- collection_desc: Science Fiction Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC SCFI
+- collection_desc: General and Rare
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC SCI
+- collection_desc: Shakespeare Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC SHA
+- collection_desc: Shorthand Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC SHORT
+- collection_desc: History of Medicine - Crummer Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBC
+- collection_desc: History of Medicine - Dock Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBD
+- collection_desc: History of Medicine
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBF
+- collection_desc: History of Medicine - Huntley Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBH
+- collection_desc: History of Medicine
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBI
+- collection_desc: History of Medicine - Weller Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBL
+- collection_desc: History of Medicine
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBM
+- collection_desc: History of Medicine
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBO
+- collection_desc: History of Medicine - Pilcher Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBP
+- collection_desc: History of Medicine
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBR
+- collection_desc: History of Medicine
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBS
+- collection_desc: History of Medicine - Warthin Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC TAUBW
+- collection_desc: Transportation History Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC THC
+- collection_desc: Transportation History Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC THCO
+- collection_desc: Walp Family Juvenile Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC WALP
+- collection_desc: Walp Family Juvenile Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC WALP1
+- collection_desc: Walp Family Juvenile Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC WALP2
+- collection_desc: Walp Family Juvenile Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC WALP3
+- collection_desc: Walp Family Juvenile Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC WALP4
+- collection_desc: Walp Family Juvenile Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC WALPO
+- collection_desc: Walp Family Juvenile Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC WLPR
+- collection_desc: Worcester Philippine History Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC WOR
+- collection_desc: Philippine History Collection
+  lib_info_link: http://www.lib.umich.edu/location/special-collections-library/unit/77
+  library_desc: Special Collections
+  code: SPEC WORO
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving
+  code: STATE
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving
+  code: STATE BUS
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving
+  code: STATE GRAD
+- collection_desc: ''
+  lib_info_link: 
+  library_desc: Offsite Shelving
+  code: STATE UMTRI
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/taubman-health-sciences-library/unit/33
+  library_desc: Taubman Health Sciences
+  code: TAUB
+- collection_desc: Reserves - Electronic Resource
+  lib_info_link: http://www.lib.umich.edu/location/taubman-health-sciences-library/unit/33
+  library_desc: Taubman Health Sciences
+  code: TAUB ERES
+- collection_desc: Interlibrary Loan
+  lib_info_link: http://www.lib.umich.edu/location/taubman-health-sciences-library/unit/33
+  library_desc: Taubman Health Sciences
+  code: TAUB ILL
+- collection_desc: Indexes - Reference Rm.
+  lib_info_link: http://www.lib.umich.edu/location/taubman-health-sciences-library/unit/33
+  library_desc: Taubman Health Sciences
+  code: TAUB IND
+- collection_desc: Indexes - 5th floor alcove
+  lib_info_link: http://www.lib.umich.edu/location/taubman-health-sciences-library/unit/33
+  library_desc: Taubman Health Sciences
+  code: TAUB INDA
+- collection_desc: Microforms - Reference Rm.
+  lib_info_link: http://www.lib.umich.edu/location/taubman-health-sciences-library/unit/33
+  library_desc: Taubman Health Sciences
+  code: TAUB MIC
+- collection_desc: Oversize - 6th floor
+  lib_info_link: http://www.lib.umich.edu/location/taubman-health-sciences-library/unit/33
+  library_desc: Taubman Health Sciences
+  code: TAUB OVR
+- collection_desc: Journals
+  lib_info_link: http://www.lib.umich.edu/location/taubman-health-sciences-library/unit/33
+  library_desc: Taubman Health Sciences
+  code: TAUB PER
+- collection_desc: Reference
+  lib_info_link: http://www.lib.umich.edu/location/taubman-health-sciences-library/unit/33
+  library_desc: Taubman Health Sciences
+  code: TAUB REF
+- collection_desc: Reserves - Ask at the Circulation Desk
+  lib_info_link: http://www.lib.umich.edu/location/taubman-health-sciences-library/unit/33
+  library_desc: Taubman Health Sciences
+  code: TAUB RESC
+- collection_desc: Storage - Ask at the Circulation Desk
+  lib_info_link: http://www.lib.umich.edu/location/taubman-health-sciences-library/unit/33
+  library_desc: Taubman Health Sciences
+  code: TAUB STOR
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/jim-toy-library/unit/177
+  library_desc: Spectrum/Jim Toy Library
+  code: TOY
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL
+- collection_desc: Atlas Cases - 1st Floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL ATL
+- collection_desc: College and Career Success Collection - 1st Floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL COLSC
+- collection_desc: Design Lab
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL DLAB
+- collection_desc: Reserves - Electronic Resource
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL ERES
+- collection_desc: Index Tables
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL IND
+- collection_desc: Ask at reference desk
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL OFF
+- collection_desc: Oversize - basement
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL OVR
+- collection_desc: Periodical Shelves - 2nd Floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL PER
+- collection_desc: 2nd floor Browsing Collection - Shelved by author
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL PRON
+- collection_desc: Reference Shelves - 1st Floor
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL REF
+- collection_desc: University Reserves - Askwith Media Lib, 2002 Shapiro
+  lib_info_link: http://www.lib.umich.edu/location/shapiro-undergraduate-library/unit/35
+  library_desc: Shapiro Undergraduate
+  code: UGL RESC
+- collection_desc: ''
+  lib_info_link: http://www.lib.umich.edu/location/um-transportation-research-institute--umtri--library/unit/53
+  library_desc: Transportation Research Inst.
+  code: UMTRI
+- collection_desc: International Data Collection
+  lib_info_link: http://www.lib.umich.edu/location/um-transportation-research-institute--umtri--library/unit/53
+  library_desc: Transportation Research Inst.
+  code: UMTRI INTER
+- collection_desc: Stapp Car Crash Collection
+  lib_info_link: http://www.lib.umich.edu/location/um-transportation-research-institute--umtri--library/unit/53
+  library_desc: Transportation Research Inst.
+  code: UMTRI STAPP

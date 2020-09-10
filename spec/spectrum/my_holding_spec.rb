@@ -2,12 +2,17 @@ require_relative '../spec_helper'
 require 'spectrum/my_holding'
 require 'spectrum/floor_location'
 require 'spectrum/utility/alma_client'
+require 'spectrum/item'
+require 'spectrum/item_action'
 require 'marc'
 
 describe Spectrum::AlmaHolding do
   context "default holding" do
+    before(:each) do
+      @source_dbl = double('Spectrum::Config::Source') 
+    end
     it "returns appropriate heading" do
-      holding = described_class.new
+      holding = described_class.new(source: @source_dbl)
       expect(holding.headings).to eq(["Action","Description","Status","Call Number"])
     end
   end
@@ -19,6 +24,7 @@ describe Spectrum::AlmaHolding do
       @init = {
         holding: JSON.parse(File.read('./spec/fixtures/hurdy_gurdy_alma_holding.json')),
         items: JSON.parse(File.read('./spec/fixtures/hurdy_gurdy_alma_item.json'))["item"],
+        source: @source_dbl,
         collections_data: [],
         holding_record: @holding_record
       }
@@ -50,7 +56,8 @@ describe Spectrum::AlmaHolding do
         holding: JSON.parse(File.read('./spec/fixtures/birds_alma_holding.json')),
         items: JSON.parse(File.read('./spec/fixtures/birds_alma_items.json'))["item"],
         collections_data: [],
-        holding_record: @holding_record
+        holding_record: @holding_record,
+        source: @source
       }
     end
     context "notes" do
@@ -69,7 +76,8 @@ describe Spectrum::AlmaHolding do
         holding: JSON.parse(File.read('./spec/fixtures/birds_alma_holding.json')),
         items: JSON.parse(File.read('./spec/fixtures/birds_alma_items.json'))["item"],
         collections_data: [],
-        holding_record: @holding_record
+        holding_record: @holding_record,
+        source: @source,
       }
     end
     context "notes" do
@@ -89,54 +97,36 @@ describe Spectrum::AlmaHolding do
 end
 describe Spectrum::AlmaItem, "to_a" do
   before(:each) do
-    @item_dbl = double('Spectrum::Item', status: 'On Shelf', call_number: 'call_number', can_request?: false)
+    @item_dbl = instance_double(Spectrum::Item, status: 'On Shelf', call_number: 'call_number', can_request?: false)
+    @source_dbl = double('Spectrum::Config::Source') 
+    @action_dbl = instance_double(Spectrum::ItemAction, to_h: {foo: 'bar'})  
     @aleph = { intent: 'intent', icon: 'icon' }
   end
   subject do
-    described_class.new(spectrum_item: @item_dbl)
+    described_class.new(spectrum_item: @item_dbl, source: @source_dbl).to_a(action: @action_dbl, **@aleph)
   end
-  it "returns array" do
-    expect(subject.to_a(**@aleph)).to eq([ 
-      {text: 'N/A'}, 
-      {text: 'On Shelf', intent: 'intent', icon: 'icon'},
-      {text: 'call_number'}
-    ]) 
+  it "returns an array" do
+    expect(subject.class.name).to eq('Array')
+  end
+  it "returns appropriate status" do
+    expect(subject[1]).to eq( {text: 'On Shelf', intent: 'intent', icon: 'icon'}) 
+  end
+  it "returns call number" do
+    expect(subject[2]).to eq( {text: @item_dbl.call_number}) 
   end
   it "handles Video call number" do
     allow(@item_dbl).to receive(:call_number).and_return('VIDEO call_number')
-    item = described_class.new(item: { 'item_data' => {'inventory_number' => '12345'}}, spectrum_item: @item_dbl) 
-    expect(item.to_a(**@aleph)).to eq([
-      {text: 'N/A'}, 
-      {text: 'On Shelf', intent: 'intent', icon: 'icon'},
-      {text: 'VIDEO call_number - 12345'}
-    ]) 
+    array = described_class.new(item: { 'item_data' => {'inventory_number' => '12345'}}, spectrum_item: @item_dbl, source: @source_dbl).to_a(action: @action_dbl, **@aleph)
+    expect(array[2]).to eq( {text: 'VIDEO call_number - 12345'}
+    ) 
   end
   it "handles empty call_number" do
     allow(@item_dbl).to receive(:call_number).and_return('')
-    expect(subject.to_a(**@aleph)).to eq([ 
-      {text: 'N/A'}, 
-      {text: 'On Shelf', intent: 'intent', icon: 'icon'},
-      {text: 'N/A'}
-    ]) 
+    expect(subject[2]).to eq( {text: 'N/A'}) 
   end
-  it "handles requestable item" do
-    mms_id = '555' 
-    allow(@item_dbl).to receive(:can_request?).and_return(true)
-    allow(@item_dbl).to receive(:barcode).and_return('12345')
-    allow(@item_dbl).to receive(:record).and_return(mms_id)
-    expect(subject.to_a(**@aleph)).to eq([ 
-      {text: 'Get this', 
-       to: {
-        barcode: '12345', 
-        action: 'get-this', 
-        record: mms_id, 
-        datastore: mms_id
-      }}, 
-      {text: 'On Shelf', intent: 'intent', icon: 'icon'},
-      {text: 'call_number'}
-    ]) 
-  end
-  it "handles reservable item" do
+  it "returns ItemAction hash for in first element" do
+    expect(@action_dbl).to receive(:to_h)
+    expect(subject[0]).to eq(@action_dbl.to_h)
   end
 end
 

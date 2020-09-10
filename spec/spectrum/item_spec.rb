@@ -30,6 +30,28 @@ describe Spectrum::Item do
     end
   end
 
+  context '#inventory_number' do
+    it 'returns a string' do
+      expect(subject.inventory_number).to eq('11111')
+    end
+  end
+
+  context '#library' do
+    it 'returns a string' do
+      expect(subject.library).to eq('MUS')
+    end
+  end
+  context '#description' do
+    it 'returns a string' do
+      expect(subject.description).to eq('description')
+    end
+  end
+  context '#collection' do
+    it 'returns a string' do
+      expect(subject.collection).to eq('OVR')
+    end
+  end
+
   #context '#status' do
     #it 'returns a string' do
       #expect(subject.status).to eq('On shelf')
@@ -143,11 +165,6 @@ describe Spectrum::NullItem do
     end
   end
 
-  context '#location' do
-    it 'returns a string' do
-      expect(subject.location).to eq('')
-    end
-  end
 
   context '#notes' do
     it 'returns a string' do
