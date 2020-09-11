@@ -24,6 +24,12 @@ module Spectrum
     def description
       @item['description']
     end
+    def in_temp_location?
+      @holding['in_temp_location'] 
+    end
+    def full_temp_location_name
+      [@holding.dig('temp_library','desc'),@holding.dig('temp_location','desc')].compact.join(' ')
+    end
 
     def collection
       @item.dig('location','value')

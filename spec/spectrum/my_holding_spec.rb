@@ -4,6 +4,7 @@ require 'spectrum/floor_location'
 require 'spectrum/utility/alma_client'
 require 'spectrum/item'
 require 'spectrum/item_action'
+require 'spectrum/item_description'
 require 'marc'
 
 describe Spectrum::AlmaHolding do
@@ -100,33 +101,41 @@ describe Spectrum::AlmaItem, "to_a" do
     @item_dbl = instance_double(Spectrum::Item, status: 'On Shelf', call_number: 'call_number', can_request?: false)
     @source_dbl = double('Spectrum::Config::Source') 
     @action_dbl = instance_double(Spectrum::ItemAction, to_h: {foo: 'bar'})  
+    @description_dbl = instance_double(Spectrum::ItemDescription, to_h: {text: 'N/A'})
     @aleph = { intent: 'intent', icon: 'icon' }
+    @to_a_init = {
+      action: instance_double(Spectrum::ItemAction, to_h: {foo: 'bar'}),
+      description: instance_double(Spectrum::ItemDescription, to_h: {text: 'N/A'}),
+      intent: 'intent', icon: 'icon'
+    }
   end
   subject do
-    described_class.new(spectrum_item: @item_dbl, source: @source_dbl).to_a(action: @action_dbl, **@aleph)
+    described_class.new(spectrum_item: @item_dbl, source: @source_dbl).to_a(**@to_a_init)
   end
   it "returns an array" do
     expect(subject.class.name).to eq('Array')
   end
   it "returns appropriate status" do
-    expect(subject[1]).to eq( {text: 'On Shelf', intent: 'intent', icon: 'icon'}) 
+    expect(subject[2]).to eq( {text: 'On Shelf', intent: 'intent', icon: 'icon'}) 
   end
   it "returns call number" do
-    expect(subject[2]).to eq( {text: @item_dbl.call_number}) 
+    expect(subject[3]).to eq( {text: @item_dbl.call_number}) 
   end
   it "handles Video call number" do
     allow(@item_dbl).to receive(:call_number).and_return('VIDEO call_number')
-    array = described_class.new(item: { 'item_data' => {'inventory_number' => '12345'}}, spectrum_item: @item_dbl, source: @source_dbl).to_a(action: @action_dbl, **@aleph)
-    expect(array[2]).to eq( {text: 'VIDEO call_number - 12345'}
+    array = described_class.new(item: { 'item_data' => {'inventory_number' => '12345'}}, spectrum_item: @item_dbl, source: @source_dbl).to_a(**@to_a_init)
+    expect(array[3]).to eq( {text: 'VIDEO call_number - 12345'}
     ) 
   end
   it "handles empty call_number" do
     allow(@item_dbl).to receive(:call_number).and_return('')
-    expect(subject[2]).to eq( {text: 'N/A'}) 
+    expect(subject[3]).to eq( {text: 'N/A'}) 
   end
   it "returns ItemAction hash for in first element" do
-    expect(@action_dbl).to receive(:to_h)
     expect(subject[0]).to eq(@action_dbl.to_h)
+  end
+  it "returns ItemDescription hash in second element" do
+    expect(subject[1]).to eq(@to_a_init[:description].to_h)
   end
 end
 

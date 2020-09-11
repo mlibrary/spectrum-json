@@ -24,14 +24,14 @@
     "call_number": "MT820 .S53",
     "accession_number": "",
     "copy_id": "0",
-    "in_temp_location": false,
+    "in_temp_location": true,
     "temp_library": {
-      "value": null,
-      "desc": null
+      "value": "HATCH",
+      "desc": "Hatcher Graduate Library"
     },
     "temp_location": {
-      "value": null,
-      "desc": null
+      "value": "PER",
+      "desc": "Periodicals"
     },
     "temp_call_number_type": {
       "value": "",

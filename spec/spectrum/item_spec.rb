@@ -4,8 +4,11 @@ require_relative '../spec_helper'
 require 'spectrum/item'
 
 describe Spectrum::Item do
+  before(:each) do
+    @item_response = JSON.parse(File.read('./spec/fixtures/plain_words_on_singing_item.json'))
+  end
   subject do
-    described_class.new(JSON.parse(File.read('./spec/fixtures/plain_words_on_singing_item.json')))
+    described_class.new(@item_response)
   end
 
   context '#barcode' do
@@ -51,6 +54,23 @@ describe Spectrum::Item do
       expect(subject.collection).to eq('OVR')
     end
   end
+  context '#full_temp_location_name' do
+    it 'returns a string' do
+      expect(subject.full_temp_location_name).to eq('Hatcher Graduate Library Periodicals')
+    end
+    it 'handles empty temp_location and temp_library' do
+      @item_response["holding_data"]["temp_location"]["desc"] = nil 
+      @item_response["holding_data"]["temp_library"]["desc"] = nil
+      expect(subject.full_temp_location_name).to eq('')
+    end
+  end
+
+  context '#in_temp_location?' do
+    it 'returns a boolean' do
+      expect(subject.in_temp_location?).to eq(true)
+    end
+  end
+
 
   #context '#status' do
     #it 'returns a string' do

@@ -110,9 +110,11 @@ module Spectrum
       @source = source
     end
     def to_a(action: Spectrum::ItemAction.for( item: @item, source: @source ), 
+             description: Spectrum::ItemDescription.new(item: @item),
               intent: Aleph.intent(item.status), icon: Aleph.icon(item.status))
       [
         action.to_h,
+        description.to_h,
         {
           text: @item.status || 'N/A',
           intent: intent || 'N/A',
@@ -137,21 +139,6 @@ module Spectrum
         nil
       else
         number
-      end
-    end
-    def action
-      if @item.can_request?
-        {
-          text: 'Get this',
-          to: {
-            barcode: @item.barcode,
-            action: 'get-this',
-            record: @item.record,
-            datastore: @item.record
-          }
-        }
-      else
-        {text: 'N/A'}
       end
     end
 
