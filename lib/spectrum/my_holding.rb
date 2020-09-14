@@ -17,21 +17,26 @@ module Spectrum
     def rows
     end
     def type
-      "pysical"
+      "physical"
     end
+
+    def to_h
+      {}
+    end
+    
   end
   class AlmaHolding < Spectrum::MyHolding
     def initialize(holding: {}, 
-                   source:,
+                   bib:, #Spectrum::BibRecord
                    preExpanded: false, 
-                   items: {}, 
+                   items: {}, #array of alma items for a given holding
                    collections_data: YAML.load_file(File.expand_path('../utility/collections.yml', __FILE__)), 
                    holding_record: MARC::XMLReader.new(StringIO.new(holding['anies']&.first || '')).first 
                   ) 
       @items = items
       @collections_data = collections_data 
       @holding_record = holding_record
-      @source = source
+      @bib = bib
       super(holding: holding, preExpanded: preExpanded)
     end
     def caption
@@ -40,7 +45,8 @@ module Spectrum
     end
     def captionLink
       collection = @collections_data.find {|x| x["code"] == library_location_code}
-      collection&.dig('lib_info_link') || ''
+      link = collection&.dig('lib_info_link')
+      link ? { href: link, text: "About location"} : nil
     end
     def headings
       [
@@ -57,7 +63,24 @@ module Spectrum
 
       [public_note, summary, floor_location].compact.reject(&:empty?)
     end
-    def rows
+    def rows( almaItemFactory = lambda{|item, bib| AlmaItem.new(item: item, bib: bib)} )
+      @items.map{ |item| almaItemFactory.call(item, @bib).to_a }
+    end
+
+    def to_h(almaItemFactory = lambda{|item, bib| AlmaItem.new(item: item, bib: bib)}, floor_location = Spectrum::FloorLocation.resolve(library, location, call_number))
+      {
+        caption: caption,
+        captionLink: captionLink,
+        headings: headings,
+        name: name,
+        notes: notes(floor_location),
+        preExpanded: @preExpanded,
+        rows: rows(almaItemFactory),
+        type: type
+      }.delete_if do |key,value| 
+        next if key == :preExpanded
+        value.nil? || value.empty? 
+      end
     end
     #type: physical
     private
@@ -91,6 +114,7 @@ module Spectrum
       @items[0].dig("item_data","library","value") || ''
     end
     def location_name
+
       location = @items[0].dig("item_data","location","desc") || ''
       location == 'Main' ? '' : location
     end
@@ -104,12 +128,12 @@ module Spectrum
 
   end
   class AlmaItem 
-    def initialize(item:{}, source:, spectrum_item: Spectrum::Item.new(item) )
-      @raw = item
+    def initialize(item:{}, bib:, spectrum_item: Spectrum::Item.new(item) )
+      @raw = item #Raw alma response
       @item = spectrum_item
-      @source = source
+      @bib = bib #Spectrum::BibRecord
     end
-    def to_a(action: Spectrum::ItemAction.for( item: @item, source: @source ), 
+    def to_a(action: Spectrum::ItemAction.for( item: @item, bib: @bib ), 
              description: Spectrum::ItemDescription.new(item: @item),
               intent: Aleph.intent(item.status), icon: Aleph.icon(item.status))
       [
@@ -169,10 +193,10 @@ module Spectrum
     def print_holding?
       @ph_exists
     end
-    def rows
-      @holding["items"].map do |item|
-        pick_item(item)
-      end
+    def rows(hathi_item_factory = 
+             lambda{|item, ph_exists| HathiItem.for(item: item, ph_exists: ph_exists) } 
+            )
+      @holding["items"].map { |item| hathi_item_factory.call(item, @ph_exists) }
     end
     def to_h
       {
@@ -185,15 +209,6 @@ module Spectrum
       }
     end
     private
-    def pick_item(item)
-      if item['rightsCode'] =~ /^(pd|world|cc|und-world|ic-world)/
-        PublicDomainHathiItem.new(item)
-      elsif print_holding? || item['orig'] == 'University of Michigan'
-        EtasHathiItem.new(item)
-      else
-        HathiItem.new(item)
-      end
-    end
 
     def get_ph_status
       oclcs = @holding["records"]&.values&.first&.dig("oclcs")
@@ -208,9 +223,23 @@ module Spectrum
   end
   class HathiItem
     def initialize(item)
+      #item is HathiTrust json response for single item
       @source = item['orig'] || 'N/A'
       @url = item['itemURL']
       @description = item['enumcron'] || 'N/A'
+    end
+    def self.for(item:, ph_exists:,
+                 pd_item_factory: lambda{|item| PublicDomainHathiItem.new(item)},
+                 etas_item_factory: lambda{|item| EtasHathiItem.new(item)},
+                 hathi_item_factory: lambda{|item| HathiItem.new(item)}
+                )
+      if item['rightsCode'] =~ /^(pd|world|cc|und-world|ic-world)/
+        pd_item_factory.call(item)
+      elsif ph_exists || item['orig'] == 'University of Michigan'
+        etas_item_factory.call(item)
+      else
+        hathi_item_factory.call(item)
+      end
     end
     def to_a
       [

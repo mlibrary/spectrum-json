@@ -1,14 +1,13 @@
 module Spectrum
   class ItemAction
-    def initialize(item: item)
-      @item = item
+    def initialize(item:)
+      @item = item #Spectrum::Item
     end
-    def self.for(item:, source:, bib_fetcher: Spectrum::Utility::BibFetcher.new)
+    def self.for(item:, bib:)
       if item.can_request?
         RequestItemAction.new(item: item)
       elsif item.can_reserve?
-        ReserveItemAction.new(item: item, 
-                              bib: bib_fetcher.fetch(id: item.record, url: source.url))
+        ReserveItemAction.new(item: item, bib: bib )
       elsif item.can_book?
         BookItemAction.new(item:item)
       else

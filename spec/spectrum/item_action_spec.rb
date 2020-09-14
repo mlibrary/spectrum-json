@@ -18,9 +18,7 @@ describe Spectrum::ItemAction do
     before(:each) do
       allow(@item_dbl).to receive(:record).and_return('id')
       @bib_dbl = double('Spectrum::BibRecord')
-      @bib_fetcher = instance_double(Spectrum::Utility::BibFetcher, fetch: @bib_dbl)
-      @source_dbl = double('source', url: 'url')
-      @params = {item: @item_dbl, source: @source_dbl, bib_fetcher: @bib_fetcher}
+      @params = {item: @item_dbl, bib: @bib_dbl}
     end
     it "returns RequestItemAction when can_request" do
       allow(@item_dbl).to receive(:can_request?).and_return(true)

@@ -1,7 +1,7 @@
 module Spectrum
   class ItemDescription
     attr_reader :temp_location, :description
-    def initialize(item: item)
+    def initialize(item:)
       @item = item
       @temp_location = item.full_temp_location_name
       @description = item.description

@@ -5,15 +5,16 @@ require 'spectrum/utility/alma_client'
 require 'spectrum/item'
 require 'spectrum/item_action'
 require 'spectrum/item_description'
+require 'spectrum/bib_record'
 require 'marc'
 
 describe Spectrum::AlmaHolding do
   context "default holding" do
     before(:each) do
-      @source_dbl = double('Spectrum::Config::Source') 
+      @bib_dbl = instance_double(Spectrum::BibRecord)
     end
     it "returns appropriate heading" do
-      holding = described_class.new(source: @source_dbl)
+      holding = described_class.new(bib: @bib_dbl)
       expect(holding.headings).to eq(["Action","Description","Status","Call Number"])
     end
   end
@@ -25,27 +26,63 @@ describe Spectrum::AlmaHolding do
       @init = {
         holding: JSON.parse(File.read('./spec/fixtures/hurdy_gurdy_alma_holding.json')),
         items: JSON.parse(File.read('./spec/fixtures/hurdy_gurdy_alma_item.json'))["item"],
-        source: @source_dbl,
+        bib: @bib_dbl,
         collections_data: [],
         holding_record: @holding_record
       }
     end
+    subject do
+      described_class.new(**@init)
+    end
     it "returns appropriate caption" do
-      expect(described_class.new(**@init).caption).to eq("Music")
+      expect(subject.caption).to eq("Music")
     end
     it "returns appropriate name" do
-      expect(described_class.new(**@init).name).to eq("holdings")
+      expect(subject.name).to eq("holdings")
     end
     it "returns appropriate captionLink" do
       @init[:collections_data] = [{"code" => 'MUSIC', "lib_info_link" => 'link'}] 
-      expect(described_class.new(**@init).captionLink).to eq("link")
+      expect(subject.captionLink).to eq({href: "link", text: "About location"})
     end
     context "notes" do
       it "returns empty array for no floor" do
-        expect(described_class.new(**@init).notes(nil)).to eq([])
+        expect(subject.notes(nil)).to eq([])
       end
       it "returns floor item when floor is found" do
-        expect(described_class.new(**@init).notes('5th Floor')).to eq(['5th Floor'])
+        expect(subject.notes('5th Floor')).to eq(['5th Floor'])
+      end
+    end
+    context "rows" do
+      it "returns an array of hashes" do
+        item_dbl = instance_double('Spectrum::AlmaItem', to_a: {item: 'item'})
+        factory_dbl = lambda{|item,bib| item_dbl}
+        expect(subject.rows(factory_dbl)).to eq([{item: 'item'}])
+      end
+    end
+    context "to_h" do
+      before(:each) do
+        @expected_output = JSON.parse(File.read('./spec/fixtures/hurdy_gurdy_output.json'),symbolize_names: true)[1]
+        @expected_output[:rows] = [[]] #assume AlmaItem to_a works
+
+        allow(Spectrum::FloorLocation).to receive(:resolve)
+        @item_dbl = instance_double('Spectrum::AlmaItem', to_a: [])
+        @factory_dbl = lambda{|item,bib| @item_dbl}
+        @floor_location = "5th Floor"
+        @init[:collections_data] = [{"code" => 'MUSIC', "lib_info_link" => 'http://www.lib.umich.edu/location/music-library/unit/39'}] 
+      end
+      it "returns expected hash" do
+        expect(subject.to_h(@factory_dbl, @floor_location )).to eq(@expected_output)
+      end
+      
+      it "removes empty fields" do
+        @floor_location = nil
+        @expected_output.delete(:notes)
+        expect(subject.to_h(@factory_dbl, @floor_location )).to eq(@expected_output)
+      end
+      it "removes nil fields" do
+        @init[:collections_data] = [] 
+        @expected_output.delete(:captionLink)
+        expect(subject.to_h(@factory_dbl, @floor_location )).to eq(@expected_output)
       end
     end
   end
@@ -58,7 +95,7 @@ describe Spectrum::AlmaHolding do
         items: JSON.parse(File.read('./spec/fixtures/birds_alma_items.json'))["item"],
         collections_data: [],
         holding_record: @holding_record,
-        source: @source
+        bib: @bib_dbl
       }
     end
     context "notes" do
@@ -78,7 +115,7 @@ describe Spectrum::AlmaHolding do
         items: JSON.parse(File.read('./spec/fixtures/birds_alma_items.json'))["item"],
         collections_data: [],
         holding_record: @holding_record,
-        source: @source,
+        bib: @bib_dbl
       }
     end
     context "notes" do
@@ -99,9 +136,9 @@ end
 describe Spectrum::AlmaItem, "to_a" do
   before(:each) do
     @item_dbl = instance_double(Spectrum::Item, status: 'On Shelf', call_number: 'call_number', can_request?: false)
-    @source_dbl = double('Spectrum::Config::Source') 
     @action_dbl = instance_double(Spectrum::ItemAction, to_h: {foo: 'bar'})  
     @description_dbl = instance_double(Spectrum::ItemDescription, to_h: {text: 'N/A'})
+    @bib_dbl = instance_double(Spectrum::BibRecord)
     @aleph = { intent: 'intent', icon: 'icon' }
     @to_a_init = {
       action: instance_double(Spectrum::ItemAction, to_h: {foo: 'bar'}),
@@ -110,7 +147,7 @@ describe Spectrum::AlmaItem, "to_a" do
     }
   end
   subject do
-    described_class.new(spectrum_item: @item_dbl, source: @source_dbl).to_a(**@to_a_init)
+    described_class.new(spectrum_item: @item_dbl, bib: @bib_dbl).to_a(**@to_a_init)
   end
   it "returns an array" do
     expect(subject.class.name).to eq('Array')
@@ -123,7 +160,7 @@ describe Spectrum::AlmaItem, "to_a" do
   end
   it "handles Video call number" do
     allow(@item_dbl).to receive(:call_number).and_return('VIDEO call_number')
-    array = described_class.new(item: { 'item_data' => {'inventory_number' => '12345'}}, spectrum_item: @item_dbl, source: @source_dbl).to_a(**@to_a_init)
+    array = described_class.new(item: { 'item_data' => {'inventory_number' => '12345'}}, spectrum_item: @item_dbl, bib: @bib_dbl).to_a(**@to_a_init)
     expect(array[3]).to eq( {text: 'VIDEO call_number - 12345'}
     ) 
   end
@@ -185,22 +222,6 @@ describe Spectrum::HathiHolding do
         expect(hathi_holding.preExpanded).to eq(false)
       end
     end
-    describe "rows" do
-      it "returns array of EtasHathiItems for ic print holding" do
-        hathi_item = described_class.new(holding: @hathi_response,alma_client: @alma_double)
-        expect(hathi_item.rows.first.class.name).to eq("Spectrum::EtasHathiItem")
-      end
-      it "returns array of HathiItems when not in umich catalogue" do
-        allow(@resp_dbl).to receive(:parsed_response).and_return({'total_record_count' => 0})
-        hathi_item = described_class.new(holding: @hathi_response,alma_client: @alma_double)
-        expect(hathi_item.rows.first.class.name).to eq("Spectrum::HathiItem")
-      end
-      it "returns array of PublicDomainHathiItems when not in umich catalogue" do
-        @hathi_response["items"][0]["rightsCode"] = 'pd'
-        hathi_item = described_class.new(holding: @hathi_response,alma_client: @alma_double)
-        expect(hathi_item.rows.first.class.name).to eq("Spectrum::PublicDomainHathiItem")
-      end
-    end
     describe "print_holding?" do
       it "calls alma_client with oclc value" do
         expect(@alma_double).to receive(:get).with("/bibs", {query: {other_system_id: "10543709", view: 'brief'}})
@@ -222,6 +243,33 @@ describe Spectrum::HathiHolding do
       end
     end
   end
+end
+describe Spectrum::HathiItem, "self.for" do
+    before(:each) do
+      pd_item_factory_dbl = lambda{|item| 'Spectrum::PublicDomainHathiItem'}
+      etas_item_factory_dbl = lambda{|item| 'Spectrum::EtasHathiItem'}
+      hathi_item_factory_dbl = lambda{|item| 'Spectrum::HathiItem'}
+      @params = {item: JSON.parse(File.read('./spec/fixtures/hurdy_hathi.json'))["items"][0],
+                 ph_exists: false, 
+                 pd_item_factory: pd_item_factory_dbl, 
+                 etas_item_factory: etas_item_factory_dbl, 
+                 hathi_item_factory: hathi_item_factory_dbl}
+    end
+    subject do 
+      described_class.for(**@params)
+    end
+    it "returns array of EtasHathiItems for ic print holding" do
+      @params[:ph_exists] = true
+      expect(subject).to eq("Spectrum::EtasHathiItem")
+    end
+    it "returns array of HathiItems when not in umich catalogue" do
+      @params[:ph_exists] = false
+      expect(subject).to eq("Spectrum::HathiItem")
+    end
+    it "returns array of PublicDomainHathiItems when not in umich catalogue" do
+      @params[:item]["rightsCode"] = 'pd'
+      expect(subject).to eq("Spectrum::PublicDomainHathiItem")
+    end
 end
 describe Spectrum::HathiItem, "to_a" do
   subject do
