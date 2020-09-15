@@ -57,6 +57,10 @@ module Spectrum
       fetch_joined('mainauthor', '; ')
     end
 
+    def oclc
+      fetch_list('oclc')
+    end
+
     def accession_number
       "<accession_number>#{fetch_joined('oclc', ',')}</accession_number>"
     end

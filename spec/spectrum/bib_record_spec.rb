@@ -25,12 +25,19 @@ describe Spectrum::BibRecord do
       expect(subject.isbn).to eq('')
     end
   end
+  context '#oclc' do
+    it 'returns an array' do
+      expect(subject.oclc).to eq(["03935616"])
+    end
+  end
 
   context '#bib.accession_number' do
     it 'returns a string' do
       expect(subject.accession_number).to eq('<accession_number>03935616</accession_number>')
     end
   end
+  
+  
 
   context '#author' do
     it 'returns a string' do
