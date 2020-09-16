@@ -91,6 +91,10 @@ module Spectrum
       status.start_with?('missing')
     end
 
+    def not_missing?
+      !missing?
+    end
+
     def known_off_shelf?
       return false if missing? || checked_out?
       off_shelf?
