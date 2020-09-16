@@ -3,7 +3,7 @@ module Spectrum
   class Holdings
     def initialize( 
             source:, 
-            mms_id:, 
+            request:, 
             client: Spectrum::Utility::AlmaClient.new, 
             bib_record: BibFetcher.new.fetch(id: mms_id, url: source.url),
             alma_holding_factory: lambda {|holding, items, preExpanded| Spectrum::AlmaHolding.new(holding: holding, items: items, preExpanded: preExpanded)},
@@ -11,7 +11,7 @@ module Spectrum
             hathi_holding_factory: lambda {|holding, preExpanded| Spectrum::HathiHolding.new(holding: holding, preExpanded: preExpanded)}
         )
       @bib_record = bib_record
-      @mms_id = mms_id
+      @mms_id = request.id
 
       @client = client
       @alma_holding_factory = alma_holding_factory

@@ -1,5 +1,6 @@
 require_relative '../spec_helper'
 require 'spectrum/holdings'
+require 'spectrum/request/holdings'
 require 'spectrum/my_holding'
 require 'spectrum/bib_record'
 require 'spectrum/utility/alma_client'
@@ -18,7 +19,7 @@ describe Spectrum::Holdings do
 
     @init = {
       source: nil,
-      mms_id: 'mms_id',
+      request: instance_double(Spectrum::Request::Holdings, id: 'mms_id'),
       client: instance_double(Spectrum::Utility::AlmaClient, get: @alma_response_dbl),
       bib_record: instance_double(Spectrum::BibRecord, oclc: [], physical_only?: true),
       alma_holding_factory: lambda {|holding, items, preExpanded| @alma_holding_dbl },

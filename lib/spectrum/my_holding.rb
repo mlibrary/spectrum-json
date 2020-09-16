@@ -171,6 +171,7 @@ module Spectrum
     attr_reader :preExpanded
     def initialize(holding: {}, preExpanded: false, alma_client: Spectrum::Utility::AlmaClient.new)
       @alma_client = alma_client
+      #holding is hathi api response json
       super(holding: holding, preExpanded: preExpanded)
       @holding.empty? ? @ph_exists = false : @ph_exists = get_ph_status
     end
