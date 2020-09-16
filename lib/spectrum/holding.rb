@@ -9,6 +9,21 @@ module Spectrum
       'BUHR',
       'SHAP',
       'SCI',
+      'UGL',
+      'FINE',
+    ]
+
+    CONTACTLESS_PICKUP = [
+      'HATCH',
+      'SHAP',
+      'SCI',
+      'UGL',
+      'FINE',
+      'BUHR',
+    ]
+
+    STANDARD_PICKUP = [
+      'FLINT',
     ]
 
     attr_reader :holding, :record, :barcode
@@ -89,8 +104,20 @@ module Spectrum
       status.start_with?('Checked out')
     end
 
+    def not_checked_out?
+      !checked_out?
+    end
+
     def off_site?
       @holding['location'].start_with?('Offsite', '- Offsite')
+    end
+
+    def contactless_pickup?
+      CONTACTLESS_PICKUP.include?(@holding['sub_library'])
+    end
+
+    def standard_pickup?
+      STANDARD_PICKUP.include?(@holding['sub_library'])
     end
 
     def reopened?

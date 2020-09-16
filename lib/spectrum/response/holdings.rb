@@ -111,6 +111,7 @@ module Spectrum
       end
 
       def get_action(item, info)
+        return Spectrum::Holding::Action.new(@request.id, @request.focus, @bib_record, item, info).finalize
         if info['can_request']
           {
             text: 'Get this',
