@@ -183,6 +183,10 @@ module Spectrum
       @holding['status']
     end
 
+    def not_pickup?
+      !(flint_pickup? || shapiro_pickup? || aael_pickup? || music_pickup?)
+    end
+
     def not_flint_and_etas?
       !(flint? && etas?)
     end
