@@ -183,6 +183,10 @@ module Spectrum
       ['FLINT'].include?(@holding['sub_library'])
     end
 
+    def not_etas?
+      !etas?
+    end
+
     def etas?
       @etas_ids['mdp.' + barcode]
     end
