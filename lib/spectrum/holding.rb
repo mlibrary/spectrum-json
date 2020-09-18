@@ -13,7 +13,7 @@ module Spectrum
       'FINE',
     ]
 
-    CONTACTLESS_PICKUP = [
+    SHAPIRO_PICKUP = [
       'HATCH',
       'SHAP',
       'SCI',
@@ -22,9 +22,13 @@ module Spectrum
       'BUHR',
     ]
 
-    STANDARD_PICKUP = [
-      'FLINT',
-    ]
+    AAEL_PICKUP = [ 'AAEL' ]
+
+    MUSIC_PICKUP = [ 'MUSIC' ]
+
+    FLINT_PICKUP = [ 'FLINT' ]
+
+    ETAS_START = 'Full text available,'
 
     attr_reader :holding, :record, :barcode
 
@@ -33,6 +37,7 @@ module Spectrum
       @item    = data[record]
       @record  = record
       @barcode = barcode
+      @etas_ids = extract_etas_ids(@item)
     end
 
     def id
@@ -117,11 +122,27 @@ module Spectrum
     end
 
     def contactless_pickup?
-      CONTACTLESS_PICKUP.include?(@holding['sub_library'])
+      shapiro_pickup?
+    end
+
+    def shapiro_pickup?
+      SHAPIRO_PICKUP.include?(@holding['sub_library'])
+    end
+
+    def aael_pickup?
+      AAEL_PICKUP.include?(@holding['sub_library'])
+    end
+
+    def music_pickup?
+      MUSIC_PICKUP.include?(@holding['sub_library'])
     end
 
     def standard_pickup?
-      STANDARD_PICKUP.include?(@holding['sub_library'])
+      flint_pickup?
+    end
+
+    def flint_pickup?
+      FLINT_PICKUP.include?(@holding['sub_library'])
     end
 
     def reopened?
@@ -136,7 +157,33 @@ module Spectrum
       @holding['status']
     end
 
+    def not_flint_and_etas?
+      !(flint? && etas?)
+    end
+
+    def flint?
+      ['FLINT'].include?(@holding['sub_library'])
+    end
+
+    def etas?
+      @etas_ids['mdp.' + barcode]
+    end
+
     private
+
+    def extract_etas_ids(items)
+      ht_item = items.find do |item|
+        ['HathiTrust Digital Library'].include?(item['location'])
+      end
+      return {} unless ht_item
+      return Hash.new(true) if ht_item['status'].start_with?(ETAS_START)
+      return {} unless ht_item['item_info']
+      ht_item['item_info'].inject({}) do |acc, info|
+        acc.tap do |acc|
+          acc[info['id']] = info['status'].start_with?(ETAS_START)
+        end
+      end
+    end
 
     def extract_holding(data, record, barcode)
       data[record].each do |item|
