@@ -7,7 +7,7 @@ module Spectrum
     class GetThis
       def initialize(source:, request:, get_this_policy: Spectrum::Policy::GetThis,
                     aleph_borrower: Aleph::Borrower.new, aleph_error: Aleph::Error,
-                    bib_fetcher: Spectrum::Utility::BibFetcher.new,
+                    bib_record: Spectrum::BibRecord.fetch(id: request.id, url: source.url),
                     item_picker: Spectrum::Utility::ItemPicker.new
                     )
 
@@ -20,7 +20,7 @@ module Spectrum
         @aleph_error = aleph_error
 
         @item_picker = item_picker
-        @bib_fetcher = bib_fetcher
+        @bib_record = bib_record
 
         
         @data = fetch_get_this
@@ -56,7 +56,7 @@ module Spectrum
 
         {
           status: 'Success',
-          options: @get_this_policy.new(patron, @bib_fetcher.fetch(id: @request.id, url: @source.url), @item_picker.item(request: @request) ).resolve
+          options: @get_this_policy.new(patron, @bib_record, @item_picker.item(request: @request) ).resolve
         }
       end
 

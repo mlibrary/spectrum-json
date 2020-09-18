@@ -4,11 +4,11 @@ module Spectrum
   module Response
     class Holdings
       def initialize(source:, request:, client: Spectrum::Utility::HttpClient.new,
-                     bib_fetcher: Spectrum::Utility::BibFetcher.new)
+                     bib_record: Spectrum::BibRecord.fetch(id: request.id, url: source.url))
         @source = source
         @request = request
         @client = client
-        @bib_record = bib_fetcher.fetch(id: @request.id, url: @source.url)
+        @bib_record = bib_record
         @data = fetch_holdings
       end
 

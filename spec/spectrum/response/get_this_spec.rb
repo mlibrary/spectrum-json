@@ -44,7 +44,7 @@ describe Spectrum::Response::GetThis do
                 get_this_policy: GetThisPolicyDouble,
                 aleph_borrower: double('Aleph::Borrower', bor_info: [], expired?: false), 
                 aleph_error: AlephErrorDouble,
-                bib_fetcher: double("Spectrum::Utility::BibFetcher", fetch: 'Spectrum::BibRecord'),
+                bib_record: 'Spectrum::BibRecord',
                 item_picker: double("Spectrum::Utility::ItemPicker", item: nil),
       }
       @holdings_source_dbl = double("HoldingsSource", holdings: 'http://localhost', url: 'mirlyn_solr_url')
