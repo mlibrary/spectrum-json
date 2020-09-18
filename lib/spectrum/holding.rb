@@ -167,6 +167,14 @@ module Spectrum
       REOPENED.include?(@holding['sub_library'])
     end
 
+    def available?
+      reopened? && not_checked_out? && not_missing?
+    end
+
+    def unavailable?
+      !available?
+    end
+
     def location
       [@holding['sub_library'], @holding['collection']].compact.join(',')
     end
