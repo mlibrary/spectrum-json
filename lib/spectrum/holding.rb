@@ -11,6 +11,8 @@ module Spectrum
       'SCI',
       'UGL',
       'FINE',
+      'AAEL',
+      'MUSIC',
     ]
 
     SHAPIRO_PICKUP = [
@@ -74,6 +76,10 @@ module Spectrum
 
     def circulating?
       can_request?
+    end
+
+    def not_building_use_only?
+      !building_use_only?
     end
 
     def building_use_only?
@@ -143,6 +149,18 @@ module Spectrum
 
     def flint_pickup?
       FLINT_PICKUP.include?(@holding['sub_library'])
+    end
+
+    def flint?
+      ['FLINT'].include?(@holding['sub_library'])
+    end
+
+    def not_flint?
+      !flint?
+    end
+
+    def not_reopened?
+      !reopened?
     end
 
     def reopened?
