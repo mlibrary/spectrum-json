@@ -6,8 +6,6 @@ require 'spectrum/policy/get_this'
 require 'spectrum/holding'
 require 'spectrum/item'
 require 'spectrum/bib_record'
-require 'spectrum/utility/item_picker'
-require 'spectrum/utility/bib_fetcher'
 
 require 'yaml'
 
@@ -38,6 +36,7 @@ end
 describe Spectrum::Response::GetThis do
   describe 'renderable' do
     before(:each) do
+      @item_dbl = class_double(Spectrum::Item, for: 'MyItem')
       @init = { 
                 source: double("HoldingsSource", holdings: 'http://localhost', url: 'mirlyn_solr_url'),
                 request: double('Spectrum::Request::GetThis', id: '123456789', barcode: '55555', logged_in?: true, username: 'username'),
@@ -45,7 +44,7 @@ describe Spectrum::Response::GetThis do
                 aleph_borrower: double('Aleph::Borrower', bor_info: [], expired?: false), 
                 aleph_error: AlephErrorDouble,
                 bib_record: 'Spectrum::BibRecord',
-                item_picker: double("Spectrum::Utility::ItemPicker", item: nil),
+                item_picker: lambda{|request| @item_dbl.for(request: request)},
       }
       @holdings_source_dbl = double("HoldingsSource", holdings: 'http://localhost', url: 'mirlyn_solr_url')
       @request_dbl = double('Spectrum::Request::GetThis', id: '123456789', barcode: '55555', logged_in?: true, username: 'username')
@@ -88,13 +87,10 @@ describe Spectrum::Response::GetThis do
     
     it 'calls get_this_policy with Spectrum::Item' do
 
-      item_dbl = 'MyItem'
-      allow(@init[:item_picker]).to receive(:item) {item_dbl} 
-
-      expect(@init[:item_picker]).to receive(:item).with(hash_including(request: @init[:request]))
+      expect(@item_dbl).to receive(:for).with(hash_including(request: @init[:request]))
       get_this = described_class.new(**@init) 
       
-      expect(get_this.renderable[:options].item).to eq(item_dbl)
+      expect(get_this.renderable[:options].item).to eq(@item_dbl.for(request: nil))
     end
   end
 end

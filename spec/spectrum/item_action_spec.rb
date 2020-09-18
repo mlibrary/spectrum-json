@@ -2,7 +2,6 @@ require_relative '../spec_helper'
 require 'spectrum/item_action'
 require 'spectrum/item'
 require 'spectrum/bib_record'
-require 'spectrum/utility/bib_fetcher'
 require 'rails' #for 'to_query'
 
 describe Spectrum::ItemAction do

@@ -8,7 +8,7 @@ module Spectrum
       def initialize(source:, request:, get_this_policy: Spectrum::Policy::GetThis,
                     aleph_borrower: Aleph::Borrower.new, aleph_error: Aleph::Error,
                     bib_record: Spectrum::BibRecord.fetch(id: request.id, url: source.url),
-                    item_picker: Spectrum::Utility::ItemPicker.new
+                    item_picker: lambda{|request| Spectrum::Item.for(request: request)}
                     )
 
         @source = source
@@ -56,7 +56,7 @@ module Spectrum
 
         {
           status: 'Success',
-          options: @get_this_policy.new(patron, @bib_record, @item_picker.item(request: @request) ).resolve
+          options: @get_this_policy.new(patron, @bib_record, @item_picker.call(@request) ).resolve
         }
       end
 

@@ -7,8 +7,6 @@ require 'active_support'
 require 'active_support/concern'
 
 require 'spectrum/utility/alma_client'
-require 'spectrum/utility/item_picker'
-require 'spectrum/utility/solr'
 require 'spectrum/utility/http_client'
 
 require 'spectrum/holding'

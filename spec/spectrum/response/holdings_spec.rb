@@ -1,16 +1,16 @@
 require_relative '../../spec_helper'
 require 'spectrum/response/holdings'
 require 'spectrum/utility/http_client'
-require 'spectrum/utility/bib_fetcher'
 require 'spectrum/floor_location'
 require 'spectrum/holding/action'
+require 'spectrum/bib_record'
 require 'aleph'
 
 describe Spectrum::Response::Holdings do
   
   describe 'renderable' do
     before(:each) do
-      @bib_record = double('Spectrum::BibRecord', physical_only?: false)
+      @bib_record = instance_double(Spectrum::BibRecord, physical_only?: false)
       @init= {
         :source => double("HoldingsSource", holdings: 'blah', url: nil),
         :request => double('Spectrum::Request::Holdings', id: '000311635', focus: nil),
