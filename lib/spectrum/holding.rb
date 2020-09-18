@@ -183,6 +183,14 @@ module Spectrum
       @holding['status']
     end
 
+    def not_pickup_or_checkout?
+      not_pickup? || checked_out? || missing? || building_use_only?
+    end
+
+    def not_flint_or_checkout?
+      not_flint? || checked_out? || missing? || building_use_only?
+    end
+
     def not_pickup?
       !(shapiro_pickup? || aael_pickup? || music_pickup?)
     end
