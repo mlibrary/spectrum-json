@@ -1,0 +1,130 @@
+{
+    "items": [
+        {
+            "enumcron": "v.1",
+            "fromRecord": "001265198",
+            "htid": "mdp.39015007053526",
+            "itemURL": "https://hdl.handle.net/2027/mdp.39015007053526",
+            "lastUpdate": "20161224",
+            "orig": "University of Michigan",
+            "rightsCode": "pd",
+            "usRightsString": "Full view"
+        },
+        {
+            "enumcron": "v.1",
+            "fromRecord": "003931952",
+            "htid": "mdp.39015071219235",
+            "itemURL": "https://hdl.handle.net/2027/mdp.39015071219235",
+            "lastUpdate": "20200513",
+            "orig": "University of Michigan",
+            "rightsCode": "pd",
+            "usRightsString": "Full view"
+        },
+        {
+            "enumcron": "v.2",
+            "fromRecord": "001265198",
+            "htid": "mdp.39015013279685",
+            "itemURL": "https://hdl.handle.net/2027/mdp.39015013279685",
+            "lastUpdate": "20200626",
+            "orig": "University of Michigan",
+            "rightsCode": "pd",
+            "usRightsString": "Full view"
+        },
+        {
+            "enumcron": "v.2",
+            "fromRecord": "003931952",
+            "htid": "mdp.39015071219243",
+            "itemURL": "https://hdl.handle.net/2027/mdp.39015071219243",
+            "lastUpdate": "20200828",
+            "orig": "University of Michigan",
+            "rightsCode": "pd",
+            "usRightsString": "Full view"
+        },
+        {
+            "enumcron": "v.3",
+            "fromRecord": "001265198",
+            "htid": "mdp.39015010683798",
+            "itemURL": "https://hdl.handle.net/2027/mdp.39015010683798",
+            "lastUpdate": "20200223",
+            "orig": "University of Michigan",
+            "rightsCode": "pd",
+            "usRightsString": "Full view"
+        },
+        {
+            "enumcron": "v.3",
+            "fromRecord": "003931952",
+            "htid": "mdp.39015071219250",
+            "itemURL": "https://hdl.handle.net/2027/mdp.39015071219250",
+            "lastUpdate": "20200822",
+            "orig": "University of Michigan",
+            "rightsCode": "pd",
+            "usRightsString": "Full view"
+        },
+        {
+            "enumcron": "0001.001",
+            "fromRecord": "003931952",
+            "htid": "miun.bac9274.0001.001",
+            "itemURL": "https://hdl.handle.net/2027/miun.bac9274.0001.001",
+            "lastUpdate": "20130819",
+            "orig": "University of Michigan",
+            "rightsCode": "pd",
+            "usRightsString": "Full view"
+        },
+        {
+            "enumcron": "0002.001",
+            "fromRecord": "003931952",
+            "htid": "miun.bac9274.0002.001",
+            "itemURL": "https://hdl.handle.net/2027/miun.bac9274.0002.001",
+            "lastUpdate": "20130819",
+            "orig": "University of Michigan",
+            "rightsCode": "pd",
+            "usRightsString": "Full view"
+        },
+        {
+            "enumcron": "0003.001",
+            "fromRecord": "003931952",
+            "htid": "miun.bac9274.0003.001",
+            "itemURL": "https://hdl.handle.net/2027/miun.bac9274.0003.001",
+            "lastUpdate": "20130819",
+            "orig": "University of Michigan",
+            "rightsCode": "pd",
+            "usRightsString": "Full view"
+        }
+    ],
+    "records": {
+        "001265198": {
+            "isbns": [],
+            "issns": [],
+            "lccns": [
+                "14018061"
+            ],
+            "oclcs": [
+                "5997332"
+            ],
+            "publishDates": [
+                "1911"
+            ],
+            "recordURL": "https://catalog.hathitrust.org/Record/001265198",
+            "titles": [
+                "A history of the northern peninsula of Michigan and its people"
+            ]
+        },
+        "003931952": {
+            "isbns": [],
+            "issns": [],
+            "lccns": [
+                "14018061"
+            ],
+            "oclcs": [
+                "5997332"
+            ],
+            "publishDates": [
+                "1911"
+            ],
+            "recordURL": "https://catalog.hathitrust.org/Record/003931952",
+            "titles": [
+                "A history of the northern peninsula of Michigan and its people;."
+            ]
+        }
+    }
+}

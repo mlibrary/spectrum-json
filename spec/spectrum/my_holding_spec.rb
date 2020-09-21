@@ -6,6 +6,7 @@ require 'spectrum/item'
 require 'spectrum/item_action'
 require 'spectrum/item_description'
 require 'spectrum/bib_record'
+require 'spectrum/utility/hathi_client'
 require 'marc'
 
 describe Spectrum::AlmaHolding do
@@ -199,7 +200,9 @@ describe Spectrum::HathiHolding do
       @alma_response = JSON.parse(File.read('./spec/fixtures/alma_has_oclc.json'))
       @resp_dbl = double('HTTParty::Response', parsed_response: @alma_response, code: 200 )
       @alma_double = double('Spectrum::Utility::AlmaClient',get: @resp_dbl )
-      @hathi_response = JSON.parse(File.read('./spec/fixtures/hurdy_hathi.json'))
+      direct_hathi_response = JSON.parse(File.read('./spec/fixtures/hurdy_hathi.json'))
+      #not doubling this because it's not the big an object and is actually what's used
+      @hathi_response = Spectrum::Utility::HathiResponse.new([direct_hathi_response])
     end
     describe "to_h" do
       it "returns appropriate hash" do

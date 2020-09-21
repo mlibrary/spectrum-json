@@ -15,7 +15,8 @@ describe Spectrum::Holdings do
     @alma_parsed_response = {"total_record_count" => 1, "holding" => [{"holding_id" => '1234'}]}
     @alma_response_dbl = double('Response', code: 200, parsed_response: @alma_parsed_response)
 
-    @hathi_response = {"records" => {}, "items" => [{"foo" => "bar"}]}
+    @hathi_response = class_double(Spectrum::Utility::HathiResponse)
+
 
     @init = {
       source: nil,
@@ -23,7 +24,7 @@ describe Spectrum::Holdings do
       client: instance_double(Spectrum::Utility::AlmaClient, get: @alma_response_dbl),
       bib_record: instance_double(Spectrum::BibRecord, oclc: [], physical_only?: true),
       alma_holding_factory: lambda {|holding, items, preExpanded| @alma_holding_dbl },
-      hathi_fetcher: instance_double(Spectrum::Utility::HathiHoldingFetcher, get: @hathi_response),
+      hathi_client: instance_double(Spectrum::Utility::HathiClient, get: @hathi_response),
       hathi_holding_factory: lambda {|holding, preExpanded| @hathi_holding_dbl },
     }
   end

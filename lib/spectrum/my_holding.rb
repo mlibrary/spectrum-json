@@ -171,7 +171,7 @@ module Spectrum
     attr_reader :preExpanded
     def initialize(holding: {}, preExpanded: false, alma_client: Spectrum::Utility::AlmaClient.new)
       @alma_client = alma_client
-      #holding is hathi api response json
+      #holding is Spectrum::Utility::HathiResponse
       super(holding: holding, preExpanded: preExpanded)
       @holding.empty? ? @ph_exists = false : @ph_exists = get_ph_status
     end
@@ -197,7 +197,7 @@ module Spectrum
     def rows(hathi_item_factory = 
              lambda{|item, ph_exists| HathiItem.for(item: item, ph_exists: ph_exists) } 
             )
-      @holding["items"].map { |item| hathi_item_factory.call(item, @ph_exists) }
+      @holding.items.map { |item| hathi_item_factory.call(item, @ph_exists) }
     end
     def to_h
       {
@@ -211,9 +211,8 @@ module Spectrum
     end
     private
 
-    def get_ph_status
-      oclcs = @holding["records"]&.values&.first&.dig("oclcs")
-      oclcs.each do |oclc|
+    def get_ph_status #FIXME should check mysql not alma
+      @holding.oclcs.each do |oclc|
         response = @alma_client.get('/bibs',{query: {other_system_id: oclc, view: 'brief'}})
         if response.code == 200 && response.parsed_response["total_record_count"] > 0
           return true

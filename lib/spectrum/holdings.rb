@@ -7,7 +7,7 @@ module Spectrum
             client: Spectrum::Utility::AlmaClient.new, 
             bib_record: BibRecord.fetch(id: request.id, url: source.url),
             alma_holding_factory: lambda {|holding, items, preExpanded| Spectrum::AlmaHolding.new(holding: holding, items: items, preExpanded: preExpanded)},
-            hathi_fetcher: Spectrum::Utility::HathiHoldingFetcher.new,
+            hathi_fetcher: Spectrum::Utility::HathiClient.new,
             hathi_holding_factory: lambda {|holding, preExpanded| Spectrum::HathiHolding.new(holding: holding, preExpanded: preExpanded)}
         )
       @bib_record = bib_record
@@ -17,7 +17,7 @@ module Spectrum
       @alma_holding_factory = alma_holding_factory
       @full_alma_holdings = get_full_alma_holdings
 
-      @hathi_fetcher = hathi_fetcher
+      @hathi_client = hathi_client
       @hathi_holding_factory = hathi_holding_factory
       @hathi_holdings_response = get_hathi_holdings_response
     end

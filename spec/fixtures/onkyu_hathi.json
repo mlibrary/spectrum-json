@@ -1,0 +1,58 @@
+{
+  "records": {
+    "002112188": {
+      "recordURL": "https://catalog.hathitrust.org/Record/002112188",
+      "titles": [
+        "Onkyū hyakunen"
+      ],
+      "isbns": [],
+      "issns": [],
+      "oclcs": [
+        "983642423",
+        "23326358",
+        "1014423513",
+        "1020028292",
+        "1035519333",
+        "1038475843",
+        "1039685191",
+        "1041913714",
+        "1042396525",
+        "1051748820",
+        "1054013161",
+        "1055049827",
+        "1056052051",
+        "1056843022",
+        "1057686932",
+        "1059408281"
+      ],
+      "lccns": [
+        "77800147"
+      ],
+      "publishDates": [
+        "1975"
+      ]
+    }
+  },
+  "items": [
+    {
+      "orig": "University of Michigan",
+      "fromRecord": "002112188",
+      "htid": "mdp.39015062216307",
+      "itemURL": "https://hdl.handle.net/2027/mdp.39015062216307",
+      "rightsCode": "ic",
+      "lastUpdate": "20200828",
+      "enumcron": false,
+      "usRightsString": "Limited (search-only)"
+    },
+    {
+      "orig": "University of California",
+      "fromRecord": "002112188",
+      "htid": "uc1.$b431200",
+      "itemURL": "https://hdl.handle.net/2027/uc1.$b431200",
+      "rightsCode": "ic",
+      "lastUpdate": "20200520",
+      "enumcron": false,
+      "usRightsString": "Limited (search-only)"
+    }
+  ]
+}
