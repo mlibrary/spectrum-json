@@ -11,9 +11,11 @@ module Spectrum
       'SCI',
       'UGL',
       'FINE',
+      'AAEL',
+      'MUSIC',
     ]
 
-    CONTACTLESS_PICKUP = [
+    SHAPIRO_PICKUP = [
       'HATCH',
       'SHAP',
       'SCI',
@@ -22,9 +24,13 @@ module Spectrum
       'BUHR',
     ]
 
-    STANDARD_PICKUP = [
-      'FLINT',
-    ]
+    AAEL_PICKUP = [ 'AAEL' ]
+
+    MUSIC_PICKUP = [ 'MUSIC' ]
+
+    FLINT_PICKUP = [ 'FLINT' ]
+
+    ETAS_START = 'Full text available,'
 
     attr_reader :holding, :record, :barcode
 
@@ -33,6 +39,7 @@ module Spectrum
       @item    = data[record]
       @record  = record
       @barcode = barcode
+      @etas_ids = extract_etas_ids(@item)
     end
 
     def id
@@ -71,6 +78,10 @@ module Spectrum
       can_request?
     end
 
+    def not_building_use_only?
+      !building_use_only?
+    end
+
     def building_use_only?
       status.start_with?('Building use only')
     end
@@ -89,6 +100,10 @@ module Spectrum
 
     def missing?
       status.start_with?('missing')
+    end
+
+    def not_missing?
+      !missing?
     end
 
     def known_off_shelf?
@@ -113,15 +128,51 @@ module Spectrum
     end
 
     def contactless_pickup?
-      CONTACTLESS_PICKUP.include?(@holding['sub_library'])
+      shapiro_pickup?
+    end
+
+    def shapiro_pickup?
+      SHAPIRO_PICKUP.include?(@holding['sub_library'])
+    end
+
+    def aael_pickup?
+      AAEL_PICKUP.include?(@holding['sub_library'])
+    end
+
+    def music_pickup?
+      MUSIC_PICKUP.include?(@holding['sub_library'])
     end
 
     def standard_pickup?
-      STANDARD_PICKUP.include?(@holding['sub_library'])
+      flint_pickup?
+    end
+
+    def flint_pickup?
+      FLINT_PICKUP.include?(@holding['sub_library'])
+    end
+
+    def flint?
+      ['FLINT'].include?(@holding['sub_library'])
+    end
+
+    def not_flint?
+      !flint?
+    end
+
+    def not_reopened?
+      !reopened?
     end
 
     def reopened?
       REOPENED.include?(@holding['sub_library'])
+    end
+
+    def available?
+      reopened? && not_checked_out? && not_missing?
+    end
+
+    def unavailable?
+      !available?
     end
 
     def location
@@ -132,7 +183,49 @@ module Spectrum
       @holding['status']
     end
 
+    def not_pickup_or_checkout?
+      not_pickup? || checked_out? || missing? || building_use_only?
+    end
+
+    def not_flint_or_checkout?
+      not_flint? || checked_out? || missing? || building_use_only?
+    end
+
+    def not_pickup?
+      !(shapiro_pickup? || aael_pickup? || music_pickup?)
+    end
+
+    def not_flint_and_etas?
+      !(flint? && etas?)
+    end
+
+    def flint?
+      ['FLINT'].include?(@holding['sub_library'])
+    end
+
+    def not_etas?
+      !etas?
+    end
+
+    def etas?
+      @etas_ids['mdp.' + barcode]
+    end
+
     private
+
+    def extract_etas_ids(items)
+      ht_item = items.find do |item|
+        ['HathiTrust Digital Library'].include?(item['location'])
+      end
+      return {} unless ht_item
+      return Hash.new(true) if ht_item['status'].start_with?(ETAS_START)
+      return {} unless ht_item['item_info']
+      ht_item['item_info'].inject({}) do |acc, info|
+        acc.tap do |acc|
+          acc[info['id']] = info['status'].start_with?(ETAS_START)
+        end
+      end
+    end
 
     def extract_holding(data, record, barcode)
       data[record].each do |item|

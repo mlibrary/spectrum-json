@@ -115,29 +115,53 @@ module Spectrum
       end
 
       def configure!
-        @actions = Spectrum::Config::ActionList.new(YAML.load(ERB.new(File.read(@actions_file)).result))
-        @sources = Spectrum::Config::SourceList.new(YAML.load(ERB.new(File.read(@sources_file)).result))
-        @bookplates = Spectrum::Config::BookplateList.new(YAML.load(ERB.new(File.read(@bookplates_file)).result))
-        @filters = Spectrum::Config::FilterList.new(YAML.load(ERB.new(File.read(@filters_file)).result))
-        @sorts   = Spectrum::Config::SortList.new(YAML.load(ERB.new(File.read(@sorts_file)).result))
-        @fields  = Spectrum::Config::FieldList.new(YAML.load(ERB.new(File.read(@fields_file)).result), self)
-        @foci    = Spectrum::Config::FocusList.new(
-          Dir.glob(@focus_files).map { |file| YAML.load(ERB.new(File.read(file)).result) },
-          self
-        )
+        if File.exist?(@actions_file)
+          @actions = Spectrum::Config::ActionList.new(YAML.load(ERB.new(File.read(@actions_file)).result))
+        end
 
-        @actions.configure!
+        if File.exist?(@sources_file)
+          @sources = Spectrum::Config::SourceList.new(YAML.load(ERB.new(File.read(@sources_file)).result))
+        end
 
-        request = Spectrum::Request::DataStore.new
+        if File.exist?(@bookplates_file)
+          @bookplates = Spectrum::Config::BookplateList.new(YAML.load(ERB.new(File.read(@bookplates_file)).result))
+        end
 
-        @foci.values.each do |focus|
-          focus.get_null_facets do
-            source = @sources[focus.source]
-            engine = source.engine(focus, request, nil)
-            begin
-              results = engine.search
-              focus.apply_facets!(results)
-            rescue Exception => e
+        if File.exist?(@filters_file)
+          @filters = Spectrum::Config::FilterList.new(YAML.load(ERB.new(File.read(@filters_file)).result))
+        end
+
+        if File.exist?(@sorts_file)
+          @sorts   = Spectrum::Config::SortList.new(YAML.load(ERB.new(File.read(@sorts_file)).result))
+        end
+
+        if File.exist?(@fields_file)
+          @fields  = Spectrum::Config::FieldList.new(YAML.load(ERB.new(File.read(@fields_file)).result), self)
+        end
+
+        if @sources && !(focus_files_list = Dir.glob(@focus_files)).empty?
+          @foci    = Spectrum::Config::FocusList.new(
+            focus_files_list.map { |file| YAML.load(ERB.new(File.read(file)).result) },
+            self
+          )
+        end
+
+        if @actions
+          @actions.configure!
+        end
+
+        if @sources && @foci
+          request = Spectrum::Request::DataStore.new
+
+          @foci.values.each do |focus|
+            focus.get_null_facets do
+              source = @sources[focus.source]
+              engine = source.engine(focus, request, nil)
+              begin
+                results = engine.search
+                focus.apply_facets!(results)
+              rescue Exception => e
+              end
             end
           end
         end
@@ -146,7 +170,7 @@ module Spectrum
       end
 
       def routes(app)
-        foci.routes(app)
+        foci.routes(app) if foci.respond_to?(:routes)
 
         app.match 'profile',
           to: 'json#profile',
