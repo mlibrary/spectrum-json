@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bigdecimal', '~> 1.3.4'
   spec.add_development_dependency 'rerun'
   spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'webmock'
   spec.add_development_dependency 'simplecov', '~> 0.16.1'
   spec.add_development_dependency 'pry-byebug'
   spec.add_development_dependency 'dotenv'

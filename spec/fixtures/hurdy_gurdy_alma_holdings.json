@@ -1,0 +1,36 @@
+{
+  "holding": [
+    {
+      "holding_id": "22162173320006381",
+      "library": {
+        "value": "MUSIC",
+        "desc": "Music"
+      },
+      "location": {
+        "value": "UNASSIGNED",
+        "desc": "UNASSIGNED location"
+      },
+      "call_number": "ML760 .P18",
+      "suppress_from_publishing": "false",
+      "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990003116350206381/holdings/22162173320006381"
+    }
+  ],
+  "bib_data": {
+    "title": "The hurdy-gurdy /",
+    "author": "Palmer, Susann.",
+    "isbn": "0715378880",
+    "publisher": "David & Charles,",
+    "mms_id": "990003116350206381",
+    "issn": null,
+    "network_number": [
+      "(OCoLC)ocm06961296",
+      "(CaOTULAS)160608021",
+      "(RLIN)MIUG83-B11939",
+      "(MiU)000311635MIU01"
+    ],
+    "place_of_publication": "Newton Abbot, Devon ; North Pomfret, Vt. :",
+    "date_of_publication": "c1980.",
+    "link": "https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/990003116350206381"
+  },
+  "total_record_count": 1
+}

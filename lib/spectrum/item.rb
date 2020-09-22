@@ -147,7 +147,7 @@ module Spectrum
     end
 
     def status
-      #@holding['status']
+      'FIXME'
     end
 
   end

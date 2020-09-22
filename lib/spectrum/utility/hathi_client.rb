@@ -26,7 +26,7 @@ module Spectrum
       base_uri "https://catalog.hathitrust.org/api/volumes/brief/oclc/"
 
       def get(oclc) #array of oclc numbers
-        self.class.get(oclc)
+        self.class.get("/#{oclc}")
       end
     end
     

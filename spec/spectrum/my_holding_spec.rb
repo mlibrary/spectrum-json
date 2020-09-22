@@ -225,26 +225,26 @@ describe Spectrum::HathiHolding do
         expect(hathi_holding.preExpanded).to eq(false)
       end
     end
-    describe "print_holding?" do
-      it "calls alma_client with oclc value" do
-        expect(@alma_double).to receive(:get).with("/bibs", {query: {other_system_id: "10543709", view: 'brief'}})
-        described_class.new(holding: @hathi_response,alma_client: @alma_double)
-      end
-      it "returns true if oclc found in alma" do
-        hathi_item = described_class.new(holding: @hathi_response,alma_client: @alma_double)
-        expect(hathi_item.print_holding?).to eq(true)
-      end
-      it "returns false if oclc not found" do
-        allow(@resp_dbl).to receive(:parsed_response).and_return({'total_record_count' => 0})
-        hathi_item = described_class.new(holding: @hathi_response,alma_client: @alma_double)
-        expect(hathi_item.print_holding?).to eq(false)
-      end
-      it "returns false if receives response error" do
-        allow(@resp_dbl).to receive(:code).and_return(400)
-        hathi_item = described_class.new(holding: @hathi_response,alma_client: @alma_double)
-        expect(hathi_item.print_holding?).to eq(false)
-      end
-    end
+    #describe "print_holding?" do
+      #it "calls alma_client with oclc value" do
+        #expect(@alma_double).to receive(:get).with("/bibs", {query: {other_system_id: "10543709", view: 'brief'}})
+        #described_class.new(holding: @hathi_response,alma_client: @alma_double)
+      #end
+      #it "returns true if oclc found in alma" do
+        #hathi_item = described_class.new(holding: @hathi_response,alma_client: @alma_double)
+        #expect(hathi_item.print_holding?).to eq(true)
+      #end
+      #it "returns false if oclc not found" do
+        #allow(@resp_dbl).to receive(:parsed_response).and_return({'total_record_count' => 0})
+        #hathi_item = described_class.new(holding: @hathi_response,alma_client: @alma_double)
+        #expect(hathi_item.print_holding?).to eq(false)
+      #end
+      #it "returns false if receives response error" do
+        #allow(@resp_dbl).to receive(:code).and_return(400)
+        #hathi_item = described_class.new(holding: @hathi_response,alma_client: @alma_double)
+        #expect(hathi_item.print_holding?).to eq(false)
+      #end
+    #end
   end
 end
 describe Spectrum::HathiItem, "self.for" do

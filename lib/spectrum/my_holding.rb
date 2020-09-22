@@ -1,4 +1,5 @@
 #Will eventually be Holding, but need to deal with PlaceHold first. This goes with holdings method in JsonController
+require 'aleph'
 module Spectrum
   attr_reader :preExpanded
   class MyHolding
@@ -135,7 +136,7 @@ module Spectrum
     end
     def to_a(action: Spectrum::ItemAction.for( item: @item, bib: @bib ), 
              description: Spectrum::ItemDescription.new(item: @item),
-              intent: Aleph.intent(item.status), icon: Aleph.icon(item.status))
+              intent: Aleph.intent(@item.status), icon: Aleph.icon(@item.status))
       [
         action.to_h,
         description.to_h,
@@ -170,7 +171,7 @@ module Spectrum
   class HathiHolding < Spectrum::MyHolding
     attr_reader :preExpanded
     def initialize(holding: {}, preExpanded: false, alma_client: Spectrum::Utility::AlmaClient.new)
-      @alma_client = alma_client
+      #@alma_client = alma_client #was used for figuring out print_holding
       #holding is Spectrum::Utility::HathiResponse
       super(holding: holding, preExpanded: preExpanded)
       @holding.empty? ? @ph_exists = false : @ph_exists = get_ph_status
@@ -212,13 +213,14 @@ module Spectrum
     private
 
     def get_ph_status #FIXME should check mysql not alma
-      @holding.oclcs.each do |oclc|
-        response = @alma_client.get('/bibs',{query: {other_system_id: oclc, view: 'brief'}})
-        if response.code == 200 && response.parsed_response["total_record_count"] > 0
-          return true
-        end
-      end
-      return false
+      true
+      #@holding.oclcs.each do |oclc|
+        #response = @alma_client.get('/bibs',{query: {other_system_id: oclc, view: 'brief'}})
+        #if response.code == 200 && response.parsed_response["total_record_count"] > 0
+          #return true
+        #end
+      #end
+      #return false
     end
   end
   class HathiItem

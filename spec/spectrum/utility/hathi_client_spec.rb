@@ -12,6 +12,15 @@ describe Spectrum::Utility::HathiClient do
     expect(@resolver_dbl).to receive(:get).once
     described_class.new(@resolver_dbl).get(oclcs)
   end
+  context "integration" do
+    it "given array of oclc it returns an appropriate HathiResponse" do
+      stub_request(:get, 'https://catalog.hathitrust.org/api/volumes/brief/oclc/10543709').to_return(body: File.read('./spec/fixtures/hurdy_hathi.json'), status: 200, headers: {content_type: 'application/json'}) 
+      resp = described_class.new.get(['10543709'])
+      expect(resp.oclcs.count).to eq(4)
+      expect(resp.items.count).to eq(1)
+    end
+  end
+
 
 end
 

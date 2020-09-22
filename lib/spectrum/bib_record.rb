@@ -16,7 +16,7 @@ module Spectrum
       'MX' => false,
     )
 
-    def self.fetch(id:, url:, rsolr_client_factory: lambda{|url| RSolr.connect(url: url)}, escaped_id: Rsolr.solr_escape(id))
+    def self.fetch(id:, url:, rsolr_client_factory: lambda{|url| RSolr.connect(url: url)}, escaped_id: RSolr.solr_escape(id))
       client = rsolr_client_factory.call(url)
       BibRecord.new(client.get('select', params: { q: "id:#{escaped_id}"}))
     end

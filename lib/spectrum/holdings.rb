@@ -6,8 +6,8 @@ module Spectrum
             request:, 
             client: Spectrum::Utility::AlmaClient.new, 
             bib_record: BibRecord.fetch(id: request.id, url: source.url),
-            alma_holding_factory: lambda {|holding, items, preExpanded| Spectrum::AlmaHolding.new(holding: holding, items: items, preExpanded: preExpanded)},
-            hathi_fetcher: Spectrum::Utility::HathiClient.new,
+            alma_holding_factory: lambda {|holding, items, preExpanded, bib_record| Spectrum::AlmaHolding.new(holding: holding, items: items, preExpanded: preExpanded, bib: bib_record)},
+            hathi_client: Spectrum::Utility::HathiClient.new,
             hathi_holding_factory: lambda {|holding, preExpanded| Spectrum::HathiHolding.new(holding: holding, preExpanded: preExpanded)}
         )
       @bib_record = bib_record
@@ -44,7 +44,7 @@ module Spectrum
 
     private
     def alma_holdings
-      @full_alma_holdings.map{|h| @alma_holding_factory.call(h.holding, h.items, preExpanded) }
+      @full_alma_holdings.map{|h| @alma_holding_factory.call(h.holding, h.items, preExpanded, @bib_record) }
     end
     def hathi_holdings
       if hathi_holding_count == 1
@@ -54,10 +54,10 @@ module Spectrum
       end
     end
     def get_hathi_holdings_response
-      @hathi_fetcher.get(@bib_record.oclc) 
+      @hathi_client.get(@bib_record.oclc) 
     end
     def hathi_holding_count
-      @hathi_holdings_response["items"].empty? ? 0 : 1
+      @hathi_holdings_response.empty? ? 0 : 1
     end
     def alma_holding_count
       @full_alma_holdings.count
@@ -70,7 +70,7 @@ module Spectrum
 
     def alma_holdings_ids
       response = @client.get("/bibs/#{@mms_id}/holdings")
-      if response.code == 200 && response.parsed_response["total_record_count"] > 0
+      if response.code == 200 && response.parsed_response["total_record_count"].to_i > 0
         response.parsed_response["holding"].map{|h| h["holding_id"]}
       else
         []
