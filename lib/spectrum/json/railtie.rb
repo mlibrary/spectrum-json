@@ -8,8 +8,17 @@ module Spectrum
     class Railtie < Rails::Railtie
       initializer 'spectrum-json.initialize' do
         Spectrum::Json.configure(Rails.root, Rails.configuration.relative_url_root)
-        Spectrum::Policy::GetThis.load_config(File.join(Rails.root, 'config', 'get_this.yml'))
-        config_data = YAML.load_file(File.join(Rails.root, 'config', 'aleph.yml'))
+
+        if File.exist?(get_this_file = File.join(Rails.root, 'config', 'get_this.yml'))
+          Spectrum::Policy::GetThis.load_config(get_this_file)
+        end
+
+        config_data = if File.exist?(aleph_config_file = File.join(Rails.root, 'config', 'aleph.yml'))
+          YAML.load_file(aleph_config_file)
+        else
+          {}
+        end
+
         Spectrum::Request::PlaceHold.configure do |config|
           config.lib = config_data['bib_library']
           config.adm = config_data['adm_library']
@@ -20,9 +29,13 @@ module Spectrum
           config.adms = [config_data['adm_library']]
         end
 
-        Spectrum::FloorLocation.configure(File.join(Rails.root, 'config', 'floor_locations.json'))
+        if File.exist?(floor_locations = File.join(Rails.root, 'config', 'floor_locations.json'))
+          Spectrum::FloorLocation.configure(floor_locations)
+        end
 
-        Spectrum::Response::Specialists.configure(File.join(Rails.root, 'config', 'specialists.yml'))
+        if File.exist?(specialists_file = File.join(Rails.root, 'config', 'specialists.yml'))
+          Spectrum::Response::Specialists.configure(specialists_file)
+        end
       end
 
       rake_tasks do
