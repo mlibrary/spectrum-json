@@ -135,9 +135,9 @@ module Spectrum
           @fields  = Spectrum::Config::FieldList.new(YAML.load(ERB.new(File.read(@fields_file)).result), self)
         end
 
-        if File.exist?(@focus_file)
+        if @sources && !(focus_files_list = Dir.glob(@focus_files)).empty?
           @foci    = Spectrum::Config::FocusList.new(
-            Dir.glob(@focus_files).map { |file| YAML.load(ERB.new(File.read(file)).result) },
+            focus_files_list.map { |file| YAML.load(ERB.new(File.read(file)).result) },
             self
           )
         end
@@ -166,7 +166,7 @@ module Spectrum
       end
 
       def routes(app)
-        foci.routes(app)
+        foci.routes(app) if foci.respond_to?(:routes)
 
         app.match 'profile',
           to: 'json#profile',
