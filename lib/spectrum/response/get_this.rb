@@ -5,9 +5,20 @@ require 'aleph'
 module Spectrum
   module Response
     class GetThis
-      def initialize(source, request)
+      def initialize(source:, request:, 
+                     get_this_policy_factory: lambda {|patron, bib_record, holdings_record| GetThisPolicy.new(patron, bib_record, holdings_record)}, aleph_borrower: Aleph::Borrower.new, 
+                     bib_record: Spectrum::BibRecord.fetch(id: request.id, url: source.url),
+                     holding_picker: lambda{|request, source| Spectrum::Holding.for(request: request, source: source)}
+                    )
         @source = source
         @request = request
+
+        @get_this_policy_factory = get_this_policy_factory
+        @holding_picker = holding_picker
+
+        @aleph_borrower = aleph_borrower
+        @bib_record = bib_record
+
         @data = fetch_get_this
       end
 
@@ -33,7 +44,7 @@ module Spectrum
         return {} unless @source.holdings
         return needs_authentication unless @request.logged_in?
         begin
-          patron = Aleph::Borrower.new.tap { |patron| patron.bor_info(@request.username) }
+          patron = @aleph_borrower.tap { |patron| patron.bor_info(@request.username) }
         rescue Aleph::Error
           return patron_not_found
         end
@@ -41,94 +52,10 @@ module Spectrum
 
         {
           status: 'Success',
-          options: Spectrum::Policy::GetThis.new(patron, fetch_bib_record, fetch_holdings_record).resolve
+          options: @get_this_policy_factory.call(patron, @bib_record, @holding_picker.call(@request, @source)).resolve
         }
       end
 
-      def fetch_holdings_record
-        return Spectrum::AvailableOnlineHolding.new(@request.id) if @request.barcode == 'available-online'
-        uri = URI(@source.holdings + @request.id)
-        Spectrum::Holding.new(JSON.parse(Net::HTTP.get(uri)), @request.id, @request.barcode)
-      end
-
-      def fetch_bib_record
-        client = @source.driver.constantize.connect(url: @source.url)
-        Spectrum::BibRecord.new(client.get('select', params: { q: "id:#{RSolr.solr_escape(@request.id)}" }))
-      end
-
-      def process_response(response)
-        data = []
-        response.each do |item|
-          next unless item['item_info']
-          item['item_info'].each do |info|
-            data << process_item_info(item, info)
-          end
-        end
-        data
-      end
-
-      def process_item_info(item, info)
-        if info['barcode']
-          process_mirlyn_item_info(item, info)
-        else
-          process_hathitrust_item_info(item, info)
-        end
-      end
-
-      def get_type(info)
-        if info['can_request']
-          'circulating'
-        elsif info['can_reserve']
-          'special'
-        elsif info['can_book']
-          'media'
-        else
-          'other'
-        end
-      end
-
-      def get_url(info)
-        record = @request.id
-        if info['can_request']
-          query = { barcode: info['barcode'], getthis: 'Get this' }.to_query
-          "https://mirlyn.lib.umich.edu/Record/#{record}/Hold?#{query}"
-        elsif info['can_reserve']
-          query = { barcode: info['barcode'] }.to_query
-          url = "https://mirlyn.lib.umich.edu/Record/#{record}/Request?#{query}"
-        elsif info['can_book']
-          query = { full_item_key: info['full_item_key'] }.to_query
-          url = "https://mirlyn.lib.umich.edu/Record/#{record}/Booking?#{query}"
-        end
-      end
-
-      def process_mirlyn_item_info(item, info)
-        {
-          type: get_type(info),
-          url: get_url(info),
-          barcode: info['barcode'],
-          location: info['location'],
-          callnumber: info['callnumber'],
-          status: info['status'],
-          enum: [info['enum_a'], info['enum_b'], info['enum_c']].compact,
-          chron: [info['chron_i'], info['chron_j']].compact,
-          info_link: item['info_link'],
-          description: info['description'],
-          summary_holdings: item['summary_holdings']
-        }
-      end
-
-      def process_hathitrust_item_info(item, info)
-        {
-          type: 'hathitrust',
-          id: info['id'],
-          handle_url: "http://hdl.handle.net/2027/#{info['id']}?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth",
-          source: info['source'],
-          rights: info['rights'],
-          status: info['status'],
-          description: info['description'],
-          summary_holdings: item['summary_holdings']
-        }
-      end
     end
   end
 end

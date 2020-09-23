@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'marc'
+require 'rsolr'
 
 module Spectrum
   class BibRecord
@@ -15,6 +16,10 @@ module Spectrum
       'MX' => false,
     )
 
+    def self.fetch(id:, url:, rsolr_client_factory: lambda{|url| RSolr.connect(url: url)}, escaped_id: RSolr.solr_escape(id))
+      client = rsolr_client_factory.call(url)
+      BibRecord.new(client.get('select', params: { q: "id:#{escaped_id}"}))
+    end
     def initialize(solr_response)
       @data = extract_data(solr_response)
       @fullrecord = MARC::XMLReader.new(StringIO.new(@data['fullrecord'])).first
