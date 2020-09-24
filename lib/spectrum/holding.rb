@@ -205,7 +205,7 @@ module Spectrum
     end
 
     def not_pickup?
-      !(shapiro_pickup? || aael_pickup? || music_pickup?)
+      !(shapiro_pickup? || aael_pickup? || music_pickup? || shapiro_and_aael_pickup?)
     end
 
     def not_flint_and_etas?
