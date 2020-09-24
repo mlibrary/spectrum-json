@@ -13,6 +13,15 @@ module Spectrum
       'FINE',
       'AAEL',
       'MUSIC',
+      'OFFS',
+      'ELLS',
+      'STATE',
+    ]
+
+    SHAPIRO_AND_AAEL_PICKUP = [
+      'OFFS',
+      'ELLS',
+      'STATE',
     ]
 
     SHAPIRO_PICKUP = [
@@ -135,6 +144,10 @@ module Spectrum
       SHAPIRO_PICKUP.include?(@holding['sub_library'])
     end
 
+    def shapiro_and_aael_pickup?
+      SHAPIRO_AND_AAEL_PICKUP.include?(@holding['sub_library'])
+    end
+
     def aael_pickup?
       AAEL_PICKUP.include?(@holding['sub_library'])
     end
@@ -208,7 +221,9 @@ module Spectrum
     end
 
     def etas?
-      @etas_ids['mdp.' + barcode]
+      # We decided on bib-level etas decisions, but if that changes.
+      # @etas_ids['mdp.' + barcode]
+      !@etas_ids.empty?
     end
 
     private
