@@ -13,9 +13,6 @@ module Spectrum
       'FINE',
       'AAEL',
       'MUSIC',
-      'OFFS',
-      'ELLS',
-      'STATE',
     ]
 
     SHAPIRO_AND_AAEL_PICKUP = [
