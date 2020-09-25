@@ -84,7 +84,7 @@ module Spectrum
         end
         expanded = @bib_record.physical_only? && data.length == 1
         data.each do |item|
-          item['preExpanded'] = expanded
+          item[:preExpanded] = expanded
         end
       end
 
