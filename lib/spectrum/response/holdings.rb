@@ -110,23 +110,6 @@ module Spectrum
 
       def get_action(item, info)
         return Spectrum::Holding::Action.new(@request.id, @request.focus, @bib_record, item, info).finalize
-        if info['can_request']
-          {
-            text: 'Get this',
-            to: {
-              barcode: info['barcode'],
-              action: 'get-this',
-              record: @request.id,
-              datastore: @request.focus,
-            }
-          }
-        elsif info['can_reserve']
-          {text: 'Request this', href: get_url(item, info)}
-        elsif info['can_book']
-          {text: 'Book this', href: get_url(item, info)}
-        else
-          {text: 'N/A'}
-        end
       end
 
       def get_type(info)

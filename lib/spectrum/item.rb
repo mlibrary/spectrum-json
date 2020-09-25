@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spectrum
-  class Holding
+  class Item
 
     REOPENED = [
       'HATCH',
@@ -52,7 +52,7 @@ module Spectrum
       return  Spectrum::AvailableOnlineHolding.new(request.id) if request.barcode == 'available-online'
       url = source.holdings + request.id
       response = HTTParty.get(url)
-      Spectrum::Holding.new(response.parsed_response, request.id, request.barcode)
+      Spectrum::Item.new(response.parsed_response, request.id, request.barcode)
     end
 
     def id
