@@ -15,6 +15,12 @@ module Spectrum
       'MUSIC',
     ]
 
+    SHAPIRO_AND_AAEL_PICKUP = [
+      'OFFS',
+      'ELLS',
+      'STATE',
+    ]
+
     SHAPIRO_PICKUP = [
       'HATCH',
       'SHAP',
@@ -40,6 +46,13 @@ module Spectrum
       @record  = record
       @barcode = barcode
       @etas_ids = extract_etas_ids(@item)
+    end
+
+    def self.for(request:, source:)
+      return  Spectrum::AvailableOnlineHolding.new(request.id) if request.barcode == 'available-online'
+      url = source.holdings + request.id
+      response = HTTParty.get(url)
+      Spectrum::Holding.new(response.parsed_response, request.id, request.barcode)
     end
 
     def id
@@ -135,6 +148,10 @@ module Spectrum
       SHAPIRO_PICKUP.include?(@holding['sub_library'])
     end
 
+    def shapiro_and_aael_pickup?
+      SHAPIRO_AND_AAEL_PICKUP.include?(@holding['sub_library'])
+    end
+
     def aael_pickup?
       AAEL_PICKUP.include?(@holding['sub_library'])
     end
@@ -192,7 +209,7 @@ module Spectrum
     end
 
     def not_pickup?
-      !(shapiro_pickup? || aael_pickup? || music_pickup?)
+      !(shapiro_pickup? || aael_pickup? || music_pickup? || shapiro_and_aael_pickup?)
     end
 
     def not_flint_and_etas?
@@ -208,7 +225,9 @@ module Spectrum
     end
 
     def etas?
-      @etas_ids['mdp.' + barcode]
+      # We decided on bib-level etas decisions, but if that changes.
+      # @etas_ids['mdp.' + barcode]
+      !@etas_ids.empty?
     end
 
     private

@@ -117,7 +117,7 @@ class JsonController < ApplicationController
 
   def get_this
     @request = Spectrum::Request::GetThis.new(request)
-    @response = Spectrum::Response::GetThis.new(@source, @request)
+    @response = Spectrum::Response::GetThis.new(source: @source, request: @request)
     render(json: @response.renderable)
   end
 

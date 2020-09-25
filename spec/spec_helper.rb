@@ -23,7 +23,6 @@ require 'pry-byebug'
 
 require 'coveralls'
 require 'simplecov'
-require 'dotenv/load'
 require 'webmock/rspec'
 SimpleCov.start
 
