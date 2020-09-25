@@ -3,8 +3,7 @@ FROM ruby:2.6.6
 LABEL maintainer="mrio@umich.edu"
 
 RUN apt-get update -yqq && apt-get install -yqq --no-install-recommends \
-  apt-transport-https\
-  nodejs
+  apt-transport-https
 
 WORKDIR /usr/src/app
 
