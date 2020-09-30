@@ -1,16 +1,6 @@
 require_relative '../../spec_helper'
-
-require 'aleph'
-require 'rsolr'
 require 'rails'
-
-require 'spectrum/response/holdings'
-require 'spectrum/floor_location'
-require 'spectrum/request/holdings'
-require 'spectrum/bib_record'
-require 'spectrum/holding/action'
-require 'spectrum/holding/get_this_action'
-require 'spectrum/holding/holding'
+require 'spectrum/json'
 
 describe Spectrum::Response::Holdings, "integrations" do
   def stub_http(id:,getHoldings:,solr:)

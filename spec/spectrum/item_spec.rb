@@ -8,7 +8,7 @@ require 'spectrum/available_online_holding'
 
 describe Spectrum::Item do
   subject do
-    described_class.new(*YAML.load_file(File.expand_path('../holding.yml', __FILE__)))
+    described_class.for_barcode(*YAML.load_file(File.expand_path('../holding.yml', __FILE__)))
   end
 
   context '#id' do
@@ -22,6 +22,23 @@ describe Spectrum::Item do
       expect(subject.callnumber).to eq('')
     end
   end
+  context '#description' do
+    it 'returns a string' do
+      expect(subject.description).to eq('')
+    end
+  end
+  context '#temp_location?' do
+    it 'returns a boolean' do
+      expect(subject.temp_location?).to eq(false)
+    end
+  end
+
+  context '#temp_location' do
+    it 'returns a string' do
+      expect(subject.temp_location).to eq('')
+    end
+  end
+
 
   context '#status' do
     it 'returns a string' do
@@ -89,7 +106,7 @@ describe Spectrum::Item do
     end
   end
 end
-describe Spectrum::Item, 'self.for' do
+describe Spectrum::Item, 'self.for_get_this' do
   before(:each) do
     @data, @record, @barcode = YAML.load_file(File.expand_path('../holding.yml', __FILE__))
     @request_dbl = instance_double(Spectrum::Request::GetThis, id: @record, username: nil, barcode: @barcode)
@@ -97,7 +114,7 @@ describe Spectrum::Item, 'self.for' do
     
   end
   subject do
-    described_class.for(request: @request_dbl, source: @source_dbl)
+    described_class.for_get_this(request: @request_dbl, source: @source_dbl)
   end
 
   it "returns loaded item for valid barcode" do

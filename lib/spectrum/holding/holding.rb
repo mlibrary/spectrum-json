@@ -1,6 +1,7 @@
 module Spectrum
   class Holding
     def initialize(input)
+      @input = input
       @holding = input.holding #holding element from getHoldings.pl
       @id = input.id
       @bib_record = input.bib_record
@@ -53,49 +54,42 @@ module Spectrum
       ['Action', 'Description', 'Status', 'Call Number']
     end
     def rows
-      @holding['item_info'].map { |info| process_item_info(info) }
+      @holding['item_info'].map { |item_info| Holding::MirlynItem.new(holding_input: @input, item_info: item_info).to_a }
     end
     def type
       'physical'
     end
 
-
-
-    def process_item_info(info)
+  end
+  class Holding::MirlynItem
+    def initialize(holding_input:,item_info:)
+      @holding = holding_input.holding
+      @raw = holding_input.raw
+      @id = holding_input.id
+      @bib_record = holding_input.bib_record
+      @item = Spectrum::Item.new(id: @id, holdings: @raw, item: item_info)
+      @item_info = item_info
+    end
+    def to_a(action: Spectrum::Holding::Action.new(@id, @id, @bib_record, @holding, @item_info),
+             description: Spectrum::Holding::MirlynItemDescription.new(item: @item),
+             intent: Aleph.intent(@item.status), icon: Aleph.icon(@item.status))
       [
-        get_action(info),
-        get_description(info),
+        action.finalize,
+        description.to_h,
         {
-          text: info['status'] || 'N/A',
-          intent: Aleph.intent(info['status']) || '',
-          icon: Aleph.icon(info['status'] || '')
+          text: @item.status || 'N/A',
+          intent: intent || 'N/A',
+          icon: icon || 'N/A'
         },
-        {text: get_callnumber(info)  || 'N/A' }
+        { text: call_number || 'N/A' }
       ]
     end
-    def get_action(info)
-      return Spectrum::Holding::Action.new(@id, @id, @bib_record, @holding, info).finalize
-    end
-    def get_callnumber(info)
-      return nil unless (callnumber = info['callnumber'])
-      return callnumber unless (inventory_number = info['inventory_number'])
+    private 
+    def call_number
+      return nil unless (callnumber = @item.callnumber)
+      return callnumber unless (inventory_number = @item_info['inventory_number'])
       return callnumber unless callnumber.start_with?('VIDEO')
       [callnumber, inventory_number].join(' - ')
-    end
-    def get_description(info)
-      if info['description'].nil? || info['description'].empty?
-        if @holding['temp_loc'].nil? || @holding['temp_loc'].empty?
-          {text: 'N/A'}
-        else
-          {text: "Temporary location: Shelved at #{@holding['temp_loc']}"}
-        end
-      else
-        if @holding['temp_loc'].nil? || @holding['temp_loc'].empty?
-          {text: info['description']}
-        else
-          {html: "<div>#{info['description']}</div><div>Temporary location: Shelved at #{@holding['temp_loc']}</div>"}
-        end
-      end
     end
   end
   class Holding::HathiTrustHolding < Holding
@@ -111,6 +105,9 @@ module Spectrum
     end
     def notes
       nil
+    end
+    def rows
+      @holding['item_info'].map { |info| process_item_info(info) }
     end
     def process_item_info(info)
       status = info['status']

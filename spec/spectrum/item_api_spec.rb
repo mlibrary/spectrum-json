@@ -5,7 +5,7 @@ require 'spectrum/item'
 require 'spectrum/available_online_holding'
 
 {
-  Spectrum::Item => [Hash.new([]), nil, nil],
+  Spectrum::Item => [holdings: Hash.new([]), id: nil, item: Hash.new],
   Spectrum::AvailableOnlineHolding => [nil],
 }.each_pair do |klass, args|
   describe klass do

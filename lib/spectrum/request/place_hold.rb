@@ -93,7 +93,7 @@ module Spectrum
         uri = URI(@source.holdings + @record_id)
         holdings_data = JSON.parse(Net::HTTP.get(uri))
         barcode = get_barcode_from_holdings_data_with_key(holdings_data, @item_key)
-        Spectrum::Item.new(JSON.parse(Net::HTTP.get(uri)), @record_id, barcode)
+        Spectrum::Item.for_barcode(holdings_data, @record_id, barcode)
       end
 
       def logged_in?

@@ -6,7 +6,7 @@ require 'lru_redux'
 require 'active_support'
 require 'active_support/concern'
 
-require 'spectrum/holding'
+require 'spectrum/item'
 require 'spectrum/available_online_holding'
 require 'spectrum/floor_location'
 require 'spectrum/bib_record'
@@ -83,6 +83,8 @@ require 'spectrum/request/debug'
 
 require 'spectrum/policy/get_this'
 
+require 'spectrum/holding/holding'
+require 'spectrum/holding/mirlyn_item_description'
 require 'spectrum/holding/action'
 require 'spectrum/holding/get_this_action'
 require 'spectrum/holding/request_this_action'
