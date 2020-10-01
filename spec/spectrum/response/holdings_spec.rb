@@ -51,3 +51,13 @@ describe Spectrum::Response::Holdings, "integrations" do
     expect(subject.renderable).to eq(output)
   end
 end
+describe Spectrum::Response::Holdings, "process_response" do
+  it "returns empty Array if getHoldingsResponse code is not 200" do
+    source = double('Source', holdings: nil)
+    request = Spectrum::Request::Holdings.new({id: '004759908'}) 
+    bib_record = instance_double(Spectrum::BibRecord, physical_only?: true)
+    getHoldingsResponse = double('HTTParty::Response', code: 400)
+
+    expect(described_class.new(source, request, bib_record, getHoldingsResponse).renderable).to eq([])
+  end
+end

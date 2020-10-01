@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'rails' #so `bundle console` works
 require 'json-schema'
 require 'lru_redux'
 
@@ -84,6 +84,7 @@ require 'spectrum/request/debug'
 require 'spectrum/policy/get_this'
 
 require 'spectrum/holding/holding'
+require 'spectrum/holding/mirlyn_item'
 require 'spectrum/holding/mirlyn_item_description'
 require 'spectrum/holding/action'
 require 'spectrum/holding/get_this_action'

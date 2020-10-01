@@ -11,7 +11,7 @@ module Spectrum
       if input.holding['up_links'] || input.holding['down_links']
         LinkedHolding.for(input)
       elsif input.holding['location'] == 'HathiTrust Digital Library'
-        HathiTrustHolding.new(input)
+        HathiHolding.new(input)
       else
         Holding.new(input)
       end
@@ -61,38 +61,7 @@ module Spectrum
     end
 
   end
-  class Holding::MirlynItem
-    def initialize(holding_input:,item_info:)
-      @holding = holding_input.holding
-      @raw = holding_input.raw
-      @id = holding_input.id
-      @bib_record = holding_input.bib_record
-      @item = Spectrum::Item.new(id: @id, holdings: @raw, item: item_info)
-      @item_info = item_info
-    end
-    def to_a(action: Spectrum::Holding::Action.new(@id, @id, @bib_record, @holding, @item_info),
-             description: Spectrum::Holding::MirlynItemDescription.new(item: @item),
-             intent: Aleph.intent(@item.status), icon: Aleph.icon(@item.status))
-      [
-        action.finalize,
-        description.to_h,
-        {
-          text: @item.status || 'N/A',
-          intent: intent || 'N/A',
-          icon: icon || 'N/A'
-        },
-        { text: call_number || 'N/A' }
-      ]
-    end
-    private 
-    def call_number
-      return nil unless (callnumber = @item.callnumber)
-      return callnumber unless (inventory_number = @item_info['inventory_number'])
-      return callnumber unless callnumber.start_with?('VIDEO')
-      [callnumber, inventory_number].join(' - ')
-    end
-  end
-  class Holding::HathiTrustHolding < Holding
+  class Holding::HathiHolding < Holding
     private
     def headings
       ['Link', 'Description', 'Source']
