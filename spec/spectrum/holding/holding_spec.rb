@@ -1,7 +1,7 @@
 require_relative '../../spec_helper'
 require 'spectrum/holding/holding'
 
-describe Spectrum::Holding::HathiHolding, "to_h" do
+describe Spectrum::Holding::HathiTrustHolding, "to_h" do
   before(:each) do
     @id = "000311635"
     @raw = JSON.parse(File.read('spec/fixtures/hurdy_gurdy_getHoldings.json'))

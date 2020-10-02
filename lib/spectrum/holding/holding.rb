@@ -11,7 +11,7 @@ module Spectrum
       if input.holding['up_links'] || input.holding['down_links']
         LinkedHolding.for(input)
       elsif input.holding['location'] == 'HathiTrust Digital Library'
-        HathiHolding.new(input)
+        HathiTrustHolding.new(input)
       else
         Holding.new(input)
       end
@@ -61,7 +61,7 @@ module Spectrum
     end
 
   end
-  class Holding::HathiHolding < Holding
+  class Holding::HathiTrustHolding < Holding
     private
     def headings
       ['Link', 'Description', 'Source']
