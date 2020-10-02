@@ -7,8 +7,9 @@ describe Spectrum::Holding::MirlynItemDescription do
     before(:each) do
       @item_dbl = instance_double(Spectrum::Item, description: nil, temp_location?: false, temp_location: '')
     end
-    subject do
-      described_class.new(item: @item_dbl).to_h
+    subject do 
+      #only called with self.for
+      described_class.for(item: @item_dbl).to_h
     end
     it "returns default of 'N/A'" do
       expect(subject).to eq({text: 'N/A'})

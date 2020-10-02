@@ -12,7 +12,7 @@ module Spectrum
         @item_info = item_info
       end
       def to_a(action: Spectrum::Holding::Action.new(@id, @id, @bib_record, @holding, @item_info),
-               description: Spectrum::Holding::MirlynItemDescription.new(item: @item),
+               description: Spectrum::Holding::MirlynItemDescription.for(item: @item),
                intent: Aleph.intent(@item.status), icon: Aleph.icon(@item.status))
         [
           action.finalize,
