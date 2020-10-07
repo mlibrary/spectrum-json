@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'mlibrary_search_parser'
 
 module Spectrum
   module Request
@@ -35,7 +36,8 @@ module Spectrum
             @start      = @data['start'].to_i
             @count      = @data['count'].to_i
             @page       = @data['page']
-            @tree       = Spectrum::FieldTree.new(@data['field_tree'])
+            search_handler = MLibrarySearchParser::SearchHandler.new('../../mlibrary_search_parser/spec/data/fields_file.json')
+            @tree = MLibrarySearchParser::Search.new(@data['field_tree']['query'], search_handler)
             @facets     = Spectrum::FacetList.new(@focus.default_facets.merge(@focus.filter_facets(@data['facets'] || {})))
             @sort       = @data['sort']
             @settings   = @data['settings']
@@ -154,7 +156,7 @@ module Spectrum
 
       def query(query_map = {}, filter_map = {})
         {
-          q: @tree.query(query_map),
+          'json.query': @tree.search_tree.solr_json_edismax,
           page: @page,
           start: @start,
           rows: @page_size,
@@ -198,7 +200,7 @@ module Spectrum
         bad_request 'uid is required' if @uid.nil?
         bad_request 'start must be >= 0' if @start < 0
         bad_request 'count must be >= 0' if @count < 0
-        bad_request @tree.error unless @tree.valid?
+        bad_request @tree.errors unless @tree.valid?
         # TODO:
         # raise ActionController::BadRequest.new("input", @facets) unless @facets.valid?
         # bad_request "No sort specified" if @sort.nil?
