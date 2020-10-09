@@ -27,6 +27,7 @@ module Spectrum
       def initialize(request = nil, focus = nil)
         @request = request
         @focus   = focus
+        search_handler = MLibrarySearchParser::SearchHandler.new('../../mlibrary_search_parser/spec/data/fields_file.json')
         if (@data = get_data(@request))
 
           bad_request 'Request json did not validate' unless Spectrum::Json::Schema.validate(:request, @data)
@@ -36,7 +37,6 @@ module Spectrum
             @start      = @data['start'].to_i
             @count      = @data['count'].to_i
             @page       = @data['page']
-            search_handler = MLibrarySearchParser::SearchHandler.new('../../mlibrary_search_parser/spec/data/fields_file.json')
             @tree = MLibrarySearchParser::Search.new(@data['field_tree']['query'], search_handler)
             @facets     = Spectrum::FacetList.new(@focus.default_facets.merge(@focus.filter_facets(@data['facets'] || {})))
             @sort       = @data['sort']
@@ -74,7 +74,7 @@ module Spectrum
         @start     ||= 0
         @count     ||= 0
         @slice     ||= [0, @count]
-        @tree      ||= Spectrum::FieldTree::Empty.new
+        @tree      ||= MLibrarySearchParser::Search.new('', search_handler)
         @facets    ||= Spectrum::FacetList.new(nil)
         @page_size ||= 0
       end
@@ -162,11 +162,14 @@ module Spectrum
           rows: @page_size,
           fq: @facets.query(filter_map, (@focus&.value_map) || {}),
           per_page: @page_size
-        }.merge(@tree.params(query_map)).tap do |ret|
-          if ret[:q].match(/ (AND|OR|NOT) /)
-            ret[:q] = '+(' + ret[:q] + ')'
-          end
-        end
+        } # I *think* we don't need any of the below with the new query parser?
+        # In particular, params seems to be always-empty, if I follow the rabbit hole all the way
+        # And we are using json.query instead of q
+        # }.merge(@tree.params(query_map)).tap do |ret|
+        #   if ret[:q].match(/ (AND|OR|NOT) /)
+        #     ret[:q] = '+(' + ret[:q] + ')'
+        #   end
+        # end
       end
 
       def facets
@@ -178,7 +181,7 @@ module Spectrum
           uid: @uid,
           start: @start,
           count: @count,
-          field_tree: @tree.spectrum,
+          field_tree: @tree.search_tree.to_clean_string,
           facets: @facets.spectrum,
           sort: @sort,
           settings: @settings
