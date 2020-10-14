@@ -8,7 +8,7 @@ module Spectrum
       def initialize(source:, request:, 
                      get_this_policy_factory: lambda {|patron, bib_record, holdings_record| GetThisPolicy.new(patron, bib_record, holdings_record)}, aleph_borrower: Aleph::Borrower.new, 
                      bib_record: Spectrum::BibRecord.fetch(id: request.id, url: source.url),
-                     holding_picker: lambda{|request, source| Spectrum::Holding.for(request: request, source: source)}
+                     holding_picker: lambda{|request, source| Spectrum::Item.for_get_this(request: request, source: source)}
                     )
         @source = source
         @request = request
