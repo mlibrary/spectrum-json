@@ -157,6 +157,7 @@ module Spectrum
       def query(query_map = {}, filter_map = {})
         {
           'json.query': @tree.search_tree.solr_json_edismax,
+          q: @tree.search_tree.to_clean_string,
           page: @page,
           start: @start,
           rows: @page_size,
