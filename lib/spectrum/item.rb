@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spectrum
-  class Holding
+  class Item
 
     REOPENED = [
       'HATCH',
@@ -38,53 +38,76 @@ module Spectrum
 
     ETAS_START = 'Full text available,'
 
-    attr_reader :holding, :record, :barcode
+    attr_reader :holding, :id 
 
-    def initialize(data, record, barcode)
-      @holding = extract_holding(data, record, barcode) || barcode_not_found
-      @item    = data[record]
-      @record  = record
-      @barcode = barcode
-      @etas_ids = extract_etas_ids(@item)
+    def initialize(id:, holdings:, item:)
+      @item = item || barcode_not_found # single item from getHoldings.pl element
+      @holdings  = holdings  #single element from getHoldings.pl
+      @id = id #doc_id
+      @etas_ids = extract_etas_ids(@holdings)
     end
 
-    def self.for(request:, source:)
+    def self.for_get_this(request:, source:)
       return  Spectrum::AvailableOnlineHolding.new(request.id) if request.barcode == 'available-online'
       url = source.holdings + request.id
       response = HTTParty.get(url)
-      Spectrum::Holding.new(response.parsed_response, request.id, request.barcode)
+      Spectrum::Item.for_barcode(response.parsed_response, request.id, request.barcode)
     end
 
-    def id
-      record
+    def self.for_barcode(data, record, barcode)
+      holdings    = data[record]  #single element from getHoldings.pl
+      item = holdings.map do |holding|
+        next unless holding['item_info']
+        holding['item_info'].find do |item|
+          item['barcode'] == barcode
+        end
+      end.compact.first
+      Spectrum::Item.new(id: record, holdings: holdings, item: item)
+    end
+
+    def record
+      @id
+    end
+
+    def barcode
+      @item['barcode']
     end
 
     def callnumber
-      @holding['callnumber'] || ''
+      @item['callnumber'] || ''
     end
 
+    def description
+      @item['description'] || ''
+    end
+    def temp_location?
+      @item['temp_location'] 
+    end
+    def temp_location
+      @item['temp_loc'] || ''
+    end
     def notes
-      @holding['description'] || ''
+      @item['description'] || ''
     end
 
     def issue
-      @holding['description'] || ''
+      @item['description'] || ''
     end
 
     def full_item_key
-      @holding['full_item_key'] || ''
+      @item['full_item_key'] || ''
     end
 
     def can_book?
-      @holding['can_book']
+      @item['can_book']
     end
 
     def can_reserve?
-      @holding['can_reserve']
+      @item['can_reserve']
     end
 
     def can_request?
-      @holding['can_request']
+      @item['can_request']
     end
 
     def circulating?
@@ -137,7 +160,7 @@ module Spectrum
     end
 
     def off_site?
-      @holding['location'].start_with?('Offsite', '- Offsite')
+      @item['location'].start_with?('Offsite', '- Offsite')
     end
 
     def contactless_pickup?
@@ -145,19 +168,19 @@ module Spectrum
     end
 
     def shapiro_pickup?
-      SHAPIRO_PICKUP.include?(@holding['sub_library'])
+      SHAPIRO_PICKUP.include?(@item['sub_library'])
     end
 
     def shapiro_and_aael_pickup?
-      SHAPIRO_AND_AAEL_PICKUP.include?(@holding['sub_library'])
+      SHAPIRO_AND_AAEL_PICKUP.include?(@item['sub_library'])
     end
 
     def aael_pickup?
-      AAEL_PICKUP.include?(@holding['sub_library'])
+      AAEL_PICKUP.include?(@item['sub_library'])
     end
 
     def music_pickup?
-      MUSIC_PICKUP.include?(@holding['sub_library'])
+      MUSIC_PICKUP.include?(@item['sub_library'])
     end
 
     def standard_pickup?
@@ -165,11 +188,11 @@ module Spectrum
     end
 
     def flint_pickup?
-      FLINT_PICKUP.include?(@holding['sub_library'])
+      FLINT_PICKUP.include?(@item['sub_library'])
     end
 
     def flint?
-      ['FLINT'].include?(@holding['sub_library'])
+      ['FLINT'].include?(@item['sub_library'])
     end
 
     def not_flint?
@@ -181,7 +204,7 @@ module Spectrum
     end
 
     def reopened?
-      REOPENED.include?(@holding['sub_library'])
+      REOPENED.include?(@item['sub_library'])
     end
 
     def available?
@@ -193,11 +216,11 @@ module Spectrum
     end
 
     def location
-      [@holding['sub_library'], @holding['collection']].compact.join(',')
+      [@item['sub_library'], @item['collection']].compact.join(',')
     end
 
     def status
-      @holding['status']
+      @item['status']
     end
 
     def not_pickup_or_checkout?
@@ -217,7 +240,7 @@ module Spectrum
     end
 
     def flint?
-      ['FLINT'].include?(@holding['sub_library'])
+      ['FLINT'].include?(@item['sub_library'])
     end
 
     def not_etas?
@@ -242,15 +265,6 @@ module Spectrum
       ht_item['item_info'].inject({}) do |acc, info|
         acc.tap do |acc|
           acc[info['id']] = info['status'].start_with?(ETAS_START)
-        end
-      end
-    end
-
-    def extract_holding(data, record, barcode)
-      data[record].each do |item|
-        next unless item['item_info']
-        item['item_info'].each do |holding|
-          return holding if holding['barcode'] == barcode
         end
       end
     end
