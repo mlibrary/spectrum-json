@@ -28,7 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'coveralls', '~> 0.8.21'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'quality', '~> 20.1.0'
-  spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'bigdecimal', '~> 1.3.4'
   spec.add_development_dependency 'rerun'
   spec.add_development_dependency 'rspec'
@@ -36,6 +35,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', '~> 0.16.1'
   spec.add_development_dependency 'pry-byebug'
 
+
+
+  spec.add_dependency "rake", ">= 12.3.3"
   spec.add_dependency 'rails', '~> 4.2.0'
   spec.add_dependency 'activesupport'
   spec.add_dependency 'exlibris-aleph'
