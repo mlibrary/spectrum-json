@@ -64,7 +64,7 @@ module Spectrum
     private
 
     def summon_escape(string)
-      string.gsub(/([\\,\{\}\(\)\[\]\&|!:])/, '\\\1')
+      string.gsub(/([\\,\{\}\(\)\[\]\&|!:])/, '\\\\\1')
     end
 
     def solr_escape(string)
