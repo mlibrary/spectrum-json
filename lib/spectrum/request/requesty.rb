@@ -27,7 +27,6 @@ module Spectrum
       def initialize(request = nil, focus = nil)
         @request = request
         @focus   = focus
-        search_handler = MLibrarySearchParser::SearchHandler.new('../../mlibrary_search_parser/spec/data/fields_file.json')
         if (@data = get_data(@request))
 
           bad_request 'Request json did not validate' unless Spectrum::Json::Schema.validate(:request, @data)
@@ -37,7 +36,9 @@ module Spectrum
             @start      = @data['start'].to_i
             @count      = @data['count'].to_i
             @page       = @data['page']
-            @tree = MLibrarySearchParser::Search.new(@data['field_tree']['query'], search_handler)
+            config_file = '/home/esty/github/mlibrary/mlibrary_search_parser/spec/data/00-catalog.yml'
+            config      = YAML.load(ERB.new(::File.read(config_file)).result)
+            @tree       = MLibrarySearchParser::Search.new(@data['field_tree']['query'], config)
             @facets     = Spectrum::FacetList.new(@focus.default_facets.merge(@focus.filter_facets(@data['facets'] || {})))
             @sort       = @data['sort']
             @settings   = @data['settings']
@@ -74,7 +75,9 @@ module Spectrum
         @start     ||= 0
         @count     ||= 0
         @slice     ||= [0, @count]
-        @tree      ||= MLibrarySearchParser::Search.new('', search_handler)
+        config_file = '/home/esty/github/mlibrary/mlibrary_search_parser/spec/data/00-catalog.yml'
+        config      = YAML.load(ERB.new(::File.read(config_file)).result)
+        @tree      ||= MLibrarySearchParser::Search.new('', config)
         @facets    ||= Spectrum::FacetList.new(nil)
         @page_size ||= 0
       end
@@ -155,15 +158,16 @@ module Spectrum
       end
 
       def query(query_map = {}, filter_map = {})
+        local_params = MLibrarySearchParser::Transformer::Solr::LocalParams.new(@tree)
         {
-          'json.query': @tree.search_tree.solr_json_edismax,
-          q: @tree.search_tree.to_clean_string,
           page: @page,
           start: @start,
           rows: @page_size,
           fq: @facets.query(filter_map, (@focus&.value_map) || {}),
           per_page: @page_size
-        } # I *think* we don't need any of the below with the new query parser?
+        }.merge(local_params.params)
+
+        # I *think* we don't need any of the below with the new query parser?
         # In particular, params seems to be always-empty, if I follow the rabbit hole all the way
         # And we are using json.query instead of q
         # }.merge(@tree.params(query_map)).tap do |ret|
@@ -182,7 +186,7 @@ module Spectrum
           uid: @uid,
           start: @start,
           count: @count,
-          field_tree: @tree.search_tree.to_clean_string,
+          field_tree: @tree.search_tree.clean_string,
           facets: @facets.spectrum,
           sort: @sort,
           settings: @settings
