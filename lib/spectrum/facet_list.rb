@@ -21,10 +21,10 @@ module Spectrum
       @data&.each_pair do |key, value|
         if value.is_a?(Array)
           value.each do |item|
-            ret << "#{filter_map[key] || key},#{item},false"
+            ret << "#{filter_map[key] || key},#{summon_escape(item)},false"
           end
         else
-          ret << "#{filter_map[key] || key},#{value},false"
+          ret << "#{filter_map[key] || key},#{summon_escape(value)},false"
         end
       end
       ret
@@ -62,6 +62,10 @@ module Spectrum
     end
 
     private
+
+    def summon_escape(string)
+      string.gsub(/([\\,\{\}\(\)\[\]\&|!:])/, '\\\\\1')
+    end
 
     def solr_escape(string)
       RSolr.solr_escape(string).gsub(/\s+/, '\\ ')
