@@ -36,9 +36,7 @@ module Spectrum
             @start      = @data['start'].to_i
             @count      = @data['count'].to_i
             @page       = @data['page']
-            config_file = '/home/esty/github/mlibrary/mlibrary_search_parser/spec/data/00-catalog.yml'
-            config      = YAML.load(ERB.new(::File.read(config_file)).result)
-            @tree       = MLibrarySearchParser::Search.new(@data['field_tree']['query'], config)
+            @tree       = MLibrarySearchParser::Search.new(@data['field_tree']['query'], @focus.raw_config)
             @facets     = Spectrum::FacetList.new(@focus.default_facets.merge(@focus.filter_facets(@data['facets'] || {})))
             @sort       = @data['sort']
             @settings   = @data['settings']
@@ -75,9 +73,7 @@ module Spectrum
         @start     ||= 0
         @count     ||= 0
         @slice     ||= [0, @count]
-        config_file = '/home/esty/github/mlibrary/mlibrary_search_parser/spec/data/00-catalog.yml'
-        config      = YAML.load(ERB.new(::File.read(config_file)).result)
-        @tree      ||= MLibrarySearchParser::Search.new('', config)
+        @tree      ||= MLibrarySearchParser::Search.new('', @focus.raw_config) if @focus
         @facets    ||= Spectrum::FacetList.new(nil)
         @page_size ||= 0
       end
@@ -158,7 +154,12 @@ module Spectrum
       end
 
       def query(query_map = {}, filter_map = {})
-        local_params = MLibrarySearchParser::Transformer::Solr::LocalParams.new(@tree)
+        if @focus
+          local_params = MLibrarySearchParser::Transformer::Solr::LocalParams.new(@tree)
+        else
+          local_params = Struct.new(:params).new
+          local_params.params = {}
+        end
         {
           page: @page,
           start: @start,
