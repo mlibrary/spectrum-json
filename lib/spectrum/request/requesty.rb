@@ -39,26 +39,12 @@ module Spectrum
         if (@data)
           bad_request 'Request json did not validate' unless Spectrum::Json::Schema.validate(:request, @data)
 
-          ############################
-          # Fake section
-          # #########################
-          @data['raw_query'] = "title:dune AND author:herbert"
-          @parserconfig      = {
-              'qt' => 'standard',
-              'search_field_default' => 'allfields',
-              'search_fields'        => {
-                  'title' => {
-                      'qf' => 'title_common_exact^1000 title_common^120 title_equiv^60 title_rest^30 series^10 series2^5',
-                      'pf' => 'serialTitle_common_exact^600 title_common_exact^500 title_l^150 title_common^100 title_a_exact^50 title_top^30 title_rest^20 series^3 series2^2'
-                  },
-                  'author' => {
-                      'qf' => 'author^10 author2^5 author_top^2 author_rest^1',
-                      'pf' => 'author^25000 author2^20000 author_top^5000 author_rest^1000'
-                  }
-              }
-          }
-          @builder           = MLibrarySearchParser::SearchBuilder.new(@parserconfig)
           @is_mirlyn         = is_mirlyn?(@focus, @data)
+          if @is_mirlyn
+            @builder = MLibrarySearchParser::SearchBuilder.new(@focus.raw_config)
+            @psearch = @builder.build(@data['raw_query'])
+          end
+
           ##############################
           ##############################
 
@@ -72,12 +58,6 @@ module Spectrum
           @sort       = @data['sort']
           @settings   = @data['settings']
           @request_id = @data['request_id']
-
-          @psearch = if @is_mirlyn
-                       @builder.build(@data['raw_query'])
-                     else
-                       nil
-                     end
 
 
           if @page || @count == 0
@@ -110,6 +90,7 @@ module Spectrum
         @start     ||= 0
         @count     ||= 0
         @slice     ||= [0, @count]
+
         @tree      ||= Spectrum::FieldTree::Empty.new
         @facets    ||= Spectrum::FacetList.new(nil)
         @page_size ||= 0
@@ -144,7 +125,6 @@ module Spectrum
       def is_open_access?
         pseudo_facet?('is_open_access')
       end
-
       def book_mark?
         @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
       rescue StandardError
@@ -192,10 +172,13 @@ module Spectrum
 
 
       def mirlyn_query
-        lp = MLibrarySearchParser::Transformer::Solr::LocalParams.new(@psearch)
-        b = base_query.merge(lp.params)
-        b[:qt] = 'standard'
-        b
+        lp       = MLibrarySearchParser::Transformer::Solr::LocalParams.new(@psearch)
+        defaults = if lp.config['search_atr_defaults']
+                     lp.config['search_atr_defaults']
+                   else
+                     {}
+                   end
+        base_query.merge(defaults).merge(lp.params)
       end
 
       def base_query(query_map = {}, filter_map = {})
@@ -210,8 +193,8 @@ module Spectrum
 
       def tree_query(query_map = {}, filter_map = {})
         base_query(query_map, filter_map).merge({
-                             q: @tree.query(query_map),
-                         }).merge(@tree.params(query_map)).tap do |ret|
+                                                    q: @tree.query(query_map),
+                                                }).merge(@tree.params(query_map)).tap do |ret|
           if ret[:q].match(/ (AND|OR|NOT) /)
             ret[:q] = '+(' + ret[:q] + ')'
           end
