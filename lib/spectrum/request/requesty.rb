@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
+require 'mlibrary_search_parser'
+
 module Spectrum
   module Request
     module Requesty
       extend ActiveSupport::Concern
 
-      FLINT = 'Flint'
-      FLINT_PROXY_PREFIX = 'http://libproxy.umflint.edu:2048/login?url='
+      FLINT                = 'Flint'
+      FLINT_PROXY_PREFIX   = 'http://libproxy.umflint.edu:2048/login?url='
       DEFAULT_PROXY_PREFIX = 'https://proxy.lib.umich.edu/login?url='
-      INSTITUTION_KEY = 'dlpsInstitutionId'
+      INSTITUTION_KEY      = 'dlpsInstitutionId'
 
       included do
         attr_accessor :request_id, :slice, :sort, :start
@@ -23,49 +25,85 @@ module Spectrum
         DEFAULT_PROXY_PREFIX
       end
 
+      def is_mirlyn?(focus, data)
+        focus and
+            data['uid'] == 'mirlyn' and
+            data.has_key?('raw_query') and
+            data['raw_query'].match(/\S/)
+      end
+
       def initialize(request = nil, focus = nil)
         @request = request
         @focus   = focus
-        if (@data = get_data(@request))
-
+        @data    = get_data(@request)
+        if (@data)
           bad_request 'Request json did not validate' unless Spectrum::Json::Schema.validate(:request, @data)
 
-          if @data
-            @uid        = @data['uid']
-            @start      = @data['start'].to_i
-            @count      = @data['count'].to_i
-            @page       = @data['page']
-            @tree       = Spectrum::FieldTree.new(@data['field_tree'])
-            @facets     = Spectrum::FacetList.new(@focus.default_facets.merge(@focus.filter_facets(@data['facets'] || {})))
-            @sort       = @data['sort']
-            @settings   = @data['settings']
-            @request_id = @data['request_id']
+          ############################
+          # Fake section
+          # #########################
+          @data['raw_query'] = "title:dune AND author:herbert"
+          @parserconfig      = {
+              'qt' => 'standard',
+              'search_field_default' => 'allfields',
+              'search_fields'        => {
+                  'title' => {
+                      'qf' => 'title_common_exact^1000 title_common^120 title_equiv^60 title_rest^30 series^10 series2^5',
+                      'pf' => 'serialTitle_common_exact^600 title_common_exact^500 title_l^150 title_common^100 title_a_exact^50 title_top^30 title_rest^20 series^3 series2^2'
+                  },
+                  'author' => {
+                      'qf' => 'author^10 author2^5 author_top^2 author_rest^1',
+                      'pf' => 'author^25000 author2^20000 author_top^5000 author_rest^1000'
+                  }
+              }
+          }
+          @builder           = MLibrarySearchParser::SearchBuilder.new(@parserconfig)
+          @is_mirlyn         = is_mirlyn?(@focus, @data)
+          ##############################
+          ##############################
 
-            if @page || @count == 0
-              @page_size = @count
-            elsif @start < @count
-              @slice = [@start, @count]
-              @page_size = @start + @count
-              @page_number = 0
-            else
-              last_record = @start + @count
-              @page_size = @count
-              @page_number = (@start / @page_size).floor
 
-              while @page_number > 0 && @page_size * (@page_number + 1) < last_record
-                first_record = @page_size * @page_number
-                if @start - first_record < @page_number
-                  @page_size = (last_record / @page_number).ceil
-                else
-                  @page_size += (@start - first_record).floor
-                end
-                @page_number = (@start / @page_size).floor
+          @uid        = @data['uid']
+          @start      = @data['start'].to_i
+          @count      = @data['count'].to_i
+          @page       = @data['page']
+          @tree       = Spectrum::FieldTree.new(@data['field_tree'])
+          @facets     = Spectrum::FacetList.new(@focus.default_facets.merge(@focus.filter_facets(@data['facets'] || {})))
+          @sort       = @data['sort']
+          @settings   = @data['settings']
+          @request_id = @data['request_id']
+
+          @psearch = if @is_mirlyn
+                       @builder.build(@data['raw_query'])
+                     else
+                       nil
+                     end
+
+
+          if @page || @count == 0
+            @page_size = @count
+          elsif @start < @count
+            @slice       = [@start, @count]
+            @page_size   = @start + @count
+            @page_number = 0
+          else
+            last_record  = @start + @count
+            @page_size   = @count
+            @page_number = (@start / @page_size).floor
+
+            while @page_number > 0 && @page_size * (@page_number + 1) < last_record
+              first_record = @page_size * @page_number
+              if @start - first_record < @page_number
+                @page_size = (last_record / @page_number).ceil
+              else
+                @page_size += (@start - first_record).floor
               end
-              @slice = [@start - @page_size * @page_number, @count]
+              @page_number = (@start / @page_size).floor
             end
-
-            validate!
+            @slice = [@start - @page_size * @page_number, @count]
           end
+
+          validate!
         end
         @page = (@page_number || 0) + 1
 
@@ -152,18 +190,39 @@ module Spectrum
         @focus ? @focus.fvf(@facets) : []
       end
 
-      def query(query_map = {}, filter_map = {})
+
+      def mirlyn_query
+        lp = MLibrarySearchParser::Transformer::Solr::LocalParams.new(@psearch)
+        b = base_query.merge(lp.params)
+        b[:qt] = 'standard'
+        b
+      end
+
+      def base_query(query_map = {}, filter_map = {})
         {
-          q: @tree.query(query_map),
-          page: @page,
-          start: @start,
-          rows: @page_size,
-          fq: @facets.query(filter_map, (@focus&.value_map) || {}),
-          per_page: @page_size
-        }.merge(@tree.params(query_map)).tap do |ret|
+            page:     @page,
+            start:    @start,
+            rows:     @page_size,
+            fq:       @facets.query(filter_map, (@focus&.value_map) || {}),
+            per_page: @page_size
+        }
+      end
+
+      def tree_query(query_map = {}, filter_map = {})
+        base_query(query_map, filter_map).merge({
+                             q: @tree.query(query_map),
+                         }).merge(@tree.params(query_map)).tap do |ret|
           if ret[:q].match(/ (AND|OR|NOT) /)
             ret[:q] = '+(' + ret[:q] + ')'
           end
+        end
+      end
+
+      def query(query_map = {}, filter_map = {})
+        if @is_mirlyn
+          mirlyn_query
+        else
+          tree_query(query_map, filter_map)
         end
       end
 
@@ -173,13 +232,13 @@ module Spectrum
 
       def spectrum
         ret = {
-          uid: @uid,
-          start: @start,
-          count: @count,
-          field_tree: @tree.spectrum,
-          facets: @facets.spectrum,
-          sort: @sort,
-          settings: @settings
+            uid:        @uid,
+            start:      @start,
+            count:      @count,
+            field_tree: @tree.spectrum,
+            facets:     @facets.spectrum,
+            sort:       @sort,
+            settings:   @settings
         }
         if @request_id
           ret.merge(request_id: @request_id)
