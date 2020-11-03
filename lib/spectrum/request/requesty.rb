@@ -13,7 +13,7 @@ module Spectrum
       INSTITUTION_KEY      = 'dlpsInstitutionId'
 
       included do
-        attr_accessor :request_id, :slice, :sort, :start
+        attr_accessor :request_id, :slice, :sort, :start, :messages
       end
 
       def can_sort?
@@ -33,9 +33,10 @@ module Spectrum
       end
 
       def initialize(request = nil, focus = nil)
-        @request = request
-        @focus   = focus
-        @data    = get_data(@request)
+        @request  = request
+        @focus    = focus
+        @data     = get_data(@request)
+        @messages = []
         if (@data)
           bad_request 'Request json did not validate' unless Spectrum::Json::Schema.validate(:request, @data)
 
@@ -43,6 +44,18 @@ module Spectrum
           if @is_mirlyn
             @builder = MLibrarySearchParser::SearchBuilder.new(@focus.raw_config)
             @psearch = @builder.build(@data['raw_query'])
+            @psearch.errors.each do |msg|
+              @messages << Spectrum::Response::Message.error(
+                summary: 'Query Parse Error',
+                details: msg.to_s
+              )
+            end
+            @psearch.warnings.each do |msg|
+              @messages << Spectrum::Response::Message.warn(
+                summary: 'Query Parse Warning',
+                details: msg.to_s
+              )
+            end
           end
 
           ##############################

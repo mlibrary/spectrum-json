@@ -14,6 +14,10 @@ module Spectrum
         DEFAULT_PROXY_PREFIX
       end
 
+      def messages
+        []
+      end
+
       def initialize(request)
         @request = request
         if request.params[:source] == 'summon'
