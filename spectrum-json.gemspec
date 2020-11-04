@@ -47,5 +47,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'execjs'
   spec.add_dependency 'rsolr'
   spec.add_dependency 'httparty'
+  spec.add_dependency 'dotenv'
 
 end
