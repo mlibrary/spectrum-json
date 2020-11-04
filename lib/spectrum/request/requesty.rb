@@ -25,7 +25,7 @@ module Spectrum
         DEFAULT_PROXY_PREFIX
       end
 
-      def is_mirlyn?(focus, data)
+      def is_new_parser?(focus, data)
         focus and
             data['uid'] == 'mirlyn' and
             data.has_key?('raw_query') and
@@ -40,8 +40,8 @@ module Spectrum
         if (@data)
           bad_request 'Request json did not validate' unless Spectrum::Json::Schema.validate(:request, @data)
 
-          @is_mirlyn         = is_mirlyn?(@focus, @data)
-          if @is_mirlyn
+          @is_new_parser = is_new_parser?(@focus, @data)
+          if @is_new_parser
             @builder = MLibrarySearchParser::SearchBuilder.new(@focus.raw_config)
             @psearch = @builder.build(@data['raw_query'])
             @psearch.errors.each do |msg|
@@ -100,9 +100,9 @@ module Spectrum
         end
         @page = (@page_number || 0) + 1
 
-        @start     ||= 0
-        @count     ||= 0
-        @slice     ||= [0, @count]
+        @start ||= 0
+        @count ||= 0
+        @slice ||= [0, @count]
 
         @tree      ||= Spectrum::FieldTree::Empty.new
         @facets    ||= Spectrum::FacetList.new(nil)
@@ -138,6 +138,7 @@ module Spectrum
       def is_open_access?
         pseudo_facet?('is_open_access')
       end
+
       def book_mark?
         @request.params['type'] == 'Record' && @request.params['id_field'] == 'BookMark'
       rescue StandardError
@@ -184,14 +185,10 @@ module Spectrum
       end
 
 
-      def mirlyn_query
+      def new_parser_query(query_map = {}, filter_map = {})
         lp       = MLibrarySearchParser::Transformer::Solr::LocalParams.new(@psearch)
-        defaults = if lp.config['search_atr_defaults']
-                     lp.config['search_atr_defaults']
-                   else
-                     {}
-                   end
-        base_query.merge(defaults).merge(lp.params)
+        defaults = lp.config['search_atr_defaults'] || {}
+        base_query(query_map, filter_map).merge(defaults).merge(lp.params)
       end
 
       def base_query(query_map = {}, filter_map = {})
@@ -204,6 +201,7 @@ module Spectrum
         }
       end
 
+      # Query derived from pride-based parser
       def tree_query(query_map = {}, filter_map = {})
         base_query(query_map, filter_map).merge({
                                                     q: @tree.query(query_map),
@@ -215,8 +213,8 @@ module Spectrum
       end
 
       def query(query_map = {}, filter_map = {})
-        if @is_mirlyn
-          mirlyn_query
+        if @is_new_parser
+          new_parser_query(query_map, filter_map)
         else
           tree_query(query_map, filter_map)
         end
