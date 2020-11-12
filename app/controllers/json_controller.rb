@@ -75,7 +75,26 @@ class JsonController < ApplicationController
     @datastore    = Spectrum::Response::DataStore.new(this_datastore)
     @specialists  = Spectrum::Response::Specialists.new(specialists)
     @response     = Spectrum::Response::RecordList.new(fetch_records, @request)
-    render(json: search_response)
+    tmp = search_response
+# TODO bulk fetch of holdings
+#  Net::HTTP.get(URI(@source.holdings + tmp[:response].first[:uid]))
+#  Net::HTTP.get(URI(@source.holdings + tmp[:response].map {|record| record[:uid]}.join(',')))
+#  binding.pry
+
+
+    tmp[:response].each do |record|
+      holdings_response = if @source.holdings
+        holdings_request = Spectrum::Request::Holdings.new({id: record[:uid]})
+        Spectrum::Response::Holdings.new(@source, holdings_request)
+      else
+        # TODO: write the NullHolding class
+        ##Spectrum::Response::NullHoldings.new
+        Struct.new(:renderable).new([])
+      end
+      record.merge!(holdings: holdings_response.renderable)
+    end
+
+    render(json: tmp)
   end
 
   def facet
@@ -91,7 +110,15 @@ class JsonController < ApplicationController
     @datastore = Spectrum::Response::DataStore.new(this_datastore)
     if engine.total_items > 0
       @response = Spectrum::Response::Record.new(fetch_record, @request)
-      render(json: record_response)
+      holdings_response = if @source.holdings
+        holdings_request = Spectrum::Request::Holdings.new(request)
+        Spectrum::Response::Holdings.new(@source, holdings_request)
+      else
+        # TODO: write the NullHolding class
+        #Spectrum::Response::NullHoldings.new
+        Struct.new(:renderable).new([])
+      end
+      render(json: record_response.merge(holdings: holdings_response.renderable))
     else
       render(json: {}, status: 200)
     end
