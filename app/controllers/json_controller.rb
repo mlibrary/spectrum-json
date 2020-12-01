@@ -75,26 +75,28 @@ class JsonController < ApplicationController
     @datastore    = Spectrum::Response::DataStore.new(this_datastore)
     @specialists  = Spectrum::Response::Specialists.new(specialists)
     @response     = Spectrum::Response::RecordList.new(fetch_records, @request)
-    tmp = search_response
-# TODO bulk fetch of holdings
-#  Net::HTTP.get(URI(@source.holdings + tmp[:response].first[:uid]))
-#  Net::HTTP.get(URI(@source.holdings + tmp[:response].map {|record| record[:uid]}.join(',')))
-#  binding.pry
+    full_response = search_response
 
+    if @source.holdings
+      bulk_holdings = HTTParty.get(
+        @source.holdings + full_response[:response].map {|record| record[:uid]}.join(',')
+      )
 
-    tmp[:response].each do |record|
-      holdings_response = if @source.holdings
+      full_response[:response].each do |record|
         holdings_request = Spectrum::Request::Holdings.new({id: record[:uid]})
-        Spectrum::Response::Holdings.new(@source, holdings_request)
-      else
-        # TODO: write the NullHolding class
-        ##Spectrum::Response::NullHoldings.new
-        Struct.new(:renderable).new([])
+        holdings_response = Spectrum::Response::Holdings.new(
+          @source,
+          holdings_request, getHoldingsResponse: bulk_holdings
+        )
+        record.merge!(holdings: holdings_response.renderable)
       end
-      record.merge!(holdings: holdings_response.renderable)
+    else
+      full_response[:response].each do |record|
+        record.merge!(holdings: Spectrum::Response::NullHoldings.new.renderable)
+      end
     end
 
-    render(json: tmp)
+    render(json: full_response)
   end
 
   def facet
@@ -114,9 +116,7 @@ class JsonController < ApplicationController
         holdings_request = Spectrum::Request::Holdings.new(request)
         Spectrum::Response::Holdings.new(@source, holdings_request)
       else
-        # TODO: write the NullHolding class
-        #Spectrum::Response::NullHoldings.new
-        Struct.new(:renderable).new([])
+        Spectrum::Response::NullHoldings.new
       end
       render(json: record_response.merge(holdings: holdings_response.renderable))
     else

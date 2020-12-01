@@ -4,12 +4,13 @@ module Spectrum
   module Response
     class Holdings
       def initialize(source, request, 
-                     bib_record=BibRecord.fetch(id: request.id, url: source.url),
-                     getHoldingsResponse=HTTParty.get("#{source.holdings}#{request.id}"),
-                     holding_factory = lambda{|input| Spectrum::Holding.for(input)}
+                     bib_record: BibRecord.fetch(id: request.id, url: source.url),
+                     getHoldingsResponse: HTTParty.get("#{source.holdings}#{request.id}"),
+                     holding_factory: lambda{|input| Spectrum::Holding.for(input)}
                     )
         @request = request
         @bib_record = bib_record
+
         if getHoldingsResponse.code == 200
           @holdings = getHoldingsResponse[@request.id]
         else
