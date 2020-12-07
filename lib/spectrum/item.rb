@@ -152,7 +152,9 @@ module Spectrum
     end
 
     def checked_out?
-      status.start_with?('Checked out') || status.start_with?('Recalled')
+      status.start_with?('Checked out') ||
+        status.start_with?('Recalled') ||
+        status.start_with?('Requested')
     end
 
     def not_checked_out?
