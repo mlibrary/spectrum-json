@@ -61,7 +61,7 @@ module Spectrum
         end
 
         def field_value(message, uid)
-          Array((message.find { |field| field[:uid] == uid } || {})[:value]).compact
+          [(message.find { |field| field[:uid] == uid } || {})[:value]].flatten.compact.map(&:to_s)
         end
 
         def title(message)

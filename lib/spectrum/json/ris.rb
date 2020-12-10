@@ -188,6 +188,7 @@ module Spectrum
 
         def single_valued_tag(tag, value)
           return [] unless tag && value
+          value = value.to_s unless value.respond_to?(:empty?)
           return [] if value.empty? || tag.empty?
           value = [value].flatten.first
           if Hash === value
