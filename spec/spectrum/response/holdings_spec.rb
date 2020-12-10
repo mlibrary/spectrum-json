@@ -58,6 +58,6 @@ describe Spectrum::Response::Holdings, "process_response" do
     bib_record = instance_double(Spectrum::BibRecord, physical_only?: true)
     getHoldingsResponse = double('HTTParty::Response', code: 400)
 
-    expect(described_class.new(source, request, bib_record, getHoldingsResponse).renderable).to eq([])
+    expect(described_class.new(source, request, bib_record: bib_record, getHoldingsResponse: getHoldingsResponse).renderable).to eq([])
   end
 end
