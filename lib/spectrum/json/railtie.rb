@@ -14,7 +14,7 @@ module Spectrum
         end
 
         config_data = if File.exist?(aleph_config_file = File.join(Rails.root, 'config', 'aleph.yml'))
-          YAML.load_file(aleph_config_file)
+          YAML.load(ERB.new(File.read(aleph_config_file)).result)
         else
           {}
         end

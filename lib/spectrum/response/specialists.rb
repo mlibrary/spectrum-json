@@ -195,7 +195,7 @@ module Spectrum
       class << self
         attr_reader :config, :logger, :cache
         def configure(file)
-          @config = YAML.load_file(file).map do |key, value|
+          @config = YAML.load(ERB.new(::File.read(file)).result).map do |key, value|
             if key == 'logger'
               @logger = value
               nil

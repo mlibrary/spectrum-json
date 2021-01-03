@@ -102,7 +102,7 @@ module Spectrum
         attr_reader :options
 
         def load_config(config_file)
-          @options = YAML.load_file(config_file).map do |option|
+          @options = YAML.load(ERB.new(File.read(config_file)).result).map do |option|
             Option.new(option)
           end
         end
