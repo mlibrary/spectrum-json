@@ -13,6 +13,9 @@ module Spectrum
       'FINE',
       'AAEL',
       'MUSIC',
+      'RMC',
+      'OFFS',
+      'STATE',
     ]
 
     SHAPIRO_AND_AAEL_PICKUP = [
@@ -28,6 +31,10 @@ module Spectrum
       'UGL',
       'FINE',
       'BUHR',
+      'HSRS',
+      'RMC',
+      #'OFFS',  # This is in SHAPIRO_AND_AAEL
+      #'STATE', # This is in SHAPIRO_AND_AAEL
     ]
 
     AAEL_PICKUP = [ 'AAEL' ]
@@ -215,6 +222,10 @@ module Spectrum
 
     def unavailable?
       !available?
+    end
+
+    def unavailable_or_flint?
+      unavailable? || flint?
     end
 
     def location
