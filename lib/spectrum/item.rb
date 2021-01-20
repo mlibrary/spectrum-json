@@ -142,6 +142,14 @@ module Spectrum
       !on_shelf?
     end
 
+    def on_order?
+      status.start_with?('On Order')
+    end
+
+    def not_on_order?
+      !on_order?
+    end
+
     def missing?
       status.start_with?('missing')
     end
