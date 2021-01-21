@@ -170,7 +170,8 @@ module Spectrum
     def checked_out?
       status.start_with?('Checked out') ||
         status.start_with?('Recalled') ||
-        status.start_with?('Requested')
+        status.start_with?('Requested') ||
+        status.start_with?('Extended loan')
     end
 
     def not_checked_out?
