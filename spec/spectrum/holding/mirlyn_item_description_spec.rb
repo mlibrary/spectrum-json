@@ -11,8 +11,8 @@ describe Spectrum::Holding::MirlynItemDescription do
       #only called with self.for
       described_class.for(item: @item_dbl).to_h
     end
-    it "returns default of 'N/A'" do
-      expect(subject).to eq({text: 'N/A'})
+    it "returns default of ''" do
+      expect(subject).to eq({text: ''})
     end
     it "returns only description" do
       allow(@item_dbl).to receive(:description).and_return('description')

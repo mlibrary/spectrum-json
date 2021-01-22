@@ -27,7 +27,7 @@ module Spectrum
       private
 
       def value
-        'N/A'
+        ''
       end
       
       def format_type
