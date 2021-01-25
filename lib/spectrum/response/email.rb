@@ -16,7 +16,7 @@ module Spectrum
         result = driver.message(request.to, request.from, request.items)
         success
       rescue Exception => e
-        Rails.logger.info { e.to_s + e.backtrace.to_s}
+        Rails.logger.error { e.to_s + e.backtrace.to_s}
         failure
       end
 

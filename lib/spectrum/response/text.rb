@@ -28,7 +28,7 @@ module Spectrum
           }
         )
       rescue Exception => e
-        Rails.logger.info { e.to_s + e.backtrace.to_s}
+        Rails.logger.error { e.to_s + e.backtrace.to_s}
         failure
       end
 

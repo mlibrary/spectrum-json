@@ -13,6 +13,9 @@ module Spectrum
       'FINE',
       'AAEL',
       'MUSIC',
+      'RMC',
+      'OFFS',
+      'STATE',
     ]
 
     SHAPIRO_AND_AAEL_PICKUP = [
@@ -28,6 +31,10 @@ module Spectrum
       'UGL',
       'FINE',
       'BUHR',
+      'HSRS',
+      'RMC',
+      #'OFFS',  # This is in SHAPIRO_AND_AAEL
+      #'STATE', # This is in SHAPIRO_AND_AAEL
     ]
 
     AAEL_PICKUP = [ 'AAEL' ]
@@ -106,8 +113,9 @@ module Spectrum
       @item['can_reserve']
     end
 
+    # HSRS reports can_request false in getHoldings.pl
     def can_request?
-      @item['can_request']
+      @item['can_request'] || ['HSRS'].include?(@item['sub_library'])
     end
 
     def circulating?
@@ -134,6 +142,14 @@ module Spectrum
       !on_shelf?
     end
 
+    def on_order?
+      status.start_with?('On Order')
+    end
+
+    def not_on_order?
+      !on_order?
+    end
+
     def missing?
       status.start_with?('missing')
     end
@@ -154,7 +170,8 @@ module Spectrum
     def checked_out?
       status.start_with?('Checked out') ||
         status.start_with?('Recalled') ||
-        status.start_with?('Requested')
+        status.start_with?('Requested') ||
+        status.start_with?('Extended loan')
     end
 
     def not_checked_out?
@@ -217,6 +234,10 @@ module Spectrum
       !available?
     end
 
+    def unavailable_or_flint?
+      unavailable? || flint?
+    end
+
     def location
       [@item['sub_library'], @item['collection']].compact.join(',')
     end
@@ -234,7 +255,7 @@ module Spectrum
     end
 
     def not_pickup?
-      !(shapiro_pickup? || aael_pickup? || music_pickup? || shapiro_and_aael_pickup?)
+      !(shapiro_pickup? || aael_pickup? || music_pickup? || shapiro_and_aael_pickup? || flint_pickup?)
     end
 
     def not_flint_and_etas?

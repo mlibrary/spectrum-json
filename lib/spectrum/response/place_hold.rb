@@ -41,7 +41,7 @@ module Spectrum
           root = hold.instance_eval { @root }
           return { status: root['reply_text'] } if root && root['reply_text']
 
-          Rails.logger.info do
+          Rails.logger.error do
             begin
               if client = hold.instance_eval { @client }
                 body = client.instance_eval { @body }
