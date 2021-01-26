@@ -27,7 +27,7 @@ module Spectrum
 
       def is_new_parser?(focus, data)
         focus and
-            data['uid'] == 'mirlyn' and
+            focus.new_parser? and
             data.has_key?('raw_query') and
             data['raw_query'].match(/\S/)
       end
