@@ -88,7 +88,7 @@ module Spectrum
       end
       [
         {text: status, href: "#{handle}#{suffix}"},
-        {text: info['description'] || 'N/A'},
+        {text: info['description'] || ''},
         {text: info['source'] || 'N/A'}
       ]
     end
