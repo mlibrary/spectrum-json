@@ -43,7 +43,7 @@ module Spectrum
         end
 
         def get_holdings(message)
-          field_value(message, 'holdings').reject do |holding|
+          raw_field_value(message, 'holdings').reject do |holding|
             holding['location'] == 'HathiTrust Digital Library'
           end.map do |holding|
             holding['item_info'].map do |item_info|
@@ -61,7 +61,11 @@ module Spectrum
         end
 
         def field_value(message, uid)
-          [(message.find { |field| field[:uid] == uid } || {})[:value]].flatten.compact.map(&:to_s)
+          raw_field_value(message, uid).map(&:to_s)
+        end
+
+        def raw_field_value(message, uid)
+          [(message.find { |field| field[:uid] == uid } || {})[:value]].flatten.compact
         end
 
         def title(message)
