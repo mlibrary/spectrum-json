@@ -46,13 +46,13 @@ module Spectrum
         end.join(' AND ')
 
         if key == 'date_of_publication' || original_key == 'date_of_publication'
-          value.match(/^before(\d+)$/) do |m|
+          value.match(/^before\s*(\d+)$/) do |m|
             value = "[* TO #{m[1]}]"
           end
-          value.match(/^after(\d+)$/) do |m|
+          value.match(/^after\s*(\d+)$/) do |m|
             value = "[#{m[1]} TO *]"
           end
-          value.match(/^(\d+)to(\d+)$/) do |m|
+          value.match(/^(\d+)\s*to\s*(\d+)$/) do |m|
             value = "[#{m[1]} TO #{m[2]}]"
           end
         end
