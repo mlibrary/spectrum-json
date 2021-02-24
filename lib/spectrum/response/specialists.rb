@@ -92,7 +92,8 @@ module Spectrum
           fq: query[:fq],
           qq: '"' + RSolr.solr_escape(query[:q]) + '"',
           rows: rows.first,
-          fl: fields.first
+          fl: fields.first,
+          df: query[:df] || 'allfields'
         )
         client.first.get('select', params: params)
       end
