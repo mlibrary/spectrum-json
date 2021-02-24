@@ -237,6 +237,9 @@ module Spectrum
           specialist_focus.facet_map
         )
         return [] if query[:q] == '*:*'
+        if data[:request].new_parser_query_words
+          query[:q] = data[:request].new_parser_query_words
+        end
         begin
           results = engines.map do |engine|
             engine.find(query)
