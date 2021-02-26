@@ -187,7 +187,7 @@ module Spectrum
 
       def new_parser_query(query_map = {}, filter_map = {})
         lp       = MLibrarySearchParser::Transformer::Solr::LocalParams.new(@psearch)
-        defaults = lp.config['search_atr_defaults'] || {}
+        defaults = lp.config['search_attr_defaults'] || {}
         base_query(query_map, filter_map).merge(defaults).merge(lp.params)
       end
 
