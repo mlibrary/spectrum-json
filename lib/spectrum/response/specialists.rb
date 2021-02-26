@@ -87,7 +87,7 @@ module Spectrum
       end
 
       def fetch_records(query)
-        params = focus.first.solr_params.merge(
+        params = focus.first.solr_params.merge(query).merge(
           q: query[:q],
           fq: query[:fq],
           qq: '"' + RSolr.solr_escape(query[:q]) + '"',
@@ -148,7 +148,11 @@ module Spectrum
       end
 
       def find(query)
-        records = fetch_records(query)
+        begin
+          records = fetch_records(query)
+        rescue
+          records = nil
+        end
         return empty_results unless records
 
         terms = extract_terms(records)
