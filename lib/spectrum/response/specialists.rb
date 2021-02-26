@@ -87,7 +87,7 @@ module Spectrum
       end
 
       def fetch_records(query)
-        params = focus.first.solr_params.merge(query).merge(
+        params = focus.first.solr_params.merge(
           q: query[:q],
           fq: query[:fq],
           qq: '"' + RSolr.solr_escape(query[:q]) + '"',
@@ -241,8 +241,8 @@ module Spectrum
           specialist_focus.facet_map
         )
         return [] if query[:q] == '*:*'
-        if data[:request].new_parser_query_words
-          query[:q] = data[:request].new_parser_query_words
+        if query[:just_tokens]
+          query[:q] = query[:just_tokens]
         end
         begin
           results = engines.map do |engine|
