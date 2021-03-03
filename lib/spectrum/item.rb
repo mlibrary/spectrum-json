@@ -117,9 +117,10 @@ module Spectrum
       @item['can_reserve']
     end
 
-    # HSRS reports can_request false in getHoldings.pl
+    # HSRS, HERB, MUSM reports can_request false in getHoldings.pl
     def can_request?
-      @item['can_request'] || ['HSRS'].include?(@item['sub_library'])
+      @item['can_request'] ||
+        ['HSRS', 'HERB', 'MUSM'].include?(@item['sub_library'])
     end
 
     def circulating?
