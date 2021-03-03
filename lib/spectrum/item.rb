@@ -16,6 +16,8 @@ module Spectrum
       'RMC',
       'OFFS',
       'STATE',
+      'MUSM',
+      'HERB',
     ]
 
     SHAPIRO_AND_AAEL_PICKUP = [
@@ -33,6 +35,8 @@ module Spectrum
       'BUHR',
       'HSRS',
       'RMC',
+      'MUSM',
+      'HERB',
       #'OFFS',  # This is in SHAPIRO_AND_AAEL
       #'STATE', # This is in SHAPIRO_AND_AAEL
     ]
