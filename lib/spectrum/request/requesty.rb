@@ -191,12 +191,6 @@ module Spectrum
         base_query(query_map, filter_map).merge(defaults).merge(lp.params)
       end
 
-      def new_parser_query_words
-        if @psearch
-          @psearch.search_tree.wanted_tokens_string
-        end
-      end
-
       def base_query(query_map = {}, filter_map = {})
         {
             page:     @page,
