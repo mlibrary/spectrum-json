@@ -92,7 +92,8 @@ module Spectrum
           fq: query[:fq],
           qq: '"' + RSolr.solr_escape(query[:q]) + '"',
           rows: rows.first,
-          fl: fields.first
+          fl: fields.first,
+          df: query[:df] || 'allfields'
         )
         client.first.get('select', params: params)
       end
@@ -236,6 +237,9 @@ module Spectrum
           specialist_focus.facet_map
         )
         return [] if query[:q] == '*:*'
+        if query[:clean_string]
+          query[:q] = query[:clean_string]
+        end
         begin
           results = engines.map do |engine|
             engine.find(query)
