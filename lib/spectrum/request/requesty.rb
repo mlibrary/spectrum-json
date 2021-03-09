@@ -46,14 +46,16 @@ module Spectrum
             @psearch = @builder.build(@data['raw_query'])
             @psearch.errors.each do |msg|
               @messages << Spectrum::Response::Message.error(
-                summary: "Query Parse Error: #{msg.class}",
-                details: msg.to_s
+                summary: "Query Parse Error",
+                details: msg.details,
+                data: msg.to_h
               )
             end
             @psearch.warnings.each do |msg|
               @messages << Spectrum::Response::Message.warn(
-                summary: "Query Parse Warning: #{msg.class}",
-                details: msg.to_s
+                summary: "Query Parse Warning",
+                details: msg.details,
+                data: msg.to_h,
               )
             end
           end

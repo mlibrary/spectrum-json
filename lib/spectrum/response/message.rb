@@ -9,6 +9,7 @@ module Spectrum
         @class = TYPES.include?(args[:class]) ? args[:class] : DEFAULT_TYPE
         @summary = args[:summary]
         @details = args[:details]
+        @data    = args[:data]
       end
 
       class << self
@@ -21,7 +22,7 @@ module Spectrum
       end
 
       def spectrum
-        { class: @class, summary: @summary, details: @details }
+        { class: @class, summary: @summary, details: @details, data: @data }
       end
     end
   end
