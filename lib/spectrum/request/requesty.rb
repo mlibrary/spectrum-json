@@ -42,8 +42,7 @@ module Spectrum
 
           @is_new_parser = is_new_parser?(@focus, @data)
           if @is_new_parser
-            @builder = MLibrarySearchParser::SearchBuilder.new(@focus.raw_config)
-            @psearch = @builder.build(@data['raw_query'])
+            @psearch = build_psearch
             @psearch.errors.each do |msg|
               @messages << Spectrum::Response::Message.error(
                 summary: "Query Parse Error",
@@ -187,8 +186,8 @@ module Spectrum
       end
 
 
-      def new_parser_query(query_map = {}, filter_map = {})
-        lp       = MLibrarySearchParser::Transformer::Solr::LocalParams.new(@psearch)
+      def new_parser_query(query_map = {}, filter_map = {}, built_search = @psearch)
+        lp = MLibrarySearchParser::Transformer::Solr::LocalParams.new(built_search)
         defaults = lp.config['search_attr_defaults'] || {}
         base_query(query_map, filter_map).merge(defaults).merge(lp.params)
       end
@@ -241,6 +240,11 @@ module Spectrum
         else
           ret
         end
+      end
+
+      def build_psearch(focus = @focus)
+        @builder = MLibrarySearchParser::SearchBuilder.new(focus.raw_config)
+        @builder.build(@data['raw_query'])
       end
 
       private
