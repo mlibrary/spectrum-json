@@ -88,11 +88,8 @@ module Spectrum
 
       def fetch_records(query)
         params = focus.first.solr_params.merge(query).merge(
-          q: query[:q],
-          fq: query[:fq],
           rows: rows.first,
-          fl: fields.first,
-          df: query[:df] || 'allfields'
+          fl: fields.first
         )
         client.first.get('select', params: params)
       end
