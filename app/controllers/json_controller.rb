@@ -312,7 +312,7 @@ class JsonController < ApplicationController
     {
       request:  @request.spectrum,
       response: @response.spectrum,
-      messages: @messages.map(&:spectrum),
+      messages: (@messages + @request.messages).map(&:spectrum),
       total_available: @response.total_available,
       specialists: @specialists.spectrum,
       datastore: @datastore.spectrum,

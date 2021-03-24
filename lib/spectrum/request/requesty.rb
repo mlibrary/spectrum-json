@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
+require 'mlibrary_search_parser'
+
 module Spectrum
   module Request
     module Requesty
       extend ActiveSupport::Concern
 
-      FLINT = 'Flint'
-      FLINT_PROXY_PREFIX = 'http://libproxy.umflint.edu:2048/login?url='
+      FLINT                = 'Flint'
+      FLINT_PROXY_PREFIX   = 'http://libproxy.umflint.edu:2048/login?url='
       DEFAULT_PROXY_PREFIX = 'https://proxy.lib.umich.edu/login?url='
-      INSTITUTION_KEY = 'dlpsInstitutionId'
+      INSTITUTION_KEY      = 'dlpsInstitutionId'
 
       included do
-        attr_accessor :request_id, :slice, :sort, :start
+        attr_accessor :request_id, :slice, :sort, :start, :messages
       end
 
       def can_sort?
@@ -23,55 +25,86 @@ module Spectrum
         DEFAULT_PROXY_PREFIX
       end
 
-      def initialize(request = nil, focus = nil)
-        @request = request
-        @focus   = focus
-        if (@data = get_data(@request))
+      def is_new_parser?(focus, data)
+        focus and
+            focus.new_parser? and
+            data.has_key?('raw_query') and
+            data['raw_query'].match(/\S/)
+      end
 
+      def initialize(request = nil, focus = nil)
+        @request  = request
+        @focus    = focus
+        @data     = get_data(@request)
+        @messages = []
+        if (@data)
           bad_request 'Request json did not validate' unless Spectrum::Json::Schema.validate(:request, @data)
 
-          if @data
-            @uid        = @data['uid']
-            @start      = @data['start'].to_i
-            @count      = @data['count'].to_i
-            @page       = @data['page']
-            @tree       = Spectrum::FieldTree.new(@data['field_tree'])
-            @facets     = Spectrum::FacetList.new(@focus.default_facets.merge(@focus.filter_facets(@data['facets'] || {})))
-            @sort       = @data['sort']
-            @settings   = @data['settings']
-            @request_id = @data['request_id']
-
-            if @page || @count == 0
-              @page_size = @count
-            elsif @start < @count
-              @slice = [@start, @count]
-              @page_size = @start + @count
-              @page_number = 0
-            else
-              last_record = @start + @count
-              @page_size = @count
-              @page_number = (@start / @page_size).floor
-
-              while @page_number > 0 && @page_size * (@page_number + 1) < last_record
-                first_record = @page_size * @page_number
-                if @start - first_record < @page_number
-                  @page_size = (last_record / @page_number).ceil
-                else
-                  @page_size += (@start - first_record).floor
-                end
-                @page_number = (@start / @page_size).floor
-              end
-              @slice = [@start - @page_size * @page_number, @count]
+          @is_new_parser = is_new_parser?(@focus, @data)
+          if @is_new_parser
+            @psearch = build_psearch
+            @psearch.errors.each do |msg|
+              @messages << Spectrum::Response::Message.error(
+                summary: "Query Parse Error",
+                details: msg.details,
+                data: msg.to_h
+              )
             end
-
-            validate!
+            @psearch.warnings.each do |msg|
+              @messages << Spectrum::Response::Message.warn(
+                summary: "Query Parse Warning",
+                details: msg.details,
+                data: msg.to_h,
+              )
+            end
           end
+
+          ##############################
+          ##############################
+
+
+          @uid        = @data['uid']
+          @start      = @data['start'].to_i
+          @count      = @data['count'].to_i
+          @page       = @data['page']
+          @tree       = Spectrum::FieldTree.new(@data['field_tree'])
+          @facets     = Spectrum::FacetList.new(@focus.default_facets.merge(@focus.filter_facets(@data['facets'] || {})))
+          @sort       = @data['sort']
+          @settings   = @data['settings']
+          @request_id = @data['request_id']
+
+
+          if @page || @count == 0
+            @page_size = @count
+          elsif @start < @count
+            @slice       = [@start, @count]
+            @page_size   = @start + @count
+            @page_number = 0
+          else
+            last_record  = @start + @count
+            @page_size   = @count
+            @page_number = (@start / @page_size).floor
+
+            while @page_number > 0 && @page_size * (@page_number + 1) < last_record
+              first_record = @page_size * @page_number
+              if @start - first_record < @page_number
+                @page_size = (last_record / @page_number).ceil
+              else
+                @page_size += (@start - first_record).floor
+              end
+              @page_number = (@start / @page_size).floor
+            end
+            @slice = [@start - @page_size * @page_number, @count]
+          end
+
+          validate!
         end
         @page = (@page_number || 0) + 1
 
-        @start     ||= 0
-        @count     ||= 0
-        @slice     ||= [0, @count]
+        @start ||= 0
+        @count ||= 0
+        @slice ||= [0, @count]
+
         @tree      ||= Spectrum::FieldTree::Empty.new
         @facets    ||= Spectrum::FacetList.new(nil)
         @page_size ||= 0
@@ -152,18 +185,39 @@ module Spectrum
         @focus ? @focus.fvf(@facets) : []
       end
 
-      def query(query_map = {}, filter_map = {})
+
+      def new_parser_query(query_map = {}, filter_map = {}, built_search = @psearch)
+        lp = MLibrarySearchParser::Transformer::Solr::LocalParams.new(built_search)
+        defaults = lp.config['search_attr_defaults'] || {}
+        base_query(query_map, filter_map).merge(defaults).merge(lp.params)
+      end
+
+      def base_query(query_map = {}, filter_map = {})
         {
-          q: @tree.query(query_map),
-          page: @page,
-          start: @start,
-          rows: @page_size,
-          fq: @facets.query(filter_map, (@focus&.value_map) || {}),
-          per_page: @page_size
-        }.merge(@tree.params(query_map)).tap do |ret|
+            page:     @page,
+            start:    @start,
+            rows:     @page_size,
+            fq:       @facets.query(filter_map, (@focus&.value_map) || {}),
+            per_page: @page_size
+        }
+      end
+
+      # Query derived from pride-based parser
+      def tree_query(query_map = {}, filter_map = {})
+        base_query(query_map, filter_map).merge({
+                                                    q: @tree.query(query_map),
+                                                }).merge(@tree.params(query_map)).tap do |ret|
           if ret[:q].match(/ (AND|OR|NOT) /)
             ret[:q] = '+(' + ret[:q] + ')'
           end
+        end
+      end
+
+      def query(query_map = {}, filter_map = {})
+        if @is_new_parser
+          new_parser_query(query_map, filter_map)
+        else
+          tree_query(query_map, filter_map)
         end
       end
 
@@ -173,19 +227,24 @@ module Spectrum
 
       def spectrum
         ret = {
-          uid: @uid,
-          start: @start,
-          count: @count,
-          field_tree: @tree.spectrum,
-          facets: @facets.spectrum,
-          sort: @sort,
-          settings: @settings
+            uid:        @uid,
+            start:      @start,
+            count:      @count,
+            field_tree: @tree.spectrum,
+            facets:     @facets.spectrum,
+            sort:       @sort,
+            settings:   @settings
         }
         if @request_id
           ret.merge(request_id: @request_id)
         else
           ret
         end
+      end
+
+      def build_psearch(focus = @focus)
+        @builder = MLibrarySearchParser::SearchBuilder.new(focus.raw_config)
+        @builder.build(@data['raw_query'])
       end
 
       private

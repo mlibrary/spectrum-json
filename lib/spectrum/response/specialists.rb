@@ -87,10 +87,7 @@ module Spectrum
       end
 
       def fetch_records(query)
-        params = focus.first.solr_params.merge(
-          q: query[:q],
-          fq: query[:fq],
-          qq: '"' + RSolr.solr_escape(query[:q]) + '"',
+        params = focus.first.solr_params.merge(query).merge(
           rows: rows.first,
           fl: fields.first
         )
@@ -231,9 +228,14 @@ module Spectrum
       def spectrum
         return [] if data[:request].instance_eval { @request&.env&.fetch('dlpsInstitutionId', nil)&.include?('Flint') }
         specialist_focus = Spectrum::Json.foci['mirlyn']
-        query = data[:request].query(
+        # catalog/mirlyn is on new parser
+        # because diff datastores have diff search fields,
+        # we re-parse the original search under catalog config
+        psearch = data[:request].build_psearch(specialist_focus)
+        query = data[:request].new_parser_query(
           specialist_focus.fields,
-          specialist_focus.facet_map
+          specialist_focus.facet_map,
+          psearch
         )
         return [] if query[:q] == '*:*'
         begin
