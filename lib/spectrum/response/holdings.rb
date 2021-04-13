@@ -33,7 +33,8 @@ module Spectrum
           hash['HathiTrust Digital Library'] = 'AAAA'
           hash['- Offsite Shelving -'] = 'zzzz'
         end
-        @holdings.each do |item|
+        holdings = @holdings || []
+        holdings.each do |item|
           input = HoldingInput.new(holding: item, id: @request.id, bib_record: @bib_record, raw: @holdings)
           holding = @holding_factory.call(input)
           if item['down_links'] || item['up_links'] || (item['item_info'] && item['item_info'].length > 0)
