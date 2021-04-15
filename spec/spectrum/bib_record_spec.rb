@@ -66,4 +66,45 @@ describe Spectrum::BibRecord do
       expect(subject.callnumber).to eq('LB 2331.72 .S371 1990')
     end
   end
+  context '#restriction' do
+    it 'returns a string' do
+      expect(subject.restriction).to eq('')
+    end
+  end
+  context '#pub_date' do
+    it 'returns a string' do
+      expect(subject.pub_date).to eq('')
+    end
+  end
+  context '#publisher' do
+    it 'returns a string' do
+      expect(subject.publisher).to eq('San Francisco : Jossey-Bass Publishers, 1990.')
+    end
+  end
+  context '#physical_description' do
+    it 'returns a string' do
+      expect(subject.physical_description).to eq('xxiv, 346 p. : ill. ; 24 cm')
+    end
+  end
+  context '#genre' do
+    it 'returns a string' do
+      expect(subject.genre).to be_nil
+    end
+  end
+  context '#sgenre' do
+    it 'returns a string or nil' do
+      expect(subject.sgenre).to be_nil
+    end
+  end
+  context '#fmt' do
+    it 'returns a string' do
+      expect(subject.fmt).to eq("")
+    end
+  end
+  context '#physical_only?' do
+    it 'returns a boolean' do
+      expect(subject.physical_only?).to eq(true)
+    end
+  end
+
 end
