@@ -7,6 +7,68 @@ describe Spectrum::BibRecord do
     described_class.new(JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json')))
   end
 
+  context '#mms_id' do
+    it "returns a string" do
+      expect(subject.mms_id).to eq('990020578280206381')
+    end
+  end
+  #needs to have bib Holdings.
+  context '#holdings' do
+    it "returns an array" do
+      expect(subject.holdings.class.name).to eq('Array')
+    end
+    context "alma holding" do
+      let(:alma_holding) { subject.holdings.first }
+      it "has a library" do
+        expect(alma_holding.library).to eq('HATCH')
+      end
+      it "has a location" do
+        expect(alma_holding.location).to eq('GRAD')
+      end
+      it "has a callnumber" do
+        expect(alma_holding.callnumber).to eq('LB 2331.72 .S371 1990')
+      end
+      it "has a public_note" do
+        expect(alma_holding.public_note).to be_nil
+      end
+      it "has items" do
+        expect(alma_holding.items.count).to eq(1)
+      end
+    end
+
+    context "hathi holding" do
+      let(:hathi_holding) { subject.holdings[1] }
+      it "has a library" do
+        expect(hathi_holding.library).to eq("HathiTrust Digital Library")
+      end
+      it "has items" do
+        expect(hathi_holding.items.count).to eq(1)
+      end
+      context "hathi item" do
+        let(:hathi_item) { hathi_holding.items[0] }
+
+        it "has an id" do
+          expect(hathi_item.id).to eq("mdp.39015017893416")
+        end
+        it "has rights" do
+          expect(hathi_item.rights).to eq("ic")
+        end
+        it "has a description" do
+          expect(hathi_item.description).to eq("")
+        end
+        it "has a collection_code" do
+          expect(hathi_item.collection_code).to eq("MIU")
+        end
+        it "has access boolean" do
+          expect(hathi_item.access).to eq(false)
+        end
+        it "has a source" do
+          expect(hathi_item.source).to eq("University of Michigan")
+        end
+      end
+    end
+
+  end
   context '#title' do
     it 'returns a string' do
       expect(subject.title).to eq('Enhancing faculty careers : strategies for development and renewal /')

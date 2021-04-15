@@ -24,6 +24,9 @@ module Spectrum
       @data = extract_data(solr_response)
       @fullrecord = MARC::XMLReader.new(StringIO.new(@data['fullrecord'])).first
     end
+    def mms_id
+      @data["id"]
+    end
 
     def title
       (@fullrecord['245'] || []).select do |subfield|
@@ -126,6 +129,100 @@ module Spectrum
       @fullrecord.fields('856').map { |field| field['u'] }.compact.empty?
     end
 
+    def holdings
+      JSON.parse(@data["hol"]).map{|x| Holding.for(x)}
+    end
+    
+
+    class Holding
+      def initialize(holding)
+        @holding = holding
+      end
+      def library
+        @holding["library"]
+      end
+      def self.for(holding)
+        if holding["library"] == "HathiTrust Digital Library"
+          HathiHolding.new(holding)
+        else
+          AlmaHolding.new(holding)
+        end
+      end
+    end
+    class HathiHolding < Holding
+      def items
+        @holding["items"].map{|x| Item.new(x) }
+      end
+      class Item
+        def initialize(item)
+          @item = item
+        end
+        def id
+          @item["id"]
+        end
+        def rights
+          @item["rights"]
+        end
+        def description
+          @item["description"]
+        end
+        def collection_code
+          @item["collection_code"]
+        end
+        def access
+          @item["access"]
+        end
+        def source
+          @item["source"]
+        end
+      end
+      private_constant :Item
+    end
+    class AlmaHolding  < Holding
+      def holding_id 
+        @holding["hol_mmsid"]
+      end
+      def location
+        @holding["location"]
+      end
+      def callnumber
+        @holding["callnumber"]
+      end
+      def public_note
+        @holding["public_note"]
+      end
+      def items
+        @holding["items"].map{|x| Item.new(x)}
+      end
+      
+      class Item
+        def initialize(item)
+          @item = item
+        end
+        def id
+          @item["item_id"]
+        end
+        def description
+          @item["description"]
+        end
+        def public_note
+          @item["public_note"]
+        end
+        def library
+          @item["library"]
+        end
+        def location
+          @item["location"]
+        end
+        def barcode
+          @item["barcode"]
+        end
+      end
+
+      private_constant :Item
+    end
+
+    private_constant :Holding, :AlmaHolding
     private
 
     def fetch_marc(datafield, subfield)
