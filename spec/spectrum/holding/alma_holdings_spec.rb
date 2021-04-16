@@ -12,7 +12,6 @@ describe Spectrum::AlmaHoldings do
     expect(subject.bib.class.to_s).to eq("Spectrum::AlmaBib")
   end
   it "has holdings" do
-    byebug
     expect(subject.holdings.first.class.to_s).to eq("Spectrum::AlmaHolding")
   end
 end
@@ -52,6 +51,9 @@ describe Spectrum::AlmaHolding do
   it "has holding_id" do
     expect(subject.holding_id).to eq("2297537770006381")
   end
+  #it "has full_location_description" do
+    #expect(subject.full_location_description).to eq("")
+  #end
   it "has a call number" do
     expect(subject.callnumber).to eq("LB 2331.72 .S371 1990")
   end
