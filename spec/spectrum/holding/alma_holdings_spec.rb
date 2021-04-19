@@ -1,5 +1,6 @@
 require_relative '../../spec_helper'
 require 'spectrum/holding/alma_holdings'
+require 'spectrum/lib_loc_display'
 describe Spectrum::AlmaHoldings do
   before(:each) do
     @mms_id = "990020578280206381"
@@ -40,6 +41,9 @@ describe Spectrum::AlmaBib do
   end
 end
 describe Spectrum::AlmaHolding do
+  before(:each) do
+    Spectrum::LibLocDisplay.configure('spec/fixtures/lib_loc_display.json')
+  end
   subject do
     response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
     bib = instance_double(Spectrum::AlmaBib, title: "title")
@@ -51,9 +55,12 @@ describe Spectrum::AlmaHolding do
   it "has holding_id" do
     expect(subject.holding_id).to eq("2297537770006381")
   end
-  #it "has full_location_description" do
-    #expect(subject.full_location_description).to eq("")
-  #end
+  it "has location_text" do
+    expect(subject.location_text).to eq("Hatcher Graduate")
+  end
+  it "has location_link" do
+    expect(subject.location_link).to eq("http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25")
+  end
   it "has a call number" do
     expect(subject.callnumber).to eq("LB 2331.72 .S371 1990")
   end

@@ -68,8 +68,19 @@ class Spectrum::AlmaHolding
   def callnumber
     @holding["call_number"]
   end
+  def location_text
+    Spectrum::LibLocDisplay.text(library, location) 
+  end
+  def location_link
+    Spectrum::LibLocDisplay.link(library, location) 
+  end
    
-  
+  def library
+    @items.first&.library
+  end
+  def location
+    @items.first&.location
+  end
 end
 class Spectrum::AlmaItem
   extend Forwardable
