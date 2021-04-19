@@ -2,42 +2,26 @@ module Spectrum
   class Holding
     class Action
 
-      class << self
-        def new(*args)
-          klass = get_class(*args)
-          return klass.new(*args) if klass
-          obj = allocate
-          obj.send(:initialize, *args)
-          obj
-        end
-
-        def inherited(base)
-          registry << base
-        end
-
-        def label(l = nil)
-          @label = l if l
-          @label
-        end
-
-        def match?(*args)
-          false
-        end
-
-        private
-
-        def registry
-          @registry ||= []
-        end
-
-        def get_class(*args)
-          registry.find { |klass| klass.match?(*args) }
+      attr_reader :id, :datastore, :bib, :item, :info
+      def self.for(*args)
+        if GetThisAction.match?(*args)
+          GetThisAction.new(*args)
+        elsif BookThisAction.match?(*args)
+          BookThisAction.new(*args)
+        elsif RequestThisAction.match?(*args)
+          RequestThisAction.new(*args)
+        else
+          Action.new(*args)
         end
       end
 
-      attr_reader :id, :datastore, :bib, :item, :info
+      def self.label
+        'N/A'
+      end
 
-      label 'N/A'
+      def self.match?(*args)
+        false
+      end
 
       def label
         self.class.label

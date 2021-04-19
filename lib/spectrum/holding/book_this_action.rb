@@ -1,7 +1,9 @@
 module Spectrum
   class Holding
     class BookThisAction < Action
-      label 'Book This' 
+      def self.label 
+        'Book This' 
+      end
 
       def self.match?(_, _, _, _, info)
         info['can_book']

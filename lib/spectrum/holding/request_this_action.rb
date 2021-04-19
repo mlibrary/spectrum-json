@@ -1,7 +1,9 @@
 module Spectrum
   class Holding
     class RequestThisAction < Action
-      label 'Request This' 
+      def self.label
+        'Request This' 
+      end
 
       def self.match?(_, _, _, _, info)
         info['can_reserve']

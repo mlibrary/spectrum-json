@@ -1,7 +1,10 @@
 module Spectrum
   class Holding
     class GetThisAction < Action
-      label 'Get This' 
+      def self.label
+        'Get This'
+      end
+      #label 'Get This' 
 
       def self.match?(_, _, bib, item, info)
         # Tim's most current logic says yes already.
