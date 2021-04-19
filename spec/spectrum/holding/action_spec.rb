@@ -29,11 +29,11 @@ describe Spectrum::Holding::Action, ".for" do
     expect(action.class.to_s).to eq('Spectrum::Holding::GetThisAction')
   end
   it "returns BookThisAction if given BookThis arguments" do
-    action = described_class.for(nil, nil,nil,{ 'sub_library' => 'FVL' }, {'can_book' => true}) 
+    action = described_class.for(nil, nil,nil,nil, {'can_book' => true}) 
     expect(action.class.to_s).to eq('Spectrum::Holding::BookThisAction')
   end
   it "returns RequestThisAction if given RequestThis arguments" do
-    action = described_class.for(nil, nil,nil,{ 'sub_library' => 'SPEC'}, {'can_reserve' => true}) 
+    action = described_class.for(nil, nil,nil,nil, {'can_reserve' => true}) 
     expect(action.class.to_s).to eq('Spectrum::Holding::RequestThisAction')
   end
 end

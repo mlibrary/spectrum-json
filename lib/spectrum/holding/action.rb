@@ -4,12 +4,12 @@ module Spectrum
 
       attr_reader :id, :datastore, :bib, :item, :info
       def self.for(*args)
-        if GetThisAction.match?(*args)
-          GetThisAction.new(*args)
+        if RequestThisAction.match?(*args)
+          RequestThisAction.new(*args)
         elsif BookThisAction.match?(*args)
           BookThisAction.new(*args)
-        elsif RequestThisAction.match?(*args)
-          RequestThisAction.new(*args)
+        elsif GetThisAction.match?(*args)
+          GetThisAction.new(*args)
         else
           Action.new(*args)
         end
