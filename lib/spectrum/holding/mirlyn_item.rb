@@ -11,7 +11,7 @@ module Spectrum
         @item = item_factory.call(@id, @raw, item_info)
         @item_info = item_info
       end
-      def to_a(action: Spectrum::Holding::Action.for(@id, @id, @bib_record, @holding, @item_info),
+      def to_a(action: Spectrum::Holding::Action.for(doc_id: @id, bib_record: @bib_record, holding: @holding, item_info: @item_info),
                description: Spectrum::Holding::MirlynItemDescription.for(item: @item),
                intent: Aleph.intent(@item.status), icon: Aleph.icon(@item.status))
         [

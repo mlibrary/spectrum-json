@@ -8,7 +8,8 @@ describe Spectrum::Holding::GetThisAction do
   context "::match?" do
     let(:data) { YAML.load_file(File.expand_path('../get_this_action_data-01.yml', __FILE__)) }
     it "returns true on example 0" do
-      expect(described_class.match?(*data[0]['args'])).to eq(data[0]['match'])
+      args = data[0]['args']
+      expect(described_class.match?(bib_record: args[2], item: args[3], info: args[4])).to eq(true)
     end
   end
 
@@ -16,7 +17,7 @@ describe Spectrum::Holding::GetThisAction do
     context "with a basic example" do
 
       let(:id) { 'ID' }
-      let(:datastore) { 'DATASTORE' }
+      let(:datastore) { 'ID' }
       let(:bib) { nil }
       let(:item) {{
         'item_status' => ''
@@ -28,11 +29,11 @@ describe Spectrum::Holding::GetThisAction do
           barcode: 'BARCODE',
           action: 'get-this',
           record: 'ID',
-          datastore: 'DATASTORE',
+          datastore: 'ID',
         }
       }}
 
-      subject { described_class.new(id, datastore, bib, item, info) }
+      subject { described_class.new(doc_id: id, bib_record: bib, holding: item, item_info: info) }
 
       it 'returns an N/A cell.' do
         expect(subject.finalize).to eq(result)

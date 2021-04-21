@@ -5,8 +5,8 @@ module Spectrum
         'Request This' 
       end
 
-      def self.match?(_, _, _, _, info)
-        info['can_reserve']
+      def self.match?(info)
+        !!info['can_reserve']
       end
 
       def finalize

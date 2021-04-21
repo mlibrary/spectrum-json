@@ -5,8 +5,8 @@ module Spectrum
         'Book This' 
       end
 
-      def self.match?(_, _, _, _, info)
-        info['can_book']
+      def self.match?(info)
+        !!info['can_book']
       end
 
       def finalize

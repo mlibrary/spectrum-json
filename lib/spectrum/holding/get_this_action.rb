@@ -6,7 +6,7 @@ module Spectrum
       end
       #label 'Get This' 
 
-      def self.match?(_, _, bib, item, info)
+      def self.match?(bib_record:, item:, info:)
         # Tim's most current logic says yes already.
         return true if info['can_request']
 
