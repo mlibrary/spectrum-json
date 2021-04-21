@@ -125,10 +125,10 @@ module Spectrum
       def finalize
         super.merge(
           to: {
-            barcode: info['barcode'],
+            barcode: @item_info['barcode'],
             action: 'get-this',
-            record: id,
-            datastore: datastore,
+            record: @doc_id,
+            datastore: @doc_id,
           }
         )
       end

@@ -34,11 +34,11 @@ module Spectrum
       end
 
       def adm_doc_number
-        info['full_item_key'].slice(0, 9)
+        @item_info['full_item_key'].slice(0, 9)
       end
 
       def adm_item_sequence
-       info['full_item_key'].slice(9, 6)
+       @item_info['full_item_key'].slice(9, 6)
       end
 
     end

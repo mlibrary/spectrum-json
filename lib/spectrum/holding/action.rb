@@ -2,7 +2,7 @@ module Spectrum
   class Holding
     class Action
 
-      attr_reader :id, :doc_id, :datastore, :bib, :item, :info
+      attr_reader :doc_id, :bib_record, :holding, :item_info
       def self.for(**args)
         if RequestThisAction.match?(args[:item_info])
           RequestThisAction.new(**args)
@@ -29,11 +29,12 @@ module Spectrum
 
       def initialize(doc_id:, bib_record:, holding:, item_info:)
         @doc_id = doc_id
-        @id = doc_id
-        @datastore = doc_id
-        @bib = bib_record
-        @item = holding
-        @info = item_info
+
+        @bib_record = bib_record
+        
+        @holding = holding
+
+        @item_info = item_info
       end
 
       def finalize
