@@ -12,7 +12,7 @@ describe Spectrum::Holding::GetThisAction do
     let(:holding) { JSON.parse(File.read('./spec/fixtures/get_this_action_getholdings.json'))[doc_id] }
     let(:item_info) {holding[1]["item_info"].first}
 
-    let(:item){Spectrum::Item.new(id: doc_id, holdings: holding, item: item_info)}
+    let(:item){Spectrum::Item.new(doc_id: doc_id, holdings: holding, item: item_info)}
 
     it "returns true on example 0" do
       expect(described_class.match?(item)).to eq(true)

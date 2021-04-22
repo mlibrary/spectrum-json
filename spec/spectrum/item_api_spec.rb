@@ -5,12 +5,12 @@ require 'spectrum/item'
 require 'spectrum/available_online_holding'
 
 {
-  Spectrum::Item => [holdings: Hash.new([]), id: nil, item: Hash.new],
+  Spectrum::Item => [holdings: Hash.new([]), doc_id: nil, item: Hash.new],
   Spectrum::AvailableOnlineHolding => [nil],
 }.each_pair do |klass, args|
   describe klass do
     [
-      'id', 'callnumber', 'status', 'location',
+      'doc_id', 'callnumber', 'status', 'location',
       'notes', 'issue', 'can_book?', 'can_reserve?',
       'can_request?', 'circulating?', 'on_shelf?',
       'on_site?', 'off_site?', 'reopened?',

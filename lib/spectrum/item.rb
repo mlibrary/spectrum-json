@@ -49,12 +49,12 @@ module Spectrum
 
     ETAS_START = 'Full text available,'
 
-    attr_reader :holding, :id 
+    attr_reader :holding, :doc_id
 
-    def initialize(id:, holdings:, item:)
+    def initialize(doc_id:, holdings:, item:)
+      @doc_id = doc_id 
       @item = item || barcode_not_found # single item from getHoldings.pl element
       @holdings  = holdings  #single element from getHoldings.pl
-      @id = id #doc_id
       @etas_ids = extract_etas_ids(@holdings)
     end
 
@@ -72,14 +72,14 @@ module Spectrum
         .find do |item_info| 
           item_info['barcode'] == barcode
         end 
-      Spectrum::Item.new(id: doc_id, holdings: holdings, item: item)
+      Spectrum::Item.new(doc_id: doc_id, holdings: holdings, item: item)
     end
 
     def record
-      @id
+      @doc_id
     end
-    def doc_id
-      @id
+    def id
+      @doc_id
     end
     def sub_library
       @item['sub_library']

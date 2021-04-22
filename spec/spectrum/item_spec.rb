@@ -17,6 +17,11 @@ describe Spectrum::Item do
       expect(subject.id).to eq('003553756')
     end
   end
+  context '#doc_id' do
+    it 'returns a string' do
+      expect(subject.doc_id).to eq('003553756')
+    end
+  end
 
   context '#callnumber' do
     it 'returns a string' do
