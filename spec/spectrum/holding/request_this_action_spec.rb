@@ -21,7 +21,7 @@ describe Spectrum::Holding::RequestThisAction do
     href: 'https://iris.lib.umich.edu/aeon/?Action=10&Form=30&ItemAuthor=author&barcode=&callnumber=&date=pub_date&description=&extent=physical_description&fixedshelf=&genre=genre&isbn=isbn&issn=issn&itemDate=date&itemPlace=place&itemPublisher=pub&location=&publisher=publisher&restriction=restriction&rft.au=author&rft.edition=edition&sgenre=sgenre&sublocation=&sysnum=ID&title=title'
   }}
 
-  subject { described_class.new(item: item, doc_id: id, bib_record: bib, holding: holding, item_info: info) }
+  subject { described_class.new(item: item,bib_record: bib) }
 
   context "#finalize" do
     it 'returns an N/A cell.' do

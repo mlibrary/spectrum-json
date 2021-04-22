@@ -39,7 +39,7 @@ describe Spectrum::Holding::GetThisAction do
         }
       }}
 
-      subject { described_class.new(doc_id: id, bib_record: bib, holding: holding, item_info: info, item: item) }
+      subject { described_class.new(bib_record: bib, item: item) }
 
       it 'returns an N/A cell.' do
         expect(subject.finalize).to eq(result)

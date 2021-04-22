@@ -12,7 +12,7 @@ describe Spectrum::Holding::Action do
   subject do 
     plain_item = instance_double(Spectrum::Item, "can_request?"=> false, "can_book?"=> false, "can_reserve?" => false, item_process_status: nil, item_status: nil, sub_library: 'FVL' ) 
 
-    described_class.for(item: plain_item, doc_id: nil, bib_record: nil, holding: {}, item_info: {})
+    described_class.for(item: plain_item, bib_record: nil)
   end
 
   context "::label" do

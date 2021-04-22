@@ -2,8 +2,8 @@ module Spectrum
   class Holding
     class Action
 
-      attr_reader :doc_id, :bib_record, :holding, :item_info
-      def self.for(bib_record:, item:, doc_id: nil, holding: nil, item_info: nil)
+      attr_reader :doc_id, :bib_record, 
+      def self.for(bib_record:, item:)
 
         args = { bib_record: bib_record, item: item }
 
@@ -30,7 +30,7 @@ module Spectrum
         self.class.label
       end
 
-      def initialize(doc_id: nil,  holding: nil, item_info: nil,bib_record:, item:)
+      def initialize(bib_record:, item:)
         @bib_record = bib_record
         @item = item #Spectrum::Item
       end
