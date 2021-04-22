@@ -5,7 +5,6 @@ module Spectrum
       @holding = input.holding #holding element from getHoldings.pl
       @id = input.id
       @bib_record = input.bib_record
-      #@preExpanded: false #state of preExpanded.
     end
     def self.for(input)
       if input.holding['up_links'] || input.holding['down_links']
@@ -13,7 +12,7 @@ module Spectrum
       elsif input.holding['location'] == 'HathiTrust Digital Library'
         HathiTrustHolding.new(input)
       else
-        Holding.new(input)
+        MirlynHolding.new(input)
       end
     end
 
@@ -37,6 +36,28 @@ module Spectrum
       @holding['info_link'] ? {href: @holding['info_link'], text: 'About location'} : nil
     end
     def name
+      nil
+    end
+    def type
+      'physical'
+    end
+    def headings
+      []
+    end
+    def rows
+      []
+    end
+    def notes
+      nil
+    end
+  end
+
+  class Holding::MirlynHolding < Holding
+    private
+    def headings
+      ['Action', 'Description', 'Status', 'Call Number']
+    end
+    def name
       'holdings'
     end
     def notes
@@ -50,16 +71,9 @@ module Spectrum
         )
       ].compact.reject(&:empty?)
     end
-    def headings
-      ['Action', 'Description', 'Status', 'Call Number']
-    end
     def rows
       @holding['item_info'].map { |item_info| Holding::MirlynItem.new(holding_input: @input, item_info: item_info).to_a }
     end
-    def type
-      'physical'
-    end
-
   end
   class Holding::HathiTrustHolding < Holding
     private
@@ -71,9 +85,6 @@ module Spectrum
     end
     def name
       'HathiTrust Sources'
-    end
-    def notes
-      nil
     end
     def rows
       @holding['item_info'].map { |info| process_item_info(info) }
@@ -107,9 +118,6 @@ module Spectrum
         ['Record link']
     end
     def name
-      nil
-    end
-    def notes
       nil
     end
 
