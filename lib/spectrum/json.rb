@@ -84,7 +84,7 @@ require 'spectrum/request/debug'
 
 require 'spectrum/policy/get_this'
 
-require 'spectrum/holding/holding'
+require 'spectrum/holding/holding_presenter'
 require 'spectrum/holding/mirlyn_item'
 require 'spectrum/holding/mirlyn_item_description'
 require 'spectrum/holding/action'

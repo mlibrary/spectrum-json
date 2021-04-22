@@ -1,5 +1,5 @@
 module Spectrum
-  class Holding
+  class Holding::HoldingPresenter
     def initialize(input)
       @input = input
       @holding = input.holding #holding element from getHoldings.pl
@@ -8,11 +8,11 @@ module Spectrum
     end
     def self.for(input)
       if input.holding['up_links'] || input.holding['down_links']
-        LinkedHolding.for(input)
+        Holding::LinkedHoldingPresenter.for(input)
       elsif input.holding['location'] == 'HathiTrust Digital Library'
-        HathiTrustHolding.new(input)
+        Holding::HathiTrustHoldingPresenter.new(input)
       else
-        MirlynHolding.new(input)
+        Holding::MirlynHoldingPresenter.new(input)
       end
     end
 
@@ -52,7 +52,7 @@ module Spectrum
     end
   end
 
-  class Holding::MirlynHolding < Holding
+  class Holding::MirlynHoldingPresenter < Holding::HoldingPresenter
     private
     def headings
       ['Action', 'Description', 'Status', 'Call Number']
@@ -75,7 +75,7 @@ module Spectrum
       @holding['item_info'].map { |item_info| Holding::MirlynItem.new(holding_input: @input, item_info: item_info).to_a }
     end
   end
-  class Holding::HathiTrustHolding < Holding
+  class Holding::HathiTrustHoldingPresenter < Holding::HoldingPresenter
     private
     def headings
       ['Link', 'Description', 'Source']
@@ -104,7 +104,7 @@ module Spectrum
       ]
     end
   end
-  class Holding::LinkedHolding < Holding
+  class Holding::LinkedHoldingPresenter < Holding::HoldingPresenter
     def self.for(input)
       if input.holding['down_links']
         Holding::DownLinkedHolding.new(input)
@@ -133,7 +133,7 @@ module Spectrum
       ]
     end
   end
-  class Holding::DownLinkedHolding < Holding::LinkedHolding
+  class Holding::DownLinkedHolding < Holding::LinkedHoldingPresenter
     private
     def caption
       'Bound with'
@@ -142,7 +142,7 @@ module Spectrum
       @holding['down_links'].map { |link| process_link(link) }
     end
   end
-  class Holding::UpLinkedHolding < Holding::LinkedHolding
+  class Holding::UpLinkedHolding < Holding::LinkedHoldingPresenter
     private
     def caption
       'Included in'
