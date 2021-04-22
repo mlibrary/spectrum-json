@@ -3,12 +3,15 @@ module Spectrum
     class Action
 
       attr_reader :doc_id, :bib_record, :holding, :item_info
-      def self.for(**args)
-        if RequestThisAction.match?(args[:item_info])
+      def self.for(bib_record:, item:, doc_id: nil, holding: nil, item_info: nil)
+
+        args = { bib_record: bib_record, item: item }
+
+        if item.can_reserve?
           RequestThisAction.new(**args)
-        elsif BookThisAction.match?(args[:item_info])
+        elsif item.can_book?
           BookThisAction.new(**args)
-        elsif GetThisAction.match?(bib_record: args[:bib_record], item: args[:holding], info: args[:item_info])
+        elsif GetThisAction.match?(item)
           GetThisAction.new(**args)
         else
           Action.new(**args)
@@ -27,14 +30,9 @@ module Spectrum
         self.class.label
       end
 
-      def initialize(doc_id:, bib_record:, holding:, item_info:)
-        @doc_id = doc_id
-
+      def initialize(doc_id: nil,  holding: nil, item_info: nil,bib_record:, item:)
         @bib_record = bib_record
-        
-        @holding = holding
-
-        @item_info = item_info
+        @item = item #Spectrum::Item
       end
 
       def finalize

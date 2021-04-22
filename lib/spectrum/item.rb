@@ -62,26 +62,44 @@ module Spectrum
       return  Spectrum::AvailableOnlineHolding.new(request.id) if request.barcode == 'available-online'
       url = source.holdings + request.id
       response = HTTParty.get(url)
-      Spectrum::Item.for_barcode(response.parsed_response, request.id, request.barcode)
+      Spectrum::Item.for_barcode(response.parsed_response[request.id], request.id, request.barcode, )
     end
 
-    def self.for_barcode(data, record, barcode)
-      holdings    = data[record]  #single element from getHoldings.pl
-      item = holdings.map do |holding|
-        next unless holding['item_info']
-        holding['item_info'].find do |item|
-          item['barcode'] == barcode
-        end
-      end.compact.first
-      Spectrum::Item.new(id: record, holdings: holdings, item: item)
+    def self.for_barcode(holdings, doc_id, barcode)
+      item = holdings.filter{ |h| h['item_info'] }
+        .map{|h| h['item_info']}
+        .flatten
+        .find do |item_info| 
+          item_info['barcode'] == barcode
+        end 
+      Spectrum::Item.new(id: doc_id, holdings: holdings, item: item)
     end
 
     def record
       @id
     end
+    def doc_id
+      @id
+    end
+    def sub_library
+      @item['sub_library']
+    end
+    def collection
+      @item['collection']
+    end
+    def inventory_number
+      @item['inventory_number']
+    end
 
     def barcode
       @item['barcode']
+    end
+
+    def item_process_status
+      @item['item_process_status']
+    end
+    def item_expected_arrival_date
+      @item['item_expected_arrival_date']
     end
 
     def callnumber
@@ -249,6 +267,26 @@ module Spectrum
 
     def status
       @item['status']
+    end
+
+    def item_status
+      @item['item_status']
+    end
+
+    def recall_due_date
+      @item['recall_due_date']
+    end
+
+    def due_date
+      @item['due_date']
+    end
+
+    def bor_status
+      @item['bor_status']
+    end
+
+    def loan_status
+      @item['loan_status']
     end
 
     def not_pickup_or_checkout?

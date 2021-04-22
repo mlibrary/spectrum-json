@@ -5,8 +5,8 @@ module Spectrum
         'Request This' 
       end
 
-      def self.match?(info)
-        !!info['can_reserve']
+      def self.match?(item)
+        item.can_request? 
       end
 
       def finalize
@@ -19,28 +19,28 @@ module Spectrum
       end
 
       def fixedshelf
-        @item_info['inventory_number']
+        @item.inventory_number
       end
 
       def barcode
-        @item_info['barcode']
+        @item.barcode
       end
 
       def sublocation
-        @holding['collection']
+        @item.collection
       end
 
       def location
-        return nil if @holding['sub_library'] && @holding['sub_library'] == 'BENT'
-        @holding['sub_lobrary']
+        return nil if @item.sub_library == 'BENT'
+        @item.sub_library
       end
 
       def description
-        (@item_info['description'] || '').slice(0, 250)
+        (@item.description || '').slice(0, 250)
       end
 
       def callnumber
-        @item_info['callnumber'] || @holding['callnumber']
+        @item.callnumber
       end
 
       def edition
@@ -88,7 +88,7 @@ module Spectrum
       end
 
       def barcode
-        @item_info['barcode']
+        @item.barcode
       end
 
       def genre
@@ -100,8 +100,8 @@ module Spectrum
       end
 
       def base_url
-        return 'https://aeon.bentley.umich.edu/login?' if @item_info['sub_library'] == 'BENT'
-        return 'https://chara.clements.umich.edu/aeon/?' if @item_info['sub_library'] == 'CLEM'
+        return 'https://aeon.bentley.umich.edu/login?' if @item.sub_library == 'BENT'
+        return 'https://chara.clements.umich.edu/aeon/?' if @item.sub_library == 'CLEM'
         'https://iris.lib.umich.edu/aeon/?'
       end
 
@@ -111,7 +111,7 @@ module Spectrum
           Form: '30',
           genre: genre,
           sgenre: sgenre,
-          sysnum: @doc_id,
+          sysnum: @item.doc_id,
           issn: issn,
           isbn: isbn,
           title: title,

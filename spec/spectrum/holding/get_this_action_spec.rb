@@ -3,13 +3,19 @@
 require_relative '../../spec_helper'
 require 'spectrum/holding/action'
 require 'spectrum/holding/get_this_action'
+require 'spectrum/item'
 
 describe Spectrum::Holding::GetThisAction do
   context "::match?" do
-    let(:data) { YAML.load_file(File.expand_path('../get_this_action_data-01.yml', __FILE__)) }
+
+    let(:doc_id) {'000045521'}
+    let(:holding) { JSON.parse(File.read('./spec/fixtures/get_this_action_getholdings.json'))[doc_id] }
+    let(:item_info) {holding[1]["item_info"].first}
+
+    let(:item){Spectrum::Item.new(id: doc_id, holdings: holding, item: item_info)}
+
     it "returns true on example 0" do
-      args = data[0]['args']
-      expect(described_class.match?(bib_record: args[2], item: args[3], info: args[4])).to eq(true)
+      expect(described_class.match?(item)).to eq(true)
     end
   end
 
@@ -17,11 +23,11 @@ describe Spectrum::Holding::GetThisAction do
     context "with a basic example" do
 
       let(:id) { 'ID' }
-      let(:datastore) { 'ID' }
       let(:bib) { nil }
-      let(:item) {{
+      let(:holding) {{
         'item_status' => ''
       }}
+      let(:item) { instance_double(Spectrum::Item, barcode: 'BARCODE', doc_id: 'ID') }
       let(:info) {{ 'can_request' => true, 'barcode' => 'BARCODE' }}
       let(:result) {{
         text: 'Get This',
@@ -33,7 +39,7 @@ describe Spectrum::Holding::GetThisAction do
         }
       }}
 
-      subject { described_class.new(doc_id: id, bib_record: bib, holding: item, item_info: info) }
+      subject { described_class.new(doc_id: id, bib_record: bib, holding: holding, item_info: info, item: item) }
 
       it 'returns an N/A cell.' do
         expect(subject.finalize).to eq(result)

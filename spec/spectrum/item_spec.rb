@@ -8,7 +8,8 @@ require 'spectrum/available_online_holding'
 
 describe Spectrum::Item do
   subject do
-    described_class.for_barcode(*YAML.load_file(File.expand_path('../holding.yml', __FILE__)))
+    holding = YAML.load_file(File.expand_path('../holding.yml', __FILE__))
+    described_class.for_barcode(holding[0][holding[1]], holding[1], holding[2])
   end
 
   context '#id' do

@@ -10,7 +10,7 @@ describe Spectrum::Holding::MirlynItem, "to_a" do
       intent: 'intent', icon: 'icon'
     }
     
-    @item_dbl = instance_double(Spectrum::Item, status: 'On Shelf', callnumber: 'call_number', can_request?: false)
+    @item_dbl = instance_double(Spectrum::Item, status: 'On Shelf', callnumber: 'call_number', can_request?: false, inventory_number: nil)
   
     @mirlyn_item_init = {
       holding_input: double('Spectrum::Response::Holdings::HoldingInput', holding: nil, raw: nil, id:nil, bib_record: nil),
@@ -33,7 +33,7 @@ describe Spectrum::Holding::MirlynItem, "to_a" do
   end
   it "handles Video call number" do
     allow(@item_dbl).to receive(:callnumber).and_return('VIDEO call_number')
-    @mirlyn_item_init[:item_info]['inventory_number'] = '12345'
+    allow(@item_dbl).to receive(:inventory_number).and_return('12345')
     expect(subject[3]).to eq( {text: 'VIDEO call_number - 12345'}
     ) 
   end

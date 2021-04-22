@@ -6,35 +6,35 @@ module Spectrum
       end
       #label 'Get This' 
 
-      def self.match?(bib_record:, item:, info:)
+      def self.match?(item)
         # Tim's most current logic says yes already.
-        return true if info['can_request']
+        return true if item.can_request?
 
         # Apply the snapshot of Tim's logic from 9/1
-        ret = from_process_status(info)
-        return false if item['sub_library'] == 'FVL'
-        return false if item['sub_library'] == 'SPEC'
-        return false if item['sub_library'] == 'BENT' && item['collection'] == 'ELEC'
-        return false if item['sub_library'] == 'CLEM' && item['collection'] == 'ELEC'
-        return false if item['collection']  == 'PAPY' && item['sub_library'].match(/^(SPEC|HATCH)/)
+        ret = from_process_status(item)
+        return false if item.sub_library == 'FVL'
+        return false if item.sub_library == 'SPEC'
+        return false if item.sub_library == 'BENT' && item.collection == 'ELEC'
+        return false if item.sub_library == 'CLEM' && item.collection == 'ELEC'
+        return false if item.collection  == 'PAPY' && item.sub_library.match(/^(SPEC|HATCH)/)
         ret
       end
 
       def self.from_process_status(item)
         ret = item_default_match(item)
-        return ret if item['item_process_status'].nil? || item['item_process_status'].empty?
+        return ret if item.item_process_status.nil? || item.item_process_status.empty?
 
-        ps_entry = process_status_map[item['item_process_status']]
+        ps_entry = process_status_map[item.item_process_status]
         return false unless ps_entry
         ret = ps_entry[1]
-        return false if item['item_process_status'].match(/NA|CL/) && item['item_expected_arrival_date']
-        if item['item_status'] == '08'
-          return true unless item['sub_library'].match(/BSTA|CSCAR/)
-          return false if item['sub_library'] == 'DHCL' && !(item['collection'].match(/BOOK|OVR/))
+        return false if item.item_process_status.match(/NA|CL/) && item.item_expected_arrival_date
+        if item.item_status == '08'
+          return true unless item.sub_library.match(/BSTA|CSCAR/)
+          return false if item.sub_library == 'DHCL' && !(item.collection.match(/BOOK|OVR/))
         end
 
-        return true if item['recall_due_date']
-        return true if item['due_date'] && item['bor_status'] == '11' && item['loan_status'] == 'A'
+        return true if item.recall_due_date
+        return true if item.due_date && item.bor_status == '11' && item.loan_status == 'A'
         ret
       end
 
@@ -111,24 +111,24 @@ module Spectrum
       end
 
       def self.item_default_match(item)
-        return false unless item['item_status']
-        return false unless item['sub_library']
-        return false if item['item_status'].match(/0[678]/)
-        return false if item['sub_library'] == 'AAEL'  && item['item_status'].match(/0[45]/)
-        return false if item['sub_library'] == 'FINE'  && item['item_status'].match(/0[345]/)
-        return false if item['sub_library'] == 'FLINT' && item['item_status'].match(/0[45]|10/)
-        return false if item['sub_library'] == 'MUSM'  && item['item_status'] == '03'
-        return false if item['sub_library'] == 'SCI' && item['item_status'].match(/0[45]/)
+        return false unless item.item_status
+        return false unless item.sub_library
+        return false if item.item_status.match(/0[678]/)
+        return false if item.sub_library == 'AAEL'  && item.item_status.match(/0[45]/)
+        return false if item.sub_library == 'FINE'  && item.item_status.match(/0[345]/)
+        return false if item.sub_library == 'FLINT' && item.item_status.match(/0[45]|10/)
+        return false if item.sub_library == 'MUSM'  && item.item_status == '03'
+        return false if item.sub_library == 'SCI' && item.item_status.match(/0[45]/)
         true
       end
 
       def finalize
         super.merge(
           to: {
-            barcode: @item_info['barcode'],
+            barcode: @item.barcode,
             action: 'get-this',
-            record: @doc_id,
-            datastore: @doc_id,
+            record: @item.doc_id,
+            datastore: @item.doc_id,
           }
         )
       end

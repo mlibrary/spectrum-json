@@ -10,16 +10,18 @@ require 'active_support/core_ext/hash'
 
 describe Spectrum::Holding::RequestThisAction do
   let(:id) { 'ID' }
-  let(:datastore) { 'DATASTORE' }
   let(:bib) { StubBibRecord.new }
-  let(:item) {{ 'can_reserve' => true }}
+  let(:holding) {{ 'can_reserve' => true }}
   let(:info) {{ 'can_reserve' => true }}
+  let(:item) { instance_double(Spectrum::Item, full_item_key: '12345678901234567890', 
+      barcode: nil, collection: nil, inventory_number: nil, sub_library: nil, callnumber: nil,
+      description: nil, doc_id: id)}
   let(:result) {{
     text: 'Request This',
     href: 'https://iris.lib.umich.edu/aeon/?Action=10&Form=30&ItemAuthor=author&barcode=&callnumber=&date=pub_date&description=&extent=physical_description&fixedshelf=&genre=genre&isbn=isbn&issn=issn&itemDate=date&itemPlace=place&itemPublisher=pub&location=&publisher=publisher&restriction=restriction&rft.au=author&rft.edition=edition&sgenre=sgenre&sublocation=&sysnum=ID&title=title'
   }}
 
-  subject { described_class.new(doc_id: id, bib_record: bib, holding: item, item_info: info) }
+  subject { described_class.new(item: item, doc_id: id, bib_record: bib, holding: holding, item_info: info) }
 
   context "#finalize" do
     it 'returns an N/A cell.' do

@@ -5,8 +5,8 @@ module Spectrum
         'Book This' 
       end
 
-      def self.match?(info)
-        !!info['can_book']
+      def self.match?(item)
+        item.can_book? 
       end
 
       def finalize
@@ -34,11 +34,11 @@ module Spectrum
       end
 
       def adm_doc_number
-        @item_info['full_item_key'].slice(0, 9)
+        @item.full_item_key.slice(0, 9)
       end
 
       def adm_item_sequence
-       @item_info['full_item_key'].slice(9, 6)
+        @item.full_item_key.slice(9, 6)
       end
 
     end

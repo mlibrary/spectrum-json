@@ -4,14 +4,13 @@ module Spectrum
       def initialize(holding_input:,item_info:, 
                      item_factory: lambda{|id, holdings, item| Spectrum::Item.new(id: id, holdings: holdings, item: item) }
                     )
-        @holding = holding_input.holding
+        @bib_record = holding_input.bib_record
+
         @raw = holding_input.raw
         @id = holding_input.id
-        @bib_record = holding_input.bib_record
         @item = item_factory.call(@id, @raw, item_info)
-        @item_info = item_info
       end
-      def to_a(action: Spectrum::Holding::Action.for(doc_id: @id, bib_record: @bib_record, holding: @holding, item_info: @item_info),
+      def to_a(action: Spectrum::Holding::Action.for(bib_record: @bib_record, item: @item),
                description: Spectrum::Holding::MirlynItemDescription.for(item: @item),
                intent: Aleph.intent(@item.status), icon: Aleph.icon(@item.status))
         [
@@ -28,7 +27,7 @@ module Spectrum
       private 
       def call_number
         return nil unless (callnumber = @item.callnumber)
-        return callnumber unless (inventory_number = @item_info['inventory_number'])
+        return callnumber unless (inventory_number = @item.inventory_number)
         return callnumber unless callnumber.start_with?('VIDEO')
         [callnumber, inventory_number].join(' - ')
       end
