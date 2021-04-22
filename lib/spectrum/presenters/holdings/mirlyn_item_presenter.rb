@@ -1,5 +1,5 @@
 module Spectrum
-  class Holding::MirlynItem
+  class Presenters::MirlynItem
     def initialize(holding_input:,item_info:, 
                    item_factory: lambda{|doc_id, holdings, item| Spectrum::Item.new(doc_id: doc_id, holdings: holdings, item: item) }
                   )

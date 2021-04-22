@@ -6,7 +6,7 @@ module Spectrum
       def initialize(source, request, 
                      bib_record: BibRecord.fetch(id: request.id, url: source.url),
                      getHoldingsResponse: HTTParty.get("#{source.holdings}#{request.id}"),
-                     holding_factory: lambda{|input| Spectrum::Holding::HoldingPresenter.for(input)}
+                     holding_factory: lambda{|input| Spectrum::Presenters::HoldingPresenter.for(input)}
                     )
         @request = request
         @bib_record = bib_record

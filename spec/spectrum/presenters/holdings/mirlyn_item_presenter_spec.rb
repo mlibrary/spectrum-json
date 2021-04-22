@@ -1,7 +1,7 @@
-require_relative '../../spec_helper'
+require_relative '../../../spec_helper'
 require 'spectrum/json'
 
-describe Spectrum::Holding::MirlynItem, "to_a" do
+describe Spectrum::Presenters::MirlynItem, "to_a" do
     before(:each) do
 
     @to_a_init = {

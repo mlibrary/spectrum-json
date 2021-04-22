@@ -1,5 +1,5 @@
-module Spectrum
-  class Holding::HoldingPresenter
+module Spectrum::Presenters
+  class HoldingPresenter
     def initialize(input)
       @input = input
       @holding = input.holding #holding element from getHoldings.pl
@@ -8,11 +8,11 @@ module Spectrum
     end
     def self.for(input)
       if input.holding['up_links'] || input.holding['down_links']
-        Holding::LinkedHoldingPresenter.for(input)
+        LinkedHoldingPresenter.for(input)
       elsif input.holding['location'] == 'HathiTrust Digital Library'
-        Holding::HathiTrustHoldingPresenter.new(input)
+        HathiTrustHoldingPresenter.new(input)
       else
-        Holding::MirlynHoldingPresenter.new(input)
+        MirlynHoldingPresenter.new(input)
       end
     end
 
@@ -52,7 +52,7 @@ module Spectrum
     end
   end
 
-  class Holding::MirlynHoldingPresenter < Holding::HoldingPresenter
+  class MirlynHoldingPresenter < HoldingPresenter
     private
     def headings
       ['Action', 'Description', 'Status', 'Call Number']
@@ -72,10 +72,10 @@ module Spectrum
       ].compact.reject(&:empty?)
     end
     def rows
-      @holding['item_info'].map { |item_info| Holding::MirlynItem.new(holding_input: @input, item_info: item_info).to_a }
+      @holding['item_info'].map { |item_info| Spectrum::Presenters::MirlynItem.new(holding_input: @input, item_info: item_info).to_a }
     end
   end
-  class Holding::HathiTrustHoldingPresenter < Holding::HoldingPresenter
+  class HathiTrustHoldingPresenter < HoldingPresenter
     private
     def headings
       ['Link', 'Description', 'Source']
@@ -104,12 +104,12 @@ module Spectrum
       ]
     end
   end
-  class Holding::LinkedHoldingPresenter < Holding::HoldingPresenter
+  class LinkedHoldingPresenter < HoldingPresenter
     def self.for(input)
       if input.holding['down_links']
-        Holding::DownLinkedHolding.new(input)
+        DownLinkedHolding.new(input)
       else
-        Holding::UpLinkedHolding.new(input)
+        UpLinkedHolding.new(input)
       end
     end
 
@@ -133,7 +133,7 @@ module Spectrum
       ]
     end
   end
-  class Holding::DownLinkedHolding < Holding::LinkedHoldingPresenter
+  class DownLinkedHolding < LinkedHoldingPresenter
     private
     def caption
       'Bound with'
@@ -142,7 +142,7 @@ module Spectrum
       @holding['down_links'].map { |link| process_link(link) }
     end
   end
-  class Holding::UpLinkedHolding < Holding::LinkedHoldingPresenter
+  class UpLinkedHolding < LinkedHoldingPresenter
     private
     def caption
       'Included in'
