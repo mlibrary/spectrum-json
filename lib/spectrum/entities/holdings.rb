@@ -13,6 +13,12 @@ module Spectrum::Entities
         []
       end
     end
+    def [](index)
+      @holdings[index]
+    end
+    def each(&block)
+      @holdings.each(&block)
+    end
   end
 
   class Holding
@@ -55,6 +61,18 @@ module Spectrum::Entities
     def holding_id
       @data["hol_doc_number"]
     end
+    def up_links
+      @data["up_links"]
+    end
+    def down_links
+      @data["down_links"]
+    end
+    def public_note
+      @data["public_note"]
+    end
+    def summary_holdings
+      @data["summary_holdings"]
+    end
   end
   class HathiHolding < Holding
     def id
@@ -78,6 +96,12 @@ module Spectrum::Entities
         MirlynItem.new(holding, item)
       end
     end
+    def raw
+      @item
+    end
+    def description
+      @item['description'] || ''
+    end
   end
   class MirlynItem < GetHoldingsItem
     def barcode
@@ -97,9 +121,6 @@ module Spectrum::Entities
       @item["full_item_key"]
     end
 
-    def description
-      @item['description'] || ''
-    end
     def inventory_number
       @item['inventory_number']
     end
@@ -123,6 +144,9 @@ module Spectrum::Entities
     end
     def temp_location
       @item['temp_loc'] || ''
+    end
+    def status
+      @item["status"]
     end
 
   end

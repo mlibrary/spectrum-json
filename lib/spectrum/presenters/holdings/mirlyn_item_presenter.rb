@@ -1,13 +1,8 @@
 module Spectrum
   class Presenters::MirlynItem
-    def initialize(holding_input:,item_info:, 
-                   item_factory: lambda{|doc_id, holdings, item| Spectrum::Entities::Item.new(doc_id: doc_id, holdings: holdings, item: item) }
-                  )
-      @bib_record = holding_input.bib_record
-
-      raw = holding_input.raw
-      id = holding_input.id
-      @item = item_factory.call(id, raw, item_info)
+    def initialize(item:, bib_record: )
+      @bib_record = bib_record
+      @item = item #Entities::MirlynItem
     end
     def to_a(action: Spectrum::Holding::Action.for(bib_record: @bib_record, item: @item),
              description: Spectrum::Holding::MirlynItemDescription.for(item: @item),

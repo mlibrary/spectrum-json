@@ -1,13 +1,15 @@
 require_relative '../../../spec_helper'
-require 'spectrum/presenters/holdings/holding_presenter'
+require 'spectrum/json'
 
 describe Spectrum::Presenters::HathiTrustHoldingPresenter, "to_h" do
   before(:each) do
-    @id = "000311635"
-    @raw = JSON.parse(File.read('spec/fixtures/hurdy_gurdy_getHoldings.json'))
-    @holding = @raw[@id].first 
-    @item_info =  @holding["item_info"]
-    @holding_input = double('Spectrum::Response::Holdings::HoldingInput', holding: @holding, raw: @raw, id:@id, bib_record: nil)
+    id = "000311635"
+    raw = JSON.parse(File.read('spec/fixtures/hurdy_gurdy_getHoldings.json'))
+    my_holdings = Spectrum::Entities::Holdings.new(raw)
+    my_hathi = my_holdings[0]
+
+    @item_info = raw[id][0]["item_info"] 
+    @holding_input = double('Spectrum::Response::Holdings::HoldingInput', holding: my_hathi, bib_record: nil )
   end
   subject do
     described_class.new(@holding_input).to_h

@@ -22,6 +22,12 @@ describe Spectrum::Entities::Holdings do
   it "has a doc_id" do
     expect(subject.doc_id).to eq("000311635")
   end
+  it "returns holdings for #each" do
+    holdings = []
+    subject.each{|x| holdings.push(x.class.name.to_s) }
+    expect(holdings[0]).to include('HathiHolding')
+    expect(holdings[1]).to include('MirlynHolding')
+  end
   context ".for" do
 
     before(:each) do

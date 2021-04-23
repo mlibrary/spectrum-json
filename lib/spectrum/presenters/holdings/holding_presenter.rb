@@ -1,16 +1,14 @@
 module Spectrum::Presenters
   class HoldingPresenter
     def initialize(input)
-      @input = input
-      @holding = input.holding #holding element from getHoldings.pl
-      @id = input.id
       @bib_record = input.bib_record
+      @holding = input.holding
     end
     def self.for(input)
-      if input.holding['up_links'] || input.holding['down_links']
-        LinkedHoldingPresenter.for(input)
-      elsif input.holding['location'] == 'HathiTrust Digital Library'
+      if input.holding.location == 'HathiTrust Digital Library'
         HathiTrustHoldingPresenter.new(input)
+      elsif input.holding.up_links || input.holding.down_links
+        LinkedHoldingPresenter.for(input)
       else
         MirlynHoldingPresenter.new(input)
       end
@@ -30,10 +28,11 @@ module Spectrum::Presenters
 
     private
     def caption
-        @holding['location']
+      @holding.location
     end
     def captionLink
-      @holding['info_link'] ? {href: @holding['info_link'], text: 'About location'} : nil
+      @holding.info_link ? {href: @holding.info_link, text: 'About location'} : nil
+
     end
     def name
       nil
@@ -62,17 +61,17 @@ module Spectrum::Presenters
     end
     def notes
       [
-        @holding['public_note'],
-        @holding['summary_holdings'],
+        @holding.public_note,
+        @holding.summary_holdings,
         Spectrum::FloorLocation.resolve(
-          @holding['sub_library'],
-          @holding['collection'],
-          @holding['callnumber']
+          @holding.sub_library,
+          @holding.collection,
+          @holding.callnumber
         )
       ].compact.reject(&:empty?)
     end
     def rows
-      @holding['item_info'].map { |item_info| Spectrum::Presenters::MirlynItem.new(holding_input: @input, item_info: item_info).to_a }
+      @holding.items.map { |item| Spectrum::Presenters::MirlynItem.new(bib_record: @bib_record,  item: item).to_a }
     end
   end
   class HathiTrustHoldingPresenter < HoldingPresenter
@@ -87,11 +86,11 @@ module Spectrum::Presenters
       'HathiTrust Sources'
     end
     def rows
-      @holding['item_info'].map { |info| process_item_info(info) }
+      @holding.items.map { |item| process_item_info(item) }
     end
-    def process_item_info(info)
-      status = info['status']
-      handle = "http://hdl.handle.net/2027/#{info['id']}"
+    def process_item_info(item)
+      status = item.status
+      handle = "http://hdl.handle.net/2027/#{item.id}"
       suffix = if status.include?('log in required')
         "?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth"
       else
@@ -99,14 +98,14 @@ module Spectrum::Presenters
       end
       [
         {text: status, href: "#{handle}#{suffix}"},
-        {text: info['description'] || ''},
-        {text: info['source'] || 'N/A'}
+        {text: item.description || ''},
+        {text: item.source || 'N/A'}
       ]
     end
   end
   class LinkedHoldingPresenter < HoldingPresenter
     def self.for(input)
-      if input.holding['down_links']
+      if input.holding.down_links
         DownLinkedHolding.new(input)
       else
         UpLinkedHolding.new(input)
@@ -127,7 +126,7 @@ module Spectrum::Presenters
           text: link['link_text'],
           to: {
             record: link['key'],
-            datastore: @id,
+            datastore: @holding.doc_id,
           }
         }
       ]
@@ -139,7 +138,7 @@ module Spectrum::Presenters
       'Bound with'
     end
     def rows
-      @holding['down_links'].map { |link| process_link(link) }
+      @holding.down_links.map { |link| process_link(link) }
     end
   end
   class UpLinkedHolding < LinkedHoldingPresenter
@@ -148,7 +147,7 @@ module Spectrum::Presenters
       'Included in'
     end
     def rows
-      @holding['up_links'].map { |link| process_link(link) }
+      @holding.up_links.map { |link| process_link(link) }
     end
   end
 end
