@@ -3,7 +3,7 @@ require 'spectrum/response/get_this'
 
 #collaborators
 require 'spectrum/policy/get_this'
-require 'spectrum/item'
+require 'spectrum/entities/item'
 require 'spectrum/bib_record'
 
 
@@ -25,7 +25,7 @@ end
 describe Spectrum::Response::GetThis do
   describe 'renderable' do
     before(:each) do
-      @item_dbl = class_double(Spectrum::Item, for_get_this: 'Spectrum::Item')
+      @item_dbl = class_double(Spectrum::Entities::Item, for_get_this: 'Spectrum::Item')
       @init = { 
                 source: double("HoldingsSource", holdings: 'http://localhost', url: 'mirlyn_solr_url'),
                 request: double('Spectrum::Request::GetThis', id: '123456789', barcode: '55555', logged_in?: true, username: 'username'),

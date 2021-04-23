@@ -10,7 +10,7 @@ describe Spectrum::Presenters::MirlynItem, "to_a" do
       intent: 'intent', icon: 'icon'
     }
     
-    @item_dbl = instance_double(Spectrum::Item, status: 'On Shelf', callnumber: 'call_number', can_request?: false, inventory_number: nil)
+    @item_dbl = instance_double(Spectrum::Entities::Item, status: 'On Shelf', callnumber: 'call_number', can_request?: false, inventory_number: nil)
   
     @mirlyn_item_init = {
       holding_input: double('Spectrum::Response::Holdings::HoldingInput', holding: nil, raw: nil, id:nil, bib_record: nil),

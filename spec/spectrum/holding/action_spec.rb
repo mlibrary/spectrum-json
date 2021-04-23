@@ -2,7 +2,7 @@
 
 require_relative '../../spec_helper'
 require 'spectrum/holding/action'
-require 'spectrum/item'
+require 'spectrum/entities/item'
 require 'spectrum/holding/get_this_action'
 require 'spectrum/holding/request_this_action'
 require 'spectrum/holding/book_this_action'
@@ -10,7 +10,7 @@ require 'spectrum/holding/book_this_action'
 describe Spectrum::Holding::Action do
 
   subject do 
-    plain_item = instance_double(Spectrum::Item, "can_request?"=> false, "can_book?"=> false, "can_reserve?" => false, item_process_status: nil, item_status: nil, sub_library: 'FVL' ) 
+    plain_item = instance_double(Spectrum::Entities::Item, "can_request?"=> false, "can_book?"=> false, "can_reserve?" => false, item_process_status: nil, item_status: nil, sub_library: 'FVL' ) 
 
     described_class.for(item: plain_item, bib_record: nil)
   end
@@ -31,7 +31,7 @@ end
 
 describe Spectrum::Holding::Action, ".for" do
   before(:each) do
-    @item = instance_double(Spectrum::Item, "can_request?" => false, "can_book?" => false, "can_reserve?" => false)
+    @item = instance_double(Spectrum::Entities::Item, "can_request?" => false, "can_book?" => false, "can_reserve?" => false)
   end
   it "returns GetThisAction if given getThis arguments" do
     allow(@item).to receive("can_request?").and_return(true)

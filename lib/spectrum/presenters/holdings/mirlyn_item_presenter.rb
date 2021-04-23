@@ -1,7 +1,7 @@
 module Spectrum
   class Presenters::MirlynItem
     def initialize(holding_input:,item_info:, 
-                   item_factory: lambda{|doc_id, holdings, item| Spectrum::Item.new(doc_id: doc_id, holdings: holdings, item: item) }
+                   item_factory: lambda{|doc_id, holdings, item| Spectrum::Entities::Item.new(doc_id: doc_id, holdings: holdings, item: item) }
                   )
       @bib_record = holding_input.bib_record
 

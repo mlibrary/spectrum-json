@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative '../spec_helper'
-require 'spectrum/item'
+require 'spectrum/entities/item'
 require 'spectrum/available_online_holding'
 
 {
-  Spectrum::Item => [holdings: Hash.new([]), doc_id: nil, item: Hash.new],
+  Spectrum::Entities::Item => [holdings: Hash.new([]), doc_id: nil, item: Hash.new],
   Spectrum::AvailableOnlineHolding => [nil],
 }.each_pair do |klass, args|
   describe klass do

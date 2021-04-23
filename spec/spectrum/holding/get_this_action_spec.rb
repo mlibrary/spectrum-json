@@ -3,7 +3,7 @@
 require_relative '../../spec_helper'
 require 'spectrum/holding/action'
 require 'spectrum/holding/get_this_action'
-require 'spectrum/item'
+require 'spectrum/entities/item'
 
 describe Spectrum::Holding::GetThisAction do
   context "::match?" do
@@ -12,7 +12,7 @@ describe Spectrum::Holding::GetThisAction do
     let(:holding) { JSON.parse(File.read('./spec/fixtures/get_this_action_getholdings.json'))[doc_id] }
     let(:item_info) {holding[1]["item_info"].first}
 
-    let(:item){Spectrum::Item.new(doc_id: doc_id, holdings: holding, item: item_info)}
+    let(:item){Spectrum::Entities::Item.new(doc_id: doc_id, holdings: holding, item: item_info)}
 
     it "returns true on example 0" do
       expect(described_class.match?(item)).to eq(true)
@@ -27,7 +27,7 @@ describe Spectrum::Holding::GetThisAction do
       let(:holding) {{
         'item_status' => ''
       }}
-      let(:item) { instance_double(Spectrum::Item, barcode: 'BARCODE', doc_id: 'ID') }
+      let(:item) { instance_double(Spectrum::Entities::Item, barcode: 'BARCODE', doc_id: 'ID') }
       let(:info) {{ 'can_request' => true, 'barcode' => 'BARCODE' }}
       let(:result) {{
         text: 'Get This',

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spectrum
+module Spectrum::Entities
   class Item
 
     REOPENED = [
@@ -62,7 +62,7 @@ module Spectrum
       return  Spectrum::AvailableOnlineHolding.new(request.id) if request.barcode == 'available-online'
       url = source.holdings + request.id
       response = HTTParty.get(url)
-      Spectrum::Item.for_barcode(response.parsed_response[request.id], request.id, request.barcode, )
+      Spectrum::Entities::Item.for_barcode(response.parsed_response[request.id], request.id, request.barcode, )
     end
 
     def self.for_barcode(holdings, doc_id, barcode)
@@ -72,7 +72,7 @@ module Spectrum
         .find do |item_info| 
           item_info['barcode'] == barcode
         end 
-      Spectrum::Item.new(doc_id: doc_id, holdings: holdings, item: item)
+      Spectrum::Entities::Item.new(doc_id: doc_id, holdings: holdings, item: item)
     end
 
     def record

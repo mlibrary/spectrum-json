@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative '../spec_helper'
-require 'spectrum/item'
+require_relative '../../spec_helper'
+require 'spectrum/entities/item'
 require 'httparty'
 require 'spectrum/request/get_this'
 require 'spectrum/available_online_holding'
 
-describe Spectrum::Item do
+describe Spectrum::Entities::Item do
   subject do
-    holding = YAML.load_file(File.expand_path('../holding.yml', __FILE__))
+    holding = YAML.load_file(File.expand_path('../../holding.yml', __FILE__))
     described_class.for_barcode(holding[0][holding[1]], holding[1], holding[2])
   end
 
@@ -112,9 +112,9 @@ describe Spectrum::Item do
     end
   end
 end
-describe Spectrum::Item, 'self.for_get_this' do
+describe Spectrum::Entities::Item, 'self.for_get_this' do
   before(:each) do
-    @data, @record, @barcode = YAML.load_file(File.expand_path('../holding.yml', __FILE__))
+    @data, @record, @barcode = YAML.load_file(File.expand_path('../../holding.yml', __FILE__))
     @request_dbl = instance_double(Spectrum::Request::GetThis, id: @record, username: nil, barcode: @barcode)
     @source_dbl = double('Source', holdings: 'http://mirlyn_url/getHoldings.pl?id=')
     
@@ -126,7 +126,7 @@ describe Spectrum::Item, 'self.for_get_this' do
   it "returns loaded item for valid barcode" do
     stub_request(:get, "#{@source_dbl.holdings}#{@record}").to_return(body: @data.to_json, status: 200, headers: {content_type: 'application/json'})
     expect(subject.barcode).to eq(@barcode)
-    expect(subject.class.name).to eq('Spectrum::Item')
+    expect(subject.class.name).to eq('Spectrum::Entities::Item')
   end
 
   it "returns AvailabileOnlineHolding when barcode is 'available-online'" do
