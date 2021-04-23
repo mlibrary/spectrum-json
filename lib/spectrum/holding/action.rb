@@ -32,7 +32,7 @@ module Spectrum
 
       def initialize(bib_record:, item:)
         @bib_record = bib_record
-        @item = item #Spectrum::Entities::Item
+        @item = item #Spectrum::Entities::MirlynItem
       end
 
       def finalize

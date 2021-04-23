@@ -5,7 +5,7 @@ require 'spectrum/entities/item'
 describe Spectrum::Holding::MirlynItemDescription do
   context "to_h" do
     before(:each) do
-      @item_dbl = instance_double(Spectrum::Entities::Item, description: nil, temp_location?: false, temp_location: '')
+      @item_dbl = instance_double(Spectrum::Entities::MirlynItem, description: nil, temp_location?: false, temp_location: '')
     end
     subject do 
       #only called with self.for
