@@ -19,6 +19,15 @@ module Spectrum::Entities
     def each(&block)
       @holdings.each(&block)
     end
+    def find_item(barcode)
+      items = mirlyn_holdings.map{|x| x.items }.flatten
+      item = items.find {|x| x.barcode == barcode }
+      item ? item : EmptyItem.new
+    end
+    private
+    def mirlyn_holdings
+      @holdings.filter{|x| x.class.name.to_s.match(/MirlynHolding/) }
+    end
   end
 
   class Holding
@@ -160,5 +169,12 @@ module Spectrum::Entities
     def status
       @item["status"]
     end
+  end
+  class EmptyItem
+    def can_book?; false end
+    def can_reserve?; false end
+    def can_request?; false end
+    def status; '' end
+    def location; '' end
   end
 end

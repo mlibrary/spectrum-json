@@ -28,6 +28,16 @@ describe Spectrum::Entities::Holdings do
     expect(holdings[0]).to include('HathiHolding')
     expect(holdings[1]).to include('MirlynHolding')
   end
+  context "#find_item" do 
+    it "returns item for a barcode" do
+      item = subject.find_item("39015009714562")
+      expect(item.class.name.to_s).to include('MirlynItem')
+    end
+    it "returns empty_item for empty barcode" do 
+      item = subject.find_item("blah")
+      expect(item.class.name.to_s).to include('EmptyItem')
+    end
+  end
   context ".for" do
 
     before(:each) do
