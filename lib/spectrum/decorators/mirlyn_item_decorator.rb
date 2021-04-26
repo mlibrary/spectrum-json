@@ -47,11 +47,19 @@ module Spectrum::Decorators
     FLINT_PICKUP = [ 'FLINT' ]
 
     ETAS_START = 'Full text available,'
+
     attr_reader :hathi_holding
-    def initialize(item, hathi_holding=nil)
+    def initialize(item, hathi_holding=[])
       @item = item
       __setobj__ @item
       @hathi_holding = hathi_holding
+    end
+
+    def etas?
+      etas_items.values.include?(true)
+    end
+    def not_etas?
+      !etas?
     end
 
     def music_pickup?
@@ -116,6 +124,12 @@ module Spectrum::Decorators
     def can_request?
       @item.can_request? ||
         ['HSRS', 'HERB', 'MUSM'].include?(@item.sub_library)
+    end
+    private
+    def etas_items
+      @hathi_holding.items.map do |item| 
+        [item.id, item.status.start_with?(ETAS_START)]
+      end.to_h
     end
   end
 end

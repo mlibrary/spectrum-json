@@ -4,9 +4,35 @@ require 'spectrum/json'
 describe Spectrum::Decorators::MirlynItemDecorator do
   before(:each) do
     @mirlyn_item_double = instance_double(Spectrum::Entities::MirlynItem) 
+    @hathi_item_double = instance_double(Spectrum::Entities::HathiItem, id: '1234')
+    @hathi_holding_double = instance_double(Spectrum::Entities::HathiHolding)
   end
   subject do
-    described_class.new(@mirlyn_item_double)
+    described_class.new(@mirlyn_item_double, @hathi_holding_double)
+  end
+  context "#etas?" do
+    it "is true if Hathi item contains etas status" do
+      allow(@hathi_item_double).to receive(:status).and_return("Full text available, simultaneous access is limited (HathiTrust log in required)")
+      allow(@hathi_holding_double).to receive(:items).and_return([@hathi_item_double])
+      expect(subject.etas?).to eq(true)
+    end
+    it "is false if any of the items are not with etas status" do
+      allow(@hathi_item_double).to receive(:status).and_return("Full text")
+      allow(@hathi_holding_double).to receive(:items).and_return([@hathi_item_double])
+      expect(subject.etas?).to eq(false)
+    end
+  end
+  context "#not_etas?" do
+    it "is false if Hathi item contains etas status" do
+      allow(@hathi_item_double).to receive(:status).and_return("Full text available, simultaneous access is limited (HathiTrust log in required)")
+      allow(@hathi_holding_double).to receive(:items).and_return([@hathi_item_double])
+      expect(subject.not_etas?).to eq(false)
+    end
+    it "is true if any of the items are not with etas status" do
+      allow(@hathi_item_double).to receive(:status).and_return("Full text")
+      allow(@hathi_holding_double).to receive(:items).and_return([@hathi_item_double])
+      expect(subject.not_etas?).to eq(true)
+    end
   end
   context "#music_pickup?" do
     it "is true if sub library is music" do
@@ -136,8 +162,6 @@ describe Spectrum::Decorators::MirlynItemDecorator do
       expect(subject.checked_out?).to eq(false)
     end
   end
-  context "#etas?" do
-  end
   context "#not_checked_out?" do
     it "is true if item doesn't have a checked out status" do
       allow(@mirlyn_item_double).to receive(:status).and_return('On shelf')
@@ -147,8 +171,6 @@ describe Spectrum::Decorators::MirlynItemDecorator do
       allow(@mirlyn_item_double).to receive(:status).and_return('Checked out')
       expect(subject.not_checked_out?).to eq(false)
     end
-  end
-  context "#not_etas?" do
   end
   context "#not_flint?" do
     it "is false if sub_library is flint" do

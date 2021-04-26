@@ -111,6 +111,9 @@ module Spectrum::Entities
     def description
       @item['description'] || ''
     end
+    def status
+      @item["status"]
+    end
   end
   class MirlynItem < GetHoldingsItem
     def barcode
@@ -154,9 +157,6 @@ module Spectrum::Entities
     def temp_location
       @item['temp_loc'] || ''
     end
-    def status
-      @item["status"]
-    end
 
   end
   class HathiItem < GetHoldingsItem
@@ -165,9 +165,6 @@ module Spectrum::Entities
     end
     def rights
       @item["rights"]
-    end
-    def status
-      @item["status"]
     end
   end
   class EmptyItem
