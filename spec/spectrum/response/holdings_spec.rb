@@ -1,6 +1,4 @@
 require_relative '../../spec_helper'
-require 'rails'
-require 'spectrum/json'
 
 describe Spectrum::Response::Holdings, "integrations" do
   def stub_http(id:,getHoldings:,solr:)

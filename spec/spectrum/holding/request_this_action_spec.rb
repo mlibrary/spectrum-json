@@ -3,11 +3,6 @@
 require_relative '../../spec_helper'
 require_relative '../../stub_bib_record'
 
-require 'spectrum/holding/action'
-require 'spectrum/holding/request_this_action'
-require 'active_support'
-require 'active_support/core_ext/hash'
-
 describe Spectrum::Holding::RequestThisAction do
   let(:id) { 'ID' }
   let(:bib) { StubBibRecord.new }

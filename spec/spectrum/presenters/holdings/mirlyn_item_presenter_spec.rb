@@ -1,5 +1,4 @@
 require_relative '../../../spec_helper'
-require 'spectrum/json'
 
 describe Spectrum::Presenters::MirlynItem, "to_a" do
     before(:each) do

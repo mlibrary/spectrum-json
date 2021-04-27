@@ -3,11 +3,6 @@
 require_relative '../../spec_helper'
 require_relative '../../stub_bib_record'
 
-require 'spectrum/holding/action'
-require 'spectrum/holding/book_this_action'
-require 'active_support'
-require 'active_support/core_ext/hash'
-require 'exlibris-aleph'
 
 describe Spectrum::Holding::BookThisAction do
   let(:id) { 'ID' }

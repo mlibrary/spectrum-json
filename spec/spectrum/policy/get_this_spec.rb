@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-
-require 'spectrum/json'
-
 class PatronStub
   def empty?
     true

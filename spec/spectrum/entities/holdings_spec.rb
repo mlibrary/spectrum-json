@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'spectrum/json'
 
 describe Spectrum::Entities::Holdings do
   let(:solr) { File.read('./spec/fixtures/hurdy_solr.json') }

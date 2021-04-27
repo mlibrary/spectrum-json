@@ -1,6 +1,4 @@
 require_relative '../../spec_helper'
-require 'spectrum/json'
-
 class GetThisPolicyDouble
   attr_reader :account, :bib, :item
   def initialize(account, bib, item)
