@@ -1,4 +1,4 @@
-require_relative '../../../spec_helper'
+require_relative '../../spec_helper'
 
 describe Spectrum::Presenters::MirlynItem, "to_a" do
     before(:each) do

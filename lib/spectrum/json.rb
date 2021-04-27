@@ -6,6 +6,7 @@ require 'lru_redux'
 require 'active_support'
 require 'active_support/concern'
 
+require 'spectrum/entities/item'
 require 'spectrum/entities/holdings'
 
 require 'spectrum/decorators/mirlyn_item_decorator'
