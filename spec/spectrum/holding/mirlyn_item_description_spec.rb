@@ -1,6 +1,5 @@
 require_relative '../../spec_helper'
-require 'spectrum/holding/mirlyn_item_description'
-require 'spectrum/entities/item'
+require 'spectrum/json'
 
 describe Spectrum::Holding::MirlynItemDescription do
   context "to_h" do

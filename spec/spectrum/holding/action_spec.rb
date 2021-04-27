@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../../spec_helper'
-require 'spectrum/holding/action'
-require 'spectrum/entities/item'
-require 'spectrum/holding/get_this_action'
-require 'spectrum/holding/request_this_action'
-require 'spectrum/holding/book_this_action'
 
 describe Spectrum::Holding::Action do
 

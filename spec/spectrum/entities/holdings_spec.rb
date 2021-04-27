@@ -38,6 +38,11 @@ describe Spectrum::Entities::Holdings do
       expect(item.class.name.to_s).to include('EmptyItem')
     end
   end
+  context "#hathi_holdings" do
+    it "returns hathi holdings array" do
+      expect(subject.hathi_holdings.class.name.to_s).to eq("Array")
+    end
+  end
   context ".for" do
 
     before(:each) do

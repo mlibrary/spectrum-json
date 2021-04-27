@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../../spec_helper'
-require 'spectrum/json'
 
 describe Spectrum::Holding::GetThisAction do
   context "::match?" do

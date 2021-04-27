@@ -49,10 +49,21 @@ module Spectrum::Decorators
     ETAS_START = 'Full text available,'
 
     attr_reader :hathi_holding
-    def initialize(item, hathi_holding=[])
+    def initialize(item, hathi_holdings = [])
       @item = item
       __setobj__ @item
-      @hathi_holding = hathi_holding
+      @hathi_holdings = hathi_holdings
+    end
+
+    def self.for(source, request, 
+      get_holdings=lambda {|source, request| Spectrum::Entities::Holdings.for(source,request) } 
+                )
+
+      return Spectrum::AvailableOnlineHolding.new(request.id) if request.barcode == 'available-online'
+      holdings = get_holdings.call(source, request)
+      item = holdings.find_item(request.barcode)
+      hathi_holdings = holdings.hathi_holdings
+      Spectrum::Decorators::MirlynItemDecorator.new(item, hathi_holdings)
     end
 
     def etas?
@@ -125,11 +136,25 @@ module Spectrum::Decorators
       @item.can_request? ||
         ['HSRS', 'HERB', 'MUSM'].include?(@item.sub_library)
     end
+    #as of 27-April-2021 none of these are used in get_this_policy
+    def circulating?
+      can_request?
+    end
+    def on_shelf?
+      @item.status.start_with?('On shelf') || building_use_only?
+    end
+    def off_site?
+      @item.location.start_with?('Offsite', '- Offsite')
+    end
+    def on_site?
+      !off_site?
+    end
     private
     def etas_items
-      @hathi_holding.items.map do |item| 
-        [item.id, item.status.start_with?(ETAS_START)]
-      end.to_h
+      @hathi_holdings.map{|x| x.items}
+        .flatten
+        .map{ |item| [item.id, item.status.start_with?(ETAS_START)] }
+        .to_h
     end
   end
 end

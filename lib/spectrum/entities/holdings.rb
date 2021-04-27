@@ -13,6 +13,9 @@ module Spectrum::Entities
         []
       end
     end
+    def hathi_holdings
+      @holdings.find_all{|x| x.class.name.to_s.match(/HathiHolding/) }
+    end
     def [](index)
       @holdings[index]
     end
@@ -90,7 +93,7 @@ module Spectrum::Entities
   end
   class GetHoldingsItem
     extend Forwardable
-    def_delegators :@holding, :doc_id, :callnumber, :sub_library, :collection, :holding_id, :id
+    def_delegators :@holding, :doc_id, :callnumber, :sub_library, :collection, :holding_id, :id, :location
     def initialize(holding, item)
       @holding = holding
       @item = item

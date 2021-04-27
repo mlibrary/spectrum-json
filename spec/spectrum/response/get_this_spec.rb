@@ -1,11 +1,5 @@
 require_relative '../../spec_helper'
-require 'spectrum/response/get_this'
-
-#collaborators
-require 'spectrum/policy/get_this'
-require 'spectrum/entities/item'
-require 'spectrum/bib_record'
-
+require 'spectrum/json'
 
 class GetThisPolicyDouble
   attr_reader :account, :bib, :item
@@ -25,7 +19,7 @@ end
 describe Spectrum::Response::GetThis do
   describe 'renderable' do
     before(:each) do
-      @item_dbl = class_double(Spectrum::Entities::Item, for_get_this: 'Spectrum::Item')
+      @mirlynItem_dbl = class_double(Spectrum::Decorators::MirlynItemDecorator)
       @init = { 
                 source: double("HoldingsSource", holdings: 'http://localhost', url: 'mirlyn_solr_url'),
                 request: double('Spectrum::Request::GetThis', id: '123456789', barcode: '55555', logged_in?: true, username: 'username'),
@@ -33,7 +27,7 @@ describe Spectrum::Response::GetThis do
                 get_this_policy_factory: lambda{|patron, bib_record, holdings_record| GetThisPolicyDouble.new( patron, bib_record, holdings_record)},
                 aleph_borrower: double('Aleph::Borrower', bor_info: [], expired?: false), 
                 bib_record: 'Spectrum::BibRecord',
-                holding_picker: lambda{|request, source| @item_dbl.for_get_this(request: request, source: source)}
+                item_picker: lambda{|request, source| @mirlynItem_dbl}
       }
     end
 
@@ -65,9 +59,8 @@ describe Spectrum::Response::GetThis do
       expect(subject.renderable[:options].bib).to eq('Spectrum::BibRecord')
     end
     
-    it 'calls get_this_policy with Spectrum::Item' do
-      expect(@item_dbl).to receive(:for_get_this).with(hash_including(request: @init[:request], source: @init[:source]))
-      expect(subject.renderable[:options].item).to eq('Spectrum::Item')
+    it 'calls get_this_policy with Spectrum::Decorators::MirlynItemDecorator' do
+      expect(subject.renderable[:options].item).to eq(@mirlynItem_dbl)
     end
   end
 end

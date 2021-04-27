@@ -8,7 +8,7 @@ describe Spectrum::Decorators::MirlynItemDecorator do
     @hathi_holding_double = instance_double(Spectrum::Entities::HathiHolding)
   end
   subject do
-    described_class.new(@mirlyn_item_double, @hathi_holding_double)
+    described_class.new(@mirlyn_item_double, [@hathi_holding_double])
   end
   context "#etas?" do
     it "is true if Hathi item contains etas status" do
@@ -257,5 +257,27 @@ describe Spectrum::Decorators::MirlynItemDecorator do
       allow(@mirlyn_item_double).to receive(:status).and_return('On shelf')
       expect(subject.not_pickup_or_checkout?).to eq(false)
     end
+  end
+  context ".for" do
+    before(:each) do
+      @source = nil 
+      @request = instance_double(Spectrum::Request::GetThis, id: '123456') 
+      @holdings_double = instance_double(Spectrum::Entities::Holdings)
+    end
+    let(:gh_factory) { lambda{|s,r| @holdings_double } }
+    subject do
+      described_class.for(@source, @request, gh_factory)
+    end
+    it "returns a AvailableOnlineHolding for valid available-online barcode" do
+      allow(@request).to receive(:barcode).and_return('available-online')
+      expect(subject.class.name.to_s).to eq('Spectrum::AvailableOnlineHolding')
+    end
+    it "returns a MirlynItemDecorator for valid barcode" do
+      allow(@request).to receive(:barcode).and_return('3312345')
+      allow(@holdings_double).to receive(:find_item).and_return({})
+      allow(@holdings_double).to receive(:hathi_holdings).and_return([])
+      expect(subject.class.name.to_s).to eq('Spectrum::Decorators::MirlynItemDecorator')
+    end
+    
   end
 end

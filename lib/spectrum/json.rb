@@ -7,7 +7,6 @@ require 'active_support'
 require 'active_support/concern'
 
 require 'spectrum/entities/holdings'
-require 'spectrum/entities/item'
 
 require 'spectrum/decorators/mirlyn_item_decorator'
 require 'spectrum/available_online_holding'
