@@ -12,7 +12,7 @@ module Spectrum
         @bib_record = bib_record
 
         if getHoldingsResponse.code == 200
-          @holdings = getHoldingsResponse[@request.id]
+          @holdings = getHoldingsResponse[@request.id] || []
         else
           @holdings = []
         end
