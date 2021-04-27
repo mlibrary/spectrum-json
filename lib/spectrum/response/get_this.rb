@@ -9,7 +9,7 @@ module Spectrum
                      get_this_policy_factory: lambda {|patron, bib_record, holdings_record| Spectrum::Policy::GetThis.new(patron, bib_record, holdings_record)}, 
                      aleph_borrower: Aleph::Borrower.new,
                      bib_record: Spectrum::BibRecord.fetch(id: request.id, url: source.url),
-                     item_picker: lambda{|request, source| Spectrum::Decorators::MirlynItemDecorator.for(request, source)}
+                     item_picker: lambda{|source, request| Spectrum::Decorators::MirlynItemDecorator.for(source, request)}
                     )
         @source = source
         @request = request
