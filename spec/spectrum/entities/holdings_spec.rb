@@ -54,9 +54,14 @@ describe Spectrum::Entities::Holdings do
       stub_request(:get, @gh_url).to_return(body: getHoldings, status: 200, headers: {content_type: 'application/json'})
       expect(subject.class.name.to_s).to eq("Spectrum::Entities::Holdings")
     end
-    it "for bad response returns empty array" do
+    it "returns an empty Holdings object on bad response" do
       stub_request(:get, @gh_url).to_return(body: '{}', status: 500, headers: {content_type: 'application/json'})
-      expect(subject).to eq([])
+      expect(subject.empty?).to be(true)
+    end
+
+    it "retruns an empty Holdings object on an empty object" do
+      stub_request(:get, @gh_url).to_return(body: '{}', status: 200, headers: {content_type: 'application/json'})
+      expect(subject.empty?).to be(true)
     end
   end
 end

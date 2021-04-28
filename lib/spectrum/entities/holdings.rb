@@ -3,14 +3,14 @@ module Spectrum::Entities
     attr_reader :holdings, :doc_id
     def initialize(data)
       @doc_id = data.keys.first
-      @holdings = data[@doc_id].map { |h| Holding.for(@doc_id, h) } 
+      @holdings = (data[@doc_id] || []).map { |h| Holding.for(@doc_id, h) } 
     end
     def self.for(source, request)
       response = HTTParty.get("#{source.holdings}#{request.id}")
       if response.code == 200
         Holdings.new(response.parsed_response)
       else
-        []
+        Holdings.new({request.id => []})
       end
     end
     def hathi_holdings
@@ -26,6 +26,10 @@ module Spectrum::Entities
       items = mirlyn_holdings.map{|x| x.items }.flatten
       item = items.find {|x| x.barcode == barcode }
       item ? item : EmptyItem.new
+    end
+
+    def empty?
+      @holdings.empty?
     end
     private
     def mirlyn_holdings
@@ -67,6 +71,10 @@ module Spectrum::Entities
     end
     def status
       @data["status"]
+    end
+
+    def empty?
+      @data.empty?
     end
   end
   class MirlynHolding < Holding
