@@ -41,4 +41,7 @@ describe Spectrum::Entities::HathiItem do
   it "has rights" do
     expect(subject.rights).to eq("ic")
   end
+  it "has an id" do
+    expect(subject.id).to eq("inu.30000042758924")
+  end
 end

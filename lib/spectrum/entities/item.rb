@@ -1,7 +1,7 @@
 module Spectrum::Entities
   class GetHoldingsItem
     extend Forwardable
-    def_delegators :@holding, :doc_id, :callnumber, :sub_library, :collection, :holding_id, :id, :location
+    def_delegators :@holding, :doc_id, :callnumber, :sub_library, :collection, :holding_id, :location
     def initialize(holding, item)
       @holding = holding
       @item = item
@@ -71,6 +71,9 @@ module Spectrum::Entities
 
   end
   class HathiItem < GetHoldingsItem
+    def id
+      @item["id"]
+    end
     def source
       @item["source"]
     end
