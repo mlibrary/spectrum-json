@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../spec_helper'
-require 'spectrum/floor_location'
 
 describe Spectrum::FloorLocation do
   context '::resolve' do

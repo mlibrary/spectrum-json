@@ -1,9 +1,10 @@
 module Spectrum
   class AvailableOnlineHolding
-    attr_reader :id
+    attr_reader :id, :doc_id
 
     def initialize(id)
       @id = id
+      @doc_id = id
     end
 
     def barcode

@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-
-require 'spectrum/policy/get_this'
-
 class PatronStub
   def empty?
     true

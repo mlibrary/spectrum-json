@@ -24,6 +24,7 @@ require 'pry-byebug'
 require 'coveralls'
 require 'simplecov'
 require 'webmock/rspec'
+require 'spectrum/json' #just require the gem
 SimpleCov.start
 
 RSpec.configure do |config|

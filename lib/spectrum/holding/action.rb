@@ -2,53 +2,37 @@ module Spectrum
   class Holding
     class Action
 
-      class << self
-        def new(*args)
-          klass = get_class(*args)
-          return klass.new(*args) if klass
-          obj = allocate
-          obj.send(:initialize, *args)
-          obj
-        end
+      attr_reader :doc_id, :bib_record, 
+      def self.for(bib_record:, item:)
 
-        def inherited(base)
-          registry << base
-        end
+        args = { bib_record: bib_record, item: item }
 
-        def label(l = nil)
-          @label = l if l
-          @label
-        end
-
-        def match?(*args)
-          false
-        end
-
-        private
-
-        def registry
-          @registry ||= []
-        end
-
-        def get_class(*args)
-          registry.find { |klass| klass.match?(*args) }
+        if item.can_reserve?
+          RequestThisAction.new(**args)
+        elsif item.can_book?
+          BookThisAction.new(**args)
+        elsif GetThisAction.match?(item)
+          GetThisAction.new(**args)
+        else
+          Action.new(**args)
         end
       end
 
-      attr_reader :id, :datastore, :bib, :item, :info
+      def self.label
+        'N/A'
+      end
 
-      label 'N/A'
+      def self.match?(*args)
+        false
+      end
 
       def label
         self.class.label
       end
 
-      def initialize(id, datastore, bib, item, info)
-        @id = id
-        @datastore = datastore
-        @bib = bib
-        @item = item
-        @info = info
+      def initialize(bib_record:, item:)
+        @bib_record = bib_record
+        @item = item #Spectrum::Entities::MirlynItem
       end
 
       def finalize

@@ -1,20 +1,21 @@
 # frozen_string_literal: true
 
 require 'aleph'
-
+#refactor to use item decorator
 module Spectrum
   module Response
     class GetThis
       def initialize(source:, request:, 
-                     get_this_policy_factory: lambda {|patron, bib_record, holdings_record| Spectrum::Policy::GetThis.new(patron, bib_record, holdings_record)}, aleph_borrower: Aleph::Borrower.new,
+                     get_this_policy_factory: lambda {|patron, bib_record, holdings_record| Spectrum::Policy::GetThis.new(patron, bib_record, holdings_record)}, 
+                     aleph_borrower: Aleph::Borrower.new,
                      bib_record: Spectrum::BibRecord.fetch(id: request.id, url: source.url),
-                     holding_picker: lambda{|request, source| Spectrum::Item.for_get_this(request: request, source: source)}
+                     item_picker: lambda{|source, request| Spectrum::Decorators::MirlynItemDecorator.for(source, request)}
                     )
         @source = source
         @request = request
 
         @get_this_policy_factory = get_this_policy_factory
-        @holding_picker = holding_picker
+        @item_picker = item_picker
 
         @aleph_borrower = aleph_borrower
         @bib_record = bib_record
@@ -49,10 +50,11 @@ module Spectrum
           return patron_not_found
         end
         return patron_expired if patron.expired?
+        item = @item_picker.call(@source, @request)
 
         {
           status: 'Success',
-          options: @get_this_policy_factory.call(patron, @bib_record, @holding_picker.call(@request, @source)).resolve
+          options: @get_this_policy_factory.call(patron, @bib_record, item).resolve
         }
       end
 
