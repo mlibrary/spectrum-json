@@ -38,6 +38,10 @@ describe Spectrum::Entities::NewHathiHolding do
       expect(subject.id).to be_nil
     end
   end
+  context "#status" do
+    it "gets status of first item if there's only one item"
+    it "returns nil if there are multiple items"
+  end
 
 end
 describe Spectrum::Entities::NewHathiItem do
@@ -59,5 +63,8 @@ describe Spectrum::Entities::NewHathiItem do
   end
   it "has a record" do
     expect(subject.record).to eq('990020578280206381')
+  end
+  context "#status" do
+    it "generates appropriate status"
   end
 end

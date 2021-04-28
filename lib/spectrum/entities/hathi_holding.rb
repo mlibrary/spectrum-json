@@ -29,6 +29,9 @@ module Spectrum::Entities
     def id
       items.first.id if items.count == 1
     end
+    def status
+      items.first.status if items.count == 1
+    end
     
   end
   class NewHathiItem
@@ -48,6 +51,10 @@ module Spectrum::Entities
 
     def record
       @holding.mms_id
+    end
+    def status
+      #TBD reimplement getHoldings stuff??? 
+      'Full Text'
     end
   end
 end
