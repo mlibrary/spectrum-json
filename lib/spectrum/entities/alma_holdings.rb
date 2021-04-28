@@ -5,7 +5,7 @@ class Spectrum::Entities::AlmaHoldings
     response = client.get_all(url: "/bibs/#{mms_id}/holdings/ALL/items", record_key: "item")
     if response.code == 200
       @parsed_response = response.parsed_response
-      @bib = Spectrum::AlmaBib.new(@parsed_response["item"][0]["bib_data"])
+      @bib = Spectrum::Entities::AlmaBib.new(@parsed_response["item"][0]["bib_data"])
       @holdings = load_holdings
     else
       #TBD ERROR
@@ -22,13 +22,13 @@ class Spectrum::Entities::AlmaHoldings
     holdings.values.map do |bib_hold_items|
       items = bib_hold_items.map{|x| x["item_data"] } 
       holding_data = bib_hold_items[0]["holding_data"]
-      Spectrum::AlmaHolding.new(bib: @bib, holding: holding_data, items: items)
+      Spectrum::Entities::AlmaHolding.new(bib: @bib, holding: holding_data, items: items)
     end
       
   end
   
 end
-class Spectrum::AlmaBib
+class Spectrum::Entities::AlmaBib
   def initialize(bib)
     @bib = bib
   end
@@ -51,7 +51,7 @@ class Spectrum::AlmaBib
     @bib["date_of_publication"]
   end
 end
-class Spectrum::AlmaHolding
+class Spectrum::Entities::AlmaHolding
   attr_reader :items
   extend Forwardable
   def_delegators :@bib, :mms_id, :title, :author, 
@@ -60,7 +60,7 @@ class Spectrum::AlmaHolding
   def initialize(bib:, holding:, items:)
     @bib = bib
     @holding = holding
-    @items = items.map{|x| Spectrum::AlmaItem.new(holding: self, item: x)}
+    @items = items.map{|x| Spectrum::Entities::AlmaItem.new(holding: self, item: x)}
   end
   def holding_id
     @holding["holding_id"]
@@ -82,7 +82,7 @@ class Spectrum::AlmaHolding
     @items.first&.location
   end
 end
-class Spectrum::AlmaItem
+class Spectrum::Entities::AlmaItem
   extend Forwardable
   def_delegators :@holding, :mms_id, :title, :author, 
     :issn, :isbn, :pub_date, :callnumber, :holding_id

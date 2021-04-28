@@ -8,13 +8,13 @@ describe Spectrum::Entities::AlmaHoldings do
     described_class.new(@mms_id)
   end
   it "has a bib" do
-    expect(subject.bib.class.to_s).to eq("Spectrum::AlmaBib")
+    expect(subject.bib.class.to_s).to eq("Spectrum::Entities::AlmaBib")
   end
   it "has holdings" do
-    expect(subject.holdings.first.class.to_s).to eq("Spectrum::AlmaHolding")
+    expect(subject.holdings.first.class.to_s).to eq("Spectrum::Entities::AlmaHolding")
   end
 end
-describe Spectrum::AlmaBib do
+describe Spectrum::Entities::AlmaBib do
   subject do
     response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
     described_class.new(response["item"][0]["bib_data"])
@@ -38,13 +38,13 @@ describe Spectrum::AlmaBib do
     expect(subject.pub_date).to eq('1990.')
   end
 end
-describe Spectrum::AlmaHolding do
+describe Spectrum::Entities::AlmaHolding do
   before(:each) do
     Spectrum::LibLocDisplay.configure('spec/fixtures/lib_loc_display.json')
   end
   subject do
     response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
-    bib = instance_double(Spectrum::AlmaBib, title: "title")
+    bib = instance_double(Spectrum::Entities::AlmaBib, title: "title")
     described_class.new(bib: bib, holding: response["item"][0]["holding_data"], items: [response["item"][0]["item_data"]])
   end
   it "has bib title" do
@@ -63,13 +63,13 @@ describe Spectrum::AlmaHolding do
     expect(subject.callnumber).to eq("LB 2331.72 .S371 1990")
   end
   it "has items" do
-    expect(subject.items[0].class.to_s).to eq('Spectrum::AlmaItem')
+    expect(subject.items[0].class.to_s).to eq('Spectrum::Entities::AlmaItem')
   end
 end
-describe Spectrum::AlmaItem do
+describe Spectrum::Entities::AlmaItem do
   subject do
     response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
-    holding = instance_double(Spectrum::AlmaHolding, title: "title")
+    holding = instance_double(Spectrum::Entities::AlmaHolding, title: "title")
     described_class.new(holding: holding, item: response["item"][0]["item_data"])
   end
   it "has a bib title" do
