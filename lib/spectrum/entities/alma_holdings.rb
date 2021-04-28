@@ -1,5 +1,5 @@
 require 'alma_rest_client'
-class Spectrum::AlmaHoldings
+class Spectrum::Entities::AlmaHoldings
   attr_reader :bib, :holdings
   def initialize(mms_id, client = AlmaRestClient.client)
     response = client.get_all(url: "/bibs/#{mms_id}/holdings/ALL/items", record_key: "item")

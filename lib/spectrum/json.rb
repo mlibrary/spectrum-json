@@ -8,6 +8,7 @@ require 'active_support/concern'
 
 require 'spectrum/entities/item'
 require 'spectrum/entities/holdings'
+require 'spectrum/entities/alma_holdings'
 
 require 'spectrum/decorators/mirlyn_item_decorator'
 require 'spectrum/available_online_holding'
@@ -94,7 +95,6 @@ require 'spectrum/holding/action'
 require 'spectrum/holding/get_this_action'
 require 'spectrum/holding/request_this_action'
 require 'spectrum/holding/book_this_action'
-require 'spectrum/holding/alma_holdings'
 
 require 'spectrum/json/railtie' if defined?(Rails)
 require 'erb'
