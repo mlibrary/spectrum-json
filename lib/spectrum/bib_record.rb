@@ -132,6 +132,9 @@ module Spectrum
     def holdings
       JSON.parse(@data["hol"]).map{|x| Holding.for(x)}
     end
+    def hathi_holding
+      holdings.find{|x| x.class.name.to_s.match(/HathiHolding/) }
+    end
     
 
     class Holding

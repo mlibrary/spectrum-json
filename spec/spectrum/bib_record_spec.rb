@@ -3,8 +3,11 @@
 require_relative '../spec_helper'
 
 describe Spectrum::BibRecord do
+  before(:each) do
+    @solr_bib_alma = File.read('./spec/fixtures/solr_bib_alma.json')
+  end
   subject do
-    described_class.new(JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json')))
+    described_class.new(JSON.parse(@solr_bib_alma))
   end
 
   context '#mms_id' do
@@ -36,6 +39,15 @@ describe Spectrum::BibRecord do
       end
     end
 
+    context "#hathi_holding" do
+      it "returns a HathiHolding item" do
+        expect(subject.hathi_holding.class.name.to_s).to eq("Spectrum::BibRecord::HathiHolding")
+      end
+      it "returns nil for no Hathi Item" do
+        @solr_bib_alma = @solr_bib_alma.gsub(/HathiTrust/, 'SomeOtherTrust')
+        expect(subject.hathi_holding).to be_nil
+      end
+    end
     context "hathi holding" do
       let(:hathi_holding) { subject.holdings[1] }
       it "has a library" do
