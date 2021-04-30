@@ -1,9 +1,9 @@
 require_relative '../spec_helper'
-require 'spectrum/lib_loc_display'
 
 describe Spectrum::LibLocDisplay do
     before(:each) do
-      described_class.configure('spec/fixtures/lib_loc_display.json')
+      #below happens in spec_helper
+      #described_class.configure('spec/fixtures/lib_loc_display.json')
     end
 
   context '::link' do

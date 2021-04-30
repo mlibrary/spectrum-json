@@ -6,6 +6,7 @@ require 'lru_redux'
 require 'active_support'
 require 'active_support/concern'
 
+require 'spectrum/lib_loc_display'
 require 'spectrum/available_online_holding'
 require 'spectrum/floor_location'
 require 'spectrum/bib_record'

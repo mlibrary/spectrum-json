@@ -11,12 +11,12 @@ class Spectrum::LibLocDisplay
 
   def self.link(library, location)
     id = normalize_location(library, location)
-    @config.find{|x| x["id"] == id}["link"]
+    @config.find{|x| x["id"] == id}&.dig("link")
   end
 
   def self.text(library, location)
     id = normalize_location(library, location)
-    @config.find{|x| x["id"] == id}["text"]
+    @config.find{|x| x["id"] == id}&.dig("text")
   end
 
 end
