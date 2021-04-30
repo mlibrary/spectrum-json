@@ -6,15 +6,17 @@ require 'lru_redux'
 require 'active_support'
 require 'active_support/concern'
 
+require 'spectrum/available_online_holding'
+require 'spectrum/floor_location'
+require 'spectrum/bib_record'
+
 require 'spectrum/entities/item'
 require 'spectrum/entities/holdings'
 require 'spectrum/entities/alma_holdings'
 require 'spectrum/entities/hathi_holding'
+require 'spectrum/entities/combined_holdings'
 
 require 'spectrum/decorators/mirlyn_item_decorator'
-require 'spectrum/available_online_holding'
-require 'spectrum/floor_location'
-require 'spectrum/bib_record'
 
 require 'spectrum/json/version'
 require 'spectrum/json/engine'

@@ -1,4 +1,6 @@
+require_relative '../../spec_helper'
 describe Spectrum::Entities::NewHathiHolding do
+  let(:mms_id) {'990020578280206381'}
   before(:each) do
     @solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
   end
@@ -16,7 +18,7 @@ describe Spectrum::Entities::NewHathiHolding do
     expect(subject.info_link).to be_nil
   end
   it "has a doc_id" do
-    expect(subject.doc_id).to eq('990020578280206381')
+    expect(subject.doc_id).to eq(mms_id)
 
   end
   it "has a location" do
@@ -41,6 +43,17 @@ describe Spectrum::Entities::NewHathiHolding do
   context "#status" do
     it "gets status of first item if there's only one item"
     it "returns nil if there are multiple items"
+  end
+  context ".for" do
+    let(:solr_url) { 'http://localhost/solr/biblio' }
+    before(:each) do
+      @solr_req = stub_request(:get, "#{solr_url}/select?q=id:#{mms_id}&wt=json").to_return(body: @solr_bib_alma.to_json, status: 200, headers: {content_type: 'application/json'})
+    end
+    it "returns a NewHathiHolding" do
+      expect(described_class.for(mms_id,solr_url).class.name.to_s).to eq(described_class.name.to_s)
+      expect(@solr_req).to have_been_requested
+
+    end
   end
 
 end

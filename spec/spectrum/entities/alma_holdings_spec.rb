@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 describe Spectrum::Entities::AlmaHoldings do
   before(:each) do
     @mms_id = "990020578280206381"
-    stub_alma_get_request(url: "bibs/#{@mms_id}/holdings/ALL/items", body: File.read('./spec/fixtures/alma_one_holding.json'), query: {limit: 100, offset: 0})
+    stub_alma_get_request(url: "bibs/#{@mms_id}/holdings/ALL/items", output: File.read('./spec/fixtures/alma_one_holding.json'), query: {limit: 100, offset: 0})
   end
   subject do
     described_class.new(@mms_id)

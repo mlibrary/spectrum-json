@@ -4,6 +4,10 @@ module Spectrum::Entities
       @bib_record = bib_record
       @holding = bib_record.hathi_holding
     end
+    def self.for(mms_id, url, 
+                 bib_record=Spectrum::BibRecord.fetch(id: mms_id, url: url))
+      NewHathiHolding.new(bib_record)
+    end
     #
     # Things that respond with the empty string
     [:callnumber, :sub_library, :collection].each do |name|
