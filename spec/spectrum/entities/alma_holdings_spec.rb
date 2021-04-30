@@ -10,8 +10,24 @@ describe Spectrum::Entities::AlmaHoldings do
   it "has a bib" do
     expect(subject.bib.class.to_s).to eq("Spectrum::Entities::AlmaBib")
   end
+  it "has working [] access" do
+    expect(subject[0].class.name.to_s).to include('AlmaHolding')
+  end
+  it "returns holdings for #each" do
+    holdings = []
+    subject.each{|x| holdings.push(x.class.name.to_s) }
+    expect(holdings[0]).to include('AlmaHolding')
+  end
   it "has holdings" do
     expect(subject.holdings.first.class.to_s).to eq("Spectrum::Entities::AlmaHolding")
+  end
+  context "#find_item" do
+    it "finds an item for a given barcode" do
+      expect(subject.find_item("39015017893416").class.name.to_s).to eq("Spectrum::Entities::AlmaItem")
+    end
+    it "returns nil if barcode doesn't match" do
+      expect(subject.find_item("not_a_barcode")).to be_nil
+    end
   end
 end
 describe Spectrum::Entities::AlmaBib do

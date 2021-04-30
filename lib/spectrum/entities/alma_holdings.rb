@@ -11,6 +11,24 @@ class Spectrum::Entities::AlmaHoldings
       #TBD ERROR
     end
   end
+
+  def find_item(barcode)
+    @holdings.map{|h| h.items}
+      .flatten
+      .find{|i| i.barcode == barcode}
+  end
+
+  def [](index)
+    @holdings[index]
+  end
+  
+  def each(&block)
+    @holdings.each(&block)
+  end
+  def empty?
+    @holdings.empty?
+  end
+  
   private
   def load_holdings
     holdings = {}
