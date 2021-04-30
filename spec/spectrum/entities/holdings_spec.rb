@@ -32,8 +32,18 @@ describe Spectrum::Entities::Holdings do
       item = subject.find_item("39015009714562")
       expect(item.class.name.to_s).to include('MirlynItem')
     end
-    it "returns empty_item for empty barcode" do 
+    it "returns empty_item for wrong barcode" do 
       item = subject.find_item("blah")
+      expect(item.class.name.to_s).to include('EmptyItem')
+    end
+  end
+  context "#find_item_by_item_key" do 
+    it "returns item for an item key" do
+      item = subject.find_item_by_item_key("000311635000010")
+      expect(item.class.name.to_s).to include('MirlynItem')
+    end
+    it "returns empty_item for wrong item key" do 
+      item = subject.find_item_by_item_key("blah")
       expect(item.class.name.to_s).to include('EmptyItem')
     end
   end
