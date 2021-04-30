@@ -40,7 +40,7 @@ class Spectrum::Entities::AlmaHoldings
     holdings.values.map do |bib_hold_items|
       items = bib_hold_items.map{|x| x["item_data"] } 
       holding_data = bib_hold_items[0]["holding_data"]
-      Spectrum::Entities::AlmaHolding.new(bib: @bib, holding: holding_data, items: items)
+      Spectrum::Entities::AlmaHolding.new(bib: @bib, holding: holding_data, items: items, holding_items: bib_hold_items)
     end
       
   end
@@ -75,10 +75,13 @@ class Spectrum::Entities::AlmaHolding
   def_delegators :@bib, :mms_id, :title, :author, 
     :issn, :isbn, :pub_date
 
-  def initialize(bib:, holding:, items:)
+  #TBD 
+  #public_note is in bib_record_holdings; 
+  #summary_holdings; ???? 
+  def initialize(bib:, holding:, items:, holding_items: [])
     @bib = bib
-    @holding = holding
-    @items = items.map{|x| Spectrum::Entities::AlmaItem.new(holding: self, item: x)}
+    @holding = holding_items[0]["holding_data"]
+    @items = holding_items.map{|x| Spectrum::Entities::AlmaItem.new(holding: self, item: x["item_data"], full_item: x)}
   end
   def holding_id
     @holding["holding_id"]
@@ -100,13 +103,27 @@ class Spectrum::Entities::AlmaHolding
     @items.first&.location
   end
 end
+#TBD #status, #temp_location?
 class Spectrum::Entities::AlmaItem
   extend Forwardable
   def_delegators :@holding, :mms_id, :title, :author, 
-    :issn, :isbn, :pub_date, :callnumber, :holding_id
-  def initialize(holding:, item:)
+    :issn, :isbn, :pub_date, :holding_id
+  def initialize(holding:, item:, full_item:{})
     @holding = holding
-    @item = item
+    @holding_raw = full_item["holding_data"]
+    @item = full_item["item_data"]
+  end
+  def callnumber
+    @holding_raw["call_number"]
+  end
+  def temp_location?
+    @holding_raw["in_temp_location"]
+  end
+  def temp_library
+    @holding_raw.dig("temp_library","desc")
+  end
+  def temp_location
+    @holding_raw.dig("temp_location","desc")
   end
   def pid
     @item["pid"]
@@ -119,5 +136,8 @@ class Spectrum::Entities::AlmaItem
   end
   def location
     @item.dig("location","value")
+  end
+  def inventory_number
+    @item["inventory_number"]
   end
 end

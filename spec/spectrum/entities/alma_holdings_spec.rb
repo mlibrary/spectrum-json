@@ -61,7 +61,8 @@ describe Spectrum::Entities::AlmaHolding do
   subject do
     response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
     bib = instance_double(Spectrum::Entities::AlmaBib, title: "title")
-    described_class.new(bib: bib, holding: response["item"][0]["holding_data"], items: [response["item"][0]["item_data"]])
+
+    described_class.new(bib: bib, holding: response["item"][0]["holding_data"], items: [response["item"][0]["item_data"]], holding_items: response["item"])
   end
   it "has bib title" do
     expect(subject.title).to eq("title")
@@ -86,7 +87,7 @@ describe Spectrum::Entities::AlmaItem do
   subject do
     response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
     holding = instance_double(Spectrum::Entities::AlmaHolding, title: "title")
-    described_class.new(holding: holding, item: response["item"][0]["item_data"])
+    described_class.new(holding: holding, item: response["item"][0]["item_data"], full_item: response["item"][0])
   end
   it "has a bib title" do
     expect(subject.title).to eq("title")
@@ -102,5 +103,8 @@ describe Spectrum::Entities::AlmaItem do
   end
   it "has a location" do
     expect(subject.location).to eq("GRAD")
+  end
+  it "has an inventory_number" do
+    expect(subject.inventory_number).to eq("")
   end
 end
