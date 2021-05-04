@@ -28,6 +28,12 @@ module Spectrum::Entities
       item ? item : EmptyItem.new
     end
 
+    def find_item_by_item_key(item_key)
+      items = mirlyn_holdings.map{|x| x.items }.flatten
+      item = items.find {|x| x.full_item_key == item_key }
+      item ? item : EmptyItem.new
+    end
+
     def empty?
       @holdings.empty?
     end
