@@ -65,9 +65,6 @@ module Spectrum::Entities
     def temp_location?
       @item['temp_location'] 
     end
-    def temp_location
-      @item['temp_loc'] || ''
-    end
 
   end
   class HathiItem < GetHoldingsItem

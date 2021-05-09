@@ -4,7 +4,6 @@ module Spectrum
       attr_reader :temp_location, :description
       def initialize(item:)
         @item = item
-        @temp_location = item.temp_location
         @description = item.description
       end
       def to_h
@@ -35,7 +34,7 @@ module Spectrum
       end
 
       def temp_location_string
-        "Temporary location: Shelved at #{@temp_location}"
+        "In a Temporary Location"
       end
 
       class TemporaryWithDescription < MirlynItemDescription
