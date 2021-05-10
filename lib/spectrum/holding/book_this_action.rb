@@ -1,10 +1,12 @@
 module Spectrum
   class Holding
     class BookThisAction < Action
-      label 'Book This' 
+      def self.label 
+        'Book This' 
+      end
 
-      def self.match?(_, _, _, _, info)
-        info['can_book']
+      def self.match?(item)
+        item.can_book? 
       end
 
       def finalize
@@ -32,11 +34,11 @@ module Spectrum
       end
 
       def adm_doc_number
-        info['full_item_key'].slice(0, 9)
+        @item.full_item_key.slice(0, 9)
       end
 
       def adm_item_sequence
-       info['full_item_key'].slice(9, 6)
+        @item.full_item_key.slice(9, 6)
       end
 
     end

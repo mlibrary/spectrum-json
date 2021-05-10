@@ -1,14 +1,19 @@
 # frozen_string_literal: true
 
 require_relative '../../spec_helper'
-require 'spectrum/holding/action'
-require 'spectrum/holding/get_this_action'
 
 describe Spectrum::Holding::GetThisAction do
   context "::match?" do
-    let(:data) { YAML.load_file(File.expand_path('../get_this_action_data-01.yml', __FILE__)) }
+
+    let(:holding) { JSON.parse(File.read('./spec/fixtures/get_this_action_getholdings.json')) }
+
+    let(:item) do
+      #Spectrum::Entities::MirlynItem
+      Spectrum::Entities::Holdings.new(holding)[1].items.first
+    end
+
     it "returns true on example 0" do
-      expect(described_class.match?(*data[0]['args'])).to eq(data[0]['match'])
+      expect(described_class.match?(item)).to eq(true)
     end
   end
 
@@ -16,11 +21,11 @@ describe Spectrum::Holding::GetThisAction do
     context "with a basic example" do
 
       let(:id) { 'ID' }
-      let(:datastore) { 'DATASTORE' }
       let(:bib) { nil }
-      let(:item) {{
+      let(:holding) {{
         'item_status' => ''
       }}
+      let(:item) { instance_double(Spectrum::Entities::MirlynItem, barcode: 'BARCODE', doc_id: 'ID') }
       let(:info) {{ 'can_request' => true, 'barcode' => 'BARCODE' }}
       let(:result) {{
         text: 'Get This',
@@ -28,11 +33,11 @@ describe Spectrum::Holding::GetThisAction do
           barcode: 'BARCODE',
           action: 'get-this',
           record: 'ID',
-          datastore: 'DATASTORE',
+          datastore: 'ID',
         }
       }}
 
-      subject { described_class.new(id, datastore, bib, item, info) }
+      subject { described_class.new(bib_record: bib, item: item) }
 
       it 'returns an N/A cell.' do
         expect(subject.finalize).to eq(result)

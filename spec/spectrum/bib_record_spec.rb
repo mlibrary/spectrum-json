@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../spec_helper'
-require 'spectrum/bib_record'
 
 describe Spectrum::BibRecord do
   subject do

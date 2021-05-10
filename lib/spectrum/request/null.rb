@@ -7,6 +7,10 @@ module Spectrum
         'https://proxy.lib.umich.edu/login?url='
       end
 
+      def messages
+        []
+      end
+
       def spectrum
         nil
       end

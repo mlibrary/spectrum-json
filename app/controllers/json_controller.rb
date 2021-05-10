@@ -78,16 +78,9 @@ class JsonController < ApplicationController
     full_response = search_response
 
     if @source.holdings
-      bulk_holdings = HTTParty.get(
-        @source.holdings + full_response[:response].map {|record| record[:uid]}.join(',')
-      )
-
       full_response[:response].each do |record|
         holdings_request = Spectrum::Request::Holdings.new({id: record[:uid]})
-        holdings_response = Spectrum::Response::Holdings.new(
-          @source,
-          holdings_request, getHoldingsResponse: bulk_holdings
-        )
+        holdings_response = Spectrum::Response::Holdings.new( @source, holdings_request )
         record.merge!(holdings: holdings_response.renderable)
       end
     else
@@ -312,7 +305,7 @@ class JsonController < ApplicationController
     {
       request:  @request.spectrum,
       response: @response.spectrum,
-      messages: @messages.map(&:spectrum),
+      messages: (@messages + @request.messages).map(&:spectrum),
       total_available: @response.total_available,
       specialists: @specialists.spectrum,
       datastore: @datastore.spectrum,

@@ -1,10 +1,12 @@
 module Spectrum
   class Holding
     class RequestThisAction < Action
-      label 'Request This' 
+      def self.label
+        'Request This' 
+      end
 
-      def self.match?(_, _, _, _, info)
-        info['can_reserve']
+      def self.match?(item)
+        item.can_request? 
       end
 
       def finalize
@@ -13,93 +15,93 @@ module Spectrum
 
       private
       def restriction
-        bib.restriction
+        @bib_record.restriction
       end
 
       def fixedshelf
-        info['inventory_number']
+        @item.inventory_number
       end
 
       def barcode
-        info['barcode']
+        @item.barcode
       end
 
       def sublocation
-        item['collection']
+        @item.collection
       end
 
       def location
-        return nil if item['sub_library'] && item['sub_library'] == 'BENT'
-        item['sub_lobrary']
+        return nil if @item.sub_library == 'BENT'
+        @item.sub_library
       end
 
       def description
-        (info['description'] || '').slice(0, 250)
+        (@item.description || '').slice(0, 250)
       end
 
       def callnumber
-        info['callnumber'] || item['callnumber']
+        @item.callnumber
       end
 
       def edition
-        (bib.edition || '').slice(0, 250)
+        (@bib_record.edition || '').slice(0, 250)
       end
 
       def extent
-        (bib.physical_description || '').slice(0, 250)
+        (@bib_record.physical_description || '').slice(0, 250)
       end
 
       def item_date
-        (bib.date || '').slice(0, 250)
+        (@bib_record.date || '').slice(0, 250)
       end
 
       def item_publisher
-        (bib.pub || '').slice(0, 250)
+        (@bib_record.pub || '').slice(0, 250)
       end
 
       def item_place
-        (bib.place || '').slice(0, 250)
+        (@bib_record.place || '').slice(0, 250)
       end
 
       def publisher
-        (bib.publisher || '').slice(0, 250)
+        (@bib_record.publisher || '').slice(0, 250)
       end
 
       def date
-        bib.pub_date
+        @bib_record.pub_date
       end
 
       def item_author
-        (bib.author || '').slice(0, 250)
+        (@bib_record.author || '').slice(0, 250)
       end
 
       def title
-        (bib.title || '').slice(0, 250)
+        (@bib_record.title || '').slice(0, 250)
       end
 
       def isbn
-        bib.isbn
+        @bib_record.isbn
       end
 
       def issn
-        bib.issn
+        @bib_record.issn
       end
 
       def barcode
-        info['barcode']
+        @item.barcode
       end
 
       def genre
-        bib.genre
+        @bib_record.genre
       end
 
       def sgenre
-        bib.sgenre
+        @bib_record.sgenre
       end
 
       def base_url
-        return 'https://aeon.bentley.umich.edu/login?' if item['sub_library'] == 'BENT'
-        return 'https://chara.clements.umich.edu/aeon/?' if item['sub_library'] == 'CLEM'
+        return 'https://aeon.bentley.umich.edu/login?' if @item.sub_library == 'BENT'
+        return 'https://chara.clements.umich.edu/aeon/?' if @item.sub_library == 'CLEM'
         'https://iris.lib.umich.edu/aeon/?'
       end
 
@@ -109,7 +111,7 @@ module Spectrum
           Form: '30',
           genre: genre,
           sgenre: sgenre,
-          sysnum: id,
+          sysnum: @item.doc_id,
           issn: issn,
           isbn: isbn,
           title: title,

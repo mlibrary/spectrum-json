@@ -6,7 +6,10 @@ require 'lru_redux'
 require 'active_support'
 require 'active_support/concern'
 
-require 'spectrum/item'
+require 'spectrum/entities/item'
+require 'spectrum/entities/holdings'
+
+require 'spectrum/decorators/mirlyn_item_decorator'
 require 'spectrum/available_online_holding'
 require 'spectrum/floor_location'
 require 'spectrum/bib_record'
@@ -84,8 +87,8 @@ require 'spectrum/request/debug'
 
 require 'spectrum/policy/get_this'
 
-require 'spectrum/holding/holding'
-require 'spectrum/holding/mirlyn_item'
+require 'spectrum/presenters/holding_presenter'
+require 'spectrum/presenters/mirlyn_item_presenter'
 require 'spectrum/holding/mirlyn_item_description'
 require 'spectrum/holding/action'
 require 'spectrum/holding/get_this_action'

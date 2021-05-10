@@ -5,18 +5,14 @@ module Spectrum
     class Holdings
       def initialize(source, request, 
                      bib_record: BibRecord.fetch(id: request.id, url: source.url),
-                     getHoldingsResponse: HTTParty.get("#{source.holdings}#{request.id}"),
-                     holding_factory: lambda{|input| Spectrum::Holding.for(input)}
+                     holdings: Spectrum::Entities::Holdings.for(source, request),
+                     holding_factory: lambda{|input| Spectrum::Presenters::HoldingPresenter.for(input)}
                     )
-        @request = request
         @bib_record = bib_record
+        @holdings = holdings
 
-        if getHoldingsResponse.code == 200
-          @holdings = getHoldingsResponse[@request.id]
-        else
-          @holdings = []
-        end
         @holding_factory = holding_factory
+
         @data = process_response
       end
 
@@ -33,11 +29,11 @@ module Spectrum
           hash['HathiTrust Digital Library'] = 'AAAA'
           hash['- Offsite Shelving -'] = 'zzzz'
         end
-        @holdings.each do |item|
-          input = HoldingInput.new(holding: item, id: @request.id, bib_record: @bib_record, raw: @holdings)
-          holding = @holding_factory.call(input)
-          if item['down_links'] || item['up_links'] || (item['item_info'] && item['item_info'].length > 0)
-            data << holding.to_h          
+        @holdings.each do |holding|
+          input = HoldingInput.new(holding: holding, bib_record: @bib_record)
+          holding_presenter = @holding_factory.call(input)
+          if holding_presenter.class.to_s.match?(/LinkedHolding/) || holding.items.count > 0
+            data << holding_presenter.to_h          
           end
         end
         data = data.reject do |item|
@@ -52,12 +48,10 @@ module Spectrum
       end
       
       class HoldingInput
-        attr_reader :holding, :id, :bib_record, :raw
-        def initialize(holding:, id:, bib_record:, raw:)
-          @holding = holding
-          @id = id
+        attr_reader :holding, :bib_record 
+        def initialize(bib_record:, holding: nil )
+          @holding = holding 
           @bib_record = bib_record
-          @raw = raw #raw getHoldings.pl output
         end
       end
       

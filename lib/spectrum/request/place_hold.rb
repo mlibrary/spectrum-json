@@ -90,10 +90,11 @@ module Spectrum
       end
 
       def fetch_holdings_record
-        uri = URI(@source.holdings + @record_id)
-        holdings_data = JSON.parse(Net::HTTP.get(uri))
-        barcode = get_barcode_from_holdings_data_with_key(holdings_data, @item_key)
-        Spectrum::Item.for_barcode(holdings_data, @record_id, barcode)
+        req = Object.new
+        def req.id; @record_id; end
+        holdings = Spectrum::Entities::Holdings.for(@source, req)
+        item = holdings.find_item_by_item_key(@item_key)
+        Spectrum::Decorators::MirlynItemDecorator.new(item, holdings.hathi_holdings)
       end
 
       def logged_in?

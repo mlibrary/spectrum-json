@@ -161,16 +161,17 @@ module Spectrum
         end
 
         def field_value(message, uid)
-          [(message.find { |field| field[:uid] == uid } || {})[:value]].flatten.compact.map(&:to_s)
+          raw_field_value(message, uid).map(&:to_s)
         end
 
-        def raw_value(message, uid)
+        def raw_field_value(message, uid)
+          [(message.find { |field| field[:uid] == uid } || {})[:value]].flatten.compact
         end
 
         def get_locations(message)
           (
-            field_value(message, 'resource_access') + 
-            field_value(message, 'holdings')
+            raw_field_value(message, 'resource_access') +
+            raw_field_value(message, 'holdings')
           ).compact.reject { |table| table[:rows].nil? || table[:rows].empty? }
         end
 
