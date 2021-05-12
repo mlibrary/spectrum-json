@@ -52,6 +52,35 @@ module Spectrum::Presenters
       nil
     end
   end
+  class AlmaHoldingPresenter < HoldingPresenter
+    private
+    def caption
+      @holding.location_text
+    end
+    def captionLink
+      @holding.location_link
+    end
+    def headings
+      ['Action', 'Description', 'Status', 'Call Number']
+    end
+    def name
+      'holdings'
+    end
+    def notes
+      [
+        @holding.public_note,
+        @holding.summary_holdings,
+        Spectrum::FloorLocation.resolve(
+          @holding.library,
+          @holding.location,
+          @holding.callnumber
+        )
+      ].compact.reject(&:empty?)
+    end
+    def rows
+      @holding.items.map { |item| Spectrum::Presenters::AlmaItem.new(bib_record: @bib_record,  item: item).to_a }
+    end
+  end
 
   class MirlynHoldingPresenter < HoldingPresenter
     private

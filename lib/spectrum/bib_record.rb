@@ -135,11 +135,17 @@ module Spectrum
     def hathi_holding
       holdings.find{|x| x.class.name.to_s.match(/HathiHolding/) }
     end
+    def alma_holding(holding_id)
+      holdings.find{|x| x.holding_id == holding_id }
+    end
     
 
     class Holding
       def initialize(holding)
         @holding = holding
+      end
+      def holding_id
+        ''
       end
       def library
         @holding["library"]

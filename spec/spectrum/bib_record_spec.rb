@@ -39,6 +39,24 @@ describe Spectrum::BibRecord do
       end
     end
 
+    context "#alma_holding(holding_id)" do
+      it "returns the alma holding for a given holding id" do
+        expect(subject.alma_holding("2297537770006381").callnumber).to eq('LB 2331.72 .S371 1990')  
+      end
+      it "returns nil for no matching holding" do
+        expect(subject.alma_holding("not_a_holding_id")).to be_nil
+      end
+    end
+    context "an alma holding" do
+      let(:alma_holding) { subject.holdings[0] }
+      ['holding_id', 'location', 'callnumber', 'public_note', 'items'].each do |method|
+        context "##{method}" do
+          it "respond_to? #{method}" do
+            expect(alma_holding.respond_to?(method)).to be(true)
+          end
+        end
+      end
+    end
     context "#hathi_holding" do
       it "returns a HathiHolding item" do
         expect(subject.hathi_holding.class.name.to_s).to eq("Spectrum::BibRecord::HathiHolding")
