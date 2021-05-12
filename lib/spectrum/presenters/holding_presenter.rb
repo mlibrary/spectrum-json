@@ -6,6 +6,7 @@ module Spectrum::Presenters
     end
     def self.for(input)
       if input.holding.class.name.to_s.match(/Hathi/)
+        #Will Change to New when using Alma data
         HathiTrustHoldingPresenter.new(input)
       elsif input.holding.up_links || input.holding.down_links
         LinkedHoldingPresenter.for(input)
@@ -73,6 +74,33 @@ module Spectrum::Presenters
     end
     def rows
       @holding.items.map { |item| Spectrum::Presenters::MirlynItem.new(bib_record: @bib_record,  item: item).to_a }
+    end
+  end
+  class NewHathiTrustHoldingPresenter < HoldingPresenter
+    private
+    def caption
+      @holding.library
+    end
+    def captionLink
+      @holding.info_link
+    end
+    def headings
+      ['Link', 'Description', 'Source']
+    end
+    def type
+      'electronic'
+    end
+    def name
+      'HathiTrust Sources'
+    end
+    def rows
+      @holding.items.map do |item| 
+        [
+          {text: item.status, href: item.url},
+          {text: item.description || ''},
+          {text: item.source || 'N/A'}
+        ]
+      end
     end
   end
   class HathiTrustHoldingPresenter < HoldingPresenter

@@ -27,22 +27,31 @@ describe Spectrum::Entities::NewHathiHolding do
   it "has items" do
     expect(subject.items.class.name.to_s).to  eq('Array')
   end
+  let(:add_hathi_item) do
+    holdings = @solr_bib_alma["response"]["docs"][0]["hol"]
+    parsed_hol = JSON.parse(holdings)
+    parsed_hol[1]["items"].push({})
+    @solr_bib_alma["response"]["docs"][0]["hol"] = parsed_hol.to_json
+  end
   context "#id" do
     
     it "has an id of first item if there is only one item" do
       expect(subject.id).to eq('mdp.39015017893416')
     end
     it "returns nil if there are multiple items" do
-      holdings = @solr_bib_alma["response"]["docs"][0]["hol"]
-      parsed_hol = JSON.parse(holdings)
-      parsed_hol[1]["items"].push({})
-      @solr_bib_alma["response"]["docs"][0]["hol"] = parsed_hol.to_json
+      add_hathi_item
       expect(subject.id).to be_nil
     end
   end
   context "#status" do
-    it "gets status of first item if there's only one item"
-    it "returns nil if there are multiple items"
+    it "gets status of first item if there's only one item" do
+      expect(subject.status).to eq("Full Text")
+    end
+    it "returns nil if there are multiple items" do
+      add_hathi_item
+      expect(subject.status).to be_nil
+    end
+
   end
   context ".for" do
     let(:solr_url) { 'http://localhost/solr/biblio' }
@@ -55,14 +64,13 @@ describe Spectrum::Entities::NewHathiHolding do
 
     end
   end
-
 end
 describe Spectrum::Entities::NewHathiItem do
   before(:each) do
-    @solr_bib_alma = File.read('./spec/fixtures/solr_bib_alma.json')
+    @solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
   end
   subject do
-    bib_record = Spectrum::BibRecord.new(JSON.parse(@solr_bib_alma))
+    bib_record = Spectrum::BibRecord.new(@solr_bib_alma)
     Spectrum::Entities::NewHathiHolding.new(bib_record).items.first
   end
   it "has a description" do
@@ -77,7 +85,16 @@ describe Spectrum::Entities::NewHathiItem do
   it "has a record" do
     expect(subject.record).to eq('990020578280206381')
   end
+  it "has an id" do
+    expect(subject.id).to eq('mdp.39015017893416')
+  end
   context "#status" do
     it "generates appropriate status"
+  end
+  context "#url" do
+    it "has non-login link" do
+      expect(subject.url).to eq('http://hdl.handle.net/2027/mdp.39015017893416')
+    end
+    it "has login link" 
   end
 end

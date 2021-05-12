@@ -18,6 +18,9 @@ module Spectrum::Entities
     def info_link
       nil
     end
+    def library
+      @holding.library
+    end
     def location
       @holding.library
     end
@@ -59,6 +62,15 @@ module Spectrum::Entities
     def status
       #TBD reimplement getHoldings stuff??? 
       'Full Text'
+    end
+    def url
+      handle = "http://hdl.handle.net/2027/#{@item.id}"
+      suffix = if status.include?('log in required')
+        "?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth"
+      else
+        ''
+      end
+      "#{handle}#{suffix}"
     end
   end
 end
