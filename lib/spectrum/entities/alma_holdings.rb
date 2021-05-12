@@ -1,16 +1,22 @@
 require 'alma_rest_client'
 class Spectrum::Entities::AlmaHoldings
   attr_reader :bib, :holdings
-  def initialize(mms_id, client = AlmaRestClient.client)
-    response = client.get_all(url: "/bibs/#{mms_id}/holdings/ALL/items", record_key: "item")
-    if response.code == 200
-      @parsed_response = response.parsed_response
-      @bib = Spectrum::Entities::AlmaBib.new(@parsed_response["item"][0]["bib_data"])
-      @holdings = load_holdings
-    else
-      #TBD ERROR
-    end
+  def initialize(alma: , solr:)
+    @alma = alma
+    @solr = solr
+    @bib = Spectrum::Entities::AlmaBib.new(@alma["item"][0]["bib_data"])
+    @holdings = load_holdings
   end
+  #def self.for(mms_id: mms_id, bib_record: nil, client: AlmaRestClient.client)
+    #response = client.get_all(url: "/bibs/#{mms_id}/holdings/ALL/items", record_key: "item")
+    #if response.code == 200
+      #@alma = response.parsed_response
+      #@bib = Spectrum::Entities::AlmaBib.new(@alma["item"][0]["bib_data"])
+      #@holdings = load_holdings
+    #else
+      ##TBD ERROR
+    #end
+  #end
 
   def find_item(barcode)
     @holdings.map{|h| h.items}
@@ -32,17 +38,15 @@ class Spectrum::Entities::AlmaHoldings
   private
   def load_holdings
     holdings = {}
-    @parsed_response["item"].each do |x|
+    @alma["item"].each do |x|
       holding_id = x["holding_data"]["holding_id"]
       holdings[holding_id] = [] if holdings[holding_id].nil?
       holdings[holding_id].push(x)
     end
-    holdings.values.map do |bib_hold_items|
-      items = bib_hold_items.map{|x| x["item_data"] } 
-      holding_data = bib_hold_items[0]["holding_data"]
-      Spectrum::Entities::AlmaHolding.new(bib: @bib, holding: holding_data, items: items, holding_items: bib_hold_items)
+    holdings.to_a.map do |id, full_items|
+      solr_holding = @solr.alma_holding(id)
+      Spectrum::Entities::AlmaHolding.new(bib: @bib, full_items: full_items, solr_holding: solr_holding)
     end
-      
   end
   
 end
@@ -78,16 +82,20 @@ class Spectrum::Entities::AlmaHolding
   #TBD 
   #public_note is in bib_record_holdings; 
   #summary_holdings; ???? 
-  def initialize(bib:, holding:, items:, holding_items: [])
+  def initialize(bib:, full_items: [], solr_holding: nil )
     @bib = bib
-    @holding = holding_items[0]["holding_data"]
-    @items = holding_items.map{|x| Spectrum::Entities::AlmaItem.new(holding: self, item: x["item_data"], full_item: x)}
+    @holding = full_items[0]["holding_data"]
+    @solr_holding = solr_holding
+    @items = full_items.map{|x| Spectrum::Entities::AlmaItem.new(holding: self, item: x["item_data"], full_item: x)}
   end
   def holding_id
     @holding["holding_id"]
   end
   def callnumber
     @holding["call_number"]
+  end
+  def public_note
+    @solr_holding&.public_note
   end
   def location_text
     Spectrum::LibLocDisplay.text(library, location) 
@@ -118,12 +126,6 @@ class Spectrum::Entities::AlmaItem
   end
   def temp_location?
     @holding_raw["in_temp_location"]
-  end
-  def temp_library
-    @holding_raw.dig("temp_library","desc")
-  end
-  def temp_location
-    @holding_raw.dig("temp_location","desc")
   end
   def pid
     @item["pid"]
