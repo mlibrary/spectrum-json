@@ -49,7 +49,7 @@ describe Spectrum::BibRecord do
     end
     context "an alma holding" do
       let(:alma_holding) { subject.holdings[0] }
-      ['holding_id', 'location', 'callnumber', 'public_note', 'items'].each do |method|
+      ['holding_id', 'location', 'callnumber', 'public_note', 'items', 'summary_holdings'].each do |method|
         context "##{method}" do
           it "respond_to? #{method}" do
             expect(alma_holding.respond_to?(method)).to be(true)

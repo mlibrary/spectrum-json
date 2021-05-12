@@ -87,6 +87,9 @@ describe Spectrum::Entities::AlmaHolding do
   it "has public_note" do
     expect(subject.public_note).to be_nil
   end
+  it "has summary_holdings" do
+    expect(subject.summary_holdings).to be_nil
+  end
 end
 describe Spectrum::Entities::AlmaItem do
   subject do

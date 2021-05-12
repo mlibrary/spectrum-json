@@ -78,10 +78,6 @@ class Spectrum::Entities::AlmaHolding
   extend Forwardable
   def_delegators :@bib, :mms_id, :title, :author, 
     :issn, :isbn, :pub_date
-
-  #TBD 
-  #public_note is in bib_record_holdings; 
-  #summary_holdings; ???? 
   def initialize(bib:, full_items: [], solr_holding: nil )
     @bib = bib
     @holding = full_items[0]["holding_data"]
@@ -92,10 +88,13 @@ class Spectrum::Entities::AlmaHolding
     @holding["holding_id"]
   end
   def callnumber
-    @holding["call_number"]
+    @solr_holding&.callnumber
   end
   def public_note
     @solr_holding&.public_note
+  end
+  def summary_holdings
+    @solr_holding&.summary_holdings
   end
   def location_text
     Spectrum::LibLocDisplay.text(library, location) 

@@ -200,6 +200,9 @@ module Spectrum
       def public_note
         @holding["public_note"]
       end
+      def summary_holdings
+        @holding["summary_holdings"]
+      end
       def items
         @holding["items"].map{|x| Item.new(x)}
       end
