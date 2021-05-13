@@ -57,6 +57,9 @@ class Spectrum::Entities::AlmaBib
   def mms_id
     @bib["mms_id"]
   end
+  def doc_id
+    mms_id
+  end
   def title
     @bib["title"]
   end
@@ -76,7 +79,7 @@ end
 class Spectrum::Entities::AlmaHolding
   attr_reader :items
   extend Forwardable
-  def_delegators :@bib, :mms_id, :title, :author, 
+  def_delegators :@bib, :mms_id, :doc_id, :title, :author, 
     :issn, :isbn, :pub_date
   def initialize(bib:, full_items: [], solr_holding: nil )
     @bib = bib
@@ -108,37 +111,5 @@ class Spectrum::Entities::AlmaHolding
   end
   def location
     @items.first&.location
-  end
-end
-#TBD #status, #temp_location?
-class Spectrum::Entities::AlmaItem
-  extend Forwardable
-  def_delegators :@holding, :mms_id, :title, :author, 
-    :issn, :isbn, :pub_date, :holding_id
-  def initialize(holding:, item:, full_item:{})
-    @holding = holding
-    @holding_raw = full_item["holding_data"]
-    @item = full_item["item_data"]
-  end
-  def callnumber
-    @holding_raw["call_number"]
-  end
-  def temp_location?
-    @holding_raw["in_temp_location"]
-  end
-  def pid
-    @item["pid"]
-  end
-  def barcode
-    @item["barcode"]
-  end
-  def library
-    @item.dig("library","value")
-  end
-  def location
-    @item.dig("location","value")
-  end
-  def inventory_number
-    @item["inventory_number"]
   end
 end

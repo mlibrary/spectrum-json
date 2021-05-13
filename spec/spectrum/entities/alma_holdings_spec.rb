@@ -39,6 +39,9 @@ describe Spectrum::Entities::AlmaBib do
   it "has an mms_id" do
     expect(subject.mms_id).to eq('990020578280206381')
   end
+  it "has a doc_id" do
+    expect(subject.doc_id).to eq('990020578280206381')
+  end
   it "has an title" do
     expect(subject.title).to eq('Enhancing faculty careers : strategies for development and renewal /')
   end
@@ -61,13 +64,16 @@ describe Spectrum::Entities::AlmaHolding do
     solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
     solr = Spectrum::BibRecord.new(solr_bib_alma)
     solr_holding = solr.alma_holding("2297537770006381")
-    bib = instance_double(Spectrum::Entities::AlmaBib, title: "title")
+    bib = instance_double(Spectrum::Entities::AlmaBib, title: "title", doc_id: "doc_id")
     
 
     described_class.new(bib: bib, full_items: response["item"], solr_holding: solr_holding)
   end
   it "has bib title" do
     expect(subject.title).to eq("title")
+  end
+  it "has a doc_id" do
+    expect(subject.doc_id).to eq('doc_id')
   end
   it "has holding_id" do
     expect(subject.holding_id).to eq("2297537770006381")
@@ -89,33 +95,5 @@ describe Spectrum::Entities::AlmaHolding do
   end
   it "has summary_holdings" do
     expect(subject.summary_holdings).to be_nil
-  end
-end
-describe Spectrum::Entities::AlmaItem do
-  subject do
-    response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
-    holding = instance_double(Spectrum::Entities::AlmaHolding, title: "title")
-    described_class.new(holding: holding, item: response["item"][0]["item_data"], full_item: response["item"][0])
-  end
-  it "has a bib title" do
-    expect(subject.title).to eq("title")
-  end
-  it "has a pid" do
-    expect(subject.pid).to eq("2397537760006381")
-  end
-  it "has a barcode" do
-    expect(subject.barcode).to eq("39015017893416")
-  end
-  it "has a library" do
-    expect(subject.library).to eq("HATCH")
-  end
-  it "has a location" do
-    expect(subject.location).to eq("GRAD")
-  end
-  it "has an inventory_number" do
-    expect(subject.inventory_number).to eq("")
-  end
-  it "returns temp_location status" do
-    expect(subject.temp_location?).to eq(false)
   end
 end

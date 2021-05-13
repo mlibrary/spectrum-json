@@ -8,7 +8,7 @@ describe Spectrum::Holding::RequestThisAction do
   let(:bib) { StubBibRecord.new }
   let(:holding) {{ 'can_reserve' => true }}
   let(:info) {{ 'can_reserve' => true }}
-  let(:item) { instance_double(Spectrum::Entities::MirlynItem, full_item_key: '12345678901234567890', 
+  let(:item) { instance_double(Spectrum::Entities::AlmaItem, full_item_key: '12345678901234567890', 
       barcode: nil, collection: nil, inventory_number: nil, sub_library: nil, callnumber: nil,
       description: nil, doc_id: id)}
   let(:result) {{

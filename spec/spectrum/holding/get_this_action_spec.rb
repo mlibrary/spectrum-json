@@ -5,11 +5,15 @@ require_relative '../../spec_helper'
 describe Spectrum::Holding::GetThisAction do
   context "::match?" do
 
-    let(:holding) { JSON.parse(File.read('./spec/fixtures/get_this_action_getholdings.json')) }
+    #let(:holding) { JSON.parse(File.read('./spec/fixtures/get_this_action_getholdings.json')) }
+    let(:holding) { JSON.parse(File.read('./spec/fixtures/alma_one_holding.json')) }
+    let(:solr) {Spectrum::BibRecord.new(JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json')))}
 
     let(:item) do
       #Spectrum::Entities::MirlynItem
-      Spectrum::Entities::Holdings.new(holding)[1].items.first
+      #Spectrum::Entities::Holdings.new(holding)[1].items.first
+      Spectrum::Entities::AlmaHoldings.new(alma: holding, solr: solr)[0].items.first
+      
     end
 
     it "returns true on example 0" do
@@ -25,7 +29,7 @@ describe Spectrum::Holding::GetThisAction do
       let(:holding) {{
         'item_status' => ''
       }}
-      let(:item) { instance_double(Spectrum::Entities::MirlynItem, barcode: 'BARCODE', doc_id: 'ID') }
+      let(:item) { instance_double(Spectrum::Entities::AlmaItem, barcode: 'BARCODE', doc_id: 'ID') }
       let(:info) {{ 'can_request' => true, 'barcode' => 'BARCODE' }}
       let(:result) {{
         text: 'Get This',

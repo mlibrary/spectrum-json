@@ -14,6 +14,7 @@ require 'spectrum/bib_record'
 require 'spectrum/entities/item'
 require 'spectrum/entities/holdings'
 require 'spectrum/entities/alma_holdings'
+require 'spectrum/entities/alma_item'
 require 'spectrum/entities/hathi_holding'
 require 'spectrum/entities/combined_holdings'
 

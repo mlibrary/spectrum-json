@@ -7,9 +7,9 @@ module Spectrum
 
         args = { bib_record: bib_record, item: item }
 
-        if item.can_reserve?
+        if RequestThisAction.match?(item)
           RequestThisAction.new(**args)
-        elsif item.can_book?
+        elsif BookThisAction.match?(item)
           BookThisAction.new(**args)
         elsif GetThisAction.match?(item)
           GetThisAction.new(**args)

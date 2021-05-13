@@ -9,7 +9,7 @@ describe Spectrum::Holding::BookThisAction do
   let(:bib_record) { nil }
   let(:holding) { nil }
   let(:item_info) {nil}
-  let(:item) { instance_double(Spectrum::Entities::MirlynItem, full_item_key: '12345678901234567890') }
+  let(:item) { instance_double(Spectrum::Entities::AlmaItem, full_item_key: '12345678901234567890') }
 
   let(:result) {{
     text: 'Book This',

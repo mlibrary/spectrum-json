@@ -6,7 +6,7 @@ module Spectrum
       end
 
       def self.match?(item)
-        item.can_request? 
+        item.can_reserve? 
       end
 
       def finalize
