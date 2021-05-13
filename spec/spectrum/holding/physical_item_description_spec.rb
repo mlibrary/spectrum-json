@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 describe Spectrum::Holding::PhysicalItemDescription do
   context "to_h" do
     before(:each) do
-      @item_dbl = instance_double(Spectrum::Entities::MirlynItem, description: nil, temp_location?: false)
+      @item_dbl = instance_double(Spectrum::Entities::AlmaItem, description: nil, temp_location?: false)
     end
     subject do 
       #only called with self.for
