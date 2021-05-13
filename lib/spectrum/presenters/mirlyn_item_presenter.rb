@@ -5,7 +5,7 @@ module Spectrum
       @item = item #Entities::MirlynItem
     end
     def to_a(action: Spectrum::Holding::Action.for(bib_record: @bib_record, item: @item),
-             description: Spectrum::Holding::MirlynItemDescription.for(item: @item),
+             description: Spectrum::Holding::PhysicalItemDescription.for(item: @item),
              intent: Aleph.intent(@item.status), icon: Aleph.icon(@item.status))
       [
         action.finalize,

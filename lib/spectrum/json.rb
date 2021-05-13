@@ -94,7 +94,7 @@ require 'spectrum/policy/get_this'
 
 require 'spectrum/presenters/holding_presenter'
 require 'spectrum/presenters/mirlyn_item_presenter'
-require 'spectrum/holding/mirlyn_item_description'
+require 'spectrum/holding/physical_item_description'
 require 'spectrum/holding/action'
 require 'spectrum/holding/get_this_action'
 require 'spectrum/holding/request_this_action'

@@ -1,6 +1,6 @@
 module Spectrum
   class Holding
-    class MirlynItemDescription
+    class PhysicalItemDescription
       attr_reader :temp_location, :description
       def initialize(item:)
         @item = item
@@ -19,7 +19,7 @@ module Spectrum
         elsif has_description
           DescriptionNotTemporary.new(item: item)
         else #Not Temporary and No Description
-          MirlynItemDescription.new(item: item)
+          PhysicalItemDescription.new(item: item)
         end
       end
 
@@ -37,7 +37,7 @@ module Spectrum
         "In a Temporary Location"
       end
 
-      class TemporaryWithDescription < MirlynItemDescription
+      class TemporaryWithDescription < PhysicalItemDescription
         def value
           "<div>#{@description}</div><div>#{temp_location_string}</div>"
         end
@@ -46,12 +46,12 @@ module Spectrum
         end
       end
 
-      class TemporaryNoDescription < MirlynItemDescription
+      class TemporaryNoDescription < PhysicalItemDescription
         def value
           temp_location_string
         end
       end
-      class DescriptionNotTemporary < MirlynItemDescription
+      class DescriptionNotTemporary < PhysicalItemDescription
         def value
           @description
         end

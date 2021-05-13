@@ -5,7 +5,7 @@ describe Spectrum::Presenters::MirlynItem, "to_a" do
 
     @to_a_init = {
       action: instance_double(Spectrum::Holding::Action, finalize: nil),
-      description: instance_double(Spectrum::Holding::MirlynItemDescription, to_h: {text: 'N/A'}),
+      description: instance_double(Spectrum::Holding::PhysicalItemDescription, to_h: {text: 'N/A'}),
       intent: 'intent', icon: 'icon'
     }
     
