@@ -1,6 +1,6 @@
 require_relative '../../spec_helper'
 
-describe Spectrum::Presenters::MirlynItem, "to_a" do
+describe Spectrum::Presenters::PhysicalItem, "to_a" do
     before(:each) do
 
     @to_a_init = {

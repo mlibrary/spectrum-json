@@ -1,5 +1,5 @@
 module Spectrum
-  class Presenters::MirlynItem
+  class Presenters::PhysicalItem
     def initialize(item:, bib_record: )
       @bib_record = bib_record
       @item = item #Entities::MirlynItem

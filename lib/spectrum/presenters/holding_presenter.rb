@@ -102,7 +102,7 @@ module Spectrum::Presenters
       ].compact.reject(&:empty?)
     end
     def rows
-      @holding.items.map { |item| Spectrum::Presenters::MirlynItem.new(bib_record: @bib_record,  item: item).to_a }
+      @holding.items.map { |item| Spectrum::Presenters::PhysicalItem.new(bib_record: @bib_record,  item: item).to_a }
     end
   end
   class NewHathiTrustHoldingPresenter < HoldingPresenter
