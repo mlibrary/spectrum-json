@@ -1,22 +1,20 @@
 require 'alma_rest_client'
 class Spectrum::Entities::AlmaHoldings
   attr_reader :bib, :holdings
-  def initialize(alma: , solr:)
+  def initialize(alma:, solr:)
     @alma = alma
-    @solr = solr
+    @solr = solr #Spectrum::BibRecord
     @bib = Spectrum::Entities::AlmaBib.new(@alma["item"][0]["bib_data"])
     @holdings = load_holdings
   end
-  #def self.for(mms_id: mms_id, bib_record: nil, client: AlmaRestClient.client)
-    #response = client.get_all(url: "/bibs/#{mms_id}/holdings/ALL/items", record_key: "item")
-    #if response.code == 200
-      #@alma = response.parsed_response
-      #@bib = Spectrum::Entities::AlmaBib.new(@alma["item"][0]["bib_data"])
-      #@holdings = load_holdings
-    #else
-      ##TBD ERROR
-    #end
-  #end
+  def self.for(bib_record:, client: AlmaRestClient.client)
+    response = client.get_all(url: "/bibs/#{bib_record.mms_id}/holdings/ALL/items", record_key: "item")
+    if response.code == 200
+      Spectrum::Entities::AlmaHoldings.new(alma: response.parsed_response, solr: bib_record)
+    else
+      #TBD ERROR
+    end
+  end
 
   def find_item(barcode)
     @holdings.map{|h| h.items}

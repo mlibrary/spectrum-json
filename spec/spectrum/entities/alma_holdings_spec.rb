@@ -30,6 +30,14 @@ describe Spectrum::Entities::AlmaHoldings do
       expect(subject.find_item("not_a_barcode")).to be_nil
     end
   end
+  context ".for(bib_record:)" do
+    it "generates AlmaHoldings for given bib record" do
+      stub_alma_get_request(url: "bibs/#{@mms_id}/holdings/ALL/items", output: File.read('./spec/fixtures/alma_one_holding.json'), query: {limit: 100, offset: 0})
+
+      holdings = described_class.for(bib_record: Spectrum::BibRecord.new(@solr_bib_alma))
+      expect(holdings.class.name.to_s).to eq("Spectrum::Entities::AlmaHoldings")
+    end
+  end
 end
 describe Spectrum::Entities::AlmaBib do
   subject do
@@ -59,11 +67,13 @@ describe Spectrum::Entities::AlmaBib do
   end
 end
 describe Spectrum::Entities::AlmaHolding do
+  let(:solr_bib_record) do
+    solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
+    Spectrum::BibRecord.new(solr_bib_alma)
+  end
   subject do
     response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
-    solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
-    solr = Spectrum::BibRecord.new(solr_bib_alma)
-    solr_holding = solr.alma_holding("2297537770006381")
+    solr_holding = solr_bib_record.alma_holding("2297537770006381")
     bib = instance_double(Spectrum::Entities::AlmaBib, title: "title", doc_id: "doc_id")
     
 
@@ -96,4 +106,5 @@ describe Spectrum::Entities::AlmaHolding do
   it "has summary_holdings" do
     expect(subject.summary_holdings).to be_nil
   end
+
 end

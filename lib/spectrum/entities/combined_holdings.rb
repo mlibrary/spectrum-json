@@ -12,8 +12,11 @@ module Spectrum::Entities
       @holdings = [@hathi_holding, *@alma_holdings.holdings]
     end
 
+    def self.for(source, request)
+      self.for_bib(Spectrum::BibRecord.fetch(id: request.id, url: source.url))
+    end
     def self.for_bib(bib_record, 
-                 alma_holdings = Spectrum::Entities::AlmaHoldings.new(bib_record.mms_id),
+                 alma_holdings = Spectrum::Entities::AlmaHoldings.for(bib_record: bib_record),
                  hathi_holding = Spectrum::Entities::NewHathiHolding.new(bib_record) )
 
       Spectrum::Entities::CombinedHoldings.new(alma_holdings: alma_holdings, hathi_holding: hathi_holding, bib_record: bib_record)
