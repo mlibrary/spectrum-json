@@ -4,12 +4,12 @@ module Spectrum
   module Response
     class Holdings
       def initialize(source, request, 
-                     bib_record: BibRecord.fetch(id: request.id, url: source.url),
-                     holdings: Spectrum::Entities::Holdings.for(source, request),
+                     #bib_record: BibRecord.fetch(id: request.id, url: source.url),
+                     holdings: Spectrum::Entities::CombinedHoldings.for(source, request),
                      holding_factory: lambda{|input| Spectrum::Presenters::HoldingPresenter.for(input)}
                     )
-        @bib_record = bib_record
         @holdings = holdings
+        @bib_record = holdings.bib_record
 
         @holding_factory = holding_factory
 

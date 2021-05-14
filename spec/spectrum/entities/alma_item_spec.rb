@@ -28,6 +28,10 @@ describe Spectrum::Entities::AlmaItem do
   it "returns a description" do
     expect(subject.description).to eq("")
   end
+  
+  context "#status" do
+    it "handles it"
+  end
   context "#can_request?" do
     it "handles it"
   end

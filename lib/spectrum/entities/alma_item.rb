@@ -43,6 +43,9 @@ class Spectrum::Entities::AlmaItem
   def description
     @item["description"]
   end
+  #TBD
+  def status
+  end
   
   #TBD
   def can_request?

@@ -7,9 +7,9 @@ module Spectrum::Presenters
     def self.for(input)
       if input.holding.class.name.to_s.match(/Hathi/)
         #Will Change to New when using Alma data
-        HathiTrustHoldingPresenter.new(input)
-      elsif input.holding.up_links || input.holding.down_links
-        LinkedHoldingPresenter.for(input)
+        NewHathiTrustHoldingPresenter.new(input)
+      #elsif input.holding.up_links || input.holding.down_links
+        #LinkedHoldingPresenter.for(input)
       else
         MirlynHoldingPresenter.new(input)
       end
@@ -54,12 +54,6 @@ module Spectrum::Presenters
   end
   class AlmaHoldingPresenter < HoldingPresenter
     private
-    def caption
-      @holding.location_text
-    end
-    def captionLink
-      @holding.location_link
-    end
     def headings
       ['Action', 'Description', 'Status', 'Call Number']
     end
