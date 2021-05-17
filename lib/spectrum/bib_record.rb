@@ -166,23 +166,11 @@ module Spectrum
         def initialize(item)
           @item = item
         end
-        def id
-          @item["id"]
-        end
-        def rights
-          @item["rights"]
-        end
-        def description
-          @item["description"]
-        end
-        def collection_code
-          @item["collection_code"]
-        end
-        def access
-          @item["access"]
-        end
-        def source
-          @item["source"]
+        ["id", "rights", "description", "collection_code",
+         "access", "source", "status"].each do |name|
+          define_method(name) do
+            @item[name]
+          end
         end
       end
       private_constant :Item

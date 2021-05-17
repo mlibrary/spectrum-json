@@ -1,6 +1,7 @@
 require_relative '../../spec_helper'
 describe Spectrum::Entities::NewHathiHolding do
   let(:mms_id) {'990020578280206381'}
+  let(:etas_status) {"Full text available, simultaneous access is limited (HathiTrust log in required)"}
   before(:each) do
     @solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
   end
@@ -45,7 +46,7 @@ describe Spectrum::Entities::NewHathiHolding do
   end
   context "#status" do
     it "gets status of first item if there's only one item" do
-      expect(subject.status).to eq("Full Text")
+      expect(subject.status).to eq(etas_status)
     end
     it "returns nil if there are multiple items" do
       add_hathi_item
@@ -92,9 +93,15 @@ describe Spectrum::Entities::NewHathiItem do
     it "generates appropriate status"
   end
   context "#url" do
-    it "has non-login link" do
+    it "has login link" do
+      expect(subject.url).to eq('http://hdl.handle.net/2027/mdp.39015017893416?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth')
+    end
+    it "does not have login link"  do
+      holdings = JSON.parse(@solr_bib_alma["response"]["docs"][0]["hol"])
+      holdings[1]["items"][0]["status"] = "Full text"
+      @solr_bib_alma["response"]["docs"][0]["hol"] = holdings.to_json
       expect(subject.url).to eq('http://hdl.handle.net/2027/mdp.39015017893416')
     end
-    it "has login link" 
+
   end
 end

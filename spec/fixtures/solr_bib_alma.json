@@ -68,7 +68,7 @@
         "ht_searchonly":false,
         "ht_searchonly_intl":false,
         "aleph_id":"002057828",
-        "hol":"[{\"hol_mmsid\":\"2297537770006381\",\"library\":\"HATCH\",\"location\":\"GRAD\",\"callnumber\":\"LB 2331.72 .S371 1990\",\"public_note\":null,\"items\":[{\"barcode\":\"39015017893416\",\"library\":\"HATCH\",\"location\":\"GRAD\",\"public_note\":null,\"process_type\":null,\"description\":null,\"item_id\":\"2397537760006381\"}]},{\"library\":\"HathiTrust Digital Library\",\"items\":[{\"id\":\"mdp.39015017893416\",\"rights\":\"ic\",\"description\":\"\",\"collection_code\":\"MIU\",\"access\":false,\"source\":\"University of Michigan\"}]}]",
+        "hol":"[{\"hol_mmsid\":\"2297537770006381\",\"library\":\"HATCH\",\"location\":\"GRAD\",\"callnumber\":\"LB 2331.72 .S371 1990\",\"public_note\":null,\"items\":[{\"barcode\":\"39015017893416\",\"library\":\"HATCH\",\"location\":\"GRAD\",\"public_note\":null,\"process_type\":null,\"description\":null,\"item_id\":\"2397537760006381\"}]},{\"library\":\"HathiTrust Digital Library\",\"items\":[{\"id\":\"mdp.39015017893416\",\"rights\":\"ic\",\"description\":\"\",\"collection_code\":\"MIU\",\"access\":false,\"source\":\"University of Michigan\",\"status\":\"Full text available, simultaneous access is limited (HathiTrust log in required)\"}]}]",
         "availability":["Circulating Items",
           "HathiTrust"],
         "location":["MIU",

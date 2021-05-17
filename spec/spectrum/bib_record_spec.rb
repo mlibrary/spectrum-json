@@ -95,6 +95,9 @@ describe Spectrum::BibRecord do
         it "has a source" do
           expect(hathi_item.source).to eq("University of Michigan")
         end
+        it "has a status" do
+          expect(hathi_item.status).to eq("Full text available, simultaneous access is limited (HathiTrust log in required)")
+        end
       end
     end
 

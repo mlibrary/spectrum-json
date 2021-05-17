@@ -50,7 +50,7 @@ module Spectrum::Entities
       @item = item
     end
     
-    [:description, :source, :rights, :id].each do |name|
+    [:description, :source, :rights, :id, :status].each do |name|
       define_method(name) do
         @item.public_send(name)
       end
@@ -58,10 +58,6 @@ module Spectrum::Entities
 
     def record
       @holding.mms_id
-    end
-    def status
-      #TBD reimplement getHoldings stuff??? 
-      'Full Text'
     end
     def url
       handle = "http://hdl.handle.net/2027/#{@item.id}"
