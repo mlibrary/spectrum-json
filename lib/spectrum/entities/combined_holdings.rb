@@ -11,7 +11,7 @@ module Spectrum::Entities
       @hathi_holding = hathi_holding
       @holdings = []
 
-      @holdings.push(@hathi_holding) unless @hathi_holding.nil?
+      @holdings.push(@hathi_holding) unless @hathi_holding.empty?
       @alma_holdings.holdings.each{|h| @holdings.push(h)}
 
     end
@@ -27,7 +27,7 @@ module Spectrum::Entities
       
     end
     def hathi_holdings
-      [@hathi_holding] unless @hathi_holding.nil?
+      [@hathi_holding] unless @hathi_holding.empty?
     end
   
     def [](index)

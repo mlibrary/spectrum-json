@@ -15,29 +15,32 @@ module Spectrum::Entities
         ''
       end
     end
+    def empty?
+      @holding.nil?
+    end
     def info_link
       nil
     end
     def library
-      @holding.library
+      @holding&.library
     end
     def location
-      @holding.library
+      @holding&.library
     end
     def mms_id
-      @bib_record.mms_id
+      @bib_record&.mms_id
     end
     def doc_id
       mms_id
     end
     def items 
-      @holding.items.map{|x| Spectrum::Entities::NewHathiItem.new(self, x) }
+      @holding&.items&.map{|x| Spectrum::Entities::NewHathiItem.new(self, x) } unless empty?
     end
     def id
-      items.first.id if items.count == 1
+      items&.first.id if items.count == 1
     end
     def status
-      items.first.status if items.count == 1
+      items&.first.status if items.count == 1
     end
     
   end

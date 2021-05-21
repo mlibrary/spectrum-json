@@ -8,7 +8,7 @@ describe Spectrum::Entities::CombinedHoldings do
     @alma_holdings_dbl = instance_double(Spectrum::Entities::AlmaHoldings, 
         holdings: [@alma_holding_dbl1, @alma_holding_dbl2])
     
-    @hathi_holding_dbl = instance_double(Spectrum::Entities::NewHathiHolding)
+    @hathi_holding_dbl = instance_double(Spectrum::Entities::NewHathiHolding, "empty?" => false)
   end
   let(:mms_id) {'990020578280206381'}
   let(:bib_record) {instance_double(Spectrum::BibRecord, mms_id: mms_id, hathi_holding: {}, alma_holding: @alma_holding_dbl1) }
@@ -39,7 +39,8 @@ describe Spectrum::Entities::CombinedHoldings do
   end
   context "no Hathi Holding" do
     subject do
-      subj = described_class.new(alma_holdings: @alma_holdings_dbl, hathi_holding: nil, bib_record: bib_record) 
+      allow(@hathi_holding).to receive("empty?").and_return(true)
+      subj = described_class.new(alma_holdings: @alma_holdings_dbl, hathi_holding: @hathi_holding, bib_record: bib_record) 
     end
     it "does not include a Hathi Holding" do
       expect(subject.holdings.count).to eq(2)

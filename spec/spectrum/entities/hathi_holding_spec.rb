@@ -15,6 +15,17 @@ describe Spectrum::Entities::NewHathiHolding do
       end
     end
   end
+  context "#empty?" do
+    it "says if it's not" do
+      expect(subject.empty?).to eq(false)
+    end
+    it "says if it is empty"  do
+      holdings = JSON.parse(@solr_bib_alma["response"]["docs"][0]["hol"])
+      holdings.delete_at(1)
+      @solr_bib_alma["response"]["docs"][0]["hol"] = holdings.to_json
+      expect(subject.empty?).to eq(true)
+    end
+  end
   it "has a nil info_link" do
     expect(subject.info_link).to be_nil
   end
