@@ -9,7 +9,11 @@ module Spectrum::Entities
       @bib_record = bib_record
       @alma_holdings = alma_holdings
       @hathi_holding = hathi_holding
-      @holdings = [@hathi_holding, *@alma_holdings.holdings]
+      @holdings = []
+
+      @holdings.push(@hathi_holding) unless @hathi_holding.nil?
+      @alma_holdings.holdings.each{|h| @holdings.push(h)}
+
     end
 
     def self.for(source, request)
@@ -23,7 +27,7 @@ module Spectrum::Entities
       
     end
     def hathi_holdings
-      [@hathi_holding]
+      [@hathi_holding] unless @hathi_holding.nil?
     end
   
     def [](index)
