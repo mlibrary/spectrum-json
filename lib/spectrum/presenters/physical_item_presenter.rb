@@ -6,7 +6,7 @@ module Spectrum
     end
     def to_a(action: Spectrum::Holding::Action.for(bib_record: @bib_record, item: @item),
              description: Spectrum::Holding::PhysicalItemDescription.for(item: @item),
-             intent: Aleph.intent(@item.status), icon: Aleph.icon(@item.status))
+             intent: nil, icon: nil)
       [
         action.finalize,
         description.to_h,
