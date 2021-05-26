@@ -12,7 +12,7 @@ module Spectrum::Entities
       @holdings = []
 
       @holdings.push(@hathi_holding) unless @hathi_holding.empty?
-      @alma_holdings.holdings.each{|h| @holdings.push(h)}
+      @alma_holdings&.holdings&.each{|h| @holdings.push(h)}
 
     end
 

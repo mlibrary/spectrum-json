@@ -39,14 +39,22 @@ describe Spectrum::Entities::CombinedHoldings do
   end
   context "no Hathi Holding" do
     subject do
-      allow(@hathi_holding).to receive("empty?").and_return(true)
-      subj = described_class.new(alma_holdings: @alma_holdings_dbl, hathi_holding: @hathi_holding, bib_record: bib_record) 
+      allow(@hathi_holding_dbl).to receive("empty?").and_return(true)
+      described_class.new(alma_holdings: @alma_holdings_dbl, hathi_holding: @hathi_holding_dbl, bib_record: bib_record) 
     end
     it "does not include a Hathi Holding" do
       expect(subject.holdings.count).to eq(2)
     end
     it "has nil #hathi_holdings" do
       expect(subject.hathi_holdings).to be_nil
+    end
+  end
+  context "no Alma Holding" do
+    subject do
+      described_class.new(alma_holdings: nil, hathi_holding: @hathi_holding_dbl, bib_record: bib_record) 
+    end
+    it "does not include an Alma Holding" do
+      expect(subject.holdings.count).to eq(1)
     end
   end
 
