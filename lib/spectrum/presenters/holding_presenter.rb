@@ -11,7 +11,7 @@ module Spectrum::Presenters
       #elsif input.holding.up_links || input.holding.down_links
         #LinkedHoldingPresenter.for(input)
       else
-        MirlynHoldingPresenter.new(input)
+        AlmaHoldingPresenter.new(input)
       end
     end
 
@@ -67,7 +67,7 @@ module Spectrum::Presenters
         Spectrum::FloorLocation.resolve(
           @holding.library,
           @holding.location,
-          @holding.callnumber
+          @holding.callnumber || ''
         )
       ].compact.reject(&:empty?)
     end
