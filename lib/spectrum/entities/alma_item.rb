@@ -14,6 +14,18 @@ class Spectrum::Entities::AlmaItem
   def temp_location?
     @holding_raw["in_temp_location"]
   end
+  def in_place?
+    !!@item["base_status"]
+  end
+  def item_policy
+    @item.dig("item_policy","value")
+  end
+  def item_policy_text
+    @item.dig("item_policy","desc")
+  end
+  def requested?
+    @item["requested"]
+  end
   def pid
     @item["pid"]
   end
