@@ -57,6 +57,15 @@ describe Spectrum::BibRecord do
         end
       end
     end
+    context "#physical_holdings?" do
+      it "returns true for if there are physical holdings" do
+        expect(subject.physical_holdings?).to eq(true)
+      end
+      it "returns false for only holdings with library ELEC" do
+        @solr_bib_alma = @solr_bib_alma.gsub(/HATCH/, 'ELEC')
+        expect(subject.physical_holdings?).to eq(false)
+      end
+    end
     context "#hathi_holding" do
       it "returns a HathiHolding item" do
         expect(subject.hathi_holding.class.name.to_s).to eq("Spectrum::BibRecord::HathiHolding")

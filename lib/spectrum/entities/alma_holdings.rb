@@ -8,11 +8,15 @@ class Spectrum::Entities::AlmaHoldings
     @holdings = load_holdings
   end
   def self.for(bib_record:, client: AlmaRestClient.client)
-    response = client.get_all(url: "/bibs/#{bib_record.mms_id}/holdings/ALL/items", record_key: "item")
-    if response.code == 200
-      Spectrum::Entities::AlmaHoldings.new(alma: response.parsed_response, solr: bib_record)
+    if bib_record.physical_holdings?
+      response = client.get_all(url: "/bibs/#{bib_record.mms_id}/holdings/ALL/items", record_key: "item")
+      if response.code == 200
+        Spectrum::Entities::AlmaHoldings.new(alma: response.parsed_response, solr: bib_record)
+      else
+        #TBD ERROR
+      end
     else
-      #TBD ERROR
+      Spectrum::Entities::AlmaHoldings::Empty.new
     end
   end
 
@@ -30,7 +34,7 @@ class Spectrum::Entities::AlmaHoldings
     @holdings.each(&block)
   end
   def empty?
-    @holdings.empty?
+    false
   end
   
   private
@@ -47,6 +51,14 @@ class Spectrum::Entities::AlmaHoldings
     end
   end
   
+end
+class Spectrum::Entities::AlmaHoldings::Empty
+  def holdings
+    []
+  end
+  def empty?
+    true
+  end
 end
 class Spectrum::Entities::AlmaBib
   def initialize(bib)

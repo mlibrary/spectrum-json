@@ -23,6 +23,7 @@ module Spectrum::Entities
                  alma_holdings = Spectrum::Entities::AlmaHoldings.for(bib_record: bib_record),
                  hathi_holding = Spectrum::Entities::NewHathiHolding.new(bib_record) )
 
+      
       Spectrum::Entities::CombinedHoldings.new(alma_holdings: alma_holdings, hathi_holding: hathi_holding, bib_record: bib_record)
       
     end

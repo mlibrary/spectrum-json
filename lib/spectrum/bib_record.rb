@@ -138,6 +138,9 @@ module Spectrum
     def alma_holding(holding_id)
       holdings.find{|x| x.holding_id == holding_id }
     end
+    def physical_holdings?
+      holdings.any?{|x| x.class.name.to_s.match(/AlmaHolding/) }
+    end
     
 
     class Holding
@@ -151,8 +154,10 @@ module Spectrum
         @holding["library"]
       end
       def self.for(holding)
-        if holding["library"] == "HathiTrust Digital Library"
+        case holding["library"]
+        when "HathiTrust Digital Library"
           HathiHolding.new(holding)
+        when "ELEC"
         else
           AlmaHolding.new(holding)
         end
