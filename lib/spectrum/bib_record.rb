@@ -158,10 +158,13 @@ module Spectrum
         when "HathiTrust Digital Library"
           HathiHolding.new(holding)
         when "ELEC"
+          ElectronicHolding.new(holding)
         else
           AlmaHolding.new(holding)
         end
       end
+    end
+    class ElectronicHolding < Holding
     end
     class HathiHolding < Holding
       def items
