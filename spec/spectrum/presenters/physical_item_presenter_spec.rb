@@ -6,10 +6,9 @@ describe Spectrum::Presenters::PhysicalItem, "to_a" do
     @to_a_init = {
       action: instance_double(Spectrum::Holding::Action, finalize: nil),
       description: instance_double(Spectrum::Holding::PhysicalItemDescription, to_h: {text: 'N/A'}),
-      intent: 'intent', icon: 'icon'
     }
     
-    @item = instance_double(Spectrum::Entities::MirlynItem, status: 'On Shelf', callnumber: 'call_number', can_request?: false, inventory_number: nil)
+    @item = instance_double(Spectrum::Entities::AlmaItem, callnumber: 'call_number', inventory_number: nil, 'in_place?' => true, item_policy: '01', requested?: false)
   
   end
   subject do
@@ -19,7 +18,7 @@ describe Spectrum::Presenters::PhysicalItem, "to_a" do
     expect(subject.class.name).to eq('Array')
   end
   it "returns appropriate status" do
-    expect(subject[2]).to eq( {text: 'On Shelf', intent: 'intent', icon: 'icon'}) 
+    expect(subject[2]).to eq( {text: 'On shelf', intent: 'success', icon: 'check_circle'}) 
   end
   it "returns call number" do
     expect(subject[3]).to eq( {text: @item.callnumber}) 

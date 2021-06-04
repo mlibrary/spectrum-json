@@ -6,14 +6,15 @@ module Spectrum
     end
     def to_a(action: Spectrum::Holding::Action.for(bib_record: @bib_record, item: @item),
              description: Spectrum::Holding::PhysicalItemDescription.for(item: @item),
+             status: Spectrum::Holding::PhysicalItemStatus.for(@item),
              intent: nil, icon: nil)
       [
         action.finalize,
         description.to_h,
         {
-          text: @item.status || 'N/A',
-          intent: intent || 'N/A',
-          icon: icon || 'N/A'
+          text: status.text || 'N/A',
+          intent: status.intent || 'N/A',
+          icon: status.icon || 'N/A'
         },
         { text: call_number || 'N/A' }
       ]
