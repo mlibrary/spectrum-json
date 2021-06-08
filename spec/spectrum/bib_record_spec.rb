@@ -57,6 +57,18 @@ describe Spectrum::BibRecord do
         end
       end
     end
+    context "an alma item" do
+      let(:alma_item){ subject.holdings[0].items[0] }
+      ['library','location','description','public_note','barcode',
+      'item_policy','process_type','permanent_location','permanent_library',
+      'id','temp_location?','callnumber'].each do |method|
+        context "##{method}" do
+          it "respond_to? #{method}" do
+            expect(alma_item.respond_to?(method)).to be(true)
+          end
+        end
+      end
+    end
     context "#physical_holdings?" do
       it "returns true for if there are physical holdings" do
         expect(subject.physical_holdings?).to eq(true)
@@ -99,7 +111,7 @@ describe Spectrum::BibRecord do
           expect(hathi_item.collection_code).to eq("MIU")
         end
         it "has access boolean" do
-          expect(hathi_item.access).to eq(false)
+          expect(hathi_item.access).to eq(0)
         end
         it "has a source" do
           expect(hathi_item.source).to eq("University of Michigan")

@@ -180,6 +180,9 @@ module Spectrum
             @item[name]
           end
         end
+        #def access
+          #!!@item["access"]
+        #end
       end
       private_constant :Item
     end
@@ -187,17 +190,10 @@ module Spectrum
       def holding_id 
         @holding["hol_mmsid"]
       end
-      def location
-        @holding["location"]
-      end
-      def callnumber
-        @holding["callnumber"]
-      end
-      def public_note
-        @holding["public_note"]
-      end
-      def summary_holdings
-        @holding["summary_holdings"]
+      ["location","callnumber","public_note","summary_holdings"].each do |name|
+        define_method(name) do
+          @holding[name]
+        end
       end
       def items
         @holding["items"].map{|x| Item.new(x)}
@@ -210,20 +206,15 @@ module Spectrum
         def id
           @item["item_id"]
         end
-        def description
-          @item["description"]
+        ["description","public_note", "barcode", "library","location",
+        "permanent_library", "permanent_location", "process_type", 
+        "callnumber", "item_policy"].each do |name|
+          define_method(name) do
+            @item[name]
+          end
         end
-        def public_note
-          @item["public_note"]
-        end
-        def library
-          @item["library"]
-        end
-        def location
-          @item["location"]
-        end
-        def barcode
-          @item["barcode"]
+        def temp_location?
+          @item["temp_location"]
         end
       end
 
