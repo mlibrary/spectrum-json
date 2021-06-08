@@ -6,7 +6,7 @@ module Spectrum
       end
 
       def self.match?(item)
-        item.can_reserve? 
+        ['SPEC','BENT','CLEM'].include?(item.library)
       end
 
       def finalize

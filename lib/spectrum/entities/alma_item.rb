@@ -35,6 +35,15 @@ class Spectrum::Entities::AlmaItem
   def library
     @item.dig("library","value")
   end
+  def process_type
+    if @item.dig("process_type","value") == ''
+      nil
+    else
+      @item.dig("process_type","value")
+    end
+  end
+  def etas?
+  end
   #used in action
   def sub_library
     library
