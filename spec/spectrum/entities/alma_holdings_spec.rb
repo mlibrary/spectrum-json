@@ -8,9 +8,6 @@ describe Spectrum::Entities::AlmaHoldings do
   subject do
     described_class.new(alma: @alma_holdings, solr: Spectrum::BibRecord.new(@solr_bib_alma))
   end
-  it "has a bib" do
-    expect(subject.bib.class.to_s).to eq("Spectrum::Entities::AlmaBib")
-  end
   it "has working [] access" do
     expect(subject[0].class.name.to_s).to include('AlmaHolding')
   end
@@ -39,33 +36,6 @@ describe Spectrum::Entities::AlmaHoldings do
     end
   end
 end
-describe Spectrum::Entities::AlmaBib do
-  subject do
-    solr = Spectrum::BibRecord.new(JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json')))
-    described_class.new(solr)
-  end
-  it "has an mms_id" do
-    expect(subject.mms_id).to eq('990020578280206381')
-  end
-  it "has a doc_id" do
-    expect(subject.doc_id).to eq('990020578280206381')
-  end
-  it "has an title" do
-    expect(subject.title).to eq('Enhancing faculty careers : strategies for development and renewal /')
-  end
-  it "has an author" do
-    expect(subject.author).to eq('Schuster, Jack H.')
-  end
-  it "has an issn" do
-    expect(subject.issn).to eq('')
-  end
-  it "has an isbn" do
-    expect(subject.isbn).to eq('9781555422103')
-  end
-  it "has a pub_date" do
-    expect(subject.pub_date).to eq('')
-  end
-end
 describe Spectrum::Entities::AlmaHolding do
   let(:solr_bib_record) do
     solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
@@ -74,7 +44,6 @@ describe Spectrum::Entities::AlmaHolding do
   subject do
     response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
     solr_holding = solr_bib_record.alma_holding("2297537770006381")
-    bib = instance_double(Spectrum::Entities::AlmaBib, title: "title", doc_id: "doc_id")
     
 
     described_class.new(bib: solr_bib_record, full_items: response["item"], solr_holding: solr_holding)
