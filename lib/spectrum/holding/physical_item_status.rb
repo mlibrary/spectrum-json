@@ -14,7 +14,23 @@ class Spectrum::Holding::PhysicalItemStatus
     }
   end
   def self.for(item)
-    if item.in_place?
+    case item.process_type
+    when 'LOAN'
+      #string format "Sep 01, 2021" or 
+      #"Sep 01, 2021 at 3:00 PM"
+      date = DateTime.parse(item.due_date)
+      date_string = date.strftime("%b %d, %Y")
+
+      if ['06', '07', '11', '12'].include?(item.item_policy)
+        date_string = date_string + ' at ' + date.strftime("%I:%M %p")
+      end
+
+      date_string
+    when 'MISSING'
+      Error.new('Missing')
+    when 'ILL'
+      Error.new('Unavailable - Ask at ILL')
+    when nil
       case item.item_policy
       when '08'
         if ['SPEC','BENT','CLEM'].include?(item.library)
@@ -36,25 +52,6 @@ class Spectrum::Holding::PhysicalItemStatus
         #else
           Success.new("On shelf")
 #        end
-      end
-    else
-      #All of these need testing
-      case item.process_type
-      when 'LOAN'
-        #string format "Sep 01, 2021" or 
-        #"Sep 01, 2021 at 3:00 PM"
-        date = DateTime.parse(item.due_date)
-        date_string = date.strftime("%b %d, %Y")
-
-        if ['06', '07', '11', '12'].include?(item.item_policy)
-          date_string = date_string + ' at ' + date.strftime("%I:%M %p")
-        end
-
-        date_string
-      when 'MISSING'
-        Error.new('Missing')
-      when 'ILL'
-        Error.new('Unavailable - Ask at ILL')
       end
       
     end

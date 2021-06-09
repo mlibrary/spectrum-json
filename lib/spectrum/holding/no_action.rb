@@ -4,7 +4,6 @@ module Spectrum
       def self.match?(item, contactless_pickup = ['HATCH','FINE','BUHR','SCI','SHAP','AAEL','MUSIC','OFFS','STATE'])
 
         return true if !contactless_pickup.include?(item.library) 
-        return true if item.etas?
 
         return true if ['06','07'].include?(item.item_policy)
 

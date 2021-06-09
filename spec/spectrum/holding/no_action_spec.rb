@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe Spectrum::Holding::NoAction do
   before(:each) do
-    @item = instance_double(Spectrum::Entities::AlmaItem, library: 'HATCH', location: 'NONE', item_policy: '01', "etas?": false, process_type: nil)
+    @item = instance_double(Spectrum::Entities::AlmaItem, library: 'HATCH', location: 'NONE', item_policy: '01', process_type: nil)
 
     @contactless_pickup = ['AAEL','FINE','FLINT', 'MUSM','HATCH','BTSA','CSCAR','DHCL' ]
   end
@@ -15,10 +15,6 @@ describe Spectrum::Holding::NoAction do
     end
     it "matches items not in the contactless pickup list" do
       @contactless_pickup = []
-      expect(subject).to eq(true)
-    end
-    it "matches etas items" do
-      allow(@item).to receive("etas?").and_return(true)
       expect(subject).to eq(true)
     end
     it "matches Item Policy 06" do

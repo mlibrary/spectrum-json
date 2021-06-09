@@ -1,15 +1,14 @@
 require_relative '../../spec_helper'
 describe Spectrum::Holding::PhysicalItemStatus do
   before(:each) do
-    @alma_item = instance_double(Spectrum::Entities::AlmaItem) 
+    @solr_item = double("Spectrum::BibRecord:AlmaHolding::Item", process_type: nil)
+    @bib_record = instance_double(Spectrum::BibRecord)
+    @alma_item = Spectrum::Entities::AlmaItem.new(solr_item: @solr_item, holding: double("AlmaHolding"), alma_item:{}, bib_record: @bib_record)
   end
   subject do
     described_class.for(@alma_item) 
   end
-  context "In place" do
-    before(:each) do
-      allow(@alma_item).to receive("in_place?").and_return(true)
-    end
+  context "Not loaned out; no process" do
     context "Policy: Loan 1" do
       before(:each) do
         allow(@alma_item).to receive(:item_policy).and_return('01')
