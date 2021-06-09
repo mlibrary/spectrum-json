@@ -23,12 +23,12 @@ module Spectrum
       end
 
       def sublocation
-        @item.collection
+        @item.location
       end
 
       def location
-        return nil if @item.sub_library == 'BENT'
-        @item.sub_library
+        return nil if @item.library == 'BENT'
+        @item.library
       end
 
       def description

@@ -20,32 +20,22 @@ class Spectrum::Entities::AlmaItem
   def pid
     @solr_item.id
   end
-  #used in action
-  def sub_library
-    library
-  end
-  #used in get_this_action
-  def collection
-    location
-  end
-  #uesed in book_this_action
-  def full_item_key
-  end
-  #TBD
-  def status
-  end
   
   #TBD
-  def can_request?
-  end
-  #TBD
-  def can_reserve?
-  end
-  #TBD
-  def can_book?
-  end
-  def item_process_status
-  end
-  def item_status
-  end
+  #def status
+  #end
+  
+  ##TBD
+  #def can_request?
+  #end
+  ##TBD
+  #def can_reserve?
+  #end
+  ##TBD
+  #def can_book?
+  #end
+  #def item_process_status
+  #end
+  #def item_status
+  #end
 end
