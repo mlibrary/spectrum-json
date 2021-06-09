@@ -7,7 +7,7 @@ describe Spectrum::Holding::Action, ".for" do
     @item = instance_double(Spectrum::Entities::AlmaItem, item_policy: '01', "can_book?" => false, "can_reserve?" => false, library: 'SHAP', "etas?"=>false, process_type: nil )
   end
   subject do
-    described_class.for(item: @item, bib_record: nil) 
+    described_class.for(@item) 
   end
   it "returns NoAction" do
     allow(@item).to receive("item_policy").and_return('06')

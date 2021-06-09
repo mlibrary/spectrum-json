@@ -3,16 +3,14 @@ module Spectrum
     class Action
 
       attr_reader :doc_id, :bib_record, 
-      def self.for(bib_record:, item:)
-
-        args = { bib_record: bib_record, item: item }
+      def self.for(item)
 
         if NoAction.match?(item)
-          NoAction.new(**args)
+          NoAction.new(item)
         elsif RequestThisAction.match?(item)
-          RequestThisAction.new(**args)
+          RequestThisAction.new(item)
         else
-          GetThisAction.new(**args)
+          GetThisAction.new(item)
         end
       end
 
@@ -26,7 +24,7 @@ module Spectrum
         self.class.label
       end
 
-      def initialize(bib_record:, item:)
+      def initialize(item)
         @bib_record = bib_record
         @item = item #Spectrum::Entities::MirlynItem
       end

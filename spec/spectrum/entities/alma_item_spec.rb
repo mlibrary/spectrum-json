@@ -11,7 +11,7 @@ describe Spectrum::Entities::AlmaItem do
 
     holding = instance_double(Spectrum::Entities::AlmaHolding, holding_id: "holding_id", bib_record: solr_bib_record, solr_holding: solr_holding)
 
-    described_class.new(holding: holding,  alma_item: response["item"][0], solr_item: solr_item)
+    described_class.new(holding: holding,  alma_item: response["item"][0], solr_item: solr_item, bib_record: solr_bib_record)
   end
   it "has a bib title" do
     expect(subject.title).to eq("Enhancing faculty careers : strategies for development and renewal /")
@@ -32,7 +32,7 @@ describe Spectrum::Entities::AlmaItem do
     expect(subject.location).to eq("GRAD")
   end
   it "has an inventory_number" do
-    expect(subject.inventory_number).to eq("")
+    expect(subject.inventory_number).to eq(nil)
   end
   it "returns temp_location status" do
     expect(subject.temp_location?).to eq(false)

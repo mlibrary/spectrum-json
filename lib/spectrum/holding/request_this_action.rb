@@ -15,15 +15,11 @@ module Spectrum
 
       private
       def restriction
-        @bib_record.restriction
+        @item.restriction
       end
 
       def fixedshelf
         @item.inventory_number
-      end
-
-      def barcode
-        @item.barcode
       end
 
       def sublocation
@@ -44,47 +40,47 @@ module Spectrum
       end
 
       def edition
-        (@bib_record.edition || '').slice(0, 250)
+        (@item.edition || '').slice(0, 250)
       end
 
       def extent
-        (@bib_record.physical_description || '').slice(0, 250)
+        (@item.physical_description || '').slice(0, 250)
       end
 
       def item_date
-        (@bib_record.date || '').slice(0, 250)
+        (@item.date || '').slice(0, 250)
       end
 
       def item_publisher
-        (@bib_record.pub || '').slice(0, 250)
+        (@item.pub || '').slice(0, 250)
       end
 
       def item_place
-        (@bib_record.place || '').slice(0, 250)
+        (@item.place || '').slice(0, 250)
       end
 
       def publisher
-        (@bib_record.publisher || '').slice(0, 250)
+        (@item.publisher || '').slice(0, 250)
       end
 
       def date
-        @bib_record.pub_date
+        @item.pub_date
       end
 
       def item_author
-        (@bib_record.author || '').slice(0, 250)
+        (@item.author || '').slice(0, 250)
       end
 
       def title
-        (@bib_record.title || '').slice(0, 250)
+        (@item.title || '').slice(0, 250)
       end
 
       def isbn
-        @bib_record.isbn
+        @item.isbn
       end
 
       def issn
-        @bib_record.issn
+        @item.issn
       end
 
       def barcode
@@ -92,17 +88,22 @@ module Spectrum
       end
 
       def genre
-        @bib_record.genre
+        @item.genre
       end
 
       def sgenre
-        @bib_record.sgenre
+        @item.sgenre
       end
 
       def base_url
-        return 'https://aeon.bentley.umich.edu/login?' if @item.sub_library == 'BENT'
-        return 'https://chara.clements.umich.edu/aeon/?' if @item.sub_library == 'CLEM'
-        'https://iris.lib.umich.edu/aeon/?'
+        case @item.library
+        when 'BENT'
+          'https://aeon.bentley.umich.edu/login?'
+        when 'CLEM'
+          'https://chara.clements.umich.edu/aeon/?'
+        else
+          'https://iris.lib.umich.edu/aeon/?'
+        end
       end
 
       def query
@@ -111,7 +112,7 @@ module Spectrum
           Form: '30',
           genre: genre,
           sgenre: sgenre,
-          sysnum: @item.doc_id,
+          sysnum: @item.mms_id,
           issn: issn,
           isbn: isbn,
           title: title,

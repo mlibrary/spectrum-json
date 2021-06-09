@@ -85,7 +85,8 @@ class Spectrum::Entities::AlmaHolding
     @solr_holding = solr_holding
     @items = solr_holding.items.map do |solr_item|
       alma_item = full_items.find{|alma_item| alma_item["item_data"]["pid"] == solr_item.id}
-      Spectrum::Entities::AlmaItem.new(holding: self, solr_item: solr_item, alma_item: alma_item)
+      Spectrum::Entities::AlmaItem.new(holding: self, solr_item: solr_item, alma_item: alma_item,
+                                      bib_record: @bib_record)
     end
   end
   def holding_id

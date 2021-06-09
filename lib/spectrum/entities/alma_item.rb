@@ -2,24 +2,21 @@
 class Spectrum::Entities::AlmaItem
   extend Forwardable
   def_delegators :@holding, :holding_id
-  def_delegators :@bib_record, :mms_id, :doc_id, :title, 
-    :author, :issn, :isbn, :pub_date, :etas?
+  def_delegators :@bib_record, :mms_id, :doc_id, :etas?, :title, :author, 
+    :restriction, :edition, :physical_description, :date, :pub, :place, 
+    :publisher, :pub_date, :issn, :isbn, :genre, :sgenre
   def_delegators :@solr_item, :callnumber, :temp_location?, :barcode, :library,
     :location, :permanent_library, :permanent_location, :description, :item_policy,
-    :process_type
-  def initialize(holding:, alma_item:, solr_item:)
+    :process_type, :inventory_number
+  def initialize(holding:, alma_item:, solr_item:, bib_record:)
     @holding = holding #AlmaHolding
-    @holding_raw = alma_item["holding_data"]
-    @alma_item = alma_item["item_data"]
-    @solr_item = solr_item
-    @bib_record = holding.bib_record
+    @alma_item = alma_item["item_data"] #parsed_response
+    @solr_item = solr_item #BibRecord::AlmaHolding::Item
+    @bib_record = bib_record #BibRecord
   end
   def in_place?
     !!@alma_item["base_status"]
   end
-  #def requested?
-    #@alma_item["requested"]
-  #end
   def pid
     @solr_item.id
   end
@@ -33,9 +30,6 @@ class Spectrum::Entities::AlmaItem
   end
   #uesed in book_this_action
   def full_item_key
-  end
-  def inventory_number
-    @alma_item["inventory_number"]
   end
   #TBD
   def status

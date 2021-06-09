@@ -27,19 +27,44 @@ describe Spectrum::Holding::RequestThisAction, ".match" do
   end
 end
 describe Spectrum::Holding::RequestThisAction do
-  let(:id) { 'ID' }
-  let(:bib) { StubBibRecord.new }
-  let(:holding) {{ 'can_reserve' => true }}
-  let(:info) {{ 'can_reserve' => true }}
-  let(:item) { instance_double(Spectrum::Entities::AlmaItem, full_item_key: '12345678901234567890', 
-      barcode: nil, collection: nil, inventory_number: nil, sub_library: nil, callnumber: nil,
-      description: nil, doc_id: id)}
+  
+  let(:bib_record){ 
+
+    methods = [
+      :mms_id,
+      :genre, 
+      :sgenre, 
+      :restriction, 
+      :edition, 
+      :physical_description, 
+      :date, 
+      :pub, 
+      :place, 
+      :publisher, 
+      :pub_date, 
+      :author, 
+      :title, 
+      :isbn, 
+      :issn, 
+    ].map{|x| [x,x]}.to_h
+    instance_double(Spectrum::BibRecord, **methods)
+
+  }
+
+  let(:solr_item){ 
+    methods = [:library, :callnumber, :description, :location, :barcode,
+               :inventory_number].map{|x| [x,x]}.to_h
+    double("BibRecord::AlmaHolding::Item", **methods) 
+  }
+
+  let(:item){Spectrum::Entities::AlmaItem.new(holding: nil, alma_item: {}, bib_record: bib_record, solr_item: solr_item) }
+
   let(:result) {{
     text: 'Request This',
-    href: 'https://iris.lib.umich.edu/aeon/?Action=10&Form=30&ItemAuthor=author&barcode=&callnumber=&date=pub_date&description=&extent=physical_description&fixedshelf=&genre=genre&isbn=isbn&issn=issn&itemDate=date&itemPlace=place&itemPublisher=pub&location=&publisher=publisher&restriction=restriction&rft.au=author&rft.edition=edition&sgenre=sgenre&sublocation=&sysnum=ID&title=title'
+    href: 'https://iris.lib.umich.edu/aeon/?Action=10&Form=30&ItemAuthor=author&barcode=barcode&callnumber=callnumber&date=pub_date&description=description&extent=physical_description&fixedshelf=inventory_number&genre=genre&isbn=isbn&issn=issn&itemDate=date&itemPlace=place&itemPublisher=pub&location=library&publisher=publisher&restriction=restriction&rft.au=author&rft.edition=edition&sgenre=sgenre&sublocation=location&sysnum=mms_id&title=title'
   }}
 
-  subject { described_class.new(item: item,bib_record: bib) }
+  subject { described_class.new(item) }
 
   context "#finalize" do
     it 'returns an N/A cell.' do
