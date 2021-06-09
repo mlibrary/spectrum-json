@@ -15,15 +15,15 @@ describe Spectrum::Holding::PhysicalItemStatus do
         allow(@alma_item).to receive(:item_policy).and_return('01')
       end
       it "returns success status for non-requested item" do
-        allow(@alma_item).to receive(:requested?).and_return(false)
+#        allow(@alma_item).to receive(:requested?).and_return(false)
         expect(subject.to_h).to eq({text: 'On shelf', intent: 'success', icon: 'check_circle'})
         expect(subject.class.to_s).to include('Success')
       end
-      it "returns error for requested item" do
-        allow(@alma_item).to receive(:requested?).and_return(true)
-        expect(subject.to_h).to eq({text: 'Requested', intent: 'error', icon: 'error'})
-        expect(subject.class.to_s).to include('Error')
-      end
+      #it "returns error for requested item" do
+        #allow(@alma_item).to receive(:requested?).and_return(true)
+        #expect(subject.to_h).to eq({text: 'Requested', intent: 'error', icon: 'error'})
+        #expect(subject.class.to_s).to include('Error')
+      #end
     end
     context "Policy: Loan 08" do
       before(:each) do
@@ -51,7 +51,6 @@ describe Spectrum::Holding::PhysicalItemStatus do
       context "Policy: #{policy[:desc]}" do
         it "returns On Shelf and length of time" do
           allow(@alma_item).to receive(:item_policy).and_return(policy[:value])
-          allow(@alma_item).to receive(:item_policy_text).and_return(policy[:desc])
           expect(subject.class.to_s).to include('Success')
           expect(subject.text).to eq("On shelf (#{policy[:desc]})")
         end

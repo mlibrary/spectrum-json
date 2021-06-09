@@ -11,19 +11,15 @@ module Spectrum
           NoAction.new(**args)
         elsif RequestThisAction.match?(item)
           RequestThisAction.new(**args)
-        elsif GetThisAction.match?(item)
-          GetThisAction.new(**args)
         else
-          Action.new(**args)
+          GetThisAction.new(**args)
         end
       end
 
       def self.label
-        'N/A'
       end
 
       def self.match?(*args)
-        false
       end
 
       def label

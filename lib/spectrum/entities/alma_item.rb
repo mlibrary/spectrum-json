@@ -1,48 +1,27 @@
 #TBD #status, #temp_location?
 class Spectrum::Entities::AlmaItem
   extend Forwardable
-  def_delegators :@holding, :mms_id, :doc_id, :title, 
-    :author, :issn, :isbn, :pub_date, :holding_id
-  def initialize(holding:, item:, full_item:{})
-    @holding = holding
-    @holding_raw = full_item["holding_data"]
-    @item = full_item["item_data"]
-  end
-  def callnumber
-    @holding_raw["call_number"]
-  end
-  def temp_location?
-    @holding_raw["in_temp_location"]
+  def_delegators :@holding, :holding_id
+  def_delegators :@bib_record, :mms_id, :doc_id, :title, 
+    :author, :issn, :isbn, :pub_date, :etas?
+  def_delegators :@solr_item, :callnumber, :temp_location?, :barcode, :library,
+    :location, :permanent_library, :permanent_location, :description, :item_policy,
+    :process_type
+  def initialize(holding:, alma_item:, solr_item:)
+    @holding = holding #AlmaHolding
+    @holding_raw = alma_item["holding_data"]
+    @alma_item = alma_item["item_data"]
+    @solr_item = solr_item
+    @bib_record = holding.bib_record
   end
   def in_place?
-    !!@item["base_status"]
+    !!@alma_item["base_status"]
   end
-  def item_policy
-    @item.dig("item_policy","value")
-  end
-  def item_policy_text
-    @item.dig("item_policy","desc")
-  end
-  def requested?
-    @item["requested"]
-  end
+  #def requested?
+    #@alma_item["requested"]
+  #end
   def pid
-    @item["pid"]
-  end
-  def barcode
-    @item["barcode"]
-  end
-  def library
-    @item.dig("library","value")
-  end
-  def process_type
-    if @item.dig("process_type","value") == ''
-      nil
-    else
-      @item.dig("process_type","value")
-    end
-  end
-  def etas?
+    @solr_item.id
   end
   #used in action
   def sub_library
@@ -55,14 +34,8 @@ class Spectrum::Entities::AlmaItem
   #uesed in book_this_action
   def full_item_key
   end
-  def location
-    @item.dig("location","value")
-  end
   def inventory_number
-    @item["inventory_number"]
-  end
-  def description
-    @item["description"]
+    @alma_item["inventory_number"]
   end
   #TBD
   def status

@@ -7,7 +7,6 @@ module Spectrum
       #label 'Get This' 
 
       def self.match?(item)
-        byebug
         # Tim's most current logic says yes already.
         return true if item.can_request?
 

@@ -4,7 +4,7 @@ class Spectrum::Entities::AlmaHoldings
   def initialize(alma:, solr:)
     @alma = alma
     @solr = solr #Spectrum::BibRecord
-    @bib = Spectrum::Entities::AlmaBib.new(@alma["item"][0]["bib_data"])
+    @bib = Spectrum::Entities::AlmaBib.new(@solr)
     @holdings = load_holdings
   end
   def self.for(bib_record:, client: AlmaRestClient.client)
@@ -45,9 +45,11 @@ class Spectrum::Entities::AlmaHoldings
       holdings[holding_id] = [] if holdings[holding_id].nil?
       holdings[holding_id].push(x)
     end
-    holdings.to_a.map do |id, full_items|
-      solr_holding = @solr.alma_holding(id)
-      Spectrum::Entities::AlmaHolding.new(bib: @bib, full_items: full_items, solr_holding: solr_holding)
+
+    @solr.alma_holdings.map do |solr_holding|
+  
+      alma_holding = holdings[solr_holding.holding_id]
+      Spectrum::Entities::AlmaHolding.new(bib: @solr, full_items: alma_holding, solr_holding: solr_holding)
     end
   end
   
@@ -61,53 +63,42 @@ class Spectrum::Entities::AlmaHoldings::Empty
   end
 end
 class Spectrum::Entities::AlmaBib
-  def initialize(bib)
-    @bib = bib
-  end
-  def mms_id
-    @bib["mms_id"]
+  extend Forwardable
+  def_delegators :@bib_record, :mms_id, :title, :author, :issn, :isbn, :pub_date
+  def initialize(bib_record)
+    @bib_record = bib_record
   end
   def doc_id
     mms_id
   end
-  def title
-    @bib["title"]
-  end
-  def author
-    @bib["author"]
-  end
-  def issn
-    @bib["issn"]
-  end
-  def isbn
-    @bib["isbn"]
-  end
-  def pub_date
-    @bib["date_of_publication"]
-  end
 end
 class Spectrum::Entities::AlmaHolding
-  attr_reader :items
+  attr_reader :items, :bib_record, :solr_holding
   extend Forwardable
-  def_delegators :@bib, :mms_id, :doc_id, :title, :author, 
+  def_delegators :@bib_record, :mms_id, :doc_id, :title, :author, 
     :issn, :isbn, :pub_date
   def initialize(bib:, full_items: [], solr_holding: nil )
-    @bib = bib
+    @bib_record = bib #now is solr BibRecord
+
     @holding = full_items[0]["holding_data"]
+
     @solr_holding = solr_holding
-    @items = full_items.map{|x| Spectrum::Entities::AlmaItem.new(holding: self, item: x["item_data"], full_item: x)}
+    @items = solr_holding.items.map do |solr_item|
+      alma_item = full_items.find{|alma_item| alma_item["item_data"]["pid"] == solr_item.id}
+      Spectrum::Entities::AlmaItem.new(holding: self, solr_item: solr_item, alma_item: alma_item)
+    end
   end
   def holding_id
-    @holding["holding_id"]
+    @solr_holding.holding_id
   end
   def callnumber
-    @solr_holding&.callnumber
+    @solr_holding.callnumber
   end
   def public_note
-    @solr_holding&.public_note
+    @solr_holding.public_note
   end
   def summary_holdings
-    @solr_holding&.summary_holdings
+    @solr_holding.summary_holdings
   end
   def location_text
     Spectrum::LibLocDisplay.text(library, location) 
@@ -117,9 +108,9 @@ class Spectrum::Entities::AlmaHolding
   end
    
   def library
-    @items.first&.library
+    @solr_holding.library
   end
   def location
-    @items.first&.location
+    @solr_holding.location
   end
 end

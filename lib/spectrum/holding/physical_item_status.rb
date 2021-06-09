@@ -22,14 +22,20 @@ class Spectrum::Holding::PhysicalItemStatus
         else
           Success.new("Building use only")
         end
-      when '06', '07', '11', '12'
-        Success.new("On shelf (#{item.item_policy_text})")
+      when '06'
+        Success.new("On shelf (4 Hour Loan)")
+      when '07'
+        Success.new("On shelf (2 Hour Loan)")
+      when '11'
+        Success.new("On shelf (6 Hour Loan)")
+      when '12'
+        Success.new("On shelf (12 Hour Loan)")
       else
-        if item.requested?
-          Error.new('Requested')
-        else
+        #if item.requested?
+          #Error.new('Requested')
+        #else
           Success.new("On shelf")
-        end
+#        end
       end
     else
       #All of these need testing

@@ -2,45 +2,22 @@
 
 require_relative '../../spec_helper'
 
-describe Spectrum::Holding::Action do
-
-  subject do 
-    plain_item = instance_double(Spectrum::Entities::AlmaItem, "can_request?"=> false, "can_book?"=> false, "can_reserve?" => false, item_process_status: nil, item_status: nil, sub_library: 'FVL' ) 
-
-    described_class.for(item: plain_item, bib_record: nil)
-  end
-
-  context "::label" do
-    it 'returns N/A' do
-      expect(subject.label).to eq('N/A')
-    end
-  end
-  
-
-  context "#finalize" do
-    it 'returns an N/A cell.' do
-      expect(subject.finalize).to eq({text: 'N/A'})
-    end
-  end
-end
-
 describe Spectrum::Holding::Action, ".for" do
   before(:each) do
-    @item = instance_double(Spectrum::Entities::AlmaItem, "can_request?" => false, "can_book?" => false, "can_reserve?" => false)
+    @item = instance_double(Spectrum::Entities::AlmaItem, item_policy: '01', "can_book?" => false, "can_reserve?" => false, library: 'SHAP', "etas?"=>false, process_type: nil )
   end
-  it "returns GetThisAction if given getThis arguments" do
-    allow(@item).to receive("can_request?").and_return(true)
-    action = described_class.for(item: @item, bib_record: nil) 
-    expect(action.class.to_s).to eq('Spectrum::Holding::GetThisAction')
+  subject do
+    described_class.for(item: @item, bib_record: nil) 
   end
-  it "returns BookThisAction if given BookThis arguments" do
-    allow(@item).to receive("can_book?").and_return(true)
-    action = described_class.for(item: @item, bib_record: nil ) 
-    expect(action.class.to_s).to eq('Spectrum::Holding::BookThisAction')
+  it "returns NoAction" do
+    allow(@item).to receive("item_policy").and_return('06')
+    expect(subject.class.to_s).to eq('Spectrum::Holding::NoAction')
   end
-  it "returns RequestThisAction if given RequestThis arguments" do
-    allow(@item).to receive("can_reserve?").and_return(true)
-    action = described_class.for(item: @item, bib_record: nil) 
-    expect(action.class.to_s).to eq('Spectrum::Holding::RequestThisAction')
+  it "returns RequestThisAction if given RequestThis arguments" #do
+    #allow(@item).to receive("library").and_return('SPEC')
+    #expect(subject.class.to_s).to eq('Spectrum::Holding::RequestThisAction')
+  #end
+  it "returns GetThisAction if it doesn't fall into the others" do
+    expect(subject.class.to_s).to eq('Spectrum::Holding::GetThisAction')
   end
 end

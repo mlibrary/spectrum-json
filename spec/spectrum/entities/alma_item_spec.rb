@@ -1,11 +1,23 @@
+require_relative '../../spec_helper'
 describe Spectrum::Entities::AlmaItem do
+  let(:solr_bib_record) do
+    solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
+    Spectrum::BibRecord.new(solr_bib_alma)
+  end
   subject do
     response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
-    holding = instance_double(Spectrum::Entities::AlmaHolding, title: "title")
-    described_class.new(holding: holding, item: response["item"][0]["item_data"], full_item: response["item"][0])
+    solr_holding = solr_bib_record.alma_holding("2297537770006381")
+    solr_item = solr_holding.items.first
+
+    holding = instance_double(Spectrum::Entities::AlmaHolding, holding_id: "holding_id", bib_record: solr_bib_record, solr_holding: solr_holding)
+
+    described_class.new(holding: holding,  alma_item: response["item"][0], solr_item: solr_item)
   end
   it "has a bib title" do
-    expect(subject.title).to eq("title")
+    expect(subject.title).to eq("Enhancing faculty careers : strategies for development and renewal /")
+  end
+  it "has a callnumber" do
+    expect(subject.callnumber).to eq('LB 2331.72 .S371 1990')
   end
   it "has a pid" do
     expect(subject.pid).to eq("2397537760006381")
@@ -26,7 +38,13 @@ describe Spectrum::Entities::AlmaItem do
     expect(subject.temp_location?).to eq(false)
   end
   it "returns a description" do
-    expect(subject.description).to eq("")
+    expect(subject.description).to eq(nil)
+  end
+  it "returns a process type" do
+    expect(subject.process_type).to eq(nil)
+  end
+  it "calculates etas" do
+    expect(subject.etas?).to eq(true)
   end
   
   context "#status" do
