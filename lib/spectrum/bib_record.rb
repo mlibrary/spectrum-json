@@ -145,6 +145,10 @@ module Spectrum
     def alma_holding(holding_id)
       holdings.find{|x| x.holding_id == holding_id }
     end
+    #non-HathiTrust Electronic Holdings
+    def elec_holdings
+      holdings.select{|x| x.class.name.to_s.match(/ElectronicHolding/) }
+    end
     def physical_holdings?
       alma_holdings.any?
     end
@@ -179,7 +183,7 @@ module Spectrum
       end
     end
     class ElectronicHolding < Holding
-        ['link','status','link_text','note','finding_aid'].each do |name|
+        ['link','status','description','link_text','note','finding_aid'].each do |name|
           define_method(name) do
             @holding[name]
           end

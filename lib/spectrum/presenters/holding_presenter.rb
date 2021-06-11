@@ -10,6 +10,8 @@ module Spectrum::Presenters
         NewHathiTrustHoldingPresenter.new(input)
       #elsif input.holding.up_links || input.holding.down_links
         #LinkedHoldingPresenter.for(input)
+      elsif input.holding.library == 'ELEC'
+        ElecHoldingPresenter.new(input)
       else
         AlmaHoldingPresenter.new(input)
       end
@@ -50,6 +52,26 @@ module Spectrum::Presenters
     end
     def notes
       nil
+    end
+  end
+  class ElecHoldingPresenter < HoldingPresenter
+    def headings 
+      ['Link', 'Description', 'Source']
+    end
+    def caption
+      "Online Resources"
+    end
+    def type
+      "electronic"
+    end
+    def rows
+      @holding.items.map do |item|
+        [ 
+          {text: item.link_text, href: item.link},
+          {text: item.description || 'N/A'},
+          {text: item.note || 'N/A'}
+        ]
+      end
     end
   end
   class AlmaHoldingPresenter < HoldingPresenter

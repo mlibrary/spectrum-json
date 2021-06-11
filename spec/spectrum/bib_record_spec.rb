@@ -39,6 +39,17 @@ describe Spectrum::BibRecord do
       end
     end
 
+    context "#alma_holdings" do
+      it "returns alma holdings when there are any" do
+        expect(subject.alma_holdings.count).to eq(1)
+      end
+    end
+    context "#elec_holdings" do
+      it "returns empty array when no non-hathi electronic holdings" do
+        expect(subject.elec_holdings).to eq([])
+      end
+    end
+
     context "#alma_holding(holding_id)" do
       it "returns the alma holding for a given holding id" do
         expect(subject.alma_holding("2297537770006381").callnumber).to eq('LB 2331.72 .S371 1990')  
@@ -134,9 +145,12 @@ describe Spectrum::BibRecord do
       it "does not have physical holdings" do
         expect(subject.physical_holdings?).to eq(false)
       end
+      it "returns electronic holdings" do
+        expect(subject.elec_holdings.count).to eq(1)
+      end
       context "electronic holding" do
         let(:elec_holding){subject.holdings.first}
-        ['link','library','status','link_text','note','finding_aid'].each do |method|
+        ['link','library','status','link_text','note','description','finding_aid'].each do |method|
           context "##{method}" do
             it "respond_to? #{method}" do
               expect(elec_holding.respond_to?(method)).to be(true)

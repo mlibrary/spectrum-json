@@ -9,8 +9,10 @@ module Spectrum::Entities
       @bib_record = bib_record
       @alma_holdings = alma_holdings
       @hathi_holding = hathi_holding
+      @elec_holdings = bib_record.elec_holdings
       @holdings = []
-
+      
+      @holdings.push({library: 'ELEC', items: @elec_holdings}) unless @elec_holdings.empty?
       @holdings.push(@hathi_holding) unless @hathi_holding.empty?
       @alma_holdings&.holdings&.each{|h| @holdings.push(h)}
 
