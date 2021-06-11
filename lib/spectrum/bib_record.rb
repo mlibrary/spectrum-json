@@ -179,6 +179,11 @@ module Spectrum
       end
     end
     class ElectronicHolding < Holding
+        ['link','status','link_text','note','finding_aid'].each do |name|
+          define_method(name) do
+            @holding[name]
+          end
+        end
     end
     class HathiHolding < Holding
       def etas?

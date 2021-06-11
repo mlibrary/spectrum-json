@@ -121,6 +121,36 @@ describe Spectrum::BibRecord do
         end
       end
     end
+    context "bib record with ELEC holdings" do
+      before(:each) do
+        @solr_elec = File.read('./spec/fixtures/solr_elec.json')
+      end
+      subject do
+        described_class.new(JSON.parse(@solr_elec))
+      end
+      it "has holdings" do
+        expect(subject.holdings.count).to eq(1)
+      end
+      it "does not have physical holdings" do
+        expect(subject.physical_holdings?).to eq(false)
+      end
+      context "electronic holding" do
+        let(:elec_holding){subject.holdings.first}
+        ['link','library','status','link_text','note','finding_aid'].each do |method|
+          context "##{method}" do
+            it "respond_to? #{method}" do
+              expect(elec_holding.respond_to?(method)).to be(true)
+            end
+          end
+        end
+        it "actually returns the right thing for an element" do
+           expect(elec_holding.status).to eq('Available') 
+
+        end
+        
+      end
+
+    end
 
   end
   context '#title' do
