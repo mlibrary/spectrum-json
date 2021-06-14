@@ -28,6 +28,7 @@ module Spectrum
         @names_have_html = @data['names_have_html'] || true
         @metadata        = @focus.metadata_component(@data, @base_url, @request)
         @formats         = @focus.icons(@data, @base_url, @request)
+        @header          = @focus.header_component(@data, @base_url, @request)
       end
 
       def initialize_from_object
@@ -40,6 +41,7 @@ module Spectrum
         @names_have_html = true
         @metadata        = @focus.metadata_component(@data, @base_url, @request)
         @formats         = @focus.icons(@data, @base_url, @request)
+        @header          = @focus.header_component(@data, @base_url, @request)
       end
 
       def spectrum
@@ -56,6 +58,7 @@ module Spectrum
           fields: @fields,
           position: @position,
           metadata: @metadata,
+          header: @header 
         }
       end
     end
