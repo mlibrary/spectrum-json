@@ -11,9 +11,9 @@ class Spectrum::Entities::AlmaItem
     :location, :permanent_library, :permanent_location, :description, :item_policy,
     :process_type, :inventory_number
 
-  def initialize(holding:, alma_item: nil, solr_item:, bib_record:)
+  def initialize(holding:, alma_loan: {}, solr_item:, bib_record:)
     @holding = holding #AlmaHolding
-    #@alma_item = alma_item["item_data"] #parsed_response
+    @alma_loan = alma_loan #parsed_response
     @solr_item = solr_item #BibRecord::AlmaHolding::Item
     @bib_record = bib_record #BibRecord
   end
@@ -21,9 +21,9 @@ class Spectrum::Entities::AlmaItem
     @solr_item.id
   end
   
-  #TBD
-  #def status
-  #end
+  def due_date
+    @alma_loan["due_date"]
+  end
   
   ##TBD
   #def can_request?

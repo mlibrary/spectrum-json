@@ -3,7 +3,7 @@ describe Spectrum::Holding::PhysicalItemStatus do
   before(:each) do
     @solr_item = double("Spectrum::BibRecord:AlmaHolding::Item", process_type: nil)
     @bib_record = instance_double(Spectrum::BibRecord)
-    @alma_item = Spectrum::Entities::AlmaItem.new(solr_item: @solr_item, holding: double("AlmaHolding"), alma_item:{}, bib_record: @bib_record)
+    @alma_item = Spectrum::Entities::AlmaItem.new(solr_item: @solr_item, holding: double("AlmaHolding"), alma_loan:{}, bib_record: @bib_record)
   end
   subject do
     described_class.for(@alma_item) 

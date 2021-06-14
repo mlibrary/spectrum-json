@@ -19,13 +19,13 @@ class Spectrum::Holding::PhysicalItemStatus
       #string format "Sep 01, 2021" or 
       #"Sep 01, 2021 at 3:00 PM"
       date = DateTime.parse(item.due_date)
-      date_string = date.strftime("%b %d, %Y")
+      date_string = "Checked out: due #{date.strftime("%b %d, %Y")}"
 
       if ['06', '07', '11', '12'].include?(item.item_policy)
         date_string = date_string + ' at ' + date.strftime("%I:%M %p")
       end
 
-      date_string
+      Warning.new(date_string)
     when 'MISSING'
       Error.new('Missing')
     when 'ILL'

@@ -5,13 +5,13 @@ describe Spectrum::Entities::AlmaItem do
     Spectrum::BibRecord.new(solr_bib_alma)
   end
   subject do
-    response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
+    response = JSON.parse(File.read('./spec/fixtures/alma_loans_one_holding.json'))
     solr_holding = solr_bib_record.alma_holding("2297537770006381")
     solr_item = solr_holding.items.first
 
     holding = instance_double(Spectrum::Entities::AlmaHolding, holding_id: "holding_id", bib_record: solr_bib_record, solr_holding: solr_holding)
 
-    described_class.new(holding: holding,  alma_item: response["item"][0], solr_item: solr_item, bib_record: solr_bib_record)
+    described_class.new(holding: holding,  alma_loan: response["item_loan"][0], solr_item: solr_item, bib_record: solr_bib_record)
   end
   it "has a bib title" do
     expect(subject.title).to eq("Enhancing faculty careers : strategies for development and renewal /")
@@ -28,6 +28,7 @@ describe Spectrum::Entities::AlmaItem do
   it "has a library" do
     expect(subject.library).to eq("HATCH")
   end
+  
   it "has a location" do
     expect(subject.location).to eq("GRAD")
   end
@@ -45,6 +46,9 @@ describe Spectrum::Entities::AlmaItem do
   end
   it "calculates etas" do
     expect(subject.etas?).to eq(true)
+  end
+  it "has a due_date" do
+    expect(subject.due_date).to eq("2021-10-01T03:59:00Z")
   end
   
   context "#status" do

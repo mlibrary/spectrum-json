@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 describe Spectrum::Entities::AlmaHoldings do
   before(:each) do
     @mms_id = "990020578280206381"
-    @alma_holdings = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
+    @alma_holdings = JSON.parse(File.read('./spec/fixtures/alma_loans_one_holding.json'))
     @solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
   end
   subject do
@@ -29,7 +29,7 @@ describe Spectrum::Entities::AlmaHoldings do
   end
   context ".for(bib_record:)" do
     it "generates AlmaHoldings for given bib record" do
-      stub_alma_get_request(url: "bibs/#{@mms_id}/holdings/ALL/items", output: File.read('./spec/fixtures/alma_one_holding.json'), query: {limit: 100, offset: 0})
+      stub_alma_get_request(url: "bibs/#{@mms_id}/loans", output: File.read('./spec/fixtures/alma_loans_one_holding.json'), query: {limit: 100, offset: 0})
 
       holdings = described_class.for(bib_record: Spectrum::BibRecord.new(@solr_bib_alma))
       expect(holdings.class.name.to_s).to eq("Spectrum::Entities::AlmaHoldings")
@@ -42,11 +42,11 @@ describe Spectrum::Entities::AlmaHolding do
     Spectrum::BibRecord.new(solr_bib_alma)
   end
   subject do
-    response = JSON.parse(File.read('./spec/fixtures/alma_one_holding.json'))
+    response = JSON.parse(File.read('./spec/fixtures/alma_loans_one_holding.json'))
     solr_holding = solr_bib_record.alma_holding("2297537770006381")
     
 
-    described_class.new(bib: solr_bib_record, full_items: response["item"], solr_holding: solr_holding)
+    described_class.new(bib: solr_bib_record, alma_loans: response["item_loan"], solr_holding: solr_holding)
   end
   it "has bib title" do
     expect(subject.title).to eq("Enhancing faculty careers : strategies for development and renewal /")

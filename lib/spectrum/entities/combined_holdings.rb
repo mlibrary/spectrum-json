@@ -1,3 +1,4 @@
+require 'ostruct'
 module Spectrum::Entities
   class CombinedHoldings
     attr_reader :holdings, :bib_record
@@ -12,7 +13,7 @@ module Spectrum::Entities
       @elec_holdings = bib_record.elec_holdings
       @holdings = []
       
-      @holdings.push({library: 'ELEC', items: @elec_holdings}) unless @elec_holdings.empty?
+      @holdings.push(OpenStruct.new(library: 'ELEC', items: @elec_holdings)) unless @elec_holdings.empty?
       @holdings.push(@hathi_holding) unless @hathi_holding.empty?
       @alma_holdings&.holdings&.each{|h| @holdings.push(h)}
 

@@ -8,13 +8,13 @@ class Spectrum::Entities::AlmaHoldings
   end
   def self.for(bib_record:, client: AlmaRestClient.client)
     if bib_record.physical_holdings?
-      #response = client.get_all(url: "/bibs/#{bib_record.mms_id}/holdings/ALL/items", record_key: "item")
-      #if response.code == 200
+      response = client.get_all(url: "/bibs/#{bib_record.mms_id}/loans", record_key: "item_loan")
+      if response.code == 200
         #Spectrum::Entities::AlmaHoldings.new(alma: response.parsed_response, solr: bib_record)
-        Spectrum::Entities::AlmaHoldings.new(alma: nil, solr: bib_record)
-      #else
+        Spectrum::Entities::AlmaHoldings.new(alma: response.parsed_response, solr: bib_record)
+      else
         #TBD ERROR
-      #end
+      end
     else
       Spectrum::Entities::AlmaHoldings::Empty.new
     end
@@ -39,17 +39,11 @@ class Spectrum::Entities::AlmaHoldings
   
   private
   def load_holdings
-    #holdings = {}
-    #@alma["item"].each do |x|
-    #  holding_id = x["holding_data"]["holding_id"]
-    #  holdings[holding_id] = [] if holdings[holding_id].nil?
-    #  holdings[holding_id].push(x)
-    #end
 
     @solr.alma_holdings.map do |solr_holding|
-  
+      alma_loans = @alma["item_loan"]&.select{|loan| loan["holding_id"] == solr_holding.holding_id}
       #alma_holding = holdings[solr_holding.holding_id]
-      Spectrum::Entities::AlmaHolding.new(bib: @solr, full_items: nil, solr_holding: solr_holding)
+      Spectrum::Entities::AlmaHolding.new(bib: @solr, alma_loans: alma_loans, solr_holding: solr_holding)
     end
   end
   
@@ -67,13 +61,13 @@ class Spectrum::Entities::AlmaHolding
   extend Forwardable
   def_delegators :@bib_record, :mms_id, :doc_id, :title, :author, 
     :issn, :isbn, :pub_date
-  def initialize(bib:, full_items: [], solr_holding: nil )
+  def initialize(bib:, alma_loans: [], solr_holding: nil )
     @bib_record = bib #now is solr BibRecord
 
     @solr_holding = solr_holding
     @items = solr_holding.items.map do |solr_item|
-      #alma_item = full_items.find{|alma_item| alma_item["item_data"]["pid"] == solr_item.id}
-      Spectrum::Entities::AlmaItem.new(holding: self, solr_item: solr_item, alma_item: {},
+      alma_loan = alma_loans&.find{|loan| loan["item_id"] == solr_item.id }
+      Spectrum::Entities::AlmaItem.new(holding: self, solr_item: solr_item, alma_loan: alma_loan,
                                       bib_record: @bib_record)
     end
   end

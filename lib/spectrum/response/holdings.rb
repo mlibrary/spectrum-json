@@ -41,7 +41,7 @@ module Spectrum
         end.sort_by do |item|
           sorter[item[:caption]]
         end
-        expanded = @bib_record.physical_only? && data.length == 1
+        expanded = data.length == 1
         data.each do |item|
           item[:preExpanded] = expanded
         end

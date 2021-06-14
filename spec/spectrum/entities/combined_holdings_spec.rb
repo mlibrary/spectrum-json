@@ -20,7 +20,7 @@ describe Spectrum::Entities::CombinedHoldings do
       solr = File.read('./spec/fixtures/solr_bib_alma.json')
       source_dbl = double('Source', url: 'http://localhost/solr/biblio', driver: 'RSolr') 
       request = Spectrum::Request::Holdings.new({id: mms_id})  
-      alma_req = stub_alma_get_request(url: "bibs/#{mms_id}/holdings/ALL/items", output: File.read('./spec/fixtures/alma_one_holding.json'), query: {limit: 100, offset: 0})
+      alma_req = stub_alma_get_request(url: "bibs/#{mms_id}/loans", output: File.read('./spec/fixtures/alma_loans_one_holding.json'), query: {limit: 100, offset: 0})
       solr_req = stub_request(:get, "http://localhost/solr/biblio/select?q=id:#{mms_id}&wt=json").to_return(body: solr, status: 200, headers: {content_type: 'application/json'})
 
       expect(described_class.for(source_dbl, request).class).to eq(described_class)
@@ -34,7 +34,7 @@ describe Spectrum::Entities::CombinedHoldings do
 
       solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
       actual_bib_record = Spectrum::BibRecord.new(solr_bib_alma)
-      alma_req = stub_alma_get_request(url: "bibs/#{mms_id}/holdings/ALL/items", output: File.read('./spec/fixtures/alma_one_holding.json'), query: {limit: 100, offset: 0})
+      alma_req = stub_alma_get_request(url: "bibs/#{mms_id}/loans", output: File.read('./spec/fixtures/alma_loans_one_holding.json'), query: {limit: 100, offset: 0})
 
       expect(described_class.for_bib(actual_bib_record).class).to eq(described_class)
       #expect(alma_req).to have_been_requested

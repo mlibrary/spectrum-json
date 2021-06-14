@@ -57,7 +57,7 @@ describe Spectrum::Holding::RequestThisAction do
     double("BibRecord::AlmaHolding::Item", **methods) 
   }
 
-  let(:item){Spectrum::Entities::AlmaItem.new(holding: nil, alma_item: {}, bib_record: bib_record, solr_item: solr_item) }
+  let(:item){Spectrum::Entities::AlmaItem.new(holding: nil, alma_loan: {}, bib_record: bib_record, solr_item: solr_item) }
 
   let(:result) {{
     text: 'Request This',
