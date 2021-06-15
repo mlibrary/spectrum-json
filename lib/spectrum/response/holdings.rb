@@ -4,12 +4,10 @@ module Spectrum
   module Response
     class Holdings
       def initialize(source, request, 
-                     #bib_record: BibRecord.fetch(id: request.id, url: source.url),
                      holdings: Spectrum::Entities::CombinedHoldings.for(source, request),
-                     holding_factory: lambda{|input| Spectrum::Presenters::HoldingPresenter.for(input)}
+                     holding_factory: lambda{|holding| Spectrum::Presenters::HoldingPresenter.for(holding)}
                     )
         @holdings = holdings
-        @bib_record = holdings.bib_record
 
         @holding_factory = holding_factory
 
@@ -31,8 +29,7 @@ module Spectrum
           hash['- Offsite Shelving -'] = 'zzzz'
         end
         @holdings.each do |holding|
-          input = HoldingInput.new(holding: holding, bib_record: @bib_record)
-          holding_presenter = @holding_factory.call(input)
+          holding_presenter = @holding_factory.call(holding)
           if holding_presenter.class.to_s.match?(/LinkedHolding/) || holding.items.count > 0
             data << holding_presenter.to_h          
           end
@@ -47,16 +44,6 @@ module Spectrum
           item[:preExpanded] = expanded
         end
       end
-      
-      class HoldingInput
-        attr_reader :holding, :bib_record 
-        def initialize(bib_record:, holding: nil )
-          @holding = holding 
-          @bib_record = bib_record
-        end
-      end
-      
-      private_constant :HoldingInput
     end
   end
 end

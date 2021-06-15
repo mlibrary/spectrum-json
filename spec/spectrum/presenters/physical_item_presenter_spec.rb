@@ -11,7 +11,7 @@ describe Spectrum::Presenters::PhysicalItem, "to_a" do
   
   end
   subject do
-    described_class.new(bib_record: nil, item: @item).to_a(**@to_a_init)
+    described_class.new(@item).to_a(**@to_a_init)
   end
   it "returns an array" do
     expect(subject.class.name).to eq('Array')

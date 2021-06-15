@@ -1,13 +1,12 @@
 module Spectrum
   class Presenters::PhysicalItem
-    def initialize(item:, bib_record: )
-      @bib_record = bib_record
+    def initialize(item)
       @item = item #Entities::MirlynItem
     end
     def to_a(action: Spectrum::Holding::Action.for(@item),
-             description: Spectrum::Holding::PhysicalItemDescription.for(item: @item),
-             status: Spectrum::Holding::PhysicalItemStatus.for(@item),
-             intent: nil, icon: nil)
+             description: Spectrum::Holding::PhysicalItemDescription.for(@item),
+             status: Spectrum::Holding::PhysicalItemStatus.for(@item)
+             )
       [
         action.finalize,
         description.to_h,

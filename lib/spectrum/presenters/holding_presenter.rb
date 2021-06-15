@@ -1,19 +1,17 @@
 module Spectrum::Presenters
   class HoldingPresenter
-    def initialize(input)
-      @bib_record = input.bib_record
-      @holding = input.holding
+    def initialize(holding)
+      @holding = holding
     end
-    def self.for(input)
-      if input.holding.class.name.to_s.match(/Hathi/)
-        #Will Change to New when using Alma data
-        NewHathiTrustHoldingPresenter.new(input)
-      #elsif input.holding.up_links || input.holding.down_links
-        #LinkedHoldingPresenter.for(input)
-      elsif input.holding.library == 'ELEC'
-        ElecHoldingPresenter.new(input)
+    def self.for(holding)
+      if holding.class.name.to_s.match(/Hathi/)
+        HathiTrustHoldingPresenter.new(holding)
+      #elsif holding.up_links || holding.down_links
+        #LinkedHoldingPresenter.for(holding)
+      elsif holding.library == 'ELEC'
+        ElecHoldingPresenter.new(holding)
       else
-        AlmaHoldingPresenter.new(input)
+        AlmaHoldingPresenter.new(holding)
       end
     end
 
@@ -94,34 +92,11 @@ module Spectrum::Presenters
       ].compact.reject(&:empty?)
     end
     def rows
-      @holding.items.map { |item| Spectrum::Presenters::PhysicalItem.new(bib_record: @bib_record,  item: item).to_a }
+      @holding.items.map { |item| Spectrum::Presenters::PhysicalItem.new(item).to_a }
     end
   end
 
-  class MirlynHoldingPresenter < HoldingPresenter
-    private
-    def headings
-      ['Action', 'Description', 'Status', 'Call Number']
-    end
-    def name
-      'holdings'
-    end
-    def notes
-      [
-        @holding.public_note,
-        @holding.summary_holdings,
-        Spectrum::FloorLocation.resolve(
-          @holding.library,
-          @holding.location,
-          @holding.callnumber
-        )
-      ].compact.reject(&:empty?)
-    end
-    def rows
-      @holding.items.map { |item| Spectrum::Presenters::PhysicalItem.new(bib_record: @bib_record,  item: item).to_a }
-    end
-  end
-  class NewHathiTrustHoldingPresenter < HoldingPresenter
+  class HathiTrustHoldingPresenter < HoldingPresenter
     private
     def caption
       @holding.library
@@ -146,35 +121,6 @@ module Spectrum::Presenters
           {text: item.source || 'N/A'}
         ]
       end
-    end
-  end
-  class HathiTrustHoldingPresenter < HoldingPresenter
-    private
-    def headings
-      ['Link', 'Description', 'Source']
-    end
-    def type
-      'electronic'
-    end
-    def name
-      'HathiTrust Sources'
-    end
-    def rows
-      @holding.items.map { |item| process_item_info(item) }
-    end
-    def process_item_info(item)
-      status = item.status
-      handle = "http://hdl.handle.net/2027/#{item.id}"
-      suffix = if status.include?('log in required')
-        "?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth"
-      else
-        ''
-      end
-      [
-        {text: status, href: "#{handle}#{suffix}"},
-        {text: item.description || ''},
-        {text: item.source || 'N/A'}
-      ]
     end
   end
   class LinkedHoldingPresenter < HoldingPresenter

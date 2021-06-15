@@ -7,7 +7,7 @@ describe Spectrum::Holding::PhysicalItemDescription do
     end
     subject do 
       #only called with self.for
-      described_class.for(item: @item_dbl).to_h
+      described_class.for(@item_dbl).to_h
     end
     it "returns default of ''" do
       expect(subject).to eq({text: ''})

@@ -2,7 +2,7 @@ module Spectrum
   class Holding
     class PhysicalItemDescription
       attr_reader :temp_location, :description
-      def initialize(item:)
+      def initialize(item)
         @item = item
         @description = item.description
       end
@@ -10,16 +10,16 @@ module Spectrum
         { format_type => value }
       end
 
-      def self.for(item:)
+      def self.for(item)
         has_description =  !(item.description.nil? || item.description.empty?)
         if item.temp_location? && has_description
-          TemporaryWithDescription.new(item: item)
+          TemporaryWithDescription.new(item)
         elsif item.temp_location?
-          TemporaryNoDescription.new(item: item)
+          TemporaryNoDescription.new(item)
         elsif has_description
-          DescriptionNotTemporary.new(item: item)
+          DescriptionNotTemporary.new(item)
         else #Not Temporary and No Description
-          PhysicalItemDescription.new(item: item)
+          PhysicalItemDescription.new(item)
         end
       end
 
