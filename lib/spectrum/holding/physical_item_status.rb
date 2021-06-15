@@ -15,21 +15,6 @@ class Spectrum::Holding::PhysicalItemStatus
   end
   def self.for(item)
     case item.process_type
-    when 'LOAN'
-      #string format "Sep 01, 2021" or 
-      #"Sep 01, 2021 at 3:00 PM"
-      date = DateTime.parse(item.due_date)
-      date_string = "Checked out: due #{date.strftime("%b %d, %Y")}"
-
-      if ['06', '07', '11', '12'].include?(item.item_policy)
-        date_string = date_string + ' at ' + date.strftime("%I:%M %p")
-      end
-
-      Warning.new(date_string)
-    when 'MISSING'
-      Error.new('Missing')
-    when 'ILL'
-      Error.new('Unavailable - Ask at ILL')
     when nil
       case item.item_policy
       when '08'
@@ -53,7 +38,24 @@ class Spectrum::Holding::PhysicalItemStatus
           Success.new("On shelf")
 #        end
       end
+    when 'LOAN'
+      #string format "Sep 01, 2021" or 
+      #"Sep 01, 2021 at 3:00 PM"
+      date = DateTime.parse(item.due_date)
+      date_string = "Checked out: due #{date.strftime("%b %d, %Y")}"
+
+      if ['06', '07', '11', '12'].include?(item.item_policy)
+        date_string = date_string + ' at ' + date.strftime("%I:%M %p")
+      end
+
+      Warning.new(date_string)
+    when 'MISSING'
+      Error.new('Missing')
+    when 'ILL'
+      Error.new('Unavailable - Ask at ILL')
       
+    else
+      Warning.new("In Process: #{item.process_type}")
     end
   end
   class Success < self

@@ -25,8 +25,9 @@ module Spectrum
       def process_response
         data = []
         sorter = Hash.new { |hash, key| hash[key] = key }.tap do |hash|
-          hash[nil] = 'AAAA'
-          hash['HathiTrust Digital Library'] = 'AAAA'
+          hash[nil] = 'AAAC'
+          hash['Online Resources'] = 'AAAA'
+          hash['HathiTrust Digital Library'] = 'AAAB'
           hash['- Offsite Shelving -'] = 'zzzz'
         end
         @holdings.each do |holding|
