@@ -10,7 +10,6 @@ class Spectrum::Entities::AlmaHoldings
     if bib_record.physical_holdings?
       response = client.get_all(url: "/bibs/#{bib_record.mms_id}/loans", record_key: "item_loan")
       if response.code == 200
-        #Spectrum::Entities::AlmaHoldings.new(alma: response.parsed_response, solr: bib_record)
         Spectrum::Entities::AlmaHoldings.new(alma: response.parsed_response, solr: bib_record)
       else
         #TBD ERROR
@@ -56,6 +55,7 @@ class Spectrum::Entities::AlmaHoldings::Empty
     true
   end
 end
+
 class Spectrum::Entities::AlmaHolding
   attr_reader :items, :bib_record, :solr_holding
   extend Forwardable
