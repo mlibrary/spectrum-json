@@ -69,6 +69,20 @@ class JsonController < ApplicationController
     render(json: basic_response)
   end
 
+  def browse
+    @request = Spectrum::Request::BrowseRequest.new(request, @focus, :desc)
+    @datastore = Spectrum::Response::DataStore.new(this_datastore)
+    @response = Spectrum::Response::RecordList.new(fetch_browse_records, @request)
+    prev_records = @response
+    @request      = Spectrum::Request::BrowseRequest.new(request, @focus, :asc)
+    @datastore    = Spectrum::Response::DataStore.new(this_datastore)
+    @response     = Spectrum::Response::RecordList.new(fetch_browse_records, @request)
+
+    full_response = browse_response(prev_records)
+    render(json: full_response)
+    # render(json: params)
+  end
+
   def search
     @request      = Spectrum::Request::DataStore.new(request, @focus)
     @new_request  = Spectrum::Request::DataStore.new(request, @focus)
@@ -233,6 +247,14 @@ class JsonController < ApplicationController
     )
   end
 
+  def fetch_browse_records
+    base_url.merge(
+        data: engine.results,
+        source: @source,
+        focus: @focus
+    )
+  end
+
   def fetch_records
     base_url.merge(
       data: engine.results,
@@ -298,6 +320,14 @@ class JsonController < ApplicationController
       total_available: @response.total_available,
       default_institution: default_institution,
       affiliation: default_affiliation,
+    }
+  end
+
+  def browse_response(prev_records)
+    {
+        request:  @request.spectrum,
+        response: @response.spectrum,
+        prev_records: prev_records.spectrum
     }
   end
 
