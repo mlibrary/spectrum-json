@@ -10,10 +10,16 @@ describe Spectrum::LibLocDisplay do
     it 'returns a link' do
       expect(described_class.link('HATCH', 'GRAD')).to eq("http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25")
     end
+    it 'returns nil  if not found' do
+      expect(described_class.link('NOTHING', 'NOTHING')).to eq(nil)
+    end
   end
   context '::text' do
     it 'returns a link' do
       expect(described_class.text('HATCH', 'GRAD')).to eq("Hatcher Graduate")
+    end
+    it "returns the code when not found" do
+      expect(described_class.text('NO_LIBRARY', 'NO_LOCATION')).to eq("NO_LIBRARY NO_LOCATION")
     end
   end
 end

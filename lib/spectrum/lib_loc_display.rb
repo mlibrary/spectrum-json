@@ -16,7 +16,7 @@ class Spectrum::LibLocDisplay
 
   def self.text(library, location)
     id = normalize_location(library, location)
-    @config.find{|x| x["id"] == id}&.dig("text")
+    @config.find{|x| x["id"] == id}&.dig("text") || "#{library} #{location}"
   end
 
 end
