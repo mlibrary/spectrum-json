@@ -241,7 +241,17 @@ module Spectrum
         end
       end
 
+      def empty?
+        @data.nil?
+      end
+
       def build_psearch(focus = @focus)
+        if empty?
+          return MLibrarySearchParser::Search.new(
+            ''
+            {"search_fields" => {'' => nil}}
+          )
+        end
         @builder = MLibrarySearchParser::SearchBuilder.new(focus.raw_config)
         @builder.build(@data['raw_query'])
       end
