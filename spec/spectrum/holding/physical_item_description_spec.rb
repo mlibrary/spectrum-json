@@ -1,13 +1,13 @@
 require_relative '../../spec_helper'
 
-describe Spectrum::Holding::MirlynItemDescription do
+describe Spectrum::Holding::PhysicalItemDescription do
   context "to_h" do
     before(:each) do
-      @item_dbl = instance_double(Spectrum::Entities::MirlynItem, description: nil, temp_location?: false)
+      @item_dbl = instance_double(Spectrum::Entities::AlmaItem, description: nil, temp_location?: false)
     end
     subject do 
       #only called with self.for
-      described_class.for(item: @item_dbl).to_h
+      described_class.for(@item_dbl).to_h
     end
     it "returns default of ''" do
       expect(subject).to eq({text: ''})

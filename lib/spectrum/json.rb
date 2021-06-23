@@ -6,13 +6,20 @@ require 'lru_redux'
 require 'active_support'
 require 'active_support/concern'
 
-require 'spectrum/entities/item'
-require 'spectrum/entities/holdings'
-
-require 'spectrum/decorators/mirlyn_item_decorator'
+require 'spectrum/lib_loc_display'
 require 'spectrum/available_online_holding'
 require 'spectrum/floor_location'
 require 'spectrum/bib_record'
+
+require 'spectrum/entities/item'
+require 'spectrum/entities/holdings'
+require 'spectrum/entities/alma_holdings'
+require 'spectrum/entities/alma_item'
+require 'spectrum/entities/hathi_holding'
+require 'spectrum/entities/combined_holdings'
+
+require 'spectrum/decorators/physical_item_decorator'
+require 'spectrum/decorators/mirlyn_item_decorator'
 
 require 'spectrum/json/version'
 require 'spectrum/json/engine'
@@ -88,12 +95,13 @@ require 'spectrum/request/debug'
 require 'spectrum/policy/get_this'
 
 require 'spectrum/presenters/holding_presenter'
-require 'spectrum/presenters/mirlyn_item_presenter'
-require 'spectrum/holding/mirlyn_item_description'
+require 'spectrum/presenters/physical_item_presenter'
+require 'spectrum/holding/physical_item_description'
+require 'spectrum/holding/physical_item_status'
 require 'spectrum/holding/action'
+require 'spectrum/holding/no_action'
 require 'spectrum/holding/get_this_action'
 require 'spectrum/holding/request_this_action'
-require 'spectrum/holding/book_this_action'
 
 require 'spectrum/json/railtie' if defined?(Rails)
 require 'erb'
