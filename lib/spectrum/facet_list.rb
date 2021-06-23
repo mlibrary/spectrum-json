@@ -15,7 +15,7 @@ module Spectrum
     def q_include
       (@data || {}).map do |category, value|
         [value].flatten(1).map do |val|
-          "#{category},exact,#{val}"
+          "facet_#{category},exact,#{val}"
         end
       end.flatten.join('|,|')
     end
