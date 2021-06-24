@@ -79,6 +79,30 @@ module Spectrum
         return params
       end
 
+      def browse_query_preceding(term)
+        {
+            q:        "#{@browse_field}:*",
+            page:     @page,
+            start:    @start,
+            rows:     @page_size,
+            fq:       ["{!frange u=\"#{term}\"}#{@search_field}"],
+            per_page: @page_size,
+            sort:     "#{@search_field} desc"
+        }
+      end
+
+      def browse_query_following(term)
+        {
+            q:        "#{@browse_field}:*",
+            page:     @page,
+            start:    @start,
+            rows:     @page_size,
+            fq:       ["{!frange l=\"#{term}\"}#{@search_field}"],
+            per_page: @page_size,
+            sort:     "#{@search_field} asc"
+        }
+      end
+
       def solr_params
         Hash.new
       end
@@ -109,29 +133,6 @@ module Spectrum
         false
       end
 
-      def browse_query_preceding(term)
-        {
-            q:        '*:*',
-            page:     @page,
-            start:    @start,
-            rows:     @page_size,
-            fq:       ["{!frange u=#{term}}#{@search_field}"],
-            per_page: @page_size,
-            sort:     "#{@search_field} desc"
-        }
-      end
-
-      def browse_query_following(term)
-        {
-            q:        '*:*',
-            page:     @page,
-            start:    @start,
-            rows:     @page_size,
-            fq:       ["{!frange l=\"#{term}\"}#{@search_field}"],
-            per_page: @page_size,
-            sort:     "#{@search_field} asc"
-        }
-      end
 
     end
   end

@@ -73,14 +73,23 @@ class JsonController < ApplicationController
     @request = Spectrum::Request::BrowseRequest.new(request, @focus, :desc)
     @datastore = Spectrum::Response::DataStore.new(this_datastore)
     @response = Spectrum::Response::RecordList.new(fetch_browse_records, @request)
-    prev_records = @response
+    prev_page = @response.spectrum
     @request      = Spectrum::Request::BrowseRequest.new(request, @focus, :asc)
+    @engine = @source.engine(@focus, @request, self)
     @datastore    = Spectrum::Response::DataStore.new(this_datastore)
     @response     = Spectrum::Response::RecordList.new(fetch_browse_records, @request)
+    this_page = @response.spectrum
 
-    full_response = browse_response(prev_records)
+    first_before_id = prev_page[0][:fields].find{|e| e[:uid] == "title"}[:value]
+    first_after_id =  this_page[0][:fields].find{|e| e[:uid] == "title"}[:value]
+    full_records = if first_before_id == first_after_id
+                      prev_page[1..2].reverse.concat(this_page)
+                   else
+                     prev_page[0..1].reverse.concat(this_page)
+                   end
+
+    full_response = browse_response(prev_page, full_records)
     render(json: full_response)
-    # render(json: params)
   end
 
   def search
@@ -323,11 +332,12 @@ class JsonController < ApplicationController
     }
   end
 
-  def browse_response(prev_records)
+  def browse_response(prev_page, full_records)
     {
         request:  @request.spectrum,
-        response: @response.spectrum,
-        prev_records: prev_records.spectrum
+        response: full_records,
+        datastore: @datastore.spectrum,
+        prev_page_start: prev_page[-1]
     }
   end
 
