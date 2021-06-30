@@ -80,13 +80,17 @@ class JsonController < ApplicationController
     @response     = Spectrum::Response::RecordList.new(fetch_browse_records, @request)
     this_page = @response.spectrum
 
-    first_before_id = prev_page[0][:fields].find{|e| e[:uid] == "title"}[:value]
-    first_after_id =  this_page[0][:fields].find{|e| e[:uid] == "title"}[:value]
-    full_records = if first_before_id == first_after_id
-                      prev_page[1..2].reverse.concat(this_page)
-                   else
-                     prev_page[0..1].reverse.concat(this_page)
-                   end
+    if prev_page and this_page
+      first_before_id = prev_page[0][:fields].find{|e| e[:uid] == "title"}[:value]
+      first_after_id =  this_page[0][:fields].find{|e| e[:uid] == "title"}[:value]
+      full_records = if first_before_id == first_after_id
+                        prev_page[1..2].reverse.concat(this_page)
+                     else
+                       prev_page[0..1].reverse.concat(this_page)
+                     end
+    else
+      full_records = this_page
+    end
 
     full_response = browse_response(prev_page, full_records)
     render(json: full_response)
