@@ -85,7 +85,7 @@ module Spectrum
             page:     @page,
             start:    @start,
             rows:     @page_size,
-            fq:       ["{!frange u=\"#{term}\"}#{@search_field}"],
+            fq:       ["#{@search_field}:[* TO \"#{term}\"]"],
             per_page: @page_size,
             sort:     "#{@search_field} desc"
         }
@@ -97,7 +97,7 @@ module Spectrum
             page:     @page,
             start:    @start,
             rows:     @page_size,
-            fq:       ["{!frange l=\"#{term}\"}#{@search_field}"],
+            fq:       ["#{@search_field}:[\"#{term}\" TO *]"],
             per_page: @page_size,
             sort:     "#{@search_field} asc"
         }

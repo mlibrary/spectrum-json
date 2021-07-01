@@ -341,7 +341,8 @@ class JsonController < ApplicationController
         request:  @request.spectrum,
         response: full_records,
         datastore: @datastore.spectrum,
-        prev_page_start: prev_page[-1]
+        prev_page_start: prev_page.last[:fields].find {|f| f[:uid] == 'callnumber'}[:value].first,
+        next_page_start: full_records.last[:fields].find {|f| f[:uid] == 'callnumber'}[:value].first
     }
   end
 
