@@ -5,24 +5,16 @@ require_relative '../../stub_bib_record'
 
 describe Spectrum::Holding::RequestThisAction, ".match" do
   before(:each) do
-    @item = instance_double(Spectrum::Entities::AlmaItem, library: 'HATCH')
+    @item = instance_double(Spectrum::Entities::AlmaItem, can_reserve?: false)
   end
   subject do
     described_class.match?(@item)
   end
-  it "generally does not match" do
+  it "generally does not match if can_reserve? is false" do
     expect(subject).to eq(false)
   end
-  it "matches SPEC" do
-    allow(@item).to receive(:library).and_return('SPEC')
-    expect(subject).to eq(true)
-  end
-  it "matches BENT" do
-    allow(@item).to receive(:library).and_return('BENT')
-    expect(subject).to eq(true)
-  end
-  it "matches CLEM" do
-    allow(@item).to receive(:library).and_return('CLEM')
+  it "matches if can_reserve? is true" do
+    allow(@item).to receive(:can_reserve?).and_return(true)
     expect(subject).to eq(true)
   end
 end

@@ -240,6 +240,9 @@ module Spectrum
             @item[name]
           end
         end
+        def can_reserve?
+          @item["can_reserve"]
+        end
         def temp_location?
           @item["temp_location"]
         end

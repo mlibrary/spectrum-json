@@ -62,7 +62,7 @@ class Spectrum::Entities::AlmaHolding
     :issn, :isbn, :pub_date
   def_delegators :@solr_holding, :holding_id, :floor_location, 
     :callnumber, :public_note, :library, :location,
-    :summary_holdings, :display_name, :info_link
+    :summary_holdings, :display_name, :info_link, :can_reserve?
   def initialize(bib:, alma_loans: [], solr_holding: nil )
     @bib_record = bib #now is solr BibRecord
 

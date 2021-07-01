@@ -88,6 +88,11 @@ describe Spectrum::BibRecord do
           end
         end
       end
+      context "#can_reserve?" do
+        it "returns a boolean" do
+          expect(alma_item.can_reserve?).to eq(false)
+        end
+      end
     end
     context "#physical_holdings?" do
       it "returns true for if there are physical holdings" do

@@ -5,10 +5,10 @@ module Spectrum
       attr_reader :doc_id, :bib_record, 
       def self.for(item)
 
-        if NoAction.match?(item)
-          NoAction.new(item)
-        elsif RequestThisAction.match?(item)
+        if RequestThisAction.match?(item)
           RequestThisAction.new(item)
+        elsif NoAction.match?(item)
+          NoAction.new(item)
         else
           GetThisAction.new(item)
         end

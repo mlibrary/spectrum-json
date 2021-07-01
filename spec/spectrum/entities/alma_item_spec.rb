@@ -50,6 +50,9 @@ describe Spectrum::Entities::AlmaItem do
   it "has a due_date" do
     expect(subject.due_date).to eq("2021-10-01T03:59:00Z")
   end
+   it "has can_reserve? flag" do
+     expect(subject.can_reserve?).to eq(false)
+   end
   
   context "#status" do
     it "handles it"
