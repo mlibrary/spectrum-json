@@ -216,9 +216,10 @@ module Spectrum
       def holding_id 
         @holding["hol_mmsid"]
       end
-      ["location","callnumber","public_note","summary_holdings"].each do |name|
+      ["location","callnumber","public_note","summary_holdings", "display_name",
+       "floor_location", "info_link"].each do |name|
         define_method(name) do
-          @holding[name]
+          @holding[name]&.strip
         end
       end
       def items

@@ -37,6 +37,15 @@ describe Spectrum::BibRecord do
       it "has items" do
         expect(alma_holding.items.count).to eq(1)
       end
+      it "has a display_name" do
+        expect(alma_holding.display_name).to eq("Hatcher Graduate")
+      end
+      it "has a floor_location" do
+        expect(alma_holding.floor_location).to eq("6 South")
+      end
+      it "has an info_link" do
+        expect(alma_holding.info_link).to eq("http://lib.umich.edu/locations-and-hours/hatcher-graduate-library")
+      end
     end
 
     context "#alma_holdings" do

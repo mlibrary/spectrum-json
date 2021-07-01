@@ -22,7 +22,7 @@ class Spectrum::Entities::AlmaItem
   end
   
   def due_date
-    @alma_loan["due_date"]
+    @alma_loan&.dig("due_date")
   end
   
   ##TBD
