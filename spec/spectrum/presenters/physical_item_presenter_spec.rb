@@ -1,25 +1,23 @@
 require_relative '../../spec_helper'
 
-describe Spectrum::Presenters::MirlynItem, "to_a" do
+describe Spectrum::Presenters::PhysicalItem, "to_a" do
     before(:each) do
 
     @to_a_init = {
       action: instance_double(Spectrum::Holding::Action, finalize: nil),
-      description: instance_double(Spectrum::Holding::MirlynItemDescription, to_h: {text: 'N/A'}),
-      intent: 'intent', icon: 'icon'
+      description: instance_double(Spectrum::Holding::PhysicalItemDescription, to_h: {text: 'N/A'}),
     }
-    
-    @item = instance_double(Spectrum::Entities::MirlynItem, status: 'On Shelf', callnumber: 'call_number', can_request?: false, inventory_number: nil)
+    @item = double('Spectrum::Entities::AlmaItem', callnumber: 'call_number', inventory_number: nil, 'process_type' => nil, item_policy: '01', requested?: false)
   
   end
   subject do
-    described_class.new(bib_record: nil, item: @item).to_a(**@to_a_init)
+    described_class.new(@item).to_a(**@to_a_init)
   end
   it "returns an array" do
     expect(subject.class.name).to eq('Array')
   end
   it "returns appropriate status" do
-    expect(subject[2]).to eq( {text: 'On Shelf', intent: 'intent', icon: 'icon'}) 
+    expect(subject[2]).to eq( {text: 'On shelf', intent: 'success', icon: 'check_circle'}) 
   end
   it "returns call number" do
     expect(subject[3]).to eq( {text: @item.callnumber}) 

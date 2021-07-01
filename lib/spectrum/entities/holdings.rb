@@ -63,6 +63,9 @@ module Spectrum::Entities
     def callnumber
       @data["callnumber"]
     end
+    def library
+      @data["sub_library"]
+    end
     def sub_library
       @data["sub_library"]
     end
@@ -73,7 +76,7 @@ module Spectrum::Entities
       @data["info_link"]
     end
     def location
-      @data["location"]
+      @data["collection"]
     end
     def status
       @data["status"]

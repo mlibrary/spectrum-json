@@ -1,19 +1,19 @@
 module Spectrum
-  class Presenters::MirlynItem
-    def initialize(item:, bib_record: )
-      @bib_record = bib_record
+  class Presenters::PhysicalItem
+    def initialize(item)
       @item = item #Entities::MirlynItem
     end
-    def to_a(action: Spectrum::Holding::Action.for(bib_record: @bib_record, item: @item),
-             description: Spectrum::Holding::MirlynItemDescription.for(item: @item),
-             intent: Aleph.intent(@item.status), icon: Aleph.icon(@item.status))
+    def to_a(action: Spectrum::Holding::Action.for(@item),
+             description: Spectrum::Holding::PhysicalItemDescription.for(@item),
+             status: Spectrum::Holding::PhysicalItemStatus.for(@item)
+             )
       [
         action.finalize,
         description.to_h,
         {
-          text: @item.status || 'N/A',
-          intent: intent || 'N/A',
-          icon: icon || 'N/A'
+          text: status.text || 'N/A',
+          intent: status.intent || 'N/A',
+          icon: status.icon || 'N/A'
         },
         { text: call_number || 'N/A' }
       ]
