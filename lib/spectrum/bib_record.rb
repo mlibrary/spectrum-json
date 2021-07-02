@@ -216,9 +216,10 @@ module Spectrum
       def holding_id 
         @holding["hol_mmsid"]
       end
-      ["location","callnumber","public_note","summary_holdings"].each do |name|
+      ["location","callnumber","public_note","summary_holdings", "display_name",
+       "floor_location", "info_link"].each do |name|
         define_method(name) do
-          @holding[name]
+          @holding[name]&.strip
         end
       end
       def items
@@ -238,6 +239,9 @@ module Spectrum
           define_method(name) do
             @item[name]
           end
+        end
+        def can_reserve?
+          @item["can_reserve"]
         end
         def temp_location?
           @item["temp_location"]

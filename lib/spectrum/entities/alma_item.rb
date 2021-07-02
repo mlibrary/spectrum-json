@@ -9,7 +9,7 @@ class Spectrum::Entities::AlmaItem
 
   def_delegators :@solr_item, :callnumber, :temp_location?, :barcode, :library,
     :location, :permanent_library, :permanent_location, :description, :item_policy,
-    :process_type, :inventory_number
+    :process_type, :inventory_number, :can_reserve?
 
   def initialize(holding:, alma_loan: {}, solr_item:, bib_record:)
     @holding = holding #AlmaHolding
@@ -22,7 +22,7 @@ class Spectrum::Entities::AlmaItem
   end
   
   def due_date
-    @alma_loan["due_date"]
+    @alma_loan&.dig("due_date")
   end
   
   ##TBD
