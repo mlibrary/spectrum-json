@@ -2,8 +2,8 @@ module Spectrum
   class Holding
     class NoAction < Action
       def self.match?(item, contactless_pickup = ['HATCH','FINE','BUHR','SCI','SHAP','AAEL','MUSIC','OFFS','STATE'])
-
-        return true if !contactless_pickup.include?(item.library) 
+        open = contactless_pickup.concat(['SPEC','BENT','CLEM'])
+        return true if !open.include?(item.library) 
 
         return true if ['06','07'].include?(item.item_policy)
 
