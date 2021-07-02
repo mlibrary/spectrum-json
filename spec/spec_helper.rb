@@ -27,7 +27,6 @@ require 'webmock/rspec'
 require 'spectrum/json' #just require the gem
 
 #configure some classes
-Spectrum::LibLocDisplay.configure('spec/fixtures/lib_loc_display.json')
 SimpleCov.start
 
 RSpec.configure do |config|

@@ -57,12 +57,6 @@ describe Spectrum::Entities::AlmaHolding do
   it "has holding_id" do
     expect(subject.holding_id).to eq("2297537770006381")
   end
-  it "has location_text" do
-    expect(subject.location_text).to eq("Hatcher Graduate")
-  end
-  it "has location_link" do
-    expect(subject.location_link).to eq("http://www.lib.umich.edu/location/hatcher-graduate-library/unit/25")
-  end
   it "has a call number" do
     expect(subject.callnumber).to eq("LB 2331.72 .S371 1990")
   end

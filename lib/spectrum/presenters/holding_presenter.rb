@@ -29,12 +29,10 @@ module Spectrum::Presenters
 
     private
     def caption
-      Spectrum::LibLocDisplay.text(@holding.library, @holding.location)
+      @holding.display_name
     end
     def captionLink
-      info_link = Spectrum::LibLocDisplay.link(@holding.library, @holding.location)
-      info_link ? {href: info_link, text: 'About location'} : nil
-
+      @holding.info_link ? {href: @holding.info_link, text: 'About location'} : nil
     end
     def name
       nil
@@ -84,11 +82,7 @@ module Spectrum::Presenters
       [
         @holding.public_note,
         @holding.summary_holdings,
-        Spectrum::FloorLocation.resolve(
-          @holding.library,
-          @holding.location,
-          @holding.callnumber || ''
-        )
+        @holding.floor_location
       ].compact.reject(&:empty?)
     end
     def rows
