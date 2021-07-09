@@ -20,10 +20,15 @@ module Spectrum
 
       def initialize(request)
         @request = request
+        id_field = @request.params['id_field']
+        id = unfiltered_id(request)
+        if id.length == 9
+          id_field = 'aleph_id'
+        end
         if request.params[:source] == 'summon'
-          @query = "#{@request.params['id_field']}:#{unfiltered_id(request)}"
+          @query = "#{id_field}:#{id}"
         else
-          @query = "#{@request.params['id_field']}:#{RSolr.solr_escape(unfiltered_id(request))}"
+          @query = "#{id_field}:#{RSolr.solr_escape(id)}"
         end
       end
 

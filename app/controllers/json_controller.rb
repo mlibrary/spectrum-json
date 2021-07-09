@@ -102,10 +102,19 @@ class JsonController < ApplicationController
 
   def record
     @request   = Spectrum::Request::Record.new(request)
+    # if our request id is actually an aleph id
+    # then the holdings code errors here
+    # but the front-end fetches the holdings when it redirects
+    # i think??
+    # TODO: make this not bad
+    do_holdings = true
+    if @request.query[:q].match?(/aleph_id:[0-9]{9}/)
+      do_holdings = false
+    end
     @datastore = Spectrum::Response::DataStore.new(this_datastore)
     if engine.total_items > 0
       @response = Spectrum::Response::Record.new(fetch_record, @request)
-      holdings_response = if @source.holdings
+      holdings_response = if @source.holdings and do_holdings
         holdings_request = Spectrum::Request::Holdings.new(request)
         Spectrum::Response::Holdings.new(@source, holdings_request)
       else
