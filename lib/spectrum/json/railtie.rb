@@ -29,10 +29,6 @@ module Spectrum
           config.adms = [config_data['adm_library']]
         end
 
-        if File.exist?(floor_locations = File.join(Rails.root, 'config', 'floor_locations.json'))
-          Spectrum::FloorLocation.configure(floor_locations)
-        end
-
         if File.exist?(specialists_file = File.join(Rails.root, 'config', 'specialists.yml'))
           Spectrum::Response::Specialists.configure(specialists_file)
         end

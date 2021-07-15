@@ -12,6 +12,14 @@ module Spectrum
       @data = data
     end
 
+    def q_include
+      (@data || {}).map do |category, value|
+        [value].flatten(1).map do |val|
+          "facet_#{category},exact,#{val}"
+        end
+      end.flatten.join('|,|')
+    end
+
     def spectrum
       @data || {}
     end

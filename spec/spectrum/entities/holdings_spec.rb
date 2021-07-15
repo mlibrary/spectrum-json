@@ -93,7 +93,7 @@ describe Spectrum::Entities::Holding do
     expect(subject.info_link).to eq('http://www.lib.umich.edu/location/music-library/unit/39')
   end
   it "has a location" do
-    expect(subject.location).to eq('Music')
+    expect(subject.location).to be_nil
   end
   it "has a status" do
     expect(subject.status).to eq('On shelf')

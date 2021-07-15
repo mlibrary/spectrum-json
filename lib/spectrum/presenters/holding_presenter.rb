@@ -1,16 +1,17 @@
 module Spectrum::Presenters
   class HoldingPresenter
-    def initialize(input)
-      @bib_record = input.bib_record
-      @holding = input.holding
+    def initialize(holding)
+      @holding = holding
     end
-    def self.for(input)
-      if input.holding.location == 'HathiTrust Digital Library'
-        HathiTrustHoldingPresenter.new(input)
-      elsif input.holding.up_links || input.holding.down_links
-        LinkedHoldingPresenter.for(input)
+    def self.for(holding)
+      if holding.class.name.to_s.match(/Hathi/)
+        HathiTrustHoldingPresenter.new(holding)
+      #elsif holding.up_links || holding.down_links
+        #LinkedHoldingPresenter.for(holding)
+      elsif holding.library == 'ELEC'
+        ElecHoldingPresenter.new(holding)
       else
-        MirlynHoldingPresenter.new(input)
+        AlmaHoldingPresenter.new(holding)
       end
     end
 
@@ -28,11 +29,10 @@ module Spectrum::Presenters
 
     private
     def caption
-      @holding.location
+      @holding.display_name
     end
     def captionLink
       @holding.info_link ? {href: @holding.info_link, text: 'About location'} : nil
-
     end
     def name
       nil
@@ -50,8 +50,27 @@ module Spectrum::Presenters
       nil
     end
   end
-
-  class MirlynHoldingPresenter < HoldingPresenter
+  class ElecHoldingPresenter < HoldingPresenter
+    def headings 
+      ['Link', 'Description', 'Source']
+    end
+    def caption
+      "Online Resources"
+    end
+    def type
+      "electronic"
+    end
+    def rows
+      @holding.items.map do |item|
+        [ 
+          {text: item.link_text, href: item.link},
+          {text: item.description || 'N/A'},
+          {text: item.note || 'N/A'}
+        ]
+      end
+    end
+  end
+  class AlmaHoldingPresenter < HoldingPresenter
     private
     def headings
       ['Action', 'Description', 'Status', 'Call Number']
@@ -63,19 +82,22 @@ module Spectrum::Presenters
       [
         @holding.public_note,
         @holding.summary_holdings,
-        Spectrum::FloorLocation.resolve(
-          @holding.sub_library,
-          @holding.collection,
-          @holding.callnumber
-        )
+        @holding.floor_location
       ].compact.reject(&:empty?)
     end
     def rows
-      @holding.items.map { |item| Spectrum::Presenters::MirlynItem.new(bib_record: @bib_record,  item: item).to_a }
+      @holding.items.map { |item| Spectrum::Presenters::PhysicalItem.new(item).to_a }
     end
   end
+
   class HathiTrustHoldingPresenter < HoldingPresenter
     private
+    def caption
+      @holding.library
+    end
+    def captionLink
+      @holding.info_link
+    end
     def headings
       ['Link', 'Description', 'Source']
     end
@@ -86,68 +108,61 @@ module Spectrum::Presenters
       'HathiTrust Sources'
     end
     def rows
-      @holding.items.map { |item| process_item_info(item) }
-    end
-    def process_item_info(item)
-      status = item.status
-      handle = "http://hdl.handle.net/2027/#{item.id}"
-      suffix = if status.include?('log in required')
-        "?urlappend=%3Bsignon=swle:https://shibboleth.umich.edu/idp/shibboleth"
-      else
-        ''
-      end
-      [
-        {text: status, href: "#{handle}#{suffix}"},
-        {text: item.description || ''},
-        {text: item.source || 'N/A'}
-      ]
-    end
-  end
-  class LinkedHoldingPresenter < HoldingPresenter
-    def self.for(input)
-      if input.holding.down_links
-        DownLinkedHolding.new(input)
-      else
-        UpLinkedHolding.new(input)
+      @holding.items.map do |item| 
+        [
+          {text: item.status, href: item.url},
+          {text: item.description || ''},
+          {text: item.source || 'N/A'}
+        ]
       end
     end
+  end
+  #Will bring this back at some point, but right now it's not being used
+  #class LinkedHoldingPresenter < HoldingPresenter
+    #def self.for(input)
+      #if input.holding.down_links
+        #DownLinkedHolding.new(input)
+      #else
+        #UpLinkedHolding.new(input)
+      #end
+    #end
 
-    private
-    def headings
-        ['Record link']
-    end
-    def name
-      nil
-    end
+    #private
+    #def headings
+        #['Record link']
+    #end
+    #def name
+      #nil
+    #end
 
-    def process_link(link)
-      [
-        {
-          text: link['link_text'],
-          to: {
-            record: link['key'],
-            datastore: @holding.doc_id,
-          }
-        }
-      ]
-    end
-  end
-  class DownLinkedHolding < LinkedHoldingPresenter
-    private
-    def caption
-      'Bound with'
-    end
-    def rows
-      @holding.down_links.map { |link| process_link(link) }
-    end
-  end
-  class UpLinkedHolding < LinkedHoldingPresenter
-    private
-    def caption
-      'Included in'
-    end
-    def rows
-      @holding.up_links.map { |link| process_link(link) }
-    end
-  end
+    #def process_link(link)
+      #[
+        #{
+          #text: link['link_text'],
+          #to: {
+            #record: link['key'],
+            #datastore: @holding.doc_id,
+          #}
+        #}
+      #]
+    #end
+  #end
+  #class DownLinkedHolding < LinkedHoldingPresenter
+    #private
+    #def caption
+      #'Bound with'
+    #end
+    #def rows
+      #@holding.down_links.map { |link| process_link(link) }
+    #end
+  #end
+  #class UpLinkedHolding < LinkedHoldingPresenter
+    #private
+    #def caption
+      #'Included in'
+    #end
+    #def rows
+      #@holding.up_links.map { |link| process_link(link) }
+    #end
+  #end
 end
