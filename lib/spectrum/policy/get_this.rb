@@ -62,7 +62,7 @@ module Spectrum
         def replace_string(input_string, account, bib, item)
           input_string
             .gsub('{$barcode}', item.barcode)
-            .gsub('{$record_id}', item.id)
+            .gsub('{$record_id}', item.doc_id)
             .gsub('{$patron_id}', account.id)
             .gsub('{$patron_name}', account.name)
             .gsub('{$two_months_from_today}', (::DateTime.now >> 2).strftime('%Y-%m-%d'))

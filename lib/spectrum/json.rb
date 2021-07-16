@@ -2,6 +2,7 @@
 require 'rails' #so `bundle console` works
 require 'json-schema'
 require 'lru_redux'
+require 'alma_rest_client'
 
 require 'active_support'
 require 'active_support/concern'
@@ -17,6 +18,8 @@ require 'spectrum/entities/alma_holdings'
 require 'spectrum/entities/alma_item'
 require 'spectrum/entities/hathi_holding'
 require 'spectrum/entities/combined_holdings'
+require 'spectrum/entities/alma_user'
+require 'spectrum/entities/alma_hold'
 
 require 'spectrum/decorators/physical_item_decorator'
 require 'spectrum/decorators/mirlyn_item_decorator'

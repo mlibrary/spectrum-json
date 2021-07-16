@@ -36,10 +36,9 @@ module Spectrum
         user = request.env['HTTP_X_REMOTE_USER']
         begin
           if user && !user.empty?
-            # The order matters here because Aleph::Borrower#bor_info raises an exception if the account isn't valid
             @logged_in = true
-            @patron = Aleph::Borrower.new.tap { |patron| patron.bor_info(user) }
-            @valid_account = true
+            @patron = Spectrum::Entities::AlmaUser.for(username: user)
+            @valid_account = @patron.active?
             @option = Spectrum::Policy::GetThis.new(@patron, fetch_bib_record, fetch_holdings_record).resolve.reject do |service|
               ['Self Service', 'Document Delivery'].include? service['service_type']
             end.first
@@ -126,10 +125,7 @@ module Spectrum
       end
 
       def pickup_location
-        Exlibris::Aleph::PickupLocation.new(
-          request.params[:pickup_location],
-          request.params[:pickup_location]
-        )
+        request.params[:pickup_location]
       end
 
       def not_needed_after

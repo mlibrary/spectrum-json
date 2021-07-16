@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails'
-require 'exlibris-aleph'
 
 module Spectrum
   module Json
@@ -22,11 +21,6 @@ module Spectrum
         Spectrum::Request::PlaceHold.configure do |config|
           config.lib = config_data['bib_library']
           config.adm = config_data['adm_library']
-        end
-        Exlibris::Aleph.configure do |config|
-          config.base_url = config_data['base_url']
-          config.rest_url = config_data['rest_url']
-          config.adms = [config_data['adm_library']]
         end
 
         if File.exist?(specialists_file = File.join(Rails.root, 'config', 'specialists.yml'))

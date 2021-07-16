@@ -58,7 +58,7 @@ class ItemStub
     true
   end
 
-  def id
+  def doc_id
     '000000000'
   end
 

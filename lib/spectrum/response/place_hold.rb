@@ -10,20 +10,8 @@ module Spectrum
         @success_message = request.success_message
         @failure_message = {}
         return unless @valid_account
-        @hold = Exlibris::Aleph::Patron::Record::Item::CreateHold.new(
-          request.patron_id,
-          request.record_id,
-          request.item_id,
-          pickup_location: request.pickup_location,
-          last_interest_date: request.not_needed_after,
-          start_interest_date: '',
-          sub_author: '',
-          sub_title: '',
-          pages: '',
-          note_1: '',
-          note_2: '',
-          rush: ''
-        )
+        @hold = Spectrum::Entities::AlmaHold.for(request: request).create!
+
       end
 
       def renderable
