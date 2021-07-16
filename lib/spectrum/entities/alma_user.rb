@@ -53,8 +53,7 @@ class Spectrum::Entities::AlmaUser
 
   def self.for(username:, client: AlmaRestClient.client)
     return Spectrum::Entities::AlmaUser::Empty.new if username.nil? || username.empty?
-
-    response = client.get_all(url: "/users/#{username}")
+    response = client.get("/users/#{username}")
     if response.code == 200
       Spectrum::Entities::AlmaUser.new(data: response.parsed_response)
     else
@@ -92,6 +91,10 @@ class Spectrum::Entities::AlmaUser
 
   def flint?
     @data['campus_code']['value'] == 'UMFL'
+  end
+
+  def dearborn?
+    @data['campus_code']['value'] == 'UMDB'
   end
 
   def id

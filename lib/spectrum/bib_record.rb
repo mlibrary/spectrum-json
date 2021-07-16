@@ -219,7 +219,7 @@ module Spectrum
       ["location","callnumber","public_note","summary_holdings", "display_name",
        "floor_location", "info_link"].each do |name|
         define_method(name) do
-          @holding[name]&.strip
+          @holding[name].to_s&.strip
         end
       end
       def items
@@ -235,7 +235,7 @@ module Spectrum
         end
         ["description","public_note", "barcode", "library","location",
         "permanent_library", "permanent_location", "process_type", 
-        "callnumber", "item_policy", "inventory_number"].each do |name|
+        "callnumber", "item_policy", "inventory_number", "item_id"].each do |name|
           define_method(name) do
             @item[name]
           end

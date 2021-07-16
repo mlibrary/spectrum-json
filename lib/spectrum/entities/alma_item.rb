@@ -1,7 +1,7 @@
 #TBD #status, #temp_location?
 class Spectrum::Entities::AlmaItem
   extend Forwardable
-  def_delegators :@holding, :holding_id
+  def_delegators :@holding, :holding_id, :public_note
 
   def_delegators :@bib_record, :mms_id, :doc_id, :etas?, :title, :author, 
     :restriction, :edition, :physical_description, :date, :pub, :place, 
@@ -9,7 +9,7 @@ class Spectrum::Entities::AlmaItem
 
   def_delegators :@solr_item, :callnumber, :temp_location?, :barcode, :library,
     :location, :permanent_library, :permanent_location, :description, :item_policy,
-    :process_type, :inventory_number, :can_reserve?
+    :process_type, :inventory_number, :can_reserve?, :item_id
 
   def initialize(holding:, alma_loan: {}, solr_item:, bib_record:)
     @holding = holding #AlmaHolding
