@@ -106,7 +106,7 @@ class JsonController < ApplicationController
     if engine.total_items > 0
       @response = Spectrum::Response::Record.new(fetch_record, @request)
       holdings_response = if @source.holdings
-          holdings_request = Spectrum::Request::Holdings.new(request)
+        holdings_request = Spectrum::Request::Holdings.new(request)
         Spectrum::Response::Holdings.new(@source, holdings_request)
       else
         Spectrum::Response::NullHoldings.new
