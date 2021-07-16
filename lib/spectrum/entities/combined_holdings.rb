@@ -20,7 +20,7 @@ module Spectrum::Entities
     end
 
     def self.for(source, request)
-      self.for_bib(Spectrum::BibRecord.fetch(id: request.id, url: source.url))
+      self.for_bib(Spectrum::BibRecord.fetch(id: request.id, url: source.url, id_field: request.id_field))
     end
     def self.for_bib(bib_record, 
                  alma_holdings = Spectrum::Entities::AlmaHoldings.for(bib_record: bib_record),

@@ -16,9 +16,13 @@ module Spectrum
       'MX' => false,
     )
 
-    def self.fetch(id:, url:, rsolr_client_factory: lambda{|url| RSolr.connect(url: url)}, escaped_id: RSolr.solr_escape(id))
+    def self.fetch(id:, url:, id_field: 'id', rsolr_client_factory: lambda{|url| RSolr.connect(url: url)}, escaped_id: RSolr.solr_escape(id))
       client = rsolr_client_factory.call(url)
-      BibRecord.new(client.get('select', params: { q: "id:#{escaped_id}"}))
+      # extracting this variable instead of running in the new()
+      # makes the difference on my machine between it working and not
+      # I don't know why and I don't like that I don't know why
+      client_get = client.get('select', params: {q: "#{id_field}:#{escaped_id}"})
+      BibRecord.new(client_get)
     end
     def initialize(solr_response)
       @data = extract_data(solr_response)
