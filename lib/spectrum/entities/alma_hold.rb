@@ -1,7 +1,7 @@
 class Spectrum::Entities::AlmaHold
   def self.for(request: request)
     self.new(
-      doc_id: request.doc_id,
+      doc_id: request.record_id,
       holding_id: request.holding_id,
       item_id: request.item_id,
       patron_id: request.patron_id,
@@ -28,45 +28,52 @@ class Spectrum::Entities::AlmaHold
   def body
     {
       "request_type" => "HOLD",
-      "description" => "??",
-      "holding_id" => holding_id,
+      "holding_id" => @holding_id,
       "pickup_location_type" => "LIBRARY",
-      "pickup_location_library" => pickup_location,
-      "pickup_location_circulation_desk" => "??",
+      "pickup_location_library" => @pickup_location,
       "pickup_location_institution" => "01UMICH_INST",
-      "target_destination" => { "value" => "??" },
-      "last_interest_date" => not_needed_after,
-      "partial_digitization" => false,
-      "chapter_or_article_title" => "??",
-      "volume" => "??",
-      "issue" => "??",
-      "part" => "??",
-      "date_of_publication" => "??",
-      "chapter_or_article_author" => "??",
-      "required_pages_range" => [ {
-        "from_page" => "??", 
-        "to_page" => "??"
-      }],
-      "full_chapter" => "??",
-      "booking_start_date" => "??",
-      "booking_end_date" => "??",
-      "destination_location" => {"value" => "??" },
-      "call_number_type" => {"value" => "1" },
-      "call_number" => "1",
-      "item_policy" => { "value" => "09" },
-      "due_back_date" => "??",
-      "copyrights_declaration_signed_by_patron" => false,
+      "last_interest_date" => @last_interest_date,
     }
   end
 
   def create!
-    @response = @client.class.post(url, body: body)
+    @response = @client.post_with_body(url, body.to_json)
     self
   end
 
-  def error?
-    return true if @response.status != 200
+  def error_code
+    error_fetch('errorCode')
   end
 
+  def error_message
+    error_fetch('errorMessage')
+  end
+
+  def error_fetch(type)
+    return nil unless @response&.parsed_response
+    @response.parsed_response.dig('errorList', 'error')&.map {|error| error.dig(type)} ||
+      @response.parsed_response.dig('web_service_result', 'errorList', 'error', type)
+  end
+
+  def error?
+    @response&.code != 200 ||
+      @response&.body.nil? ||
+      @response&.parsed_response.nil? ||
+      @response&.parsed_response&.dig('errorsExist') ||
+      @response&.parsed_response&.dig('web_service_result', 'errorsExist')
+  end
+
+  def success?
+    @response&.code == 200 && @response&.parsed_response&.dig('request_id')
+  end
   
+end
+
+# Monkeypatch while waiting on a PR.
+module ::AlmaRestClient
+  class Client
+    def post_with_body(url, body)
+      self.class.post(url, body: body, headers: {'Content-Type' => 'application/json'})
+    end
+  end
 end

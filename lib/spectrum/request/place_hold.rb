@@ -117,11 +117,15 @@ module Spectrum
       end
 
       def record_id
-        lib + request.params[:record]
+        request.params[:record]
       end
 
       def item_id
-        adm + request.params[:item]
+        request.params[:item]
+      end
+
+      def holding_id
+        request.params[:holding]
       end
 
       def pickup_location
@@ -129,7 +133,10 @@ module Spectrum
       end
 
       def not_needed_after
-        request.params[:not_needed_after]
+        return nil unless request.params[:not_needed_after].match(/^\d{8,8}$/)
+        # Format in Alma is {YYYY}-{MM}-{DD}Z
+        date = request.params[:not_needed_after]
+        "#{date[0,4]}-#{date[4,2]}-#{date[6,2]}Z"
       end
     end
   end
