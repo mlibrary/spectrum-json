@@ -37,7 +37,7 @@ class Spectrum::Entities::AlmaHold
   end
 
   def create!
-    @response = @client.post_with_body(url, body.to_json)
+    @response = @client.post(url, body: body.to_json)
     self
   end
 
@@ -69,11 +69,3 @@ class Spectrum::Entities::AlmaHold
   
 end
 
-# Monkeypatch while waiting on a PR.
-module ::AlmaRestClient
-  class Client
-    def post_with_body(url, body)
-      self.class.post(url, body: body, headers: {'Content-Type' => 'application/json'})
-    end
-  end
-end

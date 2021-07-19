@@ -13,7 +13,7 @@ gem 'mlibrary_search_parser',
 
 gem 'alma_rest_client',
   git: 'https://github.com/mlibrary/alma_rest_client', 
-  branch: 'main'
+  branch: 'post-with-body'
 
 # Specify your gem's dependencies in spectrum-json.gemspec
 gemspec
