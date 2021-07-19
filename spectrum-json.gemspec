@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
 
 
 
+  spec.add_dependency 'alma_rest_client', '~> 1.0.1'
   spec.add_dependency "rake", ">= 12.3.3"
   spec.add_dependency 'rails', '~> 4.2.0'
   spec.add_dependency 'activesupport'
