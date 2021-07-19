@@ -17,6 +17,9 @@ module Spectrum
     )
 
     def self.fetch(id:, url:, id_field: 'id', rsolr_client_factory: lambda{|url| RSolr.connect(url: url)}, escaped_id: RSolr.solr_escape(id))
+      # if someone ever passes in id_field but it is nil, that will be very annoying to diagnose
+      # previously the query was hard-coded "id:#{escaped_id}"
+      id_field ||= 'id'
       client = rsolr_client_factory.call(url)
       # extracting this variable instead of running in the new()
       # makes the difference on my machine between it working and not
