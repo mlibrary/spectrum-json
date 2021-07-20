@@ -39,20 +39,19 @@ class Spectrum::Holding::PhysicalItemStatus
 #        end
       end
     when 'LOAN'
+       
+      return Warning.new("Checked out") if item.due_date.nil? || item.due_date.empty?
       #string format "Sep 01, 2021" or 
       #"Sep 01, 2021 at 3:00 PM"
-      if item.due_date.nil? || item.due_date.empty?
-        Warning.new("Checked out")
-      else
+        
         date = DateTime.parse(item.due_date)
         date_string = "Checked out: due #{date.strftime("%b %d, %Y")}"
 
         if ['06', '07', '11', '12'].include?(item.item_policy)
-          date_string = date_string + ' at ' + date.strftime("%I:%M %p")
+          date_string = date_string + ' at' + date.strftime("%l:%M %p")
         end
 
         Warning.new(date_string)
-      end
     when 'MISSING'
       Error.new('Missing')
     when 'ILL'
