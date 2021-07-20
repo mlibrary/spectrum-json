@@ -41,20 +41,47 @@ describe Spectrum::Holding::PhysicalItemStatus do
         end
       end
     end
-    [
-      {value: '06', desc: '4 Hour Loan'},
-      {value: '07', desc: '2 Hour Loan'},
-      {value: '11', desc: '6 Hour Loan'},
-      {value: '12', desc: '12 Hour Loan'}
-    ].each do |policy|
+    hour_loans = [
+        {value: '06', desc: '4 Hour Loan'},
+        {value: '07', desc: '2 Hour Loan'},
+        {value: '11', desc: '6 Hour Loan'},
+        {value: '12', desc: '12 Hour Loan'}
+    ]
+    hour_loans.each do |policy|
       context "Policy: #{policy[:desc]}" do
         it "returns On Shelf and length of time" do
           allow(@alma_item).to receive(:item_policy).and_return(policy[:value])
           expect(subject.class.to_s).to include('Success')
           expect(subject.text).to eq("On shelf (#{policy[:desc]})")
         end
+        
       end
 
+    end
+    context "on Loan" do
+      before(:each) do 
+        allow(@alma_item).to receive(:process_type).and_return('LOAN')
+        allow(@alma_item).to receive(:due_date).and_return('2021-10-01T08:30:00Z')
+        allow(@alma_item).to receive(:item_policy).and_return('01')
+      end
+      it "handles nil due_date" do
+        allow(@alma_item).to receive(:due_date).and_return(nil)
+        expect(subject.class.to_s).to include('Warning')
+        expect(subject.text).to eq("Checked out")
+      end
+      it "handles 01 item_policy" do
+        expect(subject.class.to_s).to include('Warning')
+        expect(subject.text).to eq("Checked out: due Oct 01, 2021")
+      end
+
+      hour_loans.each do |policy|
+        it "returns Checked out with length of time for policy #{policy[:desc]}" do
+          allow(@alma_item).to receive(:item_policy).and_return(policy[:value])
+          expect(subject.class.to_s).to include('Warning')
+          expect(subject.text).to eq("Checked out: due Oct 01, 2021 at 8:30 AM")
+        end
+      end
+      
     end
   end
 end
