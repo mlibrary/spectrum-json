@@ -1,24 +1,22 @@
 # frozen_string_literal: true
 
-require 'aleph'
 #refactor to use item decorator
 module Spectrum
   module Response
     class GetThis
       def initialize(source:, request:, 
                      get_this_policy_factory: lambda {|patron, bib_record, holdings_record| Spectrum::Policy::GetThis.new(patron, bib_record, holdings_record)}, 
-                     aleph_borrower: Aleph::Borrower.new,
-                     bib_record: Spectrum::BibRecord.fetch(id: request.id, url: source.url),
-                     item_picker: lambda{|source, request| Spectrum::Decorators::MirlynItemDecorator.for(source, request)}
+                     user: Spectrum::Entities::AlmaUser.for(username: request.username),
+                     bib_record: Spectrum::BibRecord.fetch(id: request.id, url: source.url)
                     )
         @source = source
         @request = request
 
         @get_this_policy_factory = get_this_policy_factory
-        @item_picker = item_picker
 
-        @aleph_borrower = aleph_borrower
         @bib_record = bib_record
+
+        @user =  user
 
         @data = fetch_get_this
       end
@@ -44,18 +42,20 @@ module Spectrum
       def fetch_get_this
         return {} unless @source.holdings
         return needs_authentication unless @request.logged_in?
-        begin
-          patron = @aleph_borrower.tap { |patron| patron.bor_info(@request.username) }
-        rescue Aleph::Error
-          return patron_not_found
-        end
-        return patron_expired if patron.expired?
-        item = @item_picker.call(@source, @request)
+        return patron_not_found if @user.empty?
+        return patron_expired if @user.expired?
 
         {
           status: 'Success',
-          options: @get_this_policy_factory.call(patron, @bib_record, item).resolve
+          options: @get_this_policy_factory.call(@user, @bib_record, item).resolve
         }
+      end
+
+      def item
+        return Spectrum::AvailableOnlineHolding.new(@request.id) if @request.barcode == 'available-online'
+        alma_holdings = Spectrum::Entities::AlmaHoldings.for(bib_record: @bib_record)
+        item = alma_holdings.find_item(@request.barcode)
+        Spectrum::Decorators::PhysicalItemDecorator.new(item)
       end
 
     end

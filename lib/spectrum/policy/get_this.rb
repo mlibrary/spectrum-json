@@ -62,7 +62,9 @@ module Spectrum
         def replace_string(input_string, account, bib, item)
           input_string
             .gsub('{$barcode}', item.barcode)
-            .gsub('{$record_id}', item.id)
+            .gsub('{$record_id}', item.doc_id)
+            .gsub('{$holding_id}', item.holding_id)
+            .gsub('{$item_id}', item.item_id)
             .gsub('{$patron_id}', account.id)
             .gsub('{$patron_name}', account.name)
             .gsub('{$two_months_from_today}', (::DateTime.now >> 2).strftime('%Y-%m-%d'))
@@ -77,11 +79,11 @@ module Spectrum
             .gsub('{$rft.edition}', bib.edition)
             .gsub('{$callnumber}', item.callnumber)
             .gsub('{$aleph_location}', item.location)
-            .gsub('{$aleph_item_status}', item.status)
-            .gsub('{$rft.issue}', item.issue)
-            .gsub('{$notes}', item.notes)
             .gsub('{$email}', account.email)
-            .gsub('{$full_item_key}', item.full_item_key)
+            .gsub('{$notes}', item.public_note)
+#            .gsub('{$rft.issue}', item.issue)
+#            .gsub('{$full_item_key}', item.full_item_key)
+#            .gsub('{$aleph_item_status}', item.status)
         end
 
         def to_h
