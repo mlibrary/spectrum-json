@@ -25,11 +25,6 @@ describe Spectrum::Holding::NoAction do
       allow(@item).to receive(:item_policy).and_return('07')
       expect(subject).to eq(true)
     end
-    it "matches AAEL 04" do
-      allow(@item).to receive(:library).and_return('AAEL')
-      allow(@item).to receive(:item_policy).and_return('04')
-      expect(subject).to eq(true)
-    end
     it "matches AAEL 05" do
       allow(@item).to receive(:library).and_return('AAEL')
       allow(@item).to receive(:item_policy).and_return('05')
@@ -40,19 +35,9 @@ describe Spectrum::Holding::NoAction do
       allow(@item).to receive(:item_policy).and_return('03')
       expect(subject).to eq(true)
     end
-    it "matches FINE 04" do
-      allow(@item).to receive(:library).and_return('FINE')
-      allow(@item).to receive(:item_policy).and_return('04')
-      expect(subject).to eq(true)
-    end
     it "matches FINE 05" do
       allow(@item).to receive(:library).and_return('FINE')
       allow(@item).to receive(:item_policy).and_return('05')
-      expect(subject).to eq(true)
-    end
-    it "matches FLINT 04" do
-      allow(@item).to receive(:library).and_return('FLINT')
-      allow(@item).to receive(:item_policy).and_return('04')
       expect(subject).to eq(true)
     end
     it "matches FLINT 05" do
