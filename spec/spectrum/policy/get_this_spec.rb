@@ -1,3 +1,4 @@
+require_relative '../../spec_helper'
 # frozen_string_literal: true
 class PatronStub
   def empty?
