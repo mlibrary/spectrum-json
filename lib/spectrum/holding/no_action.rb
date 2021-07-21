@@ -11,11 +11,11 @@ module Spectrum
 
         case item.library
         when 'AAEL'
-          ['04','05'].include?(item.item_policy)
+          ['05'].include?(item.item_policy)
         when 'FINE'
-          ['03','04','05'].include?(item.item_policy)
+          ['03','05'].include?(item.item_policy)
         when 'FLINT'
-          ['04','05','10'].include?(item.item_policy)
+          ['05','10'].include?(item.item_policy)
         when 'MUSM'
           ['03'].include?(item.item_policy)
         when 'HATCH'
