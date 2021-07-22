@@ -1,5 +1,5 @@
 class Spectrum::Entities::AlmaHold
-  def self.for(request: request)
+  def self.for(request: )
     self.new(
       doc_id: request.record_id,
       holding_id: request.holding_id,
