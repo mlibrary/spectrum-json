@@ -103,11 +103,11 @@ module Spectrum
           case (datastore = fetch_field(items&.first, 'datastore'))
           when 'mirlyn'
             'mirlyn-favorite'
-          when 'articles', 'articlesplus'
+          when 'primo', 'articles', 'articlesplus'
             'articles-favorite'
           when 'databases'
             'databases-favorite'
-          when 'journals'
+          when 'journals', 'onlinejournals'
             'journals-favorite'
           when 'website'
             'website-favorite'
