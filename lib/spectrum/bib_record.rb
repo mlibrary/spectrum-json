@@ -190,10 +190,19 @@ module Spectrum
       end
     end
     class ElectronicHolding < Holding
-        ['link','status','description','link_text','note','finding_aid'].each do |name|
+        ['status','description','link_text','note','finding_aid'].each do |name|
           define_method(name) do
             @holding[name]
           end
+        end
+
+        # Alma's community zone electronic holdings all route through the Alma link resolver.
+        # Which in turn routes through the proxy server traffic cop, which is good.
+        # Regular records, with the url in the 856, however, do not, which leaves
+        # people out of the proxy server.  So add a campus-agnostic proxy prefix.
+        def link
+          return @holding['link'] if @holding['link'].include?('alma.exlibrisgroup')
+          "https://apps.lib.umich.edu/proxy-login/?url=#{@holding['link']}"
         end
     end
     class HathiHolding < Holding

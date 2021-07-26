@@ -282,3 +282,27 @@ describe Spectrum::BibRecord do
   end
 
 end
+
+describe Spectrum::BibRecord::ElectronicHolding do
+
+  context "#link" do
+    subject { described_class.new({'link' => url}) }
+
+    context "When the holding has an Alma link" do
+      let(:url) { 'https://na04.alma.exlibrisgroup.com' }
+
+       it "Returns the Alma link unchanged" do
+          expect(subject.link).to eq(url)
+       end
+    end
+
+    context "When the holding has an non-Alma link" do
+      let(:url) { 'https://www.lib.umich.edu' }
+      let(:proxied_url) { "https://apps.lib.umich.edu/proxy-login/?url=#{url}" }
+
+       it "Returns the proxied link" do
+          expect(subject.link).to eq(proxied_url)
+       end
+    end
+  end
+end
