@@ -20,6 +20,8 @@ require 'spectrum/entities/hathi_holding'
 require 'spectrum/entities/combined_holdings'
 require 'spectrum/entities/alma_user'
 require 'spectrum/entities/alma_hold'
+require 'spectrum/entities/get_this_options'
+require 'spectrum/entities/get_this_option'
 
 require 'spectrum/decorators/physical_item_decorator'
 require 'spectrum/decorators/mirlyn_item_decorator'

@@ -1,0 +1,56 @@
+---
+# Options
+#
+# Contactless Pickup @Flint
+- label: Pick it up at the library
+  service_type: Library pick up
+  duration: Expected availabiltiy 1-2 days
+  description:
+    heading: Policies and additional details
+    content:
+      - Standard loan and renewal policies apply
+      - Curbside pick up is available. See <a href="https://umflint.libwizard.com/f/curbside">Thompson Library - Curbside Pick Up</a> for details.
+  new_form:
+    type: alma_hold
+    pickup_locations:
+      - value: FLINT
+        name: "UM-Flint"
+  form:
+    type: ajax
+    method: post
+    action: "/spectrum/mirlyn/hold"
+    fields:
+      - type: hidden
+        name: record
+        value: "{$record_id}"
+      - type: hidden
+        name: item
+        value: "{$holding_id}/{$item_id}"
+      - type: select
+        label: "Pickup location"
+        name: pickup_location
+        value: 'select-a-pickup-location'
+        options:
+          - name: Select a pickup location
+            value: 'select-a-pickup-location'
+            disabled: true
+          - value: FLINT
+            name: "UM-Flint"
+      - type: date
+        label: "Cancel this hold if item is not available before"
+        name: not_needed_after
+        value: "{$two_months_from_today}"
+      - type: submit
+        name: submit
+        value: Get me this item
+  grants:
+    patron:
+      - active?
+      - flint?
+    holding:
+      - not_checked_out?
+      - not_missing?
+      - not_on_order?
+      - standard_pickup?
+    bib:
+      - not_etas?
