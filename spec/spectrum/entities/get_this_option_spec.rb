@@ -5,24 +5,34 @@ describe Spectrum::Entities::GetThisOption do
      @item = double('Spectrum::Decorators::PhysicalItemDecorator')
      Spectrum::Entities::GetThisOptions.configure('spec/fixtures/new_get_this_policy.yml')
   end
-  context "Basic Hold" do
+  context "No form" do
     subject do
-      hold = Spectrum::Entities::GetThisOptions.all[0]
-      described_class.for(option: hold, 
-        account: @account, item: @item)
+      hold = Spectrum::Entities::GetThisOptions.all[3]
+      described_class.for(option: hold, account: @account, item: @item)
     end
-    it "returns a Get This Option"  do
+    it "returns a GetThisOption"  do
       expect(subject.class.to_s).to eq('Spectrum::Entities::GetThisOption')
     end
     it "has a proper looking form" do
-      expect(subject.form).to eq(JSON.parse(File.read('./spec/fixtures/get_this/basic_form.json')))
+      expect(subject.form).to eq(JSON.parse(File.read('./spec/fixtures/get_this/no_form.json')))
+    end
+  end
+  context "Link" do
+    subject do
+      hold = Spectrum::Entities::GetThisOptions.all[0]
+      described_class.for(option: hold, account: @account, item: @item)
+    end
+    it "returns a GetThisOption::Link"  do
+      expect(subject.class.to_s).to eq('Spectrum::Entities::GetThisOption::Link')
+    end
+    it "has a proper looking form" do
+      expect(subject.form).to eq(JSON.parse(File.read('./spec/fixtures/get_this/link.json')))
     end
   end
   context "Alma Hold" do
     subject do 
       hold = Spectrum::Entities::GetThisOptions.all[1]
-      described_class.for(option: hold, 
-        account: @account, item: @item)
+      described_class.for(option: hold, account: @account, item: @item)
     end
     it "returns an alma hold" do
       expect(subject.class.to_s).to include('AlmaHold')

@@ -17,11 +17,6 @@
             "value": "mirlyn"
         },
         {
-            "name": "genre",
-            "type": "hidden",
-            "value": "docdelarticle"
-        },
-        {
             "name": "rft_dat",
             "type": "hidden",
             "value": "ACCESSION NUMBER"
@@ -89,6 +84,11 @@
         {
             "type": "submit",
             "value": "Place a request"
+        },
+        {
+            "name": "genre",
+            "type": "hidden",
+            "value": "docdelarticle"
         }
     ],
     "method": "get"

@@ -2,6 +2,7 @@ require_relative '../../spec_helper'
 describe Spectrum::Entities::GetThisOptions do
  context '::options_for' do
    before(:each) do
+     Spectrum::Entities::GetThisOptions.configure('spec/fixtures/get_this_policy.yml')
      user_methods = [ "empty?", "expired?", "active?", "can_ill?", 
                       "ann_arbor?", "flint?", "can_other?", "dearborn?"]
      @account = instance_double(Spectrum::Entities::AlmaUser)
@@ -35,19 +36,4 @@ describe Spectrum::Entities::GetThisOptions do
      expect(described_class.all.count).to eq(27)
    end
  end
-end
-describe Spectrum::Entities::GetThisOption do
-  before(:each) do
-     @account = instance_double(Spectrum::Entities::AlmaUser)
-     @item = double('Spectrum::Decorators::PhysicalItemDecorator')
-  end
-  context "Weblogin Option" do
-    subject do 
-      described_class.new(option:Spectrum::Entities::GetThisOption.all[0], 
-        account: @account, item: @item)
-    end
-    it "something or other" do
-      subject
-    end
-  end
 end

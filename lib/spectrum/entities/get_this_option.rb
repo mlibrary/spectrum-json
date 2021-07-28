@@ -16,7 +16,9 @@ class Spectrum::Entities::GetThisOption
   end
   def self.for(option:, account:, item:)
     args = {option: option, account: account, item: item}
-    case option.dig("new_form","type")
+    case option.dig("form","type")
+    when "link"
+      Spectrum::Entities::GetThisOption::Link.new(**args)
     when "alma_hold"
       Spectrum::Entities::GetThisOption::AlmaHold.new(**args)
     when "illiad_request"
@@ -26,7 +28,11 @@ class Spectrum::Entities::GetThisOption
     end
   end
   def form
-    @option["form"]
+    {
+      "action"=> "",
+      "fields"=> [],
+      "method"=> "post"
+    }
   end
   def to_h
     {
@@ -38,6 +44,21 @@ class Spectrum::Entities::GetThisOption
       service_type: @service_type,
       tip: @tip
     }
+  end
+  class Link < self
+    def form
+      {
+        "action" => @option.dig("form","href"),
+        "method" => "get",
+        "fields" => [
+          {
+            "type" => "submit",
+            "value" => @option.dig("form","text")
+          }
+        ]
+
+      }
+    end
   end
   class AlmaHold < self
     def form(two_months_from_today=(::DateTime.now >> 2).strftime('%Y-%m-%d'))
@@ -86,7 +107,7 @@ class Spectrum::Entities::GetThisOption
           "value" => "select-a-pickup-location"
         } 
       ]
-      @option.dig("new_form","pickup_locations").each do |pickup|
+      @option.dig("form","pickup_locations").each do |pickup|
         output.push({
           "value" => pickup["value"],
           "name" => pickup["name"]
@@ -95,14 +116,16 @@ class Spectrum::Entities::GetThisOption
       output
     end
   end
+  
   class ILLiadRequest  < self
     def form
-      base_form["fields"].concat(additional_fields)
-      base_form
+      output = base_form
+      output["fields"].concat(additional_fields)
+      output
     end
     private
     def additional_fields
-      @option.dig("new_form","fields").map do|x| 
+      @option.dig("form","fields").map do|x| 
         { "type" => "hidden" }.merge(x)
       end
     end
@@ -123,10 +146,6 @@ class Spectrum::Entities::GetThisOption
         { "type" => "hidden",
           "name" => "sid",
           "value" => "mirlyn",
-        },
-        { "type" => "hidden",
-          "name" => "genre",
-          "value" => genre
         },
         { "type" => "hidden",
           "name" => "rft_dat",
@@ -185,9 +204,6 @@ class Spectrum::Entities::GetThisOption
         }
         ]
       }
-    end
-    def genre
-      @option.dig("new_form","fields")&.find{|x| x["name"] == "genre"}&.dig("value") || ""
     end
   end
 end
