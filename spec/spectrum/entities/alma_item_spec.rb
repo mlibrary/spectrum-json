@@ -9,7 +9,7 @@ describe Spectrum::Entities::AlmaItem do
     solr_holding = solr_bib_record.alma_holding("2297537770006381")
     solr_item = solr_holding.items.first
 
-    holding = instance_double(Spectrum::Entities::AlmaHolding, holding_id: "holding_id", bib_record: solr_bib_record, solr_holding: solr_holding)
+    holding = instance_double(Spectrum::Entities::AlmaHolding, holding_id: "holding_id", bib_record: solr_bib_record, solr_holding: solr_holding, display_name: 'Hatcher Graduate Library')
 
     described_class.new(holding: holding,  alma_loan: response["item_loan"][0], solr_item: solr_item, bib_record: solr_bib_record)
   end
@@ -49,6 +49,9 @@ describe Spectrum::Entities::AlmaItem do
   end
   it "has a due_date" do
     expect(subject.due_date).to eq("2021-10-01T03:59:00Z")
+  end
+  it "has a library_display_name" do
+    expect(subject.library_display_name).to eq("Hatcher Graduate Library")
   end
    it "has can_reserve? flag" do
      expect(subject.can_reserve?).to eq(false)

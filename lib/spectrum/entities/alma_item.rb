@@ -5,7 +5,7 @@ class Spectrum::Entities::AlmaItem
 
   def_delegators :@bib_record, :mms_id, :doc_id, :etas?, :title, :author, 
     :restriction, :edition, :physical_description, :date, :pub, :place, 
-    :publisher, :pub_date, :issn, :isbn, :genre, :sgenre
+    :publisher, :pub_date, :issn, :isbn, :genre, :sgenre, :accession_number
 
   def_delegators :@solr_item, :callnumber, :temp_location?, :barcode, :library,
     :location, :permanent_library, :permanent_location, :description, :item_policy,
@@ -23,6 +23,9 @@ class Spectrum::Entities::AlmaItem
   
   def due_date
     @alma_loan&.dig("due_date")
+  end
+  def library_display_name
+    @holding.display_name
   end
   
   ##TBD

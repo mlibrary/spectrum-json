@@ -19,6 +19,8 @@ class Spectrum::Entities::GetThisOption
     case option.dig("new_form","type")
     when "alma_hold"
       Spectrum::Entities::GetThisOption::AlmaHold.new(**args)
+    when "illiad_request"
+      Spectrum::Entities::GetThisOption::ILLiadRequest.new(**args)
     else
       Spectrum::Entities::GetThisOption.new(**args)
     end
@@ -92,7 +94,101 @@ class Spectrum::Entities::GetThisOption
       end
       output
     end
-
+  end
+  class ILLiadRequest  < self
+    def form
+      base_form["fields"].concat(additional_fields)
+      base_form
+    end
+    private
+    def additional_fields
+      @option.dig("new_form","fields").map do|x| 
+        { "type" => "hidden" }.merge(x)
+      end
+    end
+    def base_form
+      {
+        "method" => "get",
+        "action" => "https://ill.lib.umich.edu/illiad/illiad.dll",
+        "fields" => 
+        [
+          { "type" => "hidden",
+            "name" => "action",
+            "value" => "10"
+        },
+        { "type" => "hidden",
+          "name" => "form",
+          "value" => "30"
+        },
+        { "type" => "hidden",
+          "name" => "sid",
+          "value" => "mirlyn",
+        },
+        { "type" => "hidden",
+          "name" => "genre",
+          "value" => genre
+        },
+        { "type" => "hidden",
+          "name" => "rft_dat",
+          "value" => @item.accession_number
+        },
+        { "type" => "hidden",
+          "name" => "isbn",
+          "value" => @item.isbn 
+        },
+        { "type" => "hidden",
+          "name" => "title",
+          "value" => @item.title,
+        },
+        { "type" => "hidden",
+          "name" => "rft.au",
+          "value" => @item.author,
+        },
+        { "type" => "hidden",
+          "name" => "date",
+          "value" => @item.date
+        },
+        { "type" => "hidden",
+          "name" => "rft.pub",
+          "value" => @item.pub,
+        },
+        { "type" => "hidden",
+          "name" => "rft.place",
+          "value" => @item.place,
+        },
+        { "type" => "hidden",
+          "name" => "callnumber",
+          "value" => @item.callnumber,
+        },
+        { "type" => "hidden",
+          "name" => "rft.edition",
+          "value" => @item.edition, #is this in item
+        },
+        { "type" => "hidden",
+          "name" => "rft.issue",
+          "value" => "",
+        },
+        { "type" => "hidden",
+          "name" => "aleph_location",
+          "value" => @item.library_display_name,
+        },
+        { "type" => "hidden",
+          "name" => "aleph_item_status",
+          "value" => "",
+        },
+        { "type" => "hidden",
+          "name" => "barcode",
+          "value" => @item.barcode,
+        },
+        { "type" => "submit",
+          "value" => "Place a request",
+        }
+        ]
+      }
+    end
+    def genre
+      @option.dig("new_form","fields")&.find{|x| x["name"] == "genre"}&.dig("value") || ""
+    end
   end
 end
 

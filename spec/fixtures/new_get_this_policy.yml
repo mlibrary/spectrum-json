@@ -1,7 +1,30 @@
 ---
 # Options
+#Base option: contact-circulation:
+- label: Contact Circulation
+  description:
+    heading: Policies and additional details
+    content:
+      - Your account with the University Library has expired
+      - Are you a recent graduate?
+      - Did you do a semester abroad?
+      - Contact the circulation department for more information
+      - TBD
+  duration: TBD
+  weight: 0
+  form:
+    method: get
+    action: "https://www.lib.umich.edu/locations-and-hours/hatcher-library/hatcher-north-information-services-desk"
+    fields:
+      - type: submit
+        value: Contact circulation
+  grants:
+    patron:
+      - expired?
+    holding:
+      - can_request?
 #
-# Contactless Pickup @Flint
+# AlmaHold Contactless Pickup @Flint
 - label: Pick it up at the library
   service_type: Library pick up
   duration: Expected availabiltiy 1-2 days
@@ -54,3 +77,88 @@
       - standard_pickup?
     bib:
       - not_etas?
+#ILLiadRequest
+- label: Request to have a small portion scanned (Document Delivery)
+  service_type: I.L.L./Document Delivery
+  duration: Expected availability 2-7 days
+  description:
+    heading: Policies and additional details
+    content:
+      - Requests to scan a portion are individually evaluated for copyright compliance.
+      - Your requested portion will be available to you on a secure website for 2 weeks.
+      - If the requested portion cannot be scanned because doing so would violate copyright law, a hold request for contactless pickup will be made on your behalf unless you specify otherwise in the notes field.
+      - Microform scanning is limited.
+  grants:
+    patron:
+      - active?
+      - can_ill?
+    holding:
+      - reopened?
+      - not_checked_out?
+      - not_missing?
+      - not_etas?
+      - not_on_order?
+    bib:
+      - can_scan?
+  new_form:
+    type: illiad_request
+    fields:
+      - name: genre
+        value: docdelarticle
+  form:
+    method: get
+    action: "https://ill.lib.umich.edu/illiad/illiad.dll"
+    fields:
+      - type: hidden
+        name: action
+        value: "10"
+      - type: hidden
+        name: form
+        value: "30"
+      - type: hidden
+        name: sid
+        value: mirlyn
+      - type: hidden
+        name: genre
+        value: docdelarticle
+      - type: hidden
+        name: rft_dat
+        value: "{$accession_number}"
+      - type: hidden
+        name: isbn
+        value: "{$isbn}"
+      - type: hidden
+        name: title
+        value: "{$title}"
+      - type: hidden
+        name: rft.au
+        value: "{$rft.au}"
+      - type: hidden
+        name: date
+        value: "{$date}"
+      - type: hidden
+        name: rft.pub
+        value: "{$rft.pub}"
+      - type: hidden
+        name: rft.place
+        value: "{$rft.place}"
+      - type: hidden
+        name: callnumber
+        value: "{$callnumber}"
+      - type: hidden
+        name: rft.edition
+        value: "{$rft.edition}"
+      - type: hidden
+        name: rft.issue
+        value: "{$rft.issue}"
+      - type: hidden
+        name: aleph_location
+        value: "{$aleph_location}"
+      - type: hidden
+        name: aleph_item_status
+        value: "{$aleph_item_status}"
+      - type: hidden
+        name: barcode
+        value: "{$barcode}"
+      - type: submit
+        value: "Place a request"
