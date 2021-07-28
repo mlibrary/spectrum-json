@@ -1,9 +1,9 @@
 class Spectrum::Entities::GetThisOption
  attr_reader :label, :service_type, :duration, :description, :tip, :faq, :form,
              :grants, :weight, :orientation
-  def initialize(option:,account:,item:)
+  def initialize(option:,patron:,item:)
     @option = option
-    @account = account
+    @patron = patron
     @item = item
 
     @description = option['description']
@@ -14,8 +14,8 @@ class Spectrum::Entities::GetThisOption
     @orientation = option['orientation'] || ''
     @tip = option['tip']
   end
-  def self.for(option:, account:, item:)
-    args = {option: option, account: account, item: item}
+  def self.for(option:, patron:, item:)
+    args = {option: option, patron: patron, item: item}
     case option.dig("form","type")
     when "link"
       Spectrum::Entities::GetThisOption::Link.new(**args)

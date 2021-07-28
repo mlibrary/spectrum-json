@@ -1,14 +1,14 @@
 require_relative '../../spec_helper'
 describe Spectrum::Entities::GetThisOption do
   before(:each) do
-     @account = instance_double(Spectrum::Entities::AlmaUser)
+     @patron = instance_double(Spectrum::Entities::AlmaUser)
      @item = double('Spectrum::Decorators::PhysicalItemDecorator')
      Spectrum::Entities::GetThisOptions.configure('spec/fixtures/new_get_this_policy.yml')
   end
   context "No form" do
     subject do
       hold = Spectrum::Entities::GetThisOptions.all[3]
-      described_class.for(option: hold, account: @account, item: @item)
+      described_class.for(option: hold, patron: @patron, item: @item)
     end
     it "returns a GetThisOption"  do
       expect(subject.class.to_s).to eq('Spectrum::Entities::GetThisOption')
@@ -20,7 +20,7 @@ describe Spectrum::Entities::GetThisOption do
   context "Link" do
     subject do
       hold = Spectrum::Entities::GetThisOptions.all[0]
-      described_class.for(option: hold, account: @account, item: @item)
+      described_class.for(option: hold, patron: @patron, item: @item)
     end
     it "returns a GetThisOption::Link"  do
       expect(subject.class.to_s).to eq('Spectrum::Entities::GetThisOption::Link')
@@ -32,7 +32,7 @@ describe Spectrum::Entities::GetThisOption do
   context "Alma Hold" do
     subject do 
       hold = Spectrum::Entities::GetThisOptions.all[1]
-      described_class.for(option: hold, account: @account, item: @item)
+      described_class.for(option: hold, patron: @patron, item: @item)
     end
     it "returns an alma hold" do
       expect(subject.class.to_s).to include('AlmaHold')
@@ -48,7 +48,7 @@ describe Spectrum::Entities::GetThisOption do
     subject do
       hold = Spectrum::Entities::GetThisOptions.all[2]
       described_class.for(option: hold, 
-        account: @account, item: @item)
+        patron: @patron, item: @item)
     end
     it "returns an ILLiadRequest" do
       expect(subject.class.to_s).to include('ILLiadRequest')

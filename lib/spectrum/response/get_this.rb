@@ -5,7 +5,7 @@ module Spectrum
   module Response
     class GetThis
       def initialize(source:, request:, 
-                     get_this_policy_factory: lambda {|patron, bib_record, holdings_record| Spectrum::Policy::GetThis.new(patron, bib_record, holdings_record)}, 
+                     get_this_policy_factory: lambda {|patron, bib, item| Spectrum::Entities::GetThisOptions.for(patron, bib, item)}, 
                      user: Spectrum::Entities::AlmaUser.for(username: request.username),
                      bib_record: Spectrum::BibRecord.fetch(id: request.id, url: source.url)
                     )

@@ -1,6 +1,6 @@
 require_relative '../../spec_helper'
 describe Spectrum::Entities::GetThisOptions do
- context '::options_for' do
+ context '::options' do
    before(:each) do
      Spectrum::Entities::GetThisOptions.configure('spec/fixtures/get_this_policy.yml')
      user_methods = [ "empty?", "expired?", "active?", "can_ill?", 
@@ -23,7 +23,7 @@ describe Spectrum::Entities::GetThisOptions do
      end
    end
    subject do
-     described_class.options_for(@account, @bib, @item)
+     described_class.options(@account, @bib, @item)
    end
    it "returns weblogin" do
       allow(@account).to receive(:empty?).and_return(true)
