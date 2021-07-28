@@ -43,7 +43,7 @@ class Spectrum::Entities::GetThisOption
       label: @orientation,
       service_type: @service_type,
       tip: @tip
-    }
+    }.stringify_keys
   end
   class Link < self
     def form

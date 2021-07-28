@@ -10,7 +10,7 @@ class Spectrum::Entities::GetThisOptions
         option['grants'].map do |attribute, features | 
           features.all? {|feature| attributes[attribute].send(feature)}
         end.any?
-      end
+      end.map{|x| Spectrum::Entities::GetThisOption.for(option: x, account: account, item: item).to_h}
     end
     def all
       @options

@@ -25,7 +25,7 @@ describe Spectrum::Entities::GetThisOptions do
    subject do
      described_class.options_for(@account, @bib, @item)
    end
-   it "returns not_logged in" do
+   it "returns weblogin" do
       allow(@account).to receive(:empty?).and_return(true)
       expect(subject.count).to eq(1)
       expect(subject.first["service_type"]).to eq("Weblogin")
