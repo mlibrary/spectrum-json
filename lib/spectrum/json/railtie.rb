@@ -9,7 +9,7 @@ module Spectrum
         Spectrum::Json.configure(Rails.root, Rails.configuration.relative_url_root)
 
         if File.exist?(get_this_file = File.join(Rails.root, 'config', 'get_this.yml'))
-          Spectrum::Policy::GetThis.load_config(get_this_file)
+          Spectrum::Entities::GetThisOptions.configure(get_this_file)
         end
 
         config_data = if File.exist?(aleph_config_file = File.join(Rails.root, 'config', 'aleph.yml'))

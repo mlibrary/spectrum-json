@@ -97,8 +97,6 @@ require 'spectrum/request/profile'
 require 'spectrum/request/ids'
 require 'spectrum/request/debug'
 
-require 'spectrum/policy/get_this'
-
 require 'spectrum/presenters/holding_presenter'
 require 'spectrum/presenters/physical_item_presenter'
 require 'spectrum/holding/physical_item_description'

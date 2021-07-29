@@ -23,10 +23,11 @@ describe Spectrum::Entities::GetThisOptions do
      end
    end
    subject do
-     described_class.options(@account, @bib, @item)
+     described_class.for(@account, @bib, @item)
    end
    it "returns weblogin" do
       allow(@account).to receive(:empty?).and_return(true)
+      allow(@item).to receive(:can_request?).and_return(true)
       expect(subject.count).to eq(1)
       expect(subject.first["service_type"]).to eq("Weblogin")
    end

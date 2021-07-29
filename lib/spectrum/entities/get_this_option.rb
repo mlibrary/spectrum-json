@@ -6,6 +6,7 @@ class Spectrum::Entities::GetThisOption
     @patron = patron
     @item = item
 
+    @weight = option['weight'] || 0
     @description = option['description']
     @duration = option['duration']
     @faq = option['faq']
@@ -40,8 +41,9 @@ class Spectrum::Entities::GetThisOption
       duration: @duration,
       faq: @faq,
       form: form,
-      label: @orientation,
+      label: @label,
       service_type: @service_type,
+      orientation: @orientation,
       tip: @tip
     }.stringify_keys
   end

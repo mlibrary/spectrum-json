@@ -4,13 +4,16 @@ class Spectrum::Entities::GetThisOptions
     def configure(options)
       @options = YAML.load_file(options)
     end
-    def options(patron, bib, item)
+    def for(patron, bib, item)
       attributes = { 'patron' => patron, 'bib' => bib, 'holding' => item }
-      @options.select do |option|
+      selection = @options.select do |option|
         option['grants'].map do |attribute, features | 
           features.all? {|feature| attributes[attribute].send(feature)}
-        end.any?
-      end.map{|x| Spectrum::Entities::GetThisOption.for(option: x, patron: patron, item: item).to_h}
+        end.all?
+      end
+      selection&.map do |x| 
+        Spectrum::Entities::GetThisOption.for(option: x, patron: patron, item: item).to_h
+      end
     end
     def all
       @options

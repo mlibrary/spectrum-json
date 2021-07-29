@@ -47,7 +47,7 @@ module Spectrum
 
         {
           status: 'Success',
-          options: @get_this_policy_factory.call(@user, @bib_record, item).resolve
+          options: @get_this_policy_factory.call(@user, @bib_record, item)
         }
       end
 
