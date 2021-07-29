@@ -29,7 +29,6 @@ module Spectrum
 
       attr_reader :request, :patron
       def initialize(request)
-        byebug
         @request = request
         @record_id = get_record_id_from_request(request)
         @source = get_source_from_request(request)
