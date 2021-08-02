@@ -251,7 +251,8 @@ module Spectrum
         end
         ["description","public_note", "barcode", "library","location",
         "permanent_library", "permanent_location", "process_type", 
-        "callnumber", "item_policy", "inventory_number", "item_id"].each do |name|
+        "callnumber", "item_policy", "inventory_number", "item_id", 
+        "record_has_finding_aid"].each do |name|
           define_method(name) do
             @item[name]
           end
