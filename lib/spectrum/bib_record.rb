@@ -162,6 +162,9 @@ module Spectrum
     def etas?
       !!hathi_holding&.etas?
     end
+    def finding_aid
+      elec_holdings&.find{|x| x.finding_aid == true }
+    end
 
     def not_etas?
       !etas?
