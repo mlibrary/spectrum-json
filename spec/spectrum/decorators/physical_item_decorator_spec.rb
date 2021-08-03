@@ -178,12 +178,14 @@ describe Spectrum::Decorators::PhysicalItemDecorator do
       allow(@input[:solr_item]).to receive(:item_policy).and_return('01')
       allow(@input[:solr_item]).to receive(:process_type).and_return(nil)
       allow(@input[:solr_item]).to receive(:can_reserve?).and_return(false)
+      allow(@input[:solr_item]).to receive(:record_has_finding_aid).and_return(false)
       expect(subject.can_request?).to eq(true)
     end
     it "is false if it wouldn't get a 'Get This' link" do
       allow(@input[:solr_item]).to receive(:library).and_return('SHAP')
       allow(@input[:solr_item]).to receive(:item_policy).and_return('06')
       allow(@input[:solr_item]).to receive(:can_reserve?).and_return(false)
+      allow(@input[:solr_item]).to receive(:record_has_finding_aid).and_return(false)
       expect(subject.can_request?).to eq(false)
     end
   end

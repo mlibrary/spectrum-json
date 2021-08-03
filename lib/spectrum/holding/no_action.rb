@@ -26,12 +26,6 @@ module Spectrum
           ['08'].include?(item.item_policy)
         when 'DHCL'
           ['BOOK', 'OVR'].include?(item.location) && item.item_policy == '08'
-        when 'BENT'
-          item.record_has_finding_aid
-        when 'CLEM'
-          item.record_has_finding_aid
-        when 'SPEC'
-          item.record_has_finding_aid
         else
           false
         end

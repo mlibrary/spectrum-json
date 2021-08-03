@@ -92,20 +92,6 @@ describe Spectrum::Holding::NoAction do
       end
       
     end
-    context "Aeon items" do
-      ['SPEC', 'BENT', 'CLEM'].each do |library|
-        it "matches #{library} with finding aid" do
-          allow(@item).to receive(:library).and_return(library)
-          allow(@item).to receive(:record_has_finding_aid).and_return(true)
-          expect(subject).to eq(true)
-        end
-        it "does not #{library} without finding aid" do
-          allow(@item).to receive(:library).and_return(library)
-          allow(@item).to receive(:record_has_finding_aid).and_return(false)
-          expect(subject).to eq(false)
-        end
-      end
-    end
 
   end
 end
