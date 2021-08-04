@@ -143,6 +143,28 @@ describe Spectrum::Decorators::PhysicalItemDecorator do
       expect(subject.not_checked_out?).to eq(false)
     end
   end
+  context "building_use_only only item" do
+    before(:each) do
+      allow(@input[:solr_item]).to receive(:item_policy).and_return('08')
+    end
+    it "has true #building_use_only?" do
+      expect(subject.building_use_only?).to eq(true)
+    end
+    it "has false #not_building_use_only?" do
+      expect(subject.not_building_use_only?).to eq(false)
+    end
+  end
+  context "not building_use_only item" do
+    before(:each) do
+      allow(@input[:solr_item]).to receive(:item_policy).and_return('01')
+    end
+    it "has false #building_use_only?" do
+      expect(subject.building_use_only?).to eq(false)
+    end
+    it "has true #not_building_use_only?" do
+      expect(subject.not_building_use_only?).to eq(true)
+    end
+  end
   context "#not_pickup_or_checkout?" do
     it "is true if item is not in any of the pickup locations" do
       allow(@input[:solr_item]).to receive(:library).and_return('BSTA')
