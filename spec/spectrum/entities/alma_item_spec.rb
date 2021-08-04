@@ -1,17 +1,17 @@
 require_relative '../../spec_helper'
 describe Spectrum::Entities::AlmaItem do
-  let(:solr_bib_record) do
-    solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
-    Spectrum::BibRecord.new(solr_bib_alma)
+  before(:each) do
+    @solr_bib_alma = File.read('./spec/fixtures/solr_bib_alma.json')
+    @alma_loan = JSON.parse(File.read('./spec/fixtures/alma_loans_one_holding.json'))["item_loan"][0]
   end
   subject do
-    response = JSON.parse(File.read('./spec/fixtures/alma_loans_one_holding.json'))
+    solr_bib_record = Spectrum::BibRecord.new(JSON.parse(@solr_bib_alma))
     solr_holding = solr_bib_record.alma_holding("2297537770006381")
     solr_item = solr_holding.items.first
 
     holding = instance_double(Spectrum::Entities::AlmaHolding, holding_id: "holding_id", bib_record: solr_bib_record, solr_holding: solr_holding)
 
-    described_class.new(holding: holding,  alma_loan: response["item_loan"][0], solr_item: solr_item, bib_record: solr_bib_record)
+    described_class.new(holding: holding,  alma_loan: @alma_loan, solr_item: solr_item, bib_record: solr_bib_record)
   end
   it "has a bib title" do
     expect(subject.title).to eq("Enhancing faculty careers : strategies for development and renewal /")
@@ -42,7 +42,7 @@ describe Spectrum::Entities::AlmaItem do
     expect(subject.description).to eq(nil)
   end
   it "returns a process type" do
-    expect(subject.process_type).to eq(nil)
+    expect(subject.process_type).to eq('LOAN')
   end
   it "calculates etas" do
     expect(subject.etas?).to eq(true)
@@ -53,6 +53,19 @@ describe Spectrum::Entities::AlmaItem do
    it "has can_reserve? flag" do
      expect(subject.can_reserve?).to eq(false)
    end
+  context "item checked back in today" do
+    before(:each) do
+      @solr_bib_alma.gsub!('\"process_type\":null','\"process_type\":\"LOAN\"')
+      @alma_loan = nil
+    end
+    it "does not have a due date" do
+      expect(subject.due_date).to eq(nil)
+    end
+    it "does not have a process type" do
+      expect(subject.process_type).to eq(nil)
+    end
+
+  end
   
   context "#status" do
     it "handles it"
