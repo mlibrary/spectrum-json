@@ -5,11 +5,11 @@ class Spectrum::Entities::AlmaItem
 
   def_delegators :@bib_record, :mms_id, :doc_id, :etas?, :title, :author, 
     :restriction, :edition, :physical_description, :date, :pub, :place, 
-    :publisher, :pub_date, :issn, :isbn, :genre, :sgenre
+    :publisher, :pub_date, :issn, :isbn, :genre, :sgenre, :finding_aid
 
   def_delegators :@solr_item, :callnumber, :temp_location?, :barcode, :library,
     :location, :permanent_library, :permanent_location, :description, :item_policy,
-     :inventory_number, :can_reserve?, :item_id
+    :process_type, :inventory_number, :can_reserve?, :item_id, :record_has_finding_aid
 
   def initialize(holding:, alma_loan: nil, solr_item:, bib_record:)
     @holding = holding #AlmaHolding

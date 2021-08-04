@@ -16,6 +16,7 @@ describe Spectrum::Entities::AlmaItem do
   it "has a bib title" do
     expect(subject.title).to eq("Enhancing faculty careers : strategies for development and renewal /")
   end
+  
   it "has a callnumber" do
     expect(subject.callnumber).to eq('LB 2331.72 .S371 1990')
   end
@@ -53,6 +54,11 @@ describe Spectrum::Entities::AlmaItem do
    it "has can_reserve? flag" do
      expect(subject.can_reserve?).to eq(false)
    end
+
+  it "has #record_has_finding_aid" do
+    expect(subject.record_has_finding_aid).to eq(false)
+  end
+
   context "item checked back in today" do
     before(:each) do
       @solr_bib_alma.gsub!('\"process_type\":null','\"process_type\":\"LOAN\"')
@@ -64,30 +70,6 @@ describe Spectrum::Entities::AlmaItem do
     it "does not have a process type" do
       expect(subject.process_type).to eq(nil)
     end
-
   end
   
-  context "#status" do
-    it "handles it"
-  end
-  context "#can_request?" do
-    it "handles it"
-  end
-  context "#can_reserve?" do
-    it "handles it"
-  end
-  context "#can_book?" do
-    it "handles it"
-  end
-  context "#item_process_status" do
-    it "handles it"
-  end
-  context "#item_status" do
-    it "handles it"
-  end
-  #in book_this_action; Do we even need this?
-  context "#full_item_key" do
-    it "handles it"
-  end
-
 end

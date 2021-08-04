@@ -7,6 +7,8 @@ module Spectrum
 
         if NoAction.match?(item)
           NoAction.new(item)
+        elsif FindingAidAction.match?(item)
+          FindingAidAction.new(item)
         elsif RequestThisAction.match?(item)
           RequestThisAction.new(item)
         else
