@@ -28,8 +28,13 @@ module Spectrum
       BibRecord.new(client_get)
     end
     def initialize(solr_response)
-      @data = extract_data(solr_response)
-      @fullrecord = MARC::XMLReader.new(StringIO.new(@data['fullrecord'])).first
+      @data = extract_data(solr_response) || {}
+      full_record_raw = @data['fullrecord']
+      if full_record_raw
+        @fullrecord = MARC::XMLReader.new(StringIO.new(full_record_raw)).first
+      else
+        @full_record = {}
+      end
     end
     def mms_id
       @data["id"]
@@ -141,7 +146,11 @@ module Spectrum
 
 
     def holdings
-      JSON.parse(@data["hol"]).map{|x| Holding.for(x)}
+      if @data["hol"]
+        JSON.parse(@data["hol"])&.map{|x| Holding.for(x)}
+      else
+        []
+      end
     end
     def hathi_holding
       holdings.find{|x| x.class.name.to_s.match(/HathiHolding/) }
@@ -204,7 +213,7 @@ module Spectrum
         # Regular records, with the url in the 856, however, do not, which leaves
         # people out of the proxy server.  So add a campus-agnostic proxy prefix.
         def link
-          return @holding['link'] if @holding['link'].include?('alma.exlibrisgroup')
+          return @holding['link'] if @holding['link']&.include?('alma.exlibrisgroup')
           "https://apps.lib.umich.edu/proxy-login/?url=#{@holding['link']}"
         end
     end
@@ -300,7 +309,7 @@ module Spectrum
 
 
     def formats
-      @fullrecord.fields('970').map { |field| field['a'] }
+      @fullrecord&.fields('970')&.map { |field| field['a'] } || []
     end
 
     def can_scan?
