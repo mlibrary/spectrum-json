@@ -58,6 +58,11 @@ describe Spectrum::BibRecord do
         expect(subject.elec_holdings).to eq([])
       end
     end
+    context "#finding_aid" do
+      it "returns nil when no holding with a finding aid" do
+        expect(subject.finding_aid).to be_nil
+      end
+    end
 
     context "#alma_holding(holding_id)" do
       it "returns the alma holding for a given holding id" do
@@ -162,6 +167,15 @@ describe Spectrum::BibRecord do
       end
       it "returns electronic holdings" do
         expect(subject.elec_holdings.count).to eq(1)
+      end
+      context "finding_aid" do
+        it "returns nil when no finding_aid" do
+          expect(subject.finding_aid).to be_nil
+        end
+        it "returns holding when there is a finding_aid" do
+          @solr_elec = @solr_elec.gsub(/finding_aid\\":false/, "finding_aid\\\":true")
+          expect(subject.finding_aid.class.name).to include('FindingAid')
+        end
       end
       context "electronic holding" do
         let(:elec_holding){subject.holdings.first}

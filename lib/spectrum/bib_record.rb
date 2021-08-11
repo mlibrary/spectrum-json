@@ -172,7 +172,7 @@ module Spectrum
       !!hathi_holding&.etas?
     end
     def finding_aid
-      elec_holdings&.find{|x| x.finding_aid == true }
+      holdings&.find{|x| x.finding_aid == true }
     end
 
     def not_etas?
@@ -187,37 +187,47 @@ module Spectrum
       def holding_id
         ''
       end
+      def finding_aid
+        false
+      end
       def library
         @holding["library"]
       end
       def self.for(holding)
-        case holding["library"]
-        when "HathiTrust Digital Library"
-          HathiHolding.new(holding)
-        when "ELEC"
-          ElectronicHolding.new(holding)
-        else
-          AlmaHolding.new(holding)
-        end
+        [HathiHolding, FindingAid, ElectronicHolding, AlmaHolding].find do |klass|
+          klass.match?(holding)
+        end.new(holding)
       end
     end
     class ElectronicHolding < Holding
-        ['status','description','link_text','note','finding_aid'].each do |name|
-          define_method(name) do
-            @holding[name]
-          end
+      def self.match?(holding)
+        holding["library"] == 'ELEC'
+      end
+      ['status','description','link_text','note','finding_aid'].each do |name|
+        define_method(name) do
+          @holding[name]
         end
+      end
 
-        # Alma's community zone electronic holdings all route through the Alma link resolver.
-        # Which in turn routes through the proxy server traffic cop, which is good.
-        # Regular records, with the url in the 856, however, do not, which leaves
-        # people out of the proxy server.  So add a campus-agnostic proxy prefix.
-        def link
-          return @holding['link'] if @holding['link']&.include?('alma.exlibrisgroup')
-          "https://apps.lib.umich.edu/proxy-login/?url=#{@holding['link']}"
-        end
+      # Alma's community zone electronic holdings all route through the Alma link resolver.
+      # Which in turn routes through the proxy server traffic cop, which is good.
+      # Regular records, with the url in the 856, however, do not, which leaves
+      # people out of the proxy server.  So add a campus-agnostic proxy prefix.
+      def link
+        return @holding['link'] if @holding['link']&.include?('alma.exlibrisgroup')
+        "https://apps.lib.umich.edu/proxy-login/?url=#{@holding['link']}"
+      end
     end
+    class FindingAid < ElectronicHolding
+      def self.match?(holding)
+        holding["finding_aid"] == true
+      end
+    end
+
     class HathiHolding < Holding
+      def self.match?(holding)
+        holding["library"] == 'HathiTrust Digital Library'
+      end
       def etas?
         items.any?{|x| x.status.start_with?('Full text available,') }
       end
@@ -241,6 +251,9 @@ module Spectrum
       private_constant :Item
     end
     class AlmaHolding  < Holding
+      def self.match?(holding)
+        true
+      end
       def holding_id 
         @holding["hol_mmsid"]
       end
