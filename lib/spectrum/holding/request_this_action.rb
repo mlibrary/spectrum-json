@@ -78,7 +78,7 @@ module Spectrum
       end
 
       def base_url
-        'https://aeon.lib.umich.edu/login?'
+        'https://aeon.lib.umich.edu/logon?'
       end
 
       def query
@@ -112,7 +112,7 @@ module Spectrum
     end
     class ClementsRequestThisAction < RequestThisAction 
       def base_url 
-        'https://aeon.clements.umich.edu/login?'
+        'https://aeon.clements.umich.edu/logon?'
       end
       def location
         @item.location

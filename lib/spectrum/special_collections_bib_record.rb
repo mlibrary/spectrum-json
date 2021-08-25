@@ -15,7 +15,7 @@ module Spectrum
      ])
     end
     def genre
-      get_field_subset(main: '970', subfields: 'a')
+      get_field_subset(main: '974', subfields: 'm')
     end
     def date
       process_list_of_fields([
