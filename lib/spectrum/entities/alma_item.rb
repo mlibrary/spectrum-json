@@ -6,7 +6,7 @@ class Spectrum::Entities::AlmaItem
   def_delegators :@bib_record, :mms_id, :doc_id, :etas?, :title, :author, 
     :restriction, :edition, :physical_description, :date, :pub, :place, 
     :publisher, :pub_date, :issn, :isbn, :genre, :sgenre, :accession_number,
-    :finding_aid
+    :finding_aid, :fullrecord
 
   def_delegators :@solr_item, :callnumber, :temp_location?, :barcode, :library,
     :location, :permanent_library, :permanent_location, :description, :item_policy,

@@ -11,6 +11,7 @@ require 'active_support/concern'
 require 'spectrum/available_online_holding'
 #require 'spectrum/floor_location'
 require 'spectrum/bib_record'
+require 'spectrum/special_collections_bib_record'
 
 require 'spectrum/entities/item'
 require 'spectrum/entities/holdings'
