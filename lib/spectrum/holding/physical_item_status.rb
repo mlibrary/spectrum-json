@@ -16,28 +16,7 @@ class Spectrum::Holding::PhysicalItemStatus
   def self.for(item)
     case item.process_type
     when nil
-      case item.item_policy
-      when '08'
-        if ['SPEC','BENT','CLEM'].include?(item.library)
-          Success.new("Reading Room Use Only")
-        else
-          Success.new("Building use only")
-        end
-      when '06'
-        Success.new("On shelf (4 Hour Loan)")
-      when '07'
-        Success.new("On shelf (2 Hour Loan)")
-      when '11'
-        Success.new("On shelf (6 Hour Loan)")
-      when '12'
-        Success.new("On shelf (12 Hour Loan)")
-      else
-        #if item.requested?
-          #Error.new('Requested')
-        #else
-          Success.new("On shelf")
-#        end
-      end
+      Success.for(item)
     when 'LOAN'
        
       return Warning.new("Checked out") if item.due_date.nil? || item.due_date.empty?
@@ -62,11 +41,55 @@ class Spectrum::Holding::PhysicalItemStatus
     end
   end
   class Success < self
+    def self.for(item)
+      if item.in_reserves?
+        ReservesSuccess.new(item)
+      else
+        Success.new(item)
+      end
+    end
+    def initialize(item)
+      @item = item
+      if @item.item_policy == '08'
+        if ['SPEC','BENT','CLEM'].include?(@item.library)
+          @text = "Reading Room Use Only"
+        else
+          @text = "Building use only"
+        end
+      else
+        @text = [base_text, suffix].reject{|x| x.nil?}.join(' ')
+      end
+    end
     def intent
       'success'
     end
     def icon
       'check_circle'
+    end
+    def base_text
+      "On shelf"
+    end
+    def suffix
+      case @item.item_policy
+      when '06'
+        "(4 Hour Loan)"
+      when '07'
+        "(2 Hour Loan)"
+      when '11'
+        "(6 Hour Loan)"
+      when '12'
+        "(12 Hour Loan)"
+      end
+    end
+  end
+  class ReservesSuccess < Success
+    def base_text
+      "On reserve at #{@item.item_location_text}".html_safe
+    end
+    def to_h
+      super.merge(
+        href: @item.item_location_link 
+      )
     end
   end
   class Warning < self
