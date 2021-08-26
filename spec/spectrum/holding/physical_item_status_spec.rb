@@ -73,6 +73,11 @@ describe Spectrum::Holding::PhysicalItemStatus do
         expect(subject.class.to_s).to include('Warning')
         expect(subject.text).to eq("Checked out: due Oct 01, 2021")
       end
+      it "handles on reserve" do
+        allow(@alma_item).to receive(:item_location_text).and_return('Hatcher Graduate Library')
+        allow(@alma_item).to receive(:in_reserves?).and_return(true)
+        expect(subject.text).to eq("Checked out: due Oct 01, 2021 On reserve at Hatcher Graduate Library")
+      end
 
       hour_loans.each do |policy|
         it "returns Checked out with length of time for policy #{policy[:desc]}" do
