@@ -103,6 +103,7 @@ require 'spectrum/holding/physical_item_description'
 require 'spectrum/holding/physical_item_status'
 require 'spectrum/holding/action'
 require 'spectrum/holding/no_action'
+require 'spectrum/holding/finding_aid_action'
 require 'spectrum/holding/get_this_action'
 require 'spectrum/holding/request_this_action'
 

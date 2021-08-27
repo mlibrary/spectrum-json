@@ -122,6 +122,9 @@ module Spectrum::Decorators
     def building_use_only?
       @item.item_policy == '08' #08 for Special Collections is also Reading Room Only
     end
+    def not_building_use_only?
+      !building_use_only?
+    end
     def not_pickup_or_checkout?
       not_pickup? || checked_out? || missing? || building_use_only?
     end
