@@ -4,18 +4,13 @@ describe Spectrum::Holding::NoAction do
   before(:each) do
     @item = instance_double(Spectrum::Entities::AlmaItem, library: 'HATCH', location: 'NONE', item_policy: '01', process_type: nil)
 
-    @contactless_pickup = ['AAEL','FINE','FLINT', 'MUSM','HATCH','BTSA','CSCAR','DHCL' ]
   end
   subject do
-    described_class.match?(@item, @contactless_pickup)
+    described_class.match?(@item)
   end
   context "::match?" do
     it "generally does not match" do
       expect(subject).to eq(false)
-    end
-    it "matches items not in the contactless pickup list" do
-      @contactless_pickup = []
-      expect(subject).to eq(true)
     end
     it "matches Item Policy 06" do
       allow(@item).to receive(:item_policy).and_return('06')
