@@ -94,7 +94,7 @@ class Spectrum::Entities::AlmaUser
   end
 
   def staff?
-    ['Staff level', 'Temporary Staff Level'].include?(user_group)
+    user_group == 'Staff Level'
   end
 
   def graduate?
