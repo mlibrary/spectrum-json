@@ -76,21 +76,31 @@ module Spectrum::Decorators
     def flint_pickup?
       FLINT_PICKUP.include?(@item.library)
     end
+
     def flint?
       @item.library == 'FLINT'
     end
+
+    def ann_arbor?
+      @item.library != 'FLINT'
+    end
+
     def not_flint?
       !flint?
     end
+
     def reopened?
       REOPENED.include?(@item.library)
     end
+
     def standard_pickup?
       flint_pickup?
     end
+
     def not_pickup?
       !(shapiro_pickup? || aael_pickup? || music_pickup? || shapiro_and_aael_pickup? || flint_pickup?)
     end
+
     def checked_out?
       !not_checked_out?
     end
@@ -118,18 +128,36 @@ module Spectrum::Decorators
     def can_request?
       Spectrum::Holding::Action.for(@item).class.to_s.match?(/GetThisAction/) 
     end
+
     #as of 27-April-2021 none of these are used in get_this_policy
     def circulating?
       can_request?
     end
     def on_shelf?
-  #    @item.status.start_with?('On shelf') || building_use_only?
+      !not_on_shelf?
     end
+
+    # Deprecated.  I think the semantics people care about now is open/closed stacks.
     def off_site?
-  #    @item.location.start_with?('Offsite', '- Offsite')
+      @item.library_display_name.start_with?('Offsite', '- Offsite')
     end
+
+    # Deprecated.  I think the semantics people care about now is open/closed stacks.
     def on_site?
-  #    !off_site?
+      !off_site?
     end
+
+    def closed_stacks?
+      @item.library_display_name.start_with?('Offsite', '- Offsite', 'Buhr')
+    end
+
+    def open_stacks?
+      !closed_stacks?
+    end
+
+    def not_on_shelf?
+      missing? || on_order? || checked_out?
+    end
+
   end
 end

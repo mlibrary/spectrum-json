@@ -45,7 +45,7 @@ class Spectrum::Entities::AlmaUser
     "01CI",
     "01AG",
   ]
-  
+
   attr_reader :id, :name, :status
   def initialize(data:)
     @data = data
@@ -61,12 +61,64 @@ class Spectrum::Entities::AlmaUser
     end
   end
 
+  def campus_code
+    @data.dig('campus_code', 'value')
+  end
+
+  def user_group
+    @data.dig('user_group', 'desc')
+  end
+
+  def ann_arbor?
+    campus_code == 'UMAA'
+  end
+
+  def dearborn?
+    campus_code == 'UMDB'
+  end
+
+  def flint?
+    campus_code == 'UMFL'
+  end
+
+  def ann_arbor_dearborn?
+    ann_arbor? || dearborn?
+  end
+
+  def flint_dearborn?
+    flint? || dearborn?
+  end
+
+  def faculty?
+    user_group == 'Faculty Level'
+  end
+
+  def staff?
+    ['Staff level', 'Temporary Staff Level'].include?(user_group)
+  end
+
+  def graduate?
+    user_group == 'Graduate Level'
+  end
+
+  def undergraduate?
+    user_group == 'Undergraduate Level'
+  end
+
+  def faculty_graduate_staff?
+    faculty? || staff? || graduate?
+  end
+
+  def faculty_student_staff?
+    faculty? || staff? || graduate? || undergraduate?
+  end
+
   def expired?
     !active?
   end
 
   def active?
-    @data['status']['value'] == 'ACTIVE'
+    @data.dig('status', 'value') == 'ACTIVE'
   end
 
   def empty?
@@ -75,13 +127,13 @@ class Spectrum::Entities::AlmaUser
 
   def can_ill?
     statistic_categories = @data['user_statistic'].map { |statistic| statistic['statistic_category']['value'] }
-    user_group = @data['user_group']['value']
+    user_group = @data.dig('user_group', 'value')
     statistic_categories.any? { |category| ILL.include?("#{user_group}#{category}") }
   end
 
   def can_other?
     statistic_categories = @data['user_statistic'].map { |statistic| statistic['statistic_category']['value'] }
-    user_group = @data['user_group']['value']
+    user_group = @data.dig('user_group', 'value')
     statistic_categories.any? { |category| OTHER.include?("#{user_group}#{category}") }
   end
 
