@@ -61,6 +61,15 @@ describe Spectrum::Entities::AlmaItem do
   it "has #record_has_finding_aid" do
     expect(subject.record_has_finding_aid).to eq(false)
   end
+  context "#in_reserves?" do
+    it "is false for an item not in a reserve location" do
+      expect(subject.in_reserves?).to eq(false)
+    end
+    it "is true for an item in a reserve location" do
+      @solr_bib_alma.gsub!('\"permanent_location\":\"GRAD\"','\"location\":\"RESC\"')
+      expect(subject.in_reserves?).to eq(true)
+    end
+  end
 
   context "item checked back in today" do
     before(:each) do

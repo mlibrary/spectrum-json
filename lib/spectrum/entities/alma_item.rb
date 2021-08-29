@@ -10,7 +10,8 @@ class Spectrum::Entities::AlmaItem
 
   def_delegators :@solr_item, :callnumber, :temp_location?, :barcode, :library,
     :location, :permanent_library, :permanent_location, :description, :item_policy,
-    :process_type, :inventory_number, :can_reserve?, :item_id, :record_has_finding_aid
+    :process_type, :inventory_number, :can_reserve?, :item_id, :record_has_finding_aid,
+    :item_location_text, :item_location_link
 
   def initialize(holding:, alma_loan: nil, solr_item:, bib_record:)
     @holding = holding #AlmaHolding
@@ -35,21 +36,12 @@ class Spectrum::Entities::AlmaItem
   def due_date
     @alma_loan&.dig("due_date")
   end
+
   def library_display_name
     @holding.display_name
+
+  def in_reserves?
+    ['CAR','OPEN','RESI','RESP','RESC','ERES'].include?(@solr_item.location)
   end
   
-  ##TBD
-  #def can_request?
-  #end
-  ##TBD
-  #def can_reserve?
-  #end
-  ##TBD
-  #def can_book?
-  #end
-  #def item_process_status
-  #end
-  #def item_status
-  #end
 end

@@ -84,6 +84,10 @@ describe Spectrum::Holding::NoAction do
         allow(@item).to receive(:process_type).and_return('MISSING')
         expect(subject).to eq(false)
       end
+      it "does not match loan process type" do
+        allow(@item).to receive(:process_type).and_return('LOAN')
+        expect(subject).to eq(false)
+      end
       
     end
 

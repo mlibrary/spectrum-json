@@ -99,6 +99,16 @@ describe Spectrum::BibRecord do
           expect(alma_item.can_reserve?).to eq(false)
         end
       end
+      context "#item_location_text" do
+        it "returns a string" do
+          expect(alma_item.item_location_text).to eq('Hatcher Graduate ')
+        end
+      end
+      context "#item_location_link" do
+        it "returns a string" do
+          expect(alma_item.item_location_link).to eq('http://lib.umich.edu/locations-and-hours/hatcher-graduate-library')
+        end
+      end
     end
     context "#physical_holdings?" do
       it "returns true for if there are physical holdings" do

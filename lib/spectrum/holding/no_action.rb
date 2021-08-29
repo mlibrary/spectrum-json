@@ -4,7 +4,7 @@ module Spectrum
       def self.match?(item)
         return true if ['06','07'].include?(item.item_policy)
 
-        return true if (item.process_type && item.process_type != 'MISSING')
+        return true if !['LOAN','MISSING', nil].include?(item.process_type)
 
         case item.library
         when 'AAEL'
