@@ -39,6 +39,7 @@ class Spectrum::Entities::AlmaItem
 
   def library_display_name
     @holding.display_name
+  end
 
   def in_reserves?
     ['CAR','OPEN','RESI','RESP','RESC','ERES'].include?(@solr_item.location)
