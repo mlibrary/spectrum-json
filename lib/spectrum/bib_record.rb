@@ -288,6 +288,12 @@ module Spectrum
         def temp_location?
           @item["temp_location"]
         end
+        def item_location_text 
+          @item["display_name"]
+        end
+        def item_location_link
+          @item["info_link"]
+        end
       end
 
       private_constant :Item

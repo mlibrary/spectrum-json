@@ -1,7 +1,7 @@
 require_relative '../../spec_helper'
 describe Spectrum::Holding::PhysicalItemStatus do
   before(:each) do
-    @solr_item = double("Spectrum::BibRecord:AlmaHolding::Item", process_type: nil)
+    @solr_item = double("Spectrum::BibRecord:AlmaHolding::Item", process_type: nil, location: 'GRAD')
     @bib_record = instance_double(Spectrum::BibRecord)
     @alma_item = Spectrum::Entities::AlmaItem.new(solr_item: @solr_item, holding: double("AlmaHolding"), alma_loan: nil, bib_record: @bib_record)
   end
@@ -72,6 +72,11 @@ describe Spectrum::Holding::PhysicalItemStatus do
       it "handles 01 item_policy" do
         expect(subject.class.to_s).to include('Warning')
         expect(subject.text).to eq("Checked out: due Oct 01, 2021")
+      end
+      it "handles on reserve" do
+        allow(@alma_item).to receive(:item_location_text).and_return('Hatcher Graduate Library')
+        allow(@alma_item).to receive(:in_reserves?).and_return(true)
+        expect(subject.text).to eq("Checked out: due Oct 01, 2021 On reserve at Hatcher Graduate Library")
       end
 
       hour_loans.each do |policy|
