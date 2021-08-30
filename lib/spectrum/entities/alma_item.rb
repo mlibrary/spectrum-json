@@ -44,5 +44,9 @@ class Spectrum::Entities::AlmaItem
   def in_reserves?
     ['CAR','OPEN','RESI','RESP','RESC','ERES'].include?(@solr_item.location)
   end
+
+  def not_in_reserves?
+    !in_reserves?
+  end
   
 end
