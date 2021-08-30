@@ -14,7 +14,7 @@ describe Spectrum::SpecialCollectionsBibRecord do
     expect(subject.author).to eq('Stern, Meredith,')
   end
   it "has a genre" do
-    expect(subject.genre).to eq('')
+    expect(subject.genre).to eq('BOOK')
   end
   it "has a date" do
     expect(subject.date).to eq('[2017]')
