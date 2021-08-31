@@ -5,6 +5,7 @@ require 'rsolr'
 
 module Spectrum
   class BibRecord
+    attr_reader :fullrecord
     SCANABLE = Hash.new(true).merge(
       'ISSCF' => false,
       'ISSMU' => false,
