@@ -108,7 +108,6 @@ require 'spectrum/holding/no_action'
 require 'spectrum/holding/finding_aid_action'
 require 'spectrum/holding/get_this_action'
 require 'spectrum/holding/request_this_action'
-require 'spectrum/holding/reserve_this_action'
 
 require 'spectrum/json/railtie' if defined?(Rails)
 require 'erb'

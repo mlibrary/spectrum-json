@@ -11,8 +11,6 @@ module Spectrum
           FindingAidAction.new(item)
         elsif RequestThisAction.match?(item)
           RequestThisAction.for(item)
-        elsif ReserveThisAction.match?(item)
-          ReserveThisAction.new(item)
         else
           GetThisAction.new(item)
         end
