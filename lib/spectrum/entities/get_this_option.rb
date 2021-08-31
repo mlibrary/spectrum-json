@@ -18,6 +18,8 @@ class Spectrum::Entities::GetThisOption
   def self.for(option:, patron:, item:)
     args = {option: option, patron: patron, item: item}
     case option.dig("form","type")
+    when "reservation"
+      Spectrum::Entities::GetThisOption::Reservation.new(**args)
     when "link"
       Spectrum::Entities::GetThisOption::Link.new(**args)
     when "alma_hold"
@@ -47,6 +49,20 @@ class Spectrum::Entities::GetThisOption
       tip: @tip
     }.stringify_keys
   end
+  class Reservation < self
+    def form
+      {
+        "action" => @option.dig("form", "base") + @item.barcode,
+        "method" => "get",
+        "fields" => [
+          {
+            "type" => "submit",
+            "value" => @option.dig("form", "text"),
+          }
+        ]
+      }
+    end
+  end
   class Link < self
     def form
       {
@@ -58,7 +74,6 @@ class Spectrum::Entities::GetThisOption
             "value" => @option.dig("form","text")
           }
         ]
-
       }
     end
   end

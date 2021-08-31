@@ -15,6 +15,18 @@ module Spectrum
       'MU' => false,
       'VM' => false,
       'MX' => false,
+      'Data File' => false,
+      'Music' => false,
+      'Visual Material' => false,
+      'Mixed Material' => false,
+    )
+
+    RESERVABLE = Hash.new(false).merge(
+      'Video (Blu-ray)' => true,
+      'Video (DVD)' => true,
+      'Video (Blu-ray)' => true,
+      'Audio CD' => true,
+      'Audio LP' => true,
     )
 
     def self.fetch(id:, url:, id_field: 'id', rsolr_client_factory: lambda{|url| RSolr.connect(url: url)}, escaped_id: RSolr.solr_escape(id))
@@ -180,6 +192,13 @@ module Spectrum
       !etas?
     end
     
+    def reservable_format?
+     formats.any? { |format| RESERVABLE[format] }
+    end
+
+    def can_scan?
+      formats.all? { |format| SCANABLE[format] }
+    end
 
     class Holding
       def initialize(holding)
@@ -327,13 +346,9 @@ module Spectrum
       str.respond_to?(:sub) ? str.sub(/[.,;:\/]$/, '') : ''
     end
 
-
     def formats
-      @fullrecord&.fields('970')&.map { |field| field['a'] } || []
-    end
-
-    def can_scan?
-      return formats.all? { |format| SCANABLE[format] }
+      (@fullrecord&.fields('970')&.map { |field| field['a'] } || []) +
+        (@data&.fetch('format', []) || [])
     end
   end
 end

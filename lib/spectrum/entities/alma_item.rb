@@ -48,5 +48,11 @@ class Spectrum::Entities::AlmaItem
   def not_in_reserves?
     !in_reserves?
   end
-  
+
+  def reservable_library?
+    ['FVL'].include?(@solr_item.library)
+  end
+  def not_reservable_library?
+    !reservable_library?
+  end
 end
