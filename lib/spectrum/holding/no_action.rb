@@ -2,9 +2,8 @@ module Spectrum
   class Holding
     class NoAction < Action
       def self.match?(item)
+        return true if item.barcode.nil?
         return true if ['06','07'].include?(item.item_policy)
-
-        return true if !['LOAN','MISSING', nil].include?(item.process_type)
 
         case item.library
         when 'AAEL'

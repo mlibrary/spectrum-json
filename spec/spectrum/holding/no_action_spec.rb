@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe Spectrum::Holding::NoAction do
   before(:each) do
-    @item = instance_double(Spectrum::Entities::AlmaItem, library: 'HATCH', location: 'NONE', item_policy: '01', process_type: nil)
+    @item = instance_double(Spectrum::Entities::AlmaItem, library: 'HATCH', location: 'NONE', item_policy: '01', process_type: nil, barcode: 'somebarcode')
   end
   subject do
     described_class.match?(@item)
@@ -75,21 +75,5 @@ describe Spectrum::Holding::NoAction do
       allow(@item).to receive(:item_policy).and_return('08')
       expect(subject).to eq(true)
     end
-    context "item process type" do
-      it "matches non-missing process type" do
-        allow(@item).to receive(:process_type).and_return('TRANSIT')
-        expect(subject).to eq(true)
-      end
-      it "does not match missing process type" do
-        allow(@item).to receive(:process_type).and_return('MISSING')
-        expect(subject).to eq(false)
-      end
-      it "does not match loan process type" do
-        allow(@item).to receive(:process_type).and_return('LOAN')
-        expect(subject).to eq(false)
-      end
-      
-    end
-
   end
 end
