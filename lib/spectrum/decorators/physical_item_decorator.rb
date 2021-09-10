@@ -113,6 +113,13 @@ module Spectrum::Decorators
     def not_missing?
       !missing?
     end
+    #Items with a process type include itesm on loan, missing, in acquisition, ILL, lost, etc.
+    def not_in_process?
+      @item.process_type.nil?
+    end
+    def in_process?
+      !not_in_process?
+    end
     def on_order?
       @item.process_type == 'ACQ'
     end
@@ -132,7 +139,6 @@ module Spectrum::Decorators
       Spectrum::Holding::Action.for(@item).class.to_s.match?(/GetThisAction/) 
     end
 
-    #as of 27-April-2021 none of these are used in get_this_policy
     def circulating?
       can_request?
     end
@@ -159,7 +165,7 @@ module Spectrum::Decorators
     end
 
     def not_on_shelf?
-      missing? || on_order? || checked_out?
+      in_process? || in_reserves? 
     end
 
   end

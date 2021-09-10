@@ -5,7 +5,7 @@ describe Spectrum::Decorators::PhysicalItemDecorator do
     @input = {
       holding:  instance_double(Spectrum::Entities::AlmaHolding),
       alma_loan: nil,
-      solr_item:  double('BibRecord::AlmaItem', process_type: nil, item_policy: '01'),
+      solr_item:  double('BibRecord::AlmaItem', process_type: nil, item_policy: '01', barcode: 'somebarcode'),
       bib_record: instance_double(Spectrum::BibRecord)
     }
   end
