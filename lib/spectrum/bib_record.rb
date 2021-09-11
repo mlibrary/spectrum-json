@@ -24,7 +24,6 @@ module Spectrum
     RESERVABLE = Hash.new(false).merge(
       'Video (Blu-ray)' => true,
       'Video (DVD)' => true,
-      'Video (Blu-ray)' => true,
       'Audio CD' => true,
       'Audio LP' => true,
     )
