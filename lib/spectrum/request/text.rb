@@ -58,8 +58,19 @@ module Spectrum
       def get_holdings(focus, id)
         source = Spectrum::Json.sources[focus.source]
         return [] unless source.holdings
-        uri = URI(source.holdings + id)
-        JSON.parse(Net::HTTP.get(uri))[id]
+        holdings_request = Spectrum::Request::Holdings.new({id: id})
+        Spectrum::Response::Holdings.new(source, holdings_request).renderable.reject do |holding|
+          holding[:caption] == 'HathiTrust Digital Library'
+        end.map do |location|
+          location[:rows].map do |row|
+            {
+              'location' => location[:caption],
+              'description' => row[1][:text],
+              'status' => row[2][:text],
+              'callnumber' => row[3][:text],
+            }
+          end
+        end.flatten
       end
 
       def each_focus
