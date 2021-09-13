@@ -43,13 +43,7 @@ module Spectrum
         end
 
         def get_holdings(message)
-          raw_field_value(message, 'holdings').reject do |holding|
-            holding['location'] == 'HathiTrust Digital Library'
-          end.map do |holding|
-            holding['item_info'].map do |item_info|
-              holding.merge(item_info).delete('item_info')
-            end
-          end.flatten
+          raw_field_value(message, 'holdings')
         end
 
         def field(message, uid, glue = nil)
