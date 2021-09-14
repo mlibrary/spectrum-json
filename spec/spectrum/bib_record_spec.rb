@@ -32,7 +32,7 @@ describe Spectrum::BibRecord do
         expect(alma_holding.callnumber).to eq('LB 2331.72 .S371 1990')
       end
       it "has a public_note" do
-        expect(alma_holding.public_note).to be_nil
+        expect(alma_holding.public_note).to eq("")
       end
       it "has items" do
         expect(alma_holding.items.count).to eq(1)
@@ -58,6 +58,11 @@ describe Spectrum::BibRecord do
         expect(subject.elec_holdings).to eq([])
       end
     end
+    context "#finding_aid" do
+      it "returns nil when no holding with a finding aid" do
+        expect(subject.finding_aid).to be_nil
+      end
+    end
 
     context "#alma_holding(holding_id)" do
       it "returns the alma holding for a given holding id" do
@@ -81,7 +86,8 @@ describe Spectrum::BibRecord do
       let(:alma_item){ subject.holdings[0].items[0] }
       ['library','location','description','public_note','barcode',
       'item_policy','process_type','permanent_location','permanent_library',
-      'id','temp_location?','callnumber', 'inventory_number'].each do |method|
+      'id','temp_location?','callnumber', 'inventory_number', "item_id", 
+      "record_has_finding_aid"].each do |method|
         context "##{method}" do
           it "respond_to? #{method}" do
             expect(alma_item.respond_to?(method)).to be(true)
@@ -91,6 +97,16 @@ describe Spectrum::BibRecord do
       context "#can_reserve?" do
         it "returns a boolean" do
           expect(alma_item.can_reserve?).to eq(false)
+        end
+      end
+      context "#item_location_text" do
+        it "returns a string" do
+          expect(alma_item.item_location_text).to eq('Hatcher Graduate ')
+        end
+      end
+      context "#item_location_link" do
+        it "returns a string" do
+          expect(alma_item.item_location_link).to eq('http://lib.umich.edu/locations-and-hours/hatcher-graduate-library')
         end
       end
     end
@@ -161,6 +177,15 @@ describe Spectrum::BibRecord do
       end
       it "returns electronic holdings" do
         expect(subject.elec_holdings.count).to eq(1)
+      end
+      context "finding_aid" do
+        it "returns nil when no finding_aid" do
+          expect(subject.finding_aid).to be_nil
+        end
+        it "returns holding when there is a finding_aid" do
+          @solr_elec = @solr_elec.gsub(/finding_aid\\":false/, "finding_aid\\\":true")
+          expect(subject.finding_aid.class.name).to include('FindingAid')
+        end
       end
       context "electronic holding" do
         let(:elec_holding){subject.holdings.first}
@@ -281,4 +306,28 @@ describe Spectrum::BibRecord do
     end
   end
 
+end
+
+describe Spectrum::BibRecord::ElectronicHolding do
+
+  context "#link" do
+    subject { described_class.new({'link' => url}) }
+
+    context "When the holding has an Alma link" do
+      let(:url) { 'https://na04.alma.exlibrisgroup.com' }
+
+       it "Returns the Alma link unchanged" do
+          expect(subject.link).to eq(url)
+       end
+    end
+
+    context "When the holding has an non-Alma link" do
+      let(:url) { 'https://www.lib.umich.edu' }
+      let(:proxied_url) { "https://apps.lib.umich.edu/proxy-login/?url=#{url}" }
+
+       it "Returns the proxied link" do
+          expect(subject.link).to eq(proxied_url)
+       end
+    end
+  end
 end

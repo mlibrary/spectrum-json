@@ -2,6 +2,7 @@
 require 'rails' #so `bundle console` works
 require 'json-schema'
 require 'lru_redux'
+require 'alma_rest_client'
 
 require 'active_support'
 require 'active_support/concern'
@@ -10,6 +11,7 @@ require 'active_support/concern'
 require 'spectrum/available_online_holding'
 #require 'spectrum/floor_location'
 require 'spectrum/bib_record'
+require 'spectrum/special_collections_bib_record'
 
 require 'spectrum/entities/item'
 require 'spectrum/entities/holdings'
@@ -17,6 +19,10 @@ require 'spectrum/entities/alma_holdings'
 require 'spectrum/entities/alma_item'
 require 'spectrum/entities/hathi_holding'
 require 'spectrum/entities/combined_holdings'
+require 'spectrum/entities/alma_user'
+require 'spectrum/entities/alma_hold'
+require 'spectrum/entities/get_this_options'
+require 'spectrum/entities/get_this_option'
 
 require 'spectrum/decorators/physical_item_decorator'
 require 'spectrum/decorators/mirlyn_item_decorator'
@@ -93,14 +99,14 @@ require 'spectrum/request/profile'
 require 'spectrum/request/ids'
 require 'spectrum/request/debug'
 
-require 'spectrum/policy/get_this'
-
 require 'spectrum/presenters/holding_presenter'
 require 'spectrum/presenters/physical_item_presenter'
 require 'spectrum/holding/physical_item_description'
 require 'spectrum/holding/physical_item_status'
+require 'spectrum/holding/physical_item_status_text'
 require 'spectrum/holding/action'
 require 'spectrum/holding/no_action'
+require 'spectrum/holding/finding_aid_action'
 require 'spectrum/holding/get_this_action'
 require 'spectrum/holding/request_this_action'
 

@@ -4,8 +4,8 @@ describe Spectrum::Decorators::PhysicalItemDecorator do
   before(:each) do
     @input = {
       holding:  instance_double(Spectrum::Entities::AlmaHolding),
-      alma_loan:  {},
-      solr_item:  double('BibRecord::AlmaItem', process_type: nil),
+      alma_loan: nil,
+      solr_item:  double('BibRecord::AlmaItem', process_type: nil, item_policy: '01', barcode: 'somebarcode'),
       bib_record: instance_double(Spectrum::BibRecord)
     }
   end
@@ -127,22 +127,42 @@ describe Spectrum::Decorators::PhysicalItemDecorator do
   end
   context "#checked_out?" do
     it "is true if item has a due date" do
-      @input[:alma_loan]["due_date"] = "2021-10-01T03:59:00Z"
+      @input[:alma_loan] = Hash.new("due_date" => "2021-10-01T03:59:00Z")
       expect(subject.checked_out?).to eq(true)
     end
     it "is false if item does not have a due date" do
-      @input[:alma_loan]["due_date"] = ''
       expect(subject.checked_out?).to eq(false)
     end
   end
   context "#not_checked_out?" do
     it "is true if item doesn't have due date" do
-      @input[:alma_loan]["due_date"] = ''
       expect(subject.not_checked_out?).to eq(true)
     end
     it "is false if item does has a due date" do
-      @input[:alma_loan]["due_date"] = "2021-10-01T03:59:00Z"
+      @input[:alma_loan] = Hash.new("due_date" => "2021-10-01T03:59:00Z")
       expect(subject.not_checked_out?).to eq(false)
+    end
+  end
+  context "building_use_only only item" do
+    before(:each) do
+      allow(@input[:solr_item]).to receive(:item_policy).and_return('08')
+    end
+    it "has true #building_use_only?" do
+      expect(subject.building_use_only?).to eq(true)
+    end
+    it "has false #not_building_use_only?" do
+      expect(subject.not_building_use_only?).to eq(false)
+    end
+  end
+  context "not building_use_only item" do
+    before(:each) do
+      allow(@input[:solr_item]).to receive(:item_policy).and_return('01')
+    end
+    it "has false #building_use_only?" do
+      expect(subject.building_use_only?).to eq(false)
+    end
+    it "has true #not_building_use_only?" do
+      expect(subject.not_building_use_only?).to eq(true)
     end
   end
   context "#not_pickup_or_checkout?" do
@@ -152,7 +172,7 @@ describe Spectrum::Decorators::PhysicalItemDecorator do
     end
     it "is true if item is checked out" do
       allow(@input[:solr_item]).to receive(:library).and_return('HATCH')
-      @input[:alma_loan]["due_date"] = "2021-10-01T03:59:00Z"
+      @input[:alma_loan] = Hash.new("due_date" => "2021-10-01T03:59:00Z")
       expect(subject.not_pickup_or_checkout?).to eq(true)
     end
     it "is true if item is missing" do
@@ -168,7 +188,6 @@ describe Spectrum::Decorators::PhysicalItemDecorator do
     it "is false if item is available and pickup-able" do
       allow(@input[:solr_item]).to receive(:library).and_return('HATCH')
       allow(@input[:solr_item]).to receive(:item_policy).and_return('01')
-      @input[:alma_loan]["due_date"] = nil
       expect(subject.not_pickup_or_checkout?).to eq(false)
     end
   end
@@ -178,12 +197,14 @@ describe Spectrum::Decorators::PhysicalItemDecorator do
       allow(@input[:solr_item]).to receive(:item_policy).and_return('01')
       allow(@input[:solr_item]).to receive(:process_type).and_return(nil)
       allow(@input[:solr_item]).to receive(:can_reserve?).and_return(false)
+      allow(@input[:solr_item]).to receive(:record_has_finding_aid).and_return(false)
       expect(subject.can_request?).to eq(true)
     end
     it "is false if it wouldn't get a 'Get This' link" do
       allow(@input[:solr_item]).to receive(:library).and_return('SHAP')
       allow(@input[:solr_item]).to receive(:item_policy).and_return('06')
       allow(@input[:solr_item]).to receive(:can_reserve?).and_return(false)
+      allow(@input[:solr_item]).to receive(:record_has_finding_aid).and_return(false)
       expect(subject.can_request?).to eq(false)
     end
   end

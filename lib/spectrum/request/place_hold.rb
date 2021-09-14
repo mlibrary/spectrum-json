@@ -36,10 +36,9 @@ module Spectrum
         user = request.env['HTTP_X_REMOTE_USER']
         begin
           if user && !user.empty?
-            # The order matters here because Aleph::Borrower#bor_info raises an exception if the account isn't valid
             @logged_in = true
-            @patron = Aleph::Borrower.new.tap { |patron| patron.bor_info(user) }
-            @valid_account = true
+            @patron = Spectrum::Entities::AlmaUser.for(username: user)
+            @valid_account = @patron.active?
             @option = Spectrum::Policy::GetThis.new(@patron, fetch_bib_record, fetch_holdings_record).resolve.reject do |service|
               ['Self Service', 'Document Delivery'].include? service['service_type']
             end.first
@@ -118,22 +117,26 @@ module Spectrum
       end
 
       def record_id
-        lib + request.params[:record]
+        request.params[:record]
       end
 
       def item_id
-        adm + request.params[:item]
+        request.params[:item]
+      end
+
+      def holding_id
+        request.params[:holding]
       end
 
       def pickup_location
-        Exlibris::Aleph::PickupLocation.new(
-          request.params[:pickup_location],
-          request.params[:pickup_location]
-        )
+        request.params[:pickup_location]
       end
 
       def not_needed_after
-        request.params[:not_needed_after]
+        return nil unless request.params[:not_needed_after].match(/^\d{8,8}$/)
+        # Format in Alma is {YYYY}-{MM}-{DD}Z
+        date = request.params[:not_needed_after]
+        "#{date[0,4]}-#{date[4,2]}-#{date[6,2]}Z"
       end
     end
   end

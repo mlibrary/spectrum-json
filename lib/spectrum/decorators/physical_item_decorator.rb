@@ -76,21 +76,31 @@ module Spectrum::Decorators
     def flint_pickup?
       FLINT_PICKUP.include?(@item.library)
     end
+
     def flint?
       @item.library == 'FLINT'
     end
+
+    def ann_arbor?
+      @item.library != 'FLINT'
+    end
+
     def not_flint?
       !flint?
     end
+
     def reopened?
       REOPENED.include?(@item.library)
     end
+
     def standard_pickup?
       flint_pickup?
     end
+
     def not_pickup?
       !(shapiro_pickup? || aael_pickup? || music_pickup? || shapiro_and_aael_pickup? || flint_pickup?)
     end
+
     def checked_out?
       !not_checked_out?
     end
@@ -103,6 +113,13 @@ module Spectrum::Decorators
     def not_missing?
       !missing?
     end
+    #Items with a process type include itesm on loan, missing, in acquisition, ILL, lost, etc.
+    def not_in_process?
+      @item.process_type.nil?
+    end
+    def in_process?
+      !not_in_process?
+    end
     def on_order?
       @item.process_type == 'ACQ'
     end
@@ -112,24 +129,44 @@ module Spectrum::Decorators
     def building_use_only?
       @item.item_policy == '08' #08 for Special Collections is also Reading Room Only
     end
+    def not_building_use_only?
+      !building_use_only?
+    end
     def not_pickup_or_checkout?
       not_pickup? || checked_out? || missing? || building_use_only?
     end
     def can_request?
       Spectrum::Holding::Action.for(@item).class.to_s.match?(/GetThisAction/) 
     end
-    #as of 27-April-2021 none of these are used in get_this_policy
+
     def circulating?
       can_request?
     end
     def on_shelf?
-  #    @item.status.start_with?('On shelf') || building_use_only?
+      !not_on_shelf?
     end
+
+    # Deprecated.  I think the semantics people care about now is open/closed stacks.
     def off_site?
-  #    @item.location.start_with?('Offsite', '- Offsite')
+      @item.library_display_name.start_with?('Offsite', '- Offsite')
     end
+
+    # Deprecated.  I think the semantics people care about now is open/closed stacks.
     def on_site?
-  #    !off_site?
+      !off_site?
     end
+
+    def closed_stacks?
+      @item.library_display_name.start_with?('Offsite', '- Offsite', 'Buhr')
+    end
+
+    def open_stacks?
+      !closed_stacks?
+    end
+
+    def not_on_shelf?
+      in_process? || in_reserves? 
+    end
+
   end
 end

@@ -1,21 +1,22 @@
 require_relative '../../spec_helper'
 describe Spectrum::Entities::AlmaItem do
-  let(:solr_bib_record) do
-    solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
-    Spectrum::BibRecord.new(solr_bib_alma)
+  before(:each) do
+    @solr_bib_alma = File.read('./spec/fixtures/solr_bib_alma.json')
+    @alma_loan = JSON.parse(File.read('./spec/fixtures/alma_loans_one_holding.json'))["item_loan"][0]
   end
   subject do
-    response = JSON.parse(File.read('./spec/fixtures/alma_loans_one_holding.json'))
+    solr_bib_record = Spectrum::BibRecord.new(JSON.parse(@solr_bib_alma))
     solr_holding = solr_bib_record.alma_holding("2297537770006381")
     solr_item = solr_holding.items.first
 
-    holding = instance_double(Spectrum::Entities::AlmaHolding, holding_id: "holding_id", bib_record: solr_bib_record, solr_holding: solr_holding)
+    holding = instance_double(Spectrum::Entities::AlmaHolding, holding_id: "holding_id", bib_record: solr_bib_record, solr_holding: solr_holding, display_name: 'Hatcher Graduate Library')
 
-    described_class.new(holding: holding,  alma_loan: response["item_loan"][0], solr_item: solr_item, bib_record: solr_bib_record)
+    described_class.new(holding: holding,  alma_loan: @alma_loan, solr_item: solr_item, bib_record: solr_bib_record)
   end
   it "has a bib title" do
     expect(subject.title).to eq("Enhancing faculty careers : strategies for development and renewal /")
   end
+  
   it "has a callnumber" do
     expect(subject.callnumber).to eq('LB 2331.72 .S371 1990')
   end
@@ -42,7 +43,7 @@ describe Spectrum::Entities::AlmaItem do
     expect(subject.description).to eq(nil)
   end
   it "returns a process type" do
-    expect(subject.process_type).to eq(nil)
+    expect(subject.process_type).to eq('LOAN')
   end
   it "calculates etas" do
     expect(subject.etas?).to eq(true)
@@ -50,31 +51,37 @@ describe Spectrum::Entities::AlmaItem do
   it "has a due_date" do
     expect(subject.due_date).to eq("2021-10-01T03:59:00Z")
   end
+  it "has a library_display_name" do
+    expect(subject.library_display_name).to eq("Hatcher Graduate Library")
+  end
    it "has can_reserve? flag" do
      expect(subject.can_reserve?).to eq(false)
    end
-  
-  context "#status" do
-    it "handles it"
+
+  it "has #record_has_finding_aid" do
+    expect(subject.record_has_finding_aid).to eq(false)
   end
-  context "#can_request?" do
-    it "handles it"
-  end
-  context "#can_reserve?" do
-    it "handles it"
-  end
-  context "#can_book?" do
-    it "handles it"
-  end
-  context "#item_process_status" do
-    it "handles it"
-  end
-  context "#item_status" do
-    it "handles it"
-  end
-  #in book_this_action; Do we even need this?
-  context "#full_item_key" do
-    it "handles it"
+  context "#in_reserves?" do
+    it "is false for an item not in a reserve location" do
+      expect(subject.in_reserves?).to eq(false)
+    end
+    it "is true for an item in a reserve location" do
+      @solr_bib_alma.gsub!('\"permanent_location\":\"GRAD\"','\"location\":\"RESC\"')
+      expect(subject.in_reserves?).to eq(true)
+    end
   end
 
+  context "item checked back in today" do
+    before(:each) do
+      @solr_bib_alma.gsub!('\"process_type\":null','\"process_type\":\"LOAN\"')
+      @alma_loan = nil
+    end
+    it "does not have a due date" do
+      expect(subject.due_date).to eq(nil)
+    end
+    it "does not have a process type" do
+      expect(subject.process_type).to eq(nil)
+    end
+  end
+  
 end

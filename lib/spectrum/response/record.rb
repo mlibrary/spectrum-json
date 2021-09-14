@@ -25,6 +25,7 @@ module Spectrum
         @fields          = @focus.apply_fields(@data, @base_url, @request)
         @names           = @focus.names(@fields)
         @uid             = @fields.find { |f| f[:uid] == 'id' }[:value]
+        @alt_ids         = @fields.find { |f| f[:uid] == 'alt_ids' }&.dig(:value) || [@uid]
         @names_have_html = @data['names_have_html'] || true
         @metadata        = @focus.metadata_component(@data, @base_url, @request)
         @formats         = @focus.icons(@data, @base_url, @request)
@@ -37,6 +38,7 @@ module Spectrum
         @fields          = @focus.apply_fields(@data, @base_url, @request)
         @names           = @focus.names(@fields)
         @uid             = @fields.find { |f| f[:uid] == 'id' }[:value]
+        @alt_ids         = @fields.find { |f| f[:uid] == 'alt_ids' }&.dig(:value) || [@uid]
         @complete        = true
         @names_have_html = true
         @metadata        = @focus.metadata_component(@data, @base_url, @request)
@@ -52,6 +54,7 @@ module Spectrum
           names: @names,
           formats: @formats,
           uid: @uid,
+          alt_ids:  @alt_ids,
           datastore: @focus.id,
           names_have_html: @names_have_html,
           has_holdings: @focus.has_holdings?,

@@ -64,7 +64,7 @@ module Spectrum::Presenters
       @holding.items.map do |item|
         [ 
           {text: item.link_text, href: item.link},
-          {text: item.description || 'N/A'},
+          {text: item.description || ''},
           {text: item.note || 'N/A'}
         ]
       end

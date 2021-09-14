@@ -24,10 +24,11 @@ require 'pry-byebug'
 require 'coveralls'
 require 'simplecov'
 require 'webmock/rspec'
-require 'spectrum/json' #just require the gem
 
 #configure some classes
 SimpleCov.start
+require 'spectrum/json' #just require the gem
+#Spectrum::Entities::GetThisOptions.configure('spec/fixtures/get_this_policy.yml')
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

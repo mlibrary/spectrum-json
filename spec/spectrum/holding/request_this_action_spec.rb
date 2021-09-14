@@ -20,9 +20,25 @@ describe Spectrum::Holding::RequestThisAction, ".match" do
 end
 describe Spectrum::Holding::RequestThisAction do
   
+  let (:special_collections_bib_record){
+    methods = [
+      :title,
+      :author, 
+      :genre,
+      :date,
+      :edition,
+      :publisher,
+      :place,
+      :extent,
+      :sysnum,
+    ].map{|x| [x,x]}.to_h
+    instance_double(Spectrum::SpecialCollectionsBibRecord, **methods)
+
+  }
   let(:bib_record){ 
 
     methods = [
+      :fullrecord,
       :mms_id,
       :genre, 
       :sgenre, 
@@ -51,16 +67,22 @@ describe Spectrum::Holding::RequestThisAction do
 
   let(:item){Spectrum::Entities::AlmaItem.new(holding: nil, alma_loan: {}, bib_record: bib_record, solr_item: solr_item) }
 
-  let(:result) {{
-    text: 'Request This',
-    href: 'https://iris.lib.umich.edu/aeon/?Action=10&Form=30&ItemAuthor=author&barcode=barcode&callnumber=callnumber&date=pub_date&description=description&extent=physical_description&fixedshelf=inventory_number&genre=genre&isbn=isbn&issn=issn&itemDate=date&itemPlace=place&itemPublisher=pub&location=library&publisher=publisher&restriction=restriction&rft.au=author&rft.edition=edition&sgenre=sgenre&sublocation=location&sysnum=mms_id&title=title'
-  }}
+  let(:query_params) {
+    ['Action','Form','callnumber', 'genre','title','author', 'date','edition',
+     'publisher', 'place','extent','barcode', 'description','sysnum','location',
+     'sublocation', 'fixedshelf','issn','isbn'
+     ].sort
+  }
 
-  subject { described_class.new(item) }
+  subject { described_class.new(item, special_collections_bib_record) }
 
   context "#finalize" do
     it 'returns an N/A cell.' do
-      expect(subject.finalize).to eq(result)
+      expect(subject.finalize[:text]).to eq('Request This')
+      href = URI.parse(subject.finalize[:href])
+      query = href.query.split('&').map{|x| x.split('=').first}
+      expect(query).to eq(query_params)
+      expect(href.hostname).to eq('aeon.lib.umich.edu')
     end
   end
 end

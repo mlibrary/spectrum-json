@@ -2,20 +2,14 @@ require_relative '../../spec_helper'
 
 describe Spectrum::Holding::NoAction do
   before(:each) do
-    @item = instance_double(Spectrum::Entities::AlmaItem, library: 'HATCH', location: 'NONE', item_policy: '01', process_type: nil)
-
-    @contactless_pickup = ['AAEL','FINE','FLINT', 'MUSM','HATCH','BTSA','CSCAR','DHCL' ]
+    @item = instance_double(Spectrum::Entities::AlmaItem, library: 'HATCH', location: 'NONE', item_policy: '01', process_type: nil, barcode: 'somebarcode')
   end
   subject do
-    described_class.match?(@item, @contactless_pickup)
+    described_class.match?(@item)
   end
   context "::match?" do
     it "generally does not match" do
       expect(subject).to eq(false)
-    end
-    it "matches items not in the contactless pickup list" do
-      @contactless_pickup = []
-      expect(subject).to eq(true)
     end
     it "matches Item Policy 06" do
       allow(@item).to receive(:item_policy).and_return('06')
@@ -23,11 +17,6 @@ describe Spectrum::Holding::NoAction do
     end
     it "matches Item Policy 07" do
       allow(@item).to receive(:item_policy).and_return('07')
-      expect(subject).to eq(true)
-    end
-    it "matches AAEL 04" do
-      allow(@item).to receive(:library).and_return('AAEL')
-      allow(@item).to receive(:item_policy).and_return('04')
       expect(subject).to eq(true)
     end
     it "matches AAEL 05" do
@@ -40,19 +29,9 @@ describe Spectrum::Holding::NoAction do
       allow(@item).to receive(:item_policy).and_return('03')
       expect(subject).to eq(true)
     end
-    it "matches FINE 04" do
-      allow(@item).to receive(:library).and_return('FINE')
-      allow(@item).to receive(:item_policy).and_return('04')
-      expect(subject).to eq(true)
-    end
     it "matches FINE 05" do
       allow(@item).to receive(:library).and_return('FINE')
       allow(@item).to receive(:item_policy).and_return('05')
-      expect(subject).to eq(true)
-    end
-    it "matches FLINT 04" do
-      allow(@item).to receive(:library).and_return('FLINT')
-      allow(@item).to receive(:item_policy).and_return('04')
       expect(subject).to eq(true)
     end
     it "matches FLINT 05" do
@@ -96,16 +75,5 @@ describe Spectrum::Holding::NoAction do
       allow(@item).to receive(:item_policy).and_return('08')
       expect(subject).to eq(true)
     end
-    context "item process type" do
-      it "matches non-missing process type" do
-        allow(@item).to receive(:process_type).and_return('TRANSIT')
-        expect(subject).to eq(true)
-      end
-      it "does not match missing process type" do
-        allow(@item).to receive(:process_type).and_return('MISSING')
-        expect(subject).to eq(false)
-      end
-    end
-
   end
 end

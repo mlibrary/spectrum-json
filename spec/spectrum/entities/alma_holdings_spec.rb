@@ -37,16 +37,14 @@ describe Spectrum::Entities::AlmaHoldings do
   end
 end
 describe Spectrum::Entities::AlmaHolding do
-  let(:solr_bib_record) do
-    solr_bib_alma = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
-    Spectrum::BibRecord.new(solr_bib_alma)
+  before(:each) do
+    @solr_json = JSON.parse(File.read('./spec/fixtures/solr_bib_alma.json'))
+    @alma_loan = JSON.parse(File.read('./spec/fixtures/alma_loans_one_holding.json'))["item_loan"]
   end
   subject do
-    response = JSON.parse(File.read('./spec/fixtures/alma_loans_one_holding.json'))
+    solr_bib_record = Spectrum::BibRecord.new(@solr_json)
     solr_holding = solr_bib_record.alma_holding("2297537770006381")
-    
-
-    described_class.new(bib: solr_bib_record, alma_loans: response["item_loan"], solr_holding: solr_holding)
+    described_class.new(bib: solr_bib_record, alma_loans: @alma_loan, solr_holding: solr_holding)
   end
   it "has bib title" do
     expect(subject.title).to eq("Enhancing faculty careers : strategies for development and renewal /")
@@ -64,10 +62,15 @@ describe Spectrum::Entities::AlmaHolding do
     expect(subject.items[0].class.to_s).to eq('Spectrum::Entities::AlmaItem')
   end
   it "has public_note" do
-    expect(subject.public_note).to be_nil
+    expect(subject.public_note).to eq("")
   end
   it "has summary_holdings" do
-    expect(subject.summary_holdings).to be_nil
+    expect(subject.summary_holdings).to eq("")
   end
 
+  context "solr process type Loan; alma has empty loan response; (i.e. item checked in today)" do
+    it "has an empty due date for the item" do
+    end
+  end
+  
 end

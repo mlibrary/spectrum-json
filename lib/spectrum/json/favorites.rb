@@ -78,15 +78,19 @@ module Spectrum
           case (datastore = fetch_field(item, 'datastore'))
           when 'mirlyn'
             ret.push('http://mirlyn.lib.umich.edu/Record/' + fetch_field(item, 'id'))
-          when 'articles', 'articlesplus'
+            ret.push('https://search.lib.umich.edu/catalog/record/' + fetch_field(item, 'id'))
+          when 'primo', 'articles', 'articlesplus'
             ret.push('http://www.lib.umich.edu/articles/details/' + fetch_field(item, 'id'))
+            ret.push('https://search.lib.umich.edu/articles/record/' + fetch_field(item, 'id'))
             unless (openurl = fetch_field(item, 'openurl')).empty?
               ret.push('http://mgetit.lib.umich.edu/?' + openurl)
             end
           when 'databases'
             ret.push('http://www.lib.umich.edu/node/' + fetch_field(item, 'id'))
-          when 'journals'
+            ret.push('https://search.lib.umich.edu/databases/record/' + fetch_field(item, 'id'))
+          when 'journals', 'onlinejournals'
             ret.push('http://mirlyn.lib.umich.edu/Record/' + fetch_field(item, 'id'))
+            ret.push('https://search.lib.umich.edu/onlinejournals/record/' + fetch_field(item, 'id'))
           when 'website'
             ret.push(fetch_field(item, 'id'))
           else
@@ -103,11 +107,11 @@ module Spectrum
           case (datastore = fetch_field(items&.first, 'datastore'))
           when 'mirlyn'
             'mirlyn-favorite'
-          when 'articles', 'articlesplus'
+          when 'primo', 'articles', 'articlesplus'
             'articles-favorite'
           when 'databases'
             'databases-favorite'
-          when 'journals'
+          when 'journals', 'onlinejournals'
             'journals-favorite'
           when 'website'
             'website-favorite'

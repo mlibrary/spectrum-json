@@ -7,8 +7,10 @@ module Spectrum
 
         if NoAction.match?(item)
           NoAction.new(item)
+        elsif FindingAidAction.match?(item)
+          FindingAidAction.new(item)
         elsif RequestThisAction.match?(item)
-          RequestThisAction.new(item)
+          RequestThisAction.for(item)
         else
           GetThisAction.new(item)
         end
@@ -25,7 +27,6 @@ module Spectrum
       end
 
       def initialize(item)
-        @bib_record = bib_record
         @item = item #Spectrum::Entities::MirlynItem
       end
 

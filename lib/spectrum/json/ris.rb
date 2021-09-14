@@ -226,11 +226,11 @@ module Spectrum
           case field(item, 'datastore').first
           when 'mirlyn'
             'DB  - U-M Catalog Search'
-          when 'articles', 'articlesplus'
+          when 'primo', 'articles', 'articlesplus'
             'DB  - U-M Articles Search'
           when 'databases'
             'DB  - U-M Database Search'
-          when 'journals'
+          when 'journals', 'onlinejournals'
             'DB  - U-M Online Journals Search'
           when 'website'
             'DB  - U-M Library Website Search'
@@ -241,7 +241,7 @@ module Spectrum
           case field(item, 'datastore').first
           when 'databases'
             'TY  - DBASE'
-          when 'journals'
+          when 'journals', 'onlinejournals'
             'TY  - JFULL'
           when 'website'
             'TY  - ICOMM'

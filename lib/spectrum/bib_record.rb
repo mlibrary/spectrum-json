@@ -5,6 +5,7 @@ require 'rsolr'
 
 module Spectrum
   class BibRecord
+    attr_reader :fullrecord
     SCANABLE = Hash.new(true).merge(
       'ISSCF' => false,
       'ISSMU' => false,
@@ -14,15 +15,38 @@ module Spectrum
       'MU' => false,
       'VM' => false,
       'MX' => false,
+      'Data File' => false,
+      'Music' => false,
+      'Visual Material' => false,
+      'Mixed Material' => false,
     )
 
-    def self.fetch(id:, url:, rsolr_client_factory: lambda{|url| RSolr.connect(url: url)}, escaped_id: RSolr.solr_escape(id))
+    RESERVABLE = Hash.new(false).merge(
+      'Video (Blu-ray)' => true,
+      'Video (DVD)' => true,
+      'Audio CD' => true,
+      'Audio LP' => true,
+    )
+
+    def self.fetch(id:, url:, id_field: 'id', rsolr_client_factory: lambda{|url| RSolr.connect(url: url)}, escaped_id: RSolr.solr_escape(id))
+      # if someone ever passes in id_field but it is nil, that will be very annoying to diagnose
+      # previously the query was hard-coded "id:#{escaped_id}"
+      id_field ||= 'id'
       client = rsolr_client_factory.call(url)
-      BibRecord.new(client.get('select', params: { q: "id:#{escaped_id}"}))
+      # extracting this variable instead of running in the new()
+      # makes the difference on my machine between it working and not
+      # I don't know why and I don't like that I don't know why
+      client_get = client.get('select', params: {q: "#{id_field}:#{escaped_id}"})
+      BibRecord.new(client_get)
     end
     def initialize(solr_response)
-      @data = extract_data(solr_response)
-      @fullrecord = MARC::XMLReader.new(StringIO.new(@data['fullrecord'])).first
+      @data = extract_data(solr_response) || {}
+      full_record_raw = @data['fullrecord']
+      if full_record_raw
+        @fullrecord = MARC::XMLReader.new(StringIO.new(full_record_raw)).first
+      else
+        @full_record = {}
+      end
     end
     def mms_id
       @data["id"]
@@ -134,7 +158,11 @@ module Spectrum
 
 
     def holdings
-      JSON.parse(@data["hol"]).map{|x| Holding.for(x)}
+      if @data["hol"]
+        JSON.parse(@data["hol"])&.map{|x| Holding.for(x)}
+      else
+        []
+      end
     end
     def hathi_holding
       holdings.find{|x| x.class.name.to_s.match(/HathiHolding/) }
@@ -155,11 +183,21 @@ module Spectrum
     def etas?
       !!hathi_holding&.etas?
     end
+    def finding_aid
+      holdings&.find{|x| x.finding_aid == true }
+    end
 
     def not_etas?
       !etas?
     end
     
+    def reservable_format?
+     formats.any? { |format| RESERVABLE[format] }
+    end
+
+    def can_scan?
+      formats.all? { |format| SCANABLE[format] }
+    end
 
     class Holding
       def initialize(holding)
@@ -168,28 +206,47 @@ module Spectrum
       def holding_id
         ''
       end
+      def finding_aid
+        false
+      end
       def library
         @holding["library"]
       end
       def self.for(holding)
-        case holding["library"]
-        when "HathiTrust Digital Library"
-          HathiHolding.new(holding)
-        when "ELEC"
-          ElectronicHolding.new(holding)
-        else
-          AlmaHolding.new(holding)
-        end
+        [HathiHolding, FindingAid, ElectronicHolding, AlmaHolding].find do |klass|
+          klass.match?(holding)
+        end.new(holding)
       end
     end
     class ElectronicHolding < Holding
-        ['link','status','description','link_text','note','finding_aid'].each do |name|
-          define_method(name) do
-            @holding[name]
-          end
+      def self.match?(holding)
+        holding["library"] == 'ELEC'
+      end
+      ['status','description','link_text','note','finding_aid'].each do |name|
+        define_method(name) do
+          @holding[name]
         end
+      end
+
+      # Alma's community zone electronic holdings all route through the Alma link resolver.
+      # Which in turn routes through the proxy server traffic cop, which is good.
+      # Regular records, with the url in the 856, however, do not, which leaves
+      # people out of the proxy server.  So add a campus-agnostic proxy prefix.
+      def link
+        return @holding['link'] if @holding['link']&.include?('alma.exlibrisgroup')
+        "https://apps.lib.umich.edu/proxy-login/?url=#{@holding['link']}"
+      end
     end
+    class FindingAid < ElectronicHolding
+      def self.match?(holding)
+        holding["finding_aid"] == true
+      end
+    end
+
     class HathiHolding < Holding
+      def self.match?(holding)
+        holding["library"] == 'HathiTrust Digital Library'
+      end
       def etas?
         items.any?{|x| x.status.start_with?('Full text available,') }
       end
@@ -213,13 +270,16 @@ module Spectrum
       private_constant :Item
     end
     class AlmaHolding  < Holding
+      def self.match?(holding)
+        true
+      end
       def holding_id 
         @holding["hol_mmsid"]
       end
       ["location","callnumber","public_note","summary_holdings", "display_name",
        "floor_location", "info_link"].each do |name|
         define_method(name) do
-          @holding[name]&.strip
+          @holding[name].to_s&.strip
         end
       end
       def items
@@ -235,7 +295,8 @@ module Spectrum
         end
         ["description","public_note", "barcode", "library","location",
         "permanent_library", "permanent_location", "process_type", 
-        "callnumber", "item_policy", "inventory_number"].each do |name|
+        "callnumber", "item_policy", "inventory_number", "item_id", 
+        "record_has_finding_aid"].each do |name|
           define_method(name) do
             @item[name]
           end
@@ -245,6 +306,12 @@ module Spectrum
         end
         def temp_location?
           @item["temp_location"]
+        end
+        def item_location_text 
+          @item["display_name"]
+        end
+        def item_location_link
+          @item["info_link"]
         end
       end
 
@@ -278,13 +345,9 @@ module Spectrum
       str.respond_to?(:sub) ? str.sub(/[.,;:\/]$/, '') : ''
     end
 
-
     def formats
-      @fullrecord.fields('970').map { |field| field['a'] }
-    end
-
-    def can_scan?
-      return formats.all? { |format| SCANABLE[format] }
+      (@fullrecord&.fields('970')&.map { |field| field['a'] } || []) +
+        (@data&.fetch('format', []) || [])
     end
   end
 end
