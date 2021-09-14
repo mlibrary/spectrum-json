@@ -17,6 +17,9 @@ module Spectrum
     def genre
       get_field_subset(main: '974', subfields: 'm')
     end
+    def sgenre
+      ''
+    end
     def date
       process_list_of_fields([
         ['260', 'c'],
@@ -43,9 +46,6 @@ module Spectrum
     def extent
       get_field_subset(main: '300', subfields: 'abcf') 
     end
-    def sysnum
-      '001'
-    end
     
     private 
     def get_field_subset(main:,subfields:)
@@ -68,6 +68,28 @@ module Spectrum
        ['111', 'acd'],
        ['130', 'aplskf'],
      ])
+    end
+    def genre
+      clements_genre
+    end
+    def sgenre
+      clements_genre
+    end
+    private
+    def clements_genre
+      clements_genre_mapping[get_field_subset(main: '974', subfields: 'm')]
+    end
+    def clements_genre_mapping
+      { 
+        'BOOK' => 'Book',
+        'ISSBD' => 'Book',
+        'ISSUE' => 'Book',
+        'SCORE' => 'Graphics',
+        'OTHERVM' => 'Graphics',
+        'MIXED' => 'Manuscripts',
+        'ATLAS' => 'Map',
+        'MAP' => 'Map'
+      }
     end
   end
 end
