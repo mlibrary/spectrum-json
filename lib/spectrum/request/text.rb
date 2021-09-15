@@ -60,7 +60,7 @@ module Spectrum
         return [] unless source.holdings
         holdings_request = Spectrum::Request::Holdings.new({id: id})
         Spectrum::Response::Holdings.new(source, holdings_request).renderable.reject do |holding|
-          holding[:caption] == 'HathiTrust Digital Library'
+          ['HathiTrust Digital Library', 'Online Resources'].include?(holding[:caption])
         end.map do |location|
           location[:rows].map do |row|
             {
