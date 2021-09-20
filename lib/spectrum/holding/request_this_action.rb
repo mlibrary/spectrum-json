@@ -43,7 +43,7 @@ module Spectrum
       :sysnum,
     ].each do |name|
       define_method(name) do
-        @bib.public_send(name).slice(0, 250)
+        (@bib.public_send(name) || '').slice(0, 250)
       end
     end
       def callnumber
