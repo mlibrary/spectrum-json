@@ -30,7 +30,7 @@ describe Spectrum::Holding::RequestThisAction do
       :publisher,
       :place,
       :extent,
-      :sysnum,
+      :sgenre
     ].map{|x| [x,x]}.to_h
     instance_double(Spectrum::SpecialCollectionsBibRecord, **methods)
 
@@ -70,7 +70,7 @@ describe Spectrum::Holding::RequestThisAction do
   let(:query_params) {
     ['Action','Form','callnumber', 'genre','title','author', 'date','edition',
      'publisher', 'place','extent','barcode', 'description','sysnum','location',
-     'sublocation', 'fixedshelf','issn','isbn'
+     'sublocation', 'fixedshelf','issn','isbn', "sgenre"
      ].sort
   }
 
