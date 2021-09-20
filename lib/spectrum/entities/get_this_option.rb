@@ -124,10 +124,10 @@ class Spectrum::Entities::GetThisOption
           "value" => "select-a-pickup-location"
         } 
       ]
-      @option.dig("form","pickup_locations").each do |pickup|
+      @option.dig("form","pickup_locations").each do |code|
         output.push({
-          "value" => pickup["value"],
-          "name" => pickup["name"]
+          "value" => code,
+          "name" => Spectrum::Entities::LocationLabels.get_this(code)
         })
       end
       output

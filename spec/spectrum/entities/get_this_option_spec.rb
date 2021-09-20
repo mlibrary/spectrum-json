@@ -4,6 +4,8 @@ describe Spectrum::Entities::GetThisOption do
      @patron = instance_double(Spectrum::Entities::AlmaUser)
      @item = double('Spectrum::Decorators::PhysicalItemDecorator')
      Spectrum::Entities::GetThisOptions.configure('spec/fixtures/new_get_this_policy.yml')
+     Spectrum::Entities::LocationLabels.configure('spec/fixtures/location_labels.yml')
+
   end
   context "No form" do
     subject do
