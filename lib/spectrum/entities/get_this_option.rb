@@ -24,6 +24,8 @@ class Spectrum::Entities::GetThisOption
       Spectrum::Entities::GetThisOption::Link.new(**args)
     when "alma_hold"
       Spectrum::Entities::GetThisOption::AlmaHold.new(**args)
+    when "alma_recall"
+      Spectrum::Entities::GetThisOption::AlmaRecall.new(**args)
     when "illiad_request"
       Spectrum::Entities::GetThisOption::ILLiadRequest.new(**args)
     else
@@ -110,10 +112,14 @@ class Spectrum::Entities::GetThisOption
           {
             "type" => "submit",
             "name" => "submit",
-            "value" => "Get me this item",
+            "value" => submit_text,
           }
         ]
       }
+    end
+    private
+    def submit_text
+      "Get me this item"
     end
     private
     def select_options
@@ -131,6 +137,12 @@ class Spectrum::Entities::GetThisOption
         })
       end
       output
+    end
+  end
+  class AlmaRecall < AlmaHold
+    private
+    def submit_text
+      "Recall this item"
     end
   end
   
