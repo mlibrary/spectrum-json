@@ -118,7 +118,11 @@ class Spectrum::Entities::AlmaUser
   end
 
   def active?
-    @data.dig('status', 'value') == 'ACTIVE'
+    if @data["expiry_date"]
+      Date.parse(@data["expiry_date"]).future?
+    else
+      false
+    end
   end
 
   def empty?

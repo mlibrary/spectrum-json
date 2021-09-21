@@ -2,9 +2,11 @@ require_relative '../../spec_helper'
 describe Spectrum::Entities::AlmaUser do
 
   context "alma_user_0" do
+    before(:each) do
+      @response = JSON.parse(File.read('./spec/fixtures/alma_user_0.json'))
+    end
     subject do
-      response = JSON.parse(File.read('./spec/fixtures/alma_user_0.json'))
-      described_class.new(data: response)
+      described_class.new(data: @response)
     end
 
     it "isn't #empty?" do
@@ -19,8 +21,15 @@ describe Spectrum::Entities::AlmaUser do
       expect(subject.can_other?).to be(false)
     end
 
-    it 'is #active?' do
-      expect(subject.active?).to be(true)
+    context "#active?" do
+      it 'is #active?' do
+        @response["expiry_date"] = "#{Date.tomorrow.to_s}Z"
+        expect(subject.active?).to be(true)
+      end
+      it "is not #active" do
+        @response["expiry_date"] = "#{Date.yesterday.to_s}Z"
+        expect(subject.active?).to be(false)
+      end
     end
 
     it 'is #ann_arbor?' do
@@ -48,9 +57,11 @@ describe Spectrum::Entities::AlmaUser do
     end
   end
   context "alma_user_1" do
+    before(:each) do
+      @response = JSON.parse(File.read('./spec/fixtures/alma_user_1.json'))
+    end
     subject do
-      response = JSON.parse(File.read('./spec/fixtures/alma_user_1.json'))
-      described_class.new(data: response)
+      described_class.new(data: @response)
     end
 
     it "isn't #can_ill?" do
@@ -58,6 +69,7 @@ describe Spectrum::Entities::AlmaUser do
     end
 
     it "isn't #active?" do
+        @response["expiry_date"] = "#{Date.yesterday.to_s}Z"
       expect(subject.active?).to be(false)
     end
 
