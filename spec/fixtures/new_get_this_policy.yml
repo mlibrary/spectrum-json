@@ -34,8 +34,7 @@
   form:
     type: alma_hold
     pickup_locations:
-      - value: FLINT
-        name: "UM-Flint"
+      - FLINT
 #ILLiadRequest
 - label: Request to have a small portion scanned (Document Delivery)
   service_type: I.L.L./Document Delivery

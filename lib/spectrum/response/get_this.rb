@@ -36,7 +36,7 @@ module Spectrum
       end
 
       def patron_expired
-        { status: 'Patron expired', options: [] }
+        { status: 'Your library account has expired. Please contact circservices@umich.edu for assistance.', options: [] }
       end
 
       def fetch_get_this

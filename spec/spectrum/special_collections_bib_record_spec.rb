@@ -31,8 +31,5 @@ describe Spectrum::SpecialCollectionsBibRecord do
   it "has an extent" do
     expect(subject.extent).to eq('32 leaves : illustrations ; 48 x 33 cm, in portfolio 50 x 35 x 2 cm')
   end
-  it "has a sysnum" do
-    expect(subject.sysnum).to eq('001')
-  end
 end
 

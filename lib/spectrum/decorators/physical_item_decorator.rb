@@ -164,8 +164,16 @@ module Spectrum::Decorators
       !closed_stacks?
     end
 
+    def in_resource_sharing_library?
+      @item.library == 'RES_SHARE'
+    end
+
     def not_on_shelf?
       in_process? || in_reserves? 
+    end
+
+    def recallable?
+      ['LOAN','HOLDSHELF'].include?(@item.process_type) && not_in_reserves?
     end
 
   end
