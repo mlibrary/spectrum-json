@@ -43,7 +43,7 @@ describe Spectrum::Response::GetThis do
 
     it 'returns patron_expired if patron is expired' do
       @init[:user]  = double('Aleph::Borrower', expired?: true, empty?: false)
-      expect(subject.renderable).to eq({ status: 'Patron expired', options: [] })
+      expect(subject.renderable).to eq({ status: 'Your library account has expired. Please contact circservices@umich.edu for assistance.', options: [] })
     end
 
     it 'returns patron_not_found if aleph_error raised' do
