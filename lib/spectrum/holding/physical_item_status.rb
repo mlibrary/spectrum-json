@@ -16,7 +16,11 @@ class Spectrum::Holding::PhysicalItemStatus
   def self.for(item)
     case item.process_type
     when nil
-      Success.new(Text::AvailableText.for(item).to_s)
+      if item.in_unavailable_temporary_location?
+        Error.new('Unavailable')
+      else
+        Success.new(Text::AvailableText.for(item).to_s)
+      end
     when 'LOAN'
        
       return Warning.new(Text::CheckedOutText.new(item).to_s) 

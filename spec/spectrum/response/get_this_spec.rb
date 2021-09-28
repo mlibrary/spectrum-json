@@ -41,10 +41,10 @@ describe Spectrum::Response::GetThis do
       expect(subject.renderable).to eq( { status: 'Not logged in', options: [] })
     end
 
-    it 'returns patron_expired if patron is expired' do
-      @init[:user]  = double('Aleph::Borrower', expired?: true, empty?: false)
-      expect(subject.renderable).to eq({ status: 'Patron expired', options: [] })
-    end
+    #it 'returns patron_expired if patron is expired' do
+      #@init[:user]  = double('Aleph::Borrower', expired?: true, empty?: false)
+      #expect(subject.renderable).to eq({ status: 'Patron expired', options: [] })
+    #end
 
     it 'returns patron_not_found if aleph_error raised' do
       #allow(@init[:user]).to receive(:bor_info) {raise Aleph::Error, 'Borrower not set'}

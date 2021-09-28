@@ -71,6 +71,18 @@ describe Spectrum::Entities::AlmaItem do
     end
   end
 
+  context "#in_unavailable_temporary_location?" do
+    it "is true for item in 'FVL LRC'" do
+      @solr_bib_alma.gsub!('\"temp_location\":false','\"temp_location\":true')
+      @solr_bib_alma.gsub!('\"location\":\"GRAD\"','\"location\":\"LRC\"')
+      @solr_bib_alma.gsub!('\"library\":\"HATCH\"','\"library\":\"FVL\"')
+      expect(subject.in_unavailable_temporary_location?).to eq(true)
+    end
+    it "is not true for item not in a temporary location" do
+      expect(subject.in_unavailable_temporary_location?).to eq(false)
+    end
+  end
+
   context "item checked back in today" do
     before(:each) do
       @solr_bib_alma.gsub!('\"process_type\":null','\"process_type\":\"LOAN\"')

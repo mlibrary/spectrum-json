@@ -1,7 +1,7 @@
 require_relative '../../spec_helper'
 describe Spectrum::Holding::PhysicalItemStatus do
   before(:each) do
-    @solr_item = double("Spectrum::BibRecord:AlmaHolding::Item", process_type: nil, location: 'GRAD')
+    @solr_item = double("Spectrum::BibRecord:AlmaHolding::Item", process_type: nil, location: 'GRAD', library: 'HATCH', temp_location?: true)
     @bib_record = instance_double(Spectrum::BibRecord)
     @alma_item = Spectrum::Entities::AlmaItem.new(solr_item: @solr_item, holding: double("AlmaHolding"), alma_loan: nil, bib_record: @bib_record)
   end
@@ -17,6 +17,11 @@ describe Spectrum::Holding::PhysicalItemStatus do
 #        allow(@alma_item).to receive(:requested?).and_return(false)
         expect(subject.to_h).to eq({text: 'On shelf', intent: 'success', icon: 'check_circle'})
         expect(subject.class.to_s).to include('Success')
+      end
+      it "returns error for item in an unavailable temporary location" do
+        allow(@alma_item).to receive(:in_unavailable_temporary_location?).and_return(true)
+        expect(subject.to_h).to eq({text: 'Unavailable', intent: 'error', icon: 'error'})
+        expect(subject.class.to_s).to include('Error')
       end
       #it "returns error for requested item" do
         #allow(@alma_item).to receive(:requested?).and_return(true)
