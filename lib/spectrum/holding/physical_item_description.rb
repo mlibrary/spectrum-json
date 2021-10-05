@@ -12,7 +12,7 @@ module Spectrum
 
       def self.for(item)
         has_description =  !(item.description.nil? || item.description.empty?)
-        in_non_reserves_temp_location = item.temp_location? && !item.in_reserves?
+        in_non_reserves_temp_location = item.temp_location? && !item.in_reserves? && !item.in_unavailable_temporary_location?
         if in_non_reserves_temp_location && has_description
           TemporaryWithDescription.new(item)
         elsif in_non_reserves_temp_location
