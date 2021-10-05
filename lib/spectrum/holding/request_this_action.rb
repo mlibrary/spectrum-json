@@ -117,10 +117,10 @@ module Spectrum
         'https://aeon.clements.umich.edu/logon?'
       end
       def location
-        @item.location
+        ''
       end
       def sublocation
-        ''
+        @item.location
       end
     end
     class BentleyRequestThisAction < RequestThisAction 
